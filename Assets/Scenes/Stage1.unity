@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   power: 0
-  speed: 0
+  speed: 5
   cost: 0
   mainBullet: {fileID: 848321473181908946, guid: 1b7304acf64eb4948a6f940bc7732c35, type: 3}
 --- !u!1001 &724544755

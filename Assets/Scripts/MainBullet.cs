@@ -17,4 +17,10 @@ public class MainBullet : MonoBehaviour
     {
         this.transform.position += speed * transform.forward * Time.deltaTime;
     }
+
+    //âÊñ äOÇ…èoÇΩÇÁè¡Ç∑
+    void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
 }

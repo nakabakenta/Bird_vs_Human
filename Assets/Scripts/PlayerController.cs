@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             this.transform.position += moveSpeed * transform.forward * Time.deltaTime;
         }
         //â¡ë¨
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if(moveSpeed < 60)
             {
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //å∏ë¨
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if (moveSpeed > 20)
             {
@@ -61,9 +61,14 @@ public class PlayerController : MonoBehaviour
             }
         }
         //çUåÇî≠éÀ
-        if(Input.GetKey(KeyCode.P))
+        if(Input.GetMouseButton(0))
         {
             Instantiate(mainBullet, this.transform.position, Quaternion.identity);
         }
+    }
+
+    void Shot()
+    {
+        
     }
 }
