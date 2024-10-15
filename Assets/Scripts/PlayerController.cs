@@ -7,18 +7,16 @@ public class PlayerController : MonoBehaviour
     //自機ステータス
     public int hp;   //自機の体力
     public int power;//自機の攻撃力
-    public int speed;//自機の攻撃速度
-    public int cost; //自機の追加武器入手時の初期残数
+    public int speed;//自機の移動速度
 
-    private int moveSpeed;        //自機の初期移動速度
-    private int acceleration = 10;//自機の加減速値
+    private int coolTime;//自機の攻撃間隔
 
     public GameObject mainBullet;
 
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 10;
+        coolTime = 0;
     }
 
     // Update is called once per frame
@@ -27,44 +25,34 @@ public class PlayerController : MonoBehaviour
         //上移動
         if(Input.GetKey(KeyCode.W))
         {
-            this.transform.position += moveSpeed * transform.up * Time.deltaTime;
+            this.transform.position += speed * transform.up * Time.deltaTime;
         }
         //右移動
         if (Input.GetKey(KeyCode.A))
         {
-            this.transform.position -= moveSpeed * transform.forward * Time.deltaTime;
+            this.transform.position -= speed * transform.forward * Time.deltaTime;
         }
         //下移動
         if (Input.GetKey(KeyCode.S))
         {
-            this.transform.position -= moveSpeed * transform.up * Time.deltaTime;
+            this.transform.position -= speed * transform.up * Time.deltaTime;
         }
         //左移動
         if (Input.GetKey(KeyCode.D))
         {
-            this.transform.position += moveSpeed * transform.forward * Time.deltaTime;
+            this.transform.position += speed * transform.forward * Time.deltaTime;
         }
-        //加速
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if(moveSpeed < 60)
-            {
-                moveSpeed += acceleration;
-            }
-        }
-        //減速
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (moveSpeed > 20)
-            {
-                moveSpeed -= acceleration;
-            }
-        }
+        //後々使うのでおいておく
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+
+        //}
         //攻撃発射
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && coolTime == 0)
         {
             Instantiate(mainBullet, this.transform.position, Quaternion.identity);
         }
+        coolTime++;
     }
 
     void Shot()
