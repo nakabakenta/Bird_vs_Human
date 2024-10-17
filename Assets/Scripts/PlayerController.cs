@@ -9,21 +9,25 @@ public class PlayerController : MonoBehaviour
     public int power;//Ž©‹@‚ÌUŒ‚—Í
     public int speed;//Ž©‹@‚ÌˆÚ“®‘¬“x
 
-    private int coolTime;//Ž©‹@‚ÌUŒ‚ŠÔŠu
+    private float coolTime = 0.25f;//UŒ‚‚ÌŠÔŠu‚ð‚ ‚¯‚é‚½‚ß‚Ì•Ï”
+    private float spanTime = 0.25f;//UŒ‚‚ªo‚é‚Ü‚Å‚ÌŠÔŠu
+    
 
     public GameObject mainBullet;
 
     // Start is called before the first frame update
     void Start()
     {
-        coolTime = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        coolTime += Time.deltaTime;//
+
         //ãˆÚ“®
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             this.transform.position += speed * transform.up * Time.deltaTime;
         }
@@ -48,11 +52,11 @@ public class PlayerController : MonoBehaviour
 
         //}
         //UŒ‚”­ŽË
-        if (Input.GetMouseButton(0) && coolTime == 0)
+        if (Input.GetMouseButton(0) && coolTime > spanTime)
         {
             Instantiate(mainBullet, this.transform.position, Quaternion.identity);
+            coolTime = 0.0f;
         }
-        coolTime++;
     }
 
     void Shot()
