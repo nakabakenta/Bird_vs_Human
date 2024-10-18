@@ -11,19 +11,21 @@ public class PlayerController : MonoBehaviour
 
     private float coolTime = 0.2f;//クールタイム
     private float spanTime = 0.2f;//攻撃が出るまでの間隔
-
-    private Vector3 nowPosition; //現在の位置
-    private Vector3 nextPosition;//移動後の位置
+    //ビューポート座標変数
     private float viewX;//ビューポートX座標
     private float viewY;//ビューポートY座標
+    //移動変数
+    private bool forward; //前移動
+    private bool backward;//後移動
+    private bool up;      //上移動
+    private bool down;    //下移動
 
     public GameObject bullet;//
 
     // Start is called before the first frame update
     void Start()
     {
-        nowPosition = new Vector3(0, 0, 0);
-        nextPosition = nowPosition;
+        
     }
 
     // Update is called once per frame
@@ -31,45 +33,69 @@ public class PlayerController : MonoBehaviour
     {
         coolTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-        //上移動
-        if (Input.GetKey(KeyCode.W))
+        //移動処理
+        //前移動
+        if (Input.GetKey(KeyCode.D) && forward == true)
         {
-            nextPosition.y = nowPosition.y + speed * Time.deltaTime;
+            this.transform.position += speed * transform.forward * Time.deltaTime;
+        }
+        //後移動
+        if (Input.GetKey(KeyCode.A) && backward == true)
+        {
+            this.transform.position -= speed * transform.forward * Time.deltaTime;
+        }
+        //上移動
+        if (Input.GetKey(KeyCode.W) && up == true)
+        {
+            this.transform.position += speed * transform.up * Time.deltaTime;
         }
         //下移動
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && down == true)
         {
-            nextPosition.y = nowPosition.y - speed * Time.deltaTime;
+            this.transform.position -= speed * transform.up * Time.deltaTime;
         }
-        //左移動
-        if (Input.GetKey(KeyCode.D))
-        {
-            nextPosition.z = nowPosition.z + speed * Time.deltaTime;
-        }
-        //右移動
-        if (Input.GetKey(KeyCode.A))
-        {
-            nextPosition.z = nowPosition.z - speed * Time.deltaTime;
-        }
+        
         //移動後のビューポート座標値を取得
-        viewX = Camera.main.WorldToViewportPoint(nextPosition).x;
-        viewY = Camera.main.WorldToViewportPoint(nextPosition).y;
-        //もし移動後のビューポートX座標が0から1の範囲ならば
-        if (0 <= viewX && viewX <= 1)
+        viewX = Camera.main.WorldToViewportPoint(this.transform.position).x;
+        viewY = Camera.main.WorldToViewportPoint(this.transform.position).y;
+
+        //移動可能な画面範囲指定
+        //-X座標
+        if (viewX >= 0)
         {
-            //移動する
-            transform.position = nextPosition;
-            //nowPositionにnextPositionを代入する(次のUpdateで使う)
-            nowPosition = nextPosition;
+            backward = true;
         }
-        //もし移動後のビューポートX座標が0から1の範囲ならば
-        //if (0 <= viewY && viewY <= 1)
-        //{
-        //    //移動する
-        //    transform.position = nextPosition;
-        //    //nowPositionにnextPositionを代入する(次のUpdateで使う)
-        //    nowPosition = nextPosition;
-        //}
+        else
+        {
+            backward = false;
+        }
+        //+X座標
+        if (viewX <= 1)
+        {
+            forward = true;
+        }
+        else
+        {
+            forward = false;
+        }
+        //-Y座標
+        if (viewY >= 0)
+        {
+            down = true;
+        }
+        else
+        {
+            down = false;
+        }
+        //+Y座標
+        if (viewY <= 1)
+        {
+            up = true;
+        }
+        else
+        {
+            up = false;
+        }
 
         //後々使うのでおいておく
         //if (Input.GetKeyDown(KeyCode.E))
