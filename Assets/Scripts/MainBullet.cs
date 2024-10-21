@@ -18,11 +18,12 @@ public class MainBullet : MonoBehaviour
         this.transform.position += speed * transform.forward * Time.deltaTime;
     }
 
-    //当たり判定(OnTriggerEnter)
-    void OnTriggerEnter(Collider collider)
+    //衝突判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collision)
     {
-        //
-        if (collider.gameObject.tag == "Delete")
+        //下記のタグが付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Enemy"||//敵
+            collision.gameObject.tag == "Delete")//削除
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }

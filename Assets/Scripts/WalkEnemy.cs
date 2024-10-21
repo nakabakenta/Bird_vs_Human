@@ -8,11 +8,13 @@ public class WalkEnemy : MonoBehaviour
     public int hp;     //体力
     public float speed;//移動速度
 
-    private Animator animator = null;//アニメーター
+    private CapsuleCollider capsuleCollider;//CapsuleCollider変数
+    private Animator animator = null;       //Animator変数
 
     // Start is called before the first frame update
     void Start()
     {
+        capsuleCollider = this.gameObject.GetComponent<CapsuleCollider>();
         animator = this.GetComponent<Animator>();
     }
 
@@ -20,11 +22,15 @@ public class WalkEnemy : MonoBehaviour
     void Update()
     {
         //
-        this.transform.position += speed * transform.forward * Time.deltaTime;
-        //
-        if (hp <= 0)
+        if(hp > 0)
         {
-            animator.SetBool("Death", true);
+            this.transform.position += speed * transform.forward * Time.deltaTime;//
+        }
+        //
+        else if (hp <= 0)
+        {
+            capsuleCollider.enabled = false;//CapsuleColliderを無効化する
+            animator.SetBool("Death", true);//
         }
     }
 
