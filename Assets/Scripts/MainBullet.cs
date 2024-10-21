@@ -18,9 +18,13 @@ public class MainBullet : MonoBehaviour
         this.transform.position += speed * transform.forward * Time.deltaTime;
     }
 
-    //画面外に出たら消す
-    void OnBecameInvisible()
+    //当たり判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collider)
     {
-        Destroy(this.gameObject);
+        //
+        if (collider.gameObject.tag == "Delete")
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
+        }
     }
 }

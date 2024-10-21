@@ -19,12 +19,28 @@ public class WalkEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //
         this.transform.position += speed * transform.forward * Time.deltaTime;
+        //
+        if (hp <= 0)
+        {
+            animator.SetBool("Death", true);
+        }
     }
 
-    //画面外処理
-    void OnBecameInvisible()
+    //当たり判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collider)
     {
-        Destroy(this.gameObject);//消す
+        //
+        if (collider.gameObject.tag == "Bullet")
+        {
+            hp = 0;//
+        }
+
+        //
+        if (collider.gameObject.tag == "Delete")
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
+        }
     }
 }

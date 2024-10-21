@@ -8,14 +8,12 @@ public class Enemy : MonoBehaviour
     public float speed;//ˆÚ“®‘¬“x
 
     private Animator animator = null;
-
     private Transform a;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = this.GetComponent<Animator>();
-
         a = GameObject.Find("lb_chickadee").transform;
     }
 
