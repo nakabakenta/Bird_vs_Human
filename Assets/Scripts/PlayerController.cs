@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //自機ステータス
-    public int hp;     //体力
-    public int power;  //攻撃力
-    public float speed;//移動速度
+    //自機ステータス変数
+    public static int hp;    //体力
+    public int power;        //攻撃力
+    public float playerSpeed;//プレイヤー移動速度
 
     public GameObject bullet;//
 
@@ -16,44 +16,37 @@ public class PlayerController : MonoBehaviour
     //ビューポート座標変数
     private float viewX;//ビューポートX座標
     private float viewY;//ビューポートY座標
-    //移動フラグ
+    //移動フラグ変数
     private bool forward; //前移動
     private bool backward;//後移動
     private bool up;      //上移動
     private bool down;    //下移動
     //ダメージ関係変数
-    private float blinkingTime = 1.0f;//点滅・無敵の持続時間
-    private bool isDamage;            //ダメージを受けているかのフラグ
-    private bool isObjRenderer;       //objRendererが有効か無効かのフラグ
-
+    private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
+    private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
+    private float rendererElapsedTime;     //Rendererの有効・無効の経過時間(点滅の経過時間)
+    private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
+    private bool isDamage;                 //ダメージを受けているかのフラグ
+    private bool isObjRenderer;            //objRendererの有効・無効フラグ
+    //コンポーネント取得変数
     private Rigidbody rigidBody;     //Rigidbody変数
     private BoxCollider boxCollider; //CapsuleCollider変数
     private Animator animator = null;//Animator変数
-    private Renderer[] objRenderer;  //Renderer配列
-
-    //リセットする時の為にコルーチンを保持しておく
-    Coroutine blinking;
-
-    //ダメージ点滅の合計経過時間
-    private float blinkingTotalElapsedTime;
-
-    //ダメージ点滅のRendererの有効・無効切り替え用の経過時間
-    float blinkingElapsedTime;
-
-    //ダメージ点滅のRendererの有効・無効切り替え用のインターバル
-    float blinkingInterval = 0.05f;
+    private Renderer[] objRenderer;  //Renderer配列変数
+    //コルーチン変数
+    private Coroutine blinking;//
 
     void Awake()
     {
-        objRenderer = GetComponentsInChildren<Renderer>();
+        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = this.gameObject.GetComponent<Rigidbody>();
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();
-        animator = this.GetComponent<Animator>();
+        rigidBody = this.gameObject.GetComponent<Rigidbody>();    //このオブジェクトのRigidbodyを取得
+        boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトのBoxColliderを取得
+        animator = this.GetComponent<Animator>();                 //このオブジェクトのAnimatorを取得
     }
 
     // Update is called once per frame
@@ -62,11 +55,13 @@ public class PlayerController : MonoBehaviour
         //クールタイムにTime.deltaTimeを足す
         coolTime += Time.deltaTime;
 
-        PlayControl();
+        //関数PlayControlを呼び出す
+        PlayControl();             
 
         //移動後のビューポート座標値を取得
-        viewX = Camera.main.WorldToViewportPoint(this.transform.position).x;
-        viewY = Camera.main.WorldToViewportPoint(this.transform.position).y;
+        viewX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
+        viewY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
+
         //移動可能な画面範囲指定
         //-X座標
         if (viewX >= 0)
@@ -103,13 +98,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             up = false;
-        }
-
-        //後々使うのでおいておく
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-
-        //}        
+        } 
     }
 
     //操作入力
@@ -122,22 +111,22 @@ public class PlayerController : MonoBehaviour
             //前移動
             if (Input.GetKey(KeyCode.D) && forward == true)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;
+                this.transform.position += playerSpeed * transform.forward * Time.deltaTime;
             }
             //後移動
             if (Input.GetKey(KeyCode.A) && backward == true)
             {
-                this.transform.position -= speed * transform.forward * Time.deltaTime;
+                this.transform.position -= playerSpeed * transform.forward * Time.deltaTime;
             }
             //上移動
             if (Input.GetKey(KeyCode.W) && up == true)
             {
-                this.transform.position += speed * transform.up * Time.deltaTime;
+                this.transform.position += playerSpeed * transform.up * Time.deltaTime;
             }
             //下移動
             if (Input.GetKey(KeyCode.S) && down == true)
             {
-                this.transform.position -= speed * transform.up * Time.deltaTime;
+                this.transform.position -= playerSpeed * transform.up * Time.deltaTime;
             }
             //攻撃発射
             if (Input.GetMouseButton(0) && coolTime > spanTime)
@@ -145,86 +134,79 @@ public class PlayerController : MonoBehaviour
                 Instantiate(bullet, this.transform.position, Quaternion.identity);
                 coolTime = 0.0f;
             }
+            //後々使うのでおいておく
+            //if (Input.GetKeyDown(KeyCode.E))
+            //{
+
+            //}     
         }
     }
-
 
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //
+        //タグEnemyの付いたオブジェクトに衝突したら
         if (collision.gameObject.tag == "Enemy")
         {
-            Damage();//
+            Damage();//関数Damageを呼び出す
         } 
     }
 
-    void SetObjRenderer(bool b)
+    void SetObjRenderer(bool set)
     {
         for (int i = 0; i < objRenderer.Length; i++)
         {
-            objRenderer[i].enabled = b;
+            objRenderer[i].enabled = set;//RendererをobjRendererにセットする
         }
     }
 
+    //ダメージ判定
     void Damage()
     {
-        //ダメージ点滅中は二重に実行しない。
+        //点滅中は二重に実行しない
         if (isDamage)
             return;
 
-        hp -= 1;//
+        hp -= 1;//体力を-1する
 
         //体力が0以下だったら
         if (hp <= 0)
         {
             boxCollider.enabled = false;    //BoxColliderを無効化する
-            animator.SetBool("Death", true);//
+            animator.SetBool("Death", true);//AnimatorのDeath(死亡モーション)を有効化する
             rigidBody.useGravity = true;    //RigidBodyの重力を有効化する
         }
-        StartFlicker();
-    }
 
-    void StartFlicker()
-    {
-        //isDamagedで多重実行を防いでいるので、ここで多重実行を弾かなくてもOK    
-        blinking = StartCoroutine(Blinking());
+        StartCoroutine("Blinking");//コルーチンBlinkingを呼び出す
     }
 
     IEnumerator Blinking()
     {
         isDamage = true;
 
-        blinkingTotalElapsedTime = 0;
-        blinkingElapsedTime = 0;
+        rendererTotalElapsedTime = 0;
+        rendererElapsedTime = 0;
 
         while (true)
         {
-
-            blinkingTotalElapsedTime += Time.deltaTime;
-            blinkingElapsedTime += Time.deltaTime;
-
-            if (blinkingInterval <= blinkingElapsedTime)
+            rendererTotalElapsedTime += Time.deltaTime;
+            rendererElapsedTime += Time.deltaTime;
+            if (rendererSwitch <= rendererElapsedTime)
             {
-                //被ダメージ点滅処理
-                blinkingElapsedTime = 0;
-                //Rendererの有効、無効の反転
-                isObjRenderer = !isObjRenderer;
-                SetObjRenderer(isObjRenderer);
+                rendererElapsedTime = 0;       //被ダメージ点滅処理
+                isObjRenderer = !isObjRenderer;//Rendererの有効・無効を切り替える(点滅処理)
+                SetObjRenderer(isObjRenderer); //
             }
 
-            if (blinkingTime <= blinkingTotalElapsedTime)
+            if (blinkingTime <= rendererTotalElapsedTime)
             {
                 //被ダメージ点滅の終了時の処理
                 isDamage = false;
-                //最後に必ずRendererを有効化する
-                isObjRenderer = true;
-                SetObjRenderer(true);
-
+                isObjRenderer = true;//Rendererを有効化する
+                SetObjRenderer(true);//
                 blinking = null;
                 yield break;
             }
-
             yield return null;
         }
     }
