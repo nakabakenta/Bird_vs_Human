@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //自機ステータス変数
-    public static int hp;    //体力
+    public int hp;           //体力
     public int power;        //攻撃力
     public float playerSpeed;//プレイヤー移動速度
 
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        GameManager.playerHp = hp;                                              //GameManager(hp)に体力の値を入れる
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
@@ -177,7 +178,8 @@ public class PlayerController : MonoBehaviour
             rigidBody.useGravity = true;    //RigidBodyの重力を有効化する
         }
 
-        StartCoroutine("Blinking");//コルーチンBlinkingを呼び出す
+        GameManager.playerHp = hp; //GameManager(hp)に体力の値を入れる
+        StartCoroutine("Blinking");//コルーチン(Blinking)を呼び出す
     }
 
     IEnumerator Blinking()
@@ -204,7 +206,6 @@ public class PlayerController : MonoBehaviour
                 isDamage = false;
                 isObjRenderer = true;//Rendererを有効化する
                 SetObjRenderer(true);//
-                blinking = null;
                 yield break;
             }
             yield return null;
