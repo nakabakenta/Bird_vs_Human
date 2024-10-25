@@ -5,14 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //自機ステータス変数
-    public int hp;           //体力
-    public int power;        //攻撃力
-    public float playerSpeed;//プレイヤー移動速度
+    public GameObject forwardBullet;//
+    public GameObject downBullet;   //
 
-    public GameObject bullet;//
+    public int hp;
+    public int power;
+    public float speed;
 
-    private float coolTime = 0.2f;//クールタイム
-    private float spanTime = 0.2f;//攻撃が出るまでの間隔
+    private float coolTimeL = 0.25f;//クールタイム(前方攻撃)
+    private float coolTimeR = 0.50f;//クールタイム(落下攻撃)
+    private float attackL = 0.25f;  //攻撃が出るまでの間隔(前方攻撃)
+    private float attackR = 0.50f;  //攻撃が出るまでの間隔(落下攻撃)
     //ビューポート座標変数
     private float viewX;//ビューポートX座標
     private float viewY;//ビューポートY座標
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private bool isDamage;                 //ダメージを受けているかのフラグ
     private bool isObjRenderer;            //objRendererの有効・無効フラグ
     //コンポーネント取得変数
+    private DamageManager damageManager;
     private Rigidbody rigidBody;     //Rigidbody変数
     private BoxCollider boxCollider; //CapsuleCollider変数
     private Animator animator = null;//Animator変数
@@ -38,23 +42,25 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        GameManager.playerHp = hp;                                              //GameManager(hp)に体力の値を入れる
+        GameManager.playerHp = hp;                                         //GameManager(hp)に体力の値を入れる
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = this.gameObject.GetComponent<Rigidbody>();    //このオブジェクトのRigidbodyを取得
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトのBoxColliderを取得
-        animator = this.GetComponent<Animator>();                 //このオブジェクトのAnimatorを取得
+        damageManager = GetComponent<DamageManager>();//
+        rigidBody = this.gameObject.GetComponent<Rigidbody>();      //このオブジェクトのRigidbodyを取得
+        boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
+        animator = this.GetComponent<Animator>();                   //このオブジェクトのAnimatorを取得
     }
 
     // Update is called once per frame
     void Update()
     {
         //クールタイムにTime.deltaTimeを足す
-        coolTime += Time.deltaTime;
+        coolTimeL += Time.deltaTime;
+        coolTimeR += Time.deltaTime;
 
         //関数PlayControlを呼び出す
         PlayControl();             
@@ -112,34 +118,39 @@ public class PlayerController : MonoBehaviour
             //前移動
             if (Input.GetKey(KeyCode.D) && forward == true)
             {
-                this.transform.position += playerSpeed * transform.forward * Time.deltaTime;
+                this.transform.position += speed * transform.forward * Time.deltaTime;
             }
             //後移動
             if (Input.GetKey(KeyCode.A) && backward == true)
             {
-                this.transform.position -= playerSpeed * transform.forward * Time.deltaTime;
+                this.transform.position -= speed * transform.forward * Time.deltaTime;
             }
             //上移動
             if (Input.GetKey(KeyCode.W) && up == true)
             {
-                this.transform.position += playerSpeed * transform.up * Time.deltaTime;
+                this.transform.position += speed * transform.up * Time.deltaTime;
             }
             //下移動
             if (Input.GetKey(KeyCode.S) && down == true)
             {
-                this.transform.position -= playerSpeed * transform.up * Time.deltaTime;
+                this.transform.position -= speed * transform.up * Time.deltaTime;
             }
-            //攻撃発射
-            if (Input.GetMouseButton(0) && coolTime > spanTime)
+            //前方攻撃
+            if (Input.GetMouseButton(0) && coolTimeL > attackL)
             {
-                Instantiate(bullet, this.transform.position, Quaternion.identity);
-                coolTime = 0.0f;
+                Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
+                coolTimeL = 0.0f;
             }
-            //後々使うのでおいておく
-            //if (Input.GetKeyDown(KeyCode.E))
-            //{
-
-            //}     
+            //落下攻撃
+            if (Input.GetMouseButton(1) && coolTimeR > attackR)
+            {
+                Instantiate(downBullet, this.transform.position, Quaternion.identity);
+                coolTimeR = 0.0f;
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                
+            }
         }
     }
 
@@ -166,7 +177,12 @@ public class PlayerController : MonoBehaviour
     {
         //点滅中は二重に実行しない
         if (isDamage)
+        {
             return;
+        }
+
+        //damageManager.PlayerDamage();
+
 
         hp -= 1;//体力を-1する
 

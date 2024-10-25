@@ -13,31 +13,28 @@ public class WalkEnemy : MonoBehaviour
     private bool isAnimation = false;
 
     //コンポーネント取得変数
-
-    private Vector3 position;
-    private Transform objTransform;
+    private Transform setTransform;  //Transform変数
     private Animator animator = null;//Animator変数
     
 
     // Start is called before the first frame update
     void Start()
     {
-        position = this.transform.position;
-        objTransform = this.transform;
-
-        animator = this.GetComponent<Animator>();//このオブジェクトのAnimatorを取得
-        animator.SetBool("Walk", true);          //AnimatorのWalk(歩行モーション)を有効化する
+        setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
+        animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
+        animator.SetBool("Walk", true);                          //AnimatorのWalk(歩行モーション)を有効化する
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        Vector3 localAngle = objTransform.localEulerAngles;
-        localAngle.y = 180.0f;
-
-        position.x = 0.0f;
-        position.z = 0.0f;
+        Vector3 localPosition = setTransform.localPosition;//オブジェクトの
+        Vector3 localAngle = setTransform.localEulerAngles;//
+        localPosition.x = 0.0f;//
+        localPosition.y = 0.0f;//
+        localAngle.y = 180.0f; //
+        setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
+        setTransform.localEulerAngles = localAngle;       //
 
         //
         if (hp > 0 && isAnimation == false)
@@ -79,6 +76,8 @@ public class WalkEnemy : MonoBehaviour
                 }
             }
         }
+
+        
     }
 
     //当たり判定(OnTriggerEnter)
