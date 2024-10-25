@@ -902,7 +902,7 @@ MonoBehaviour:
   downBullet: {fileID: 3969301995329424523, guid: c1077a3abc1757346a93ed64104541fa, type: 3}
   hp: 6
   power: 1
-  speed: 10
+  speed: 8
 --- !u!1 &1411164257525991249
 GameObject:
   m_ObjectHideFlags: 0
