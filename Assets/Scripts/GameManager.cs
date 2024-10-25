@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static string playerSelect;//
-
-    public static int playerHp;     //
-    public static int playerPower;  //
-    public static float playerSeppd;//
+    struct PlayerStatus
+    {
+        public string name;
+        public int hp;
+        public int power;
+        public float speed;
+    }
 
     public static bool stage1;
     public static bool stage2;

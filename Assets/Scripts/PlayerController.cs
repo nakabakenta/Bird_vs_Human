@@ -8,9 +8,8 @@ public class PlayerController : MonoBehaviour
     public GameObject forwardBullet;//
     public GameObject downBullet;   //
 
-    public int hp;
-    public int power;
-    public float speed;
+    private int hp;
+    private float speed;
 
     private float coolTimeL = 0.25f;//クールタイム(前方攻撃)
     private float coolTimeR = 0.50f;//クールタイム(落下攻撃)
@@ -42,7 +41,24 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        GameManager.playerHp = hp;                                         //GameManager(hp)に体力の値を入れる
+        if(GameManager.playerSelect == "Sparrow" || 
+           GameManager.playerSelect == "Crow" ||
+           GameManager.playerSelect == "Chickadee" ||
+           GameManager.playerSelect == "Penguin")
+        {
+            
+
+
+        }
+        else
+        {
+            GameManager.playerHp = 6;
+            GameManager.playerPower = 6;
+            GameManager.playerSeppd = 8;
+        }
+
+        hp = GameManager.playerHp;
+        speed = GameManager.playerSeppd;
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
@@ -182,7 +198,6 @@ public class PlayerController : MonoBehaviour
         }
 
         //damageManager.PlayerDamage();
-
 
         hp -= 1;//体力を-1する
 

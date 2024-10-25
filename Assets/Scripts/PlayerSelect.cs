@@ -4,24 +4,7 @@ using UnityEngine;
 
 public class PlayerSelect : MonoBehaviour
 {
-    //
-    public enum PlayerList
-    {
-        SPARROW,  //スズメ
-        CROW,　　 //カラス
-        CHICKADEE,//コガラ
-        PENGUIN,  //ペンギン
-    }
-
-    //
-    public enum PlayerStatus
-    {
-        NAME, //名前
-        HP,   //体力
-        POWER,//攻撃力
-        SPEED,//移動速度
-    }
-
+    private GameManager playerStatus;
     private SceneLoader sceneLoader;//
 
     // Start is called before the first frame update
@@ -36,12 +19,49 @@ public class PlayerSelect : MonoBehaviour
         
     }
 
+    //
     public void Sparrow()
     {
-        PlayerList type = PlayerList.SPARROW;
+        playerStatus.name = "Sparrow";
 
-
-
+        playerStatus.hp = 6;
+        playerStatus.power = 6;
+        playerStatus.speppd = 8;
         sceneLoader.StageSelect();
+    }
+
+    //
+    public void Crow()
+    {
+        GameManager.playerSelect = "Crow";
+        GameManager.playerHp = 8;
+        GameManager.playerPower = 10;
+        GameManager.playerSeppd = 5;
+        sceneLoader.StageSelect();
+    }
+
+    //
+    public void Chickadee()
+    {
+        GameManager.playerSelect = "Chickadee";
+        GameManager.playerHp = 6;
+        GameManager.playerPower = 5;
+        GameManager.playerSeppd = 10;
+        sceneLoader.StageSelect();
+    }
+
+    //
+    public void Penguin()
+    {
+        GameManager.playerSelect = "Penguin";
+        sceneLoader.StageSelect();
+    }
+
+    void SetStatus()
+    {
+
+        GameManager.playerHp = hp;
+        GameManager.playerPower = power;
+        GameManager.playerSeppd = seppd;
     }
 }
