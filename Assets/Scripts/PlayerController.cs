@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     public GameObject forwardBullet;//
     public GameObject downBullet;   //
 
-    private int hp;
-    private float speed;
+    private int hp;//
+    private float speed;//
 
     private float coolTimeL = 0.25f;//クールタイム(前方攻撃)
     private float coolTimeR = 0.50f;//クールタイム(落下攻撃)
@@ -46,19 +46,16 @@ public class PlayerController : MonoBehaviour
            GameManager.playerSelect == "Chickadee" ||
            GameManager.playerSelect == "Penguin")
         {
-            
-
-
+            hp = GameManager.hp;
+            speed = GameManager.speed;
         }
         else
         {
-            GameManager.playerHp = 6;
-            GameManager.playerPower = 6;
-            GameManager.playerSeppd = 8;
+            GameManager.hp = 6;
+            GameManager.power = 6;
+            GameManager.speed = 8;
         }
 
-        hp = GameManager.playerHp;
-        speed = GameManager.playerSeppd;
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
@@ -209,7 +206,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.useGravity = true;    //RigidBodyの重力を有効化する
         }
 
-        GameManager.playerHp = hp; //GameManager(hp)に体力の値を入れる
+        GameManager.hp = hp; //GameManager(hp)に体力の値を入れる
         StartCoroutine("Blinking");//コルーチン(Blinking)を呼び出す
     }
 

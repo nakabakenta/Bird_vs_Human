@@ -42,12 +42,12 @@ public class WalkEnemy : MonoBehaviour
             this.transform.position += speed * transform.forward * Time.deltaTime;//左方向に移動する
         }
         //
-        else if (GameManager.playerHp <= 0)
+        else if (GameManager.hp <= 0)
         {
             animator.SetBool("Dance", true);//AnimatorのDance(ダンスモーション)を有効化する
         }
         //
-        if (GameManager.playerHp > 0 && isAnimation == true)
+        if (GameManager.hp > 0 && isAnimation == true)
         {
             coolTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 

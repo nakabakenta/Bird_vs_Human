@@ -22,46 +22,40 @@ public class PlayerSelect : MonoBehaviour
     //
     public void Sparrow()
     {
-        playerStatus.name = "Sparrow";
-
-        playerStatus.hp = 6;
-        playerStatus.power = 6;
-        playerStatus.speppd = 8;
+        GameManager.hp = 6;
+        GameManager.power = 6;
+        GameManager.speed = 8;
+        GameManager.playerSelect = "Sparrow";
         sceneLoader.StageSelect();
     }
 
     //
     public void Crow()
     {
+        GameManager.hp = 8;
+        GameManager.power = 10;
+        GameManager.speed = 5;
         GameManager.playerSelect = "Crow";
-        GameManager.playerHp = 8;
-        GameManager.playerPower = 10;
-        GameManager.playerSeppd = 5;
         sceneLoader.StageSelect();
     }
 
     //
     public void Chickadee()
     {
+        GameManager.hp = 6;
+        GameManager.power = 5;
+        GameManager.speed = 10;
         GameManager.playerSelect = "Chickadee";
-        GameManager.playerHp = 6;
-        GameManager.playerPower = 5;
-        GameManager.playerSeppd = 10;
         sceneLoader.StageSelect();
     }
 
     //
     public void Penguin()
     {
+        GameManager.hp = 10;
+        GameManager.power = 10;
+        GameManager.speed = 10;
         GameManager.playerSelect = "Penguin";
         sceneLoader.StageSelect();
-    }
-
-    void SetStatus()
-    {
-
-        GameManager.playerHp = hp;
-        GameManager.playerPower = power;
-        GameManager.playerSeppd = seppd;
     }
 }
