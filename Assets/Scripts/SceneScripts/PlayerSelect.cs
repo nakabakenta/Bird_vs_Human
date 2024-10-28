@@ -4,58 +4,36 @@ using UnityEngine;
 
 public class PlayerSelect : MonoBehaviour
 {
-    private GameManager playerStatus;
     private SceneLoader sceneLoader;//
 
     // Start is called before the first frame update
     void Start()
     {
-        sceneLoader = GetComponent<SceneLoader>();//
+        sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //
+    //スズメ
     public void Sparrow()
     {
-        GameManager.hp = 6;
-        GameManager.power = 6;
-        GameManager.speed = 8;
-        GameManager.playerSelect = "Sparrow";
+        GameManager.playerSelect = PlayerStatus.Sparrow.name;
         sceneLoader.StageSelect();
     }
-
-    //
+    //カラス
     public void Crow()
     {
-        GameManager.hp = 8;
-        GameManager.power = 10;
-        GameManager.speed = 5;
-        GameManager.playerSelect = "Crow";
+        GameManager.playerSelect = PlayerStatus.Crow.name;
         sceneLoader.StageSelect();
     }
-
-    //
+    //コガラ
     public void Chickadee()
     {
-        GameManager.hp = 6;
-        GameManager.power = 5;
-        GameManager.speed = 10;
-        GameManager.playerSelect = "Chickadee";
+        GameManager.playerSelect = PlayerStatus.Chickadee.name;
         sceneLoader.StageSelect();
     }
-
-    //
+    //ペンギン
     public void Penguin()
     {
-        GameManager.hp = 10;
-        GameManager.power = 10;
-        GameManager.speed = 10;
-        GameManager.playerSelect = "Penguin";
+        GameManager.playerSelect = PlayerStatus.Penguin.name;
         sceneLoader.StageSelect();
     }
 }

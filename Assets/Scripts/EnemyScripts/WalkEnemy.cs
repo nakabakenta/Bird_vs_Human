@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class WalkEnemy : MonoBehaviour
 {
-    //ステータス変数
-    public int hp;     //体力
-    public float speed;//移動速度
-
-    private int random = 0;       //
+    //ステータス
+    private int hp = EnemyStatus.WalkEnemy.hp;        //体力
+    private float speed = EnemyStatus.WalkEnemy.speed;//移動速度
+    //
+    private int random = 0;       //ランダム
     private float coolTime = 0.0f;//クールタイム
-    private bool isAnimation = false;
+    private bool isAttack = false;//攻撃中かどうか
 
     //コンポーネント取得変数
-    private Transform setTransform;  //Transform変数
-    private Animator animator = null;//Animator変数
-    
+    private Transform setTransform;  //Transform
+    private Animator animator = null;//Animator
 
     // Start is called before the first frame update
     void Start()
     {
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetBool("Walk", true);                          //AnimatorのWalk(歩行モーション)を有効化する
+        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(歩行モーション)を有効にする
     }
 
     // Update is called once per frame
@@ -37,47 +36,43 @@ public class WalkEnemy : MonoBehaviour
         setTransform.localEulerAngles = localAngle;       //
 
         //
-        if (hp > 0 && isAnimation == false)
+        if (hp > 0 && isAttack == false)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//左方向に移動する
         }
         //
-        else if (GameManager.hp <= 0)
+        else if (PlayerController.hp <= 0)
         {
-            animator.SetBool("Dance", true);//AnimatorのDance(ダンスモーション)を有効化する
+            animator.SetInteger("Motion", 3);//Animatorの"Motion, 3"(ダンスモーション)を有効にする
         }
         //
-        if (GameManager.hp > 0 && isAnimation == true)
+        if (PlayerController.hp > 0 && isAttack == true)
         {
             coolTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-            //
-            if(random == 1)
+            //ランダムが"1"だったら
+            if (random == 1)
             {
                 //
                 if (coolTime >= 2.0f)
                 {
-                    coolTime = 0.0f;                       //
-                    animator.SetInteger("AttackMotion", 0);//
-                    animator.SetBool("Walk", true);        //AnimatorのWalk(歩行モーション)を有効化する
-                    isAnimation = false;
+                    coolTime = 0.0f;                 //
+                    animator.SetInteger("Motion", 0);//
+                    isAttack = false;
                 }
             }
-            //
-            else if(random == 2)
+            //ランダムが"2"だったら
+            else if (random == 2)
             {
                 //
                 if (coolTime >= 1.5f)
                 {
                     coolTime = 0.0f;
-                    animator.SetInteger("AttackMotion", 0);//
-                    animator.SetBool("Walk", true);        //AnimatorのWalk(歩行モーション)を有効化する
-                    isAnimation = false;
+                    animator.SetInteger("Motion", 0);//
+                    isAttack = false;
                 }
             }
         }
-
-        
     }
 
     //当たり判定(OnTriggerEnter)
@@ -103,15 +98,14 @@ public class WalkEnemy : MonoBehaviour
     //アニメーション関数
     void Animation()
     {
-        if (isAnimation)
+        if (isAttack)
         {
             return;
         }
 
-        isAnimation = true;
+        isAttack = true;
         random = (int)Random.Range(1, 3);           //ランダム処理(1～2)
-        animator.SetBool("Walk", false);            //AnimatorのWalk(歩行モーション)を無効化する
-        animator.SetInteger("AttackMotion", random);//AnimatorのAttackMotion(1～2)を有効化する
+        animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効化する
         Debug.Log(random);                          //Debug.Log(random)
     }
 
@@ -123,9 +117,9 @@ public class WalkEnemy : MonoBehaviour
         //体力が0以下だったら
         if (hp <= 0)
         {
-            this.tag = "Death";             //タグをDeathに変更する
-            animator.SetBool("Walk", false);//AnimatorのWalk(歩行モーション)を無効化する
-            animator.SetBool("Death", true);//AnimatorのDeath(死亡時のモーション)を有効化する
+            GameManager.score += EnemyStatus.WalkEnemy.score;//
+            this.tag = "Death";              //タグをDeathに変更する
+            animator.SetInteger("Motion", 4);//
         }
     }
 }

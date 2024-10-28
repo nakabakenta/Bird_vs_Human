@@ -28,4 +28,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("StageSelect");
     }
+
+    public void Stage1()
+    {
+        SceneManager.LoadScene("Stage1");
+    }
 }

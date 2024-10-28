@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int hp;//
-    public static int power;//
-    public static float speed;//
-    public static string playerSelect;//
+    public static string playerSelect;   //
+    public static bool gameStart = false;//
+
+    public static int score;//
 
     public static bool stage1;//
     public static bool stage2;//
