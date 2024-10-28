@@ -19,8 +19,6 @@ public class SceneLoader : MonoBehaviour
 
     public void PlayerSelect()
     {
-
-
         SceneManager.LoadScene("PlayerSelect");
     }
 
@@ -32,5 +30,10 @@ public class SceneLoader : MonoBehaviour
     public void Stage1()
     {
         SceneManager.LoadScene("Stage1");
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }
