@@ -22,7 +22,7 @@ public class RunEnemy : MonoBehaviour
     {
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走るモーション)を有効にする
+        animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走る)を有効にする
         playerTransform = GameObject.Find("Chickadee_Player").transform;
     }
 
@@ -96,7 +96,7 @@ public class RunEnemy : MonoBehaviour
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
         {
             Damage();//関数Damageを呼び出す
         }
@@ -130,8 +130,8 @@ public class RunEnemy : MonoBehaviour
         if (hp <= 0)
         {
             GameManager.score += EnemyStatus.RunEnemy.score;//
-            this.tag = "Death";              //タグをDeathに変更する
-            animator.SetInteger("Motion", 4);//
+            this.tag = "Death";                             //タグをDeathに変更する
+            animator.SetInteger("Motion", 4);               //
         }
     }
 }
