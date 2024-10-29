@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static string playerSelect;   //
+    public static int score;             //
+    public static int life;              //
     public static bool gameStart = false;//
-
-    public static int score;//
 
     public static bool stage1;//
     public static bool stage2;//
