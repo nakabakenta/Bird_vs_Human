@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
             speed = PlayerStatus.Sparrow.speed;                  //ˆÚ“®‘¬“x
         }
 
-
+        GameManager.remain = 3;
     }
 
     //‘€ì“ü—Í

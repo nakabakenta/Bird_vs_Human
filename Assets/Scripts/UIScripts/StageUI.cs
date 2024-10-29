@@ -56,5 +56,16 @@ public class StageUI : MonoBehaviour
         {
             score.text = "SCORE : 0000" + GameManager.score;
         }
+
+        //
+        if (GameManager.remain >= 10)
+        {
+            remain.text = "REMAIN : " + GameManager.remain;//
+        }
+        //
+        else if (GameManager.remain >= 0)
+        {
+            remain.text = "REMAIN : 0" + GameManager.remain;//
+        }
     }
 }
