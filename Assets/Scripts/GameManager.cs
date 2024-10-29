@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static string playerSelect;   //
+    public static string playerSelect;   //プレイヤー(自機)選択
+    //ゲームプレイ中
+    public static bool gameStart = false;//ゲームスタートフラグ
+
     public static int score;             //
-    public static int life;              //
-    public static bool gameStart = false;//
+    public static int remain;            //
+    
 
     public static bool stage1;//
     public static bool stage2;//

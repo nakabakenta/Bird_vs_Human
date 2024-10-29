@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GageUI : MonoBehaviour
 {
     private float coolTime = 0.0f;//クールタイム(ゲージ)
-    private float charge = 0.5f;  //ゲージがチャージされるまでの間隔
+    private float charge = 0.5f;  //ゲージがチャージされる間隔
 
     private Slider gage;//Slider(ゲージ)
 
