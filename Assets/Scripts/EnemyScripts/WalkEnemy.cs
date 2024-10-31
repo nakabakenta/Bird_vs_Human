@@ -29,9 +29,9 @@ public class WalkEnemy : MonoBehaviour
     {
         Vector3 localPosition = setTransform.localPosition;//オブジェクトの
         Vector3 localAngle = setTransform.localEulerAngles;//
-        localPosition.x = 0.0f;//
         localPosition.y = 0.0f;//
-        localAngle.y = 180.0f; //
+        localPosition.z = 0.0f;//
+        localAngle.y = EnemyStatus.rotationY;//
         setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         setTransform.localEulerAngles = localAngle;       //
 
@@ -84,7 +84,7 @@ public class WalkEnemy : MonoBehaviour
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
         {
             Damage();//関数Damageを呼び出す
         }

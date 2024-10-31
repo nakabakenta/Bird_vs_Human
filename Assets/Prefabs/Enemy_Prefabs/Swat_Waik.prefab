@@ -2122,6 +2122,7 @@ GameObject:
   - component: {fileID: 1734329729614039349}
   - component: {fileID: 5482730215180168610}
   - component: {fileID: 7042868304017859024}
+  - component: {fileID: -3891707796788629735}
   m_Layer: 0
   m_Name: Swat_Waik
   m_TagString: Enemy
@@ -2136,7 +2137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7702886973443865384}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2145,7 +2146,7 @@ Transform:
   - {fileID: 3313985788267774214}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &3985081609292839912
 Animator:
   serializedVersion: 5
@@ -2206,6 +2207,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 808a97695e67f2f448d6e3139d4a5045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3891707796788629735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7702886973443865384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58fe8043bf399b438ffd0b36648782a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8207585878527063794

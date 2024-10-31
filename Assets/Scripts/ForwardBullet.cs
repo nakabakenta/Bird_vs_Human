@@ -15,7 +15,7 @@ public class ForwardBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += speed * transform.forward * Time.deltaTime;//
+        this.transform.position += speed * transform.right * Time.deltaTime;//
     }
 
     //衝突判定(OnTriggerEnter)
@@ -23,7 +23,7 @@ public class ForwardBullet : MonoBehaviour
     {
         //下記のタグが付いたオブジェクトに衝突したら
         if (collision.gameObject.tag == "Enemy"||//敵
-            collision.gameObject.tag == "Delete")//削除
+            collision.gameObject.tag == "BulletDelete")//削除
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }

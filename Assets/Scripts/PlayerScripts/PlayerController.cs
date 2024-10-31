@@ -8,13 +8,21 @@ public class PlayerController : MonoBehaviour
     public GameObject forwardBullet;//
     public GameObject downBullet;   //
 
-    public static int hp;     //体力
-    public static float speed;//移動速度
-    
+    public GameObject aaa;
+
+    public static int hp;              //体力
+    public static float speed;         //移動速度
+    public static bool useGage = false;//
+    public static string status;       //
+
     private float coolTimeL = 0.25f;//クールタイム(前方攻撃)
     private float coolTimeR = 0.50f;//クールタイム(落下攻撃)
     private float attackL = 0.25f;  //攻撃が出るまでの間隔(前方攻撃)
     private float attackR = 0.50f;  //攻撃が出るまでの間隔(落下攻撃)
+
+    private float elapsedTime = 0.0f;
+    private float invincibleTime = 10.0f;
+
     //ビューポート座標変数
     private float viewX;//ビューポートX座標
     private float viewY;//ビューポートY座標
@@ -56,6 +64,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = this.gameObject.GetComponent<Rigidbody>();      //このオブジェクトのRigidbodyを取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
         animator = this.GetComponent<Animator>();                   //このオブジェクトのAnimatorを取得
+        status = "Normal";
     }
 
     // Update is called once per frame
@@ -65,8 +74,10 @@ public class PlayerController : MonoBehaviour
         coolTimeL += Time.deltaTime;
         coolTimeR += Time.deltaTime;
 
-        //関数PlayControlを呼び出す
-        PlayControl();             
+        if(hp > 0)
+        {
+            PlayControl();//関数PlayControlを呼び出す
+        }   
 
         //移動後のビューポート座標値を取得
         viewX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
@@ -108,7 +119,12 @@ public class PlayerController : MonoBehaviour
         else
         {
             up = false;
-        } 
+        }
+
+        if(status == "Invincible")
+        {
+            Invincible();
+        }
     }
 
     //ステータスを設定
@@ -142,7 +158,6 @@ public class PlayerController : MonoBehaviour
             hp = PlayerStatus.Sparrow.hp;                        //体力
             speed = PlayerStatus.Sparrow.speed;                  //移動速度
         }
-
         GameManager.remain = 3;
     }
 
@@ -185,9 +200,12 @@ public class PlayerController : MonoBehaviour
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
                 coolTimeR = 0.0f;
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            //
+            if (Input.GetKeyDown(KeyCode.E) && useGage == true)
             {
-                
+                useGage = false;
+                status = "Invincible";
+                Instantiate(aaa, this.transform.position, Quaternion.identity);
             }
         }
     }
@@ -196,7 +214,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //タグEnemyの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" && status == "Normal")
         {
             Damage();//関数Damageを呼び出す
         } 
@@ -262,5 +280,16 @@ public class PlayerController : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    void Invincible()
+    {
+        elapsedTime += Time.deltaTime;
+
+        if(elapsedTime > invincibleTime)
+        {
+            elapsedTime = 0.0f;
+            status = "Normal";
+        }  
     }
 }

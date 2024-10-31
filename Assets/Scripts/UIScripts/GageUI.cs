@@ -26,10 +26,18 @@ public class GageUI : MonoBehaviour
         //クールタイムにTime.deltaTimeを足す
         coolTime += Time.deltaTime;
 
-        if(gage.value < 20 && coolTime > charge)
+        if(gage.value < gage.maxValue && coolTime > charge && PlayerController.status == "Normal")
         {
             gage.value++;
             coolTime = 0.0f;
+        }
+        else if(gage.value == gage.maxValue && PlayerController.status == "Normal")
+        {
+            PlayerController.useGage = true;
+        }
+        else if(PlayerController.status == "Invincible")
+        {
+            gage.value = 0;
         }
     }
 }

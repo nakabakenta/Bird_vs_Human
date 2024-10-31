@@ -31,24 +31,24 @@ public class RunEnemy : MonoBehaviour
     {
         Vector3 localPosition = setTransform.localPosition;//オブジェクトの
         Vector3 localAngle = setTransform.localEulerAngles;//
-        localPosition.x = 0.0f;//
         localPosition.y = 0.0f;//
-        localAngle.y = 180.0f; //
+        localPosition.z = 0.0f;//
+        localAngle.y = EnemyStatus.rotationY;//
         setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         setTransform.localEulerAngles = localAngle;       //
 
         //
-        if (hp > 0 && isAttack == false && this.transform.position.z > playerTransform.position.z)
+        if (hp > 0 && isAttack == false && this.transform.position.x > playerTransform.position.x)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//左方向に移動する
         }
         //
-        else if (hp > 0 && isAttack == false && this.transform.position.z < playerTransform.position.z)
+        else if (hp > 0 && isAttack == false && this.transform.position.x < playerTransform.position.x)
         {
             this.transform.position -= speed * transform.forward * Time.deltaTime;
         }
         //
-        else if (hp > 0 && isAttack == false && this.transform.position.z == playerTransform.position.z)
+        else if (hp > 0 && isAttack == false && this.transform.position.x == playerTransform.position.x)
         {
             animator.SetInteger("Motion", 10);//AnimatorのMotion 3(ダンスモーション)を有効にする
         }

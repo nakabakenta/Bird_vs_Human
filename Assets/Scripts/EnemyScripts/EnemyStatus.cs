@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyStatus : MonoBehaviour
 {
+    //“G(‹¤’Ê)
+    public static float rotationY = -90.0f;//YŽ²‰ñ“]ŒÅ’è
+
     //“G(•à‚­)
     public static class WalkEnemy
     {
