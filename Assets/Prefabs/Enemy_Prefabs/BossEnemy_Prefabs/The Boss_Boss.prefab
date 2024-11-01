@@ -1492,6 +1492,7 @@ GameObject:
   - component: {fileID: 8115842568659593115}
   - component: {fileID: -8428241704860124382}
   - component: {fileID: 5345720362397491705}
+  - component: {fileID: -2850630541892979045}
   m_Layer: 0
   m_Name: The Boss_Boss
   m_TagString: BossEnemy
@@ -1526,7 +1527,7 @@ Animator:
   m_GameObject: {fileID: 3245617214350387035}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 69bf2f81f43985e4f9a0941c1136ce04, type: 3}
-  m_Controller: {fileID: 9100000, guid: bd5ec05995f555541a123346770bfa6c, type: 2}
+  m_Controller: {fileID: 9100000, guid: ec9747f9a1ff1a2409eb9536104afe2b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1566,6 +1567,18 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &-2850630541892979045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245617214350387035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44276220b72dd464e94b689eb22af33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3372869447002784768
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class WalkEnemy : MonoBehaviour
     {
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(歩行モーション)を有効にする
+        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(歩く)を有効にする
     }
 
     // Update is called once per frame
@@ -35,6 +35,44 @@ public class WalkEnemy : MonoBehaviour
         setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         setTransform.localEulerAngles = localAngle;       //
 
+        //
+        if(viewPointX < 1)
+        {
+            Move();
+        }
+
+        //移動後のビューポート座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+
+        //ビューポート座標.Xが0未満 || 体力が0以下 && ビューポート座標.Xが0未満であれば
+        if (viewPointX < 0 || hp <= 0 && viewPointX < 0)
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
+        }
+    }
+
+    //当たり判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collision)
+    {
+        //タグPlayerの付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Player")
+        {
+            RandomAnimation();
+        }
+        //タグBulletの付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
+        {
+            Damage();//関数Damageを呼び出す
+        }
+        //タグDeleteの付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Delete")
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
+        }
+    }
+
+    void Move()
+    {
         //
         if (hp > 0 && isAttack == false)
         {
@@ -73,39 +111,10 @@ public class WalkEnemy : MonoBehaviour
                 }
             }
         }
-
-        //移動後のビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
-
-        //ビューポート座標.Xが0未満 || 体力が0以下 && ビューポート座標.Xが0未満であれば
-        if (viewPointX < 0 || hp <= 0 && viewPointX < 0)
-        {
-            Destroy(this.gameObject);//このオブジェクトを消す
-        }
     }
 
-    //当たり判定(OnTriggerEnter)
-    void OnTriggerEnter(Collider collision)
-    {
-        //タグPlayerの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Player")
-        {
-            Animation();
-        }
-        //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
-        {
-            Damage();//関数Damageを呼び出す
-        }
-        //タグDeleteの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Delete")
-        {
-            Destroy(this.gameObject);//このオブジェクトを消す
-        }
-    }
-
-    //アニメーション関数
-    void Animation()
+    //ランダムアニメーション関数
+    void RandomAnimation()
     {
         if (isAttack)
         {
@@ -113,9 +122,9 @@ public class WalkEnemy : MonoBehaviour
         }
 
         isAttack = true;
-        random = (int)Random.Range(1, 3);           //ランダム処理(1～2)
-        animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効化する
-        Debug.Log(random);                          //Debug.Log(random)
+        random = (int)Random.Range(1, 3);     //ランダム(1～2)
+        animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効にする
+        Debug.Log(random);                    //Debug.Log(random)
     }
 
     //ダメージ判定関数

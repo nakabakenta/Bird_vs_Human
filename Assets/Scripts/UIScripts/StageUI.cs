@@ -5,9 +5,10 @@ using TMPro;
 
 public class StageUI : MonoBehaviour
 {
-    private TMP_Text score; //TMP_Text(スコア)
-    private TMP_Text remain;//TMP_Text(残り)
-    private TMP_Text hp;    //TMP_Text(体力)
+    private TMP_Text score;      //TMP_Text(スコア)
+    private TMP_Text remain;     //TMP_Text(残り)
+    private TMP_Text hp;         //TMP_Text(体力)
+    private GameObject gameClear;//TMP_Text(ゲームクリア)
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,9 @@ public class StageUI : MonoBehaviour
         score = GameObject.Find("SCORE").GetComponent<TMP_Text>();  //
         remain = GameObject.Find("REMAIN").GetComponent<TMP_Text>();//
         hp = GameObject.Find("HP").GetComponent<TMP_Text>();
+        gameClear = GameObject.Find("GAME CLEAR");
+
+        gameClear.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,6 +70,11 @@ public class StageUI : MonoBehaviour
         else if (GameManager.remain >= 0)
         {
             remain.text = "REMAIN : 0" + GameManager.remain;//
+        }
+
+        if (Stage.BossEnemy[0] == false)
+        {
+            gameClear.SetActive(true);
         }
     }
 }

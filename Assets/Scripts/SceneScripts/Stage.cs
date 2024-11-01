@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    public static bool[] BossEnemy = new bool[5];//ƒ{ƒX
+
     private SceneLoader sceneLoader;//
 
     // Start is called before the first frame update
     void Start()
     {
+        BossEnemy[0] = true;
+
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"‚ðŽæ“¾‚·‚é
     }
 
