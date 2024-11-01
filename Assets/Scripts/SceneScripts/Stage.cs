@@ -12,7 +12,26 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BossEnemy[0] = true;
+        if(stage == 1)
+        {
+            BossEnemy[0] = true;
+        }
+        else if(stage == 2)
+        {
+            BossEnemy[1] = true;
+        }
+        else if (stage == 3)
+        {
+            BossEnemy[2] = true;
+        }
+        else if (stage == 4)
+        {
+            BossEnemy[3] = true;
+        }
+        else if (stage == 5)
+        {
+            BossEnemy[4] = true;
+        }
 
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"‚ðŽæ“¾‚·‚é
     }
