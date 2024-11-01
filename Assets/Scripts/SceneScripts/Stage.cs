@@ -41,7 +41,7 @@ public class Stage : MonoBehaviour
     {
         if(PlayerController.hp <= 0)
         {
-            sceneLoader.GameOver();
+            //sceneLoader.GameOver();
         }
     }
 }
