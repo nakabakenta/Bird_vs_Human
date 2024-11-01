@@ -7,12 +7,12 @@ public class WalkEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyStatus.WalkEnemy.hp;        //体力
     private float speed = EnemyStatus.WalkEnemy.speed;//移動速度
-    //
+    //処理
     private int random = 0;       //ランダム
     private float coolTime = 0.0f;//クールタイム
     private bool isAttack = false;//攻撃中かどうか
-
-    //コンポーネント取得変数
+    private float viewPointX;     //ビューポイント座標.X
+    //コンポーネント
     private Transform setTransform;  //Transform
     private Animator animator = null;//Animator
 
@@ -72,6 +72,15 @@ public class WalkEnemy : MonoBehaviour
                     isAttack = false;
                 }
             }
+        }
+
+        //移動後のビューポート座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+
+        //ビューポート座標.Xが0未満 || 体力が0以下 && ビューポート座標.Xが0未満であれば
+        if (viewPointX < 0 || hp <= 0 && viewPointX < 0)
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 

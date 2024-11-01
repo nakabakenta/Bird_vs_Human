@@ -910,7 +910,7 @@ GameObject:
   - component: {fileID: 1353528761970681189}
   - component: {fileID: 1353528761973747205}
   m_Layer: 0
-  m_Name: Chickadee_Group
+  m_Name: Chickadee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

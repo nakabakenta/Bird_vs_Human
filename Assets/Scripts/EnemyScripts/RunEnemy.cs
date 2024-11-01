@@ -7,12 +7,12 @@ public class RunEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyStatus.RunEnemy.hp;        //体力
     private float speed = EnemyStatus.RunEnemy.speed;//移動速度
-    //
+    //処理
     private int random = 0;       //ランダム
     private float coolTime = 0.0f;//クールタイム
     private bool isAttack = false;//攻撃中かどうか
-
-    //コンポーネント取得変数
+    private float viewPointX;     //ビューポイント座標.X
+    //コンポーネント
     private Transform setTransform;   //Transform
     private Transform playerTransform;//Transform(プレイヤー)
     private Animator animator = null; //Animator
@@ -48,11 +48,6 @@ public class RunEnemy : MonoBehaviour
             this.transform.position -= speed * transform.forward * Time.deltaTime;
         }
         //
-        else if (hp > 0 && isAttack == false && this.transform.position.x == playerTransform.position.x)
-        {
-            animator.SetInteger("Motion", 10);//AnimatorのMotion 3(ダンスモーション)を有効にする
-        }
-        //
         else if (PlayerController.hp <= 0)
         {
             animator.SetInteger("Motion", 3);//AnimatorのMotion 3(ダンスモーション)を有効にする
@@ -84,7 +79,16 @@ public class RunEnemy : MonoBehaviour
                     isAttack = false;
                 }
             }
-        } 
+        }
+
+        //移動後のビューポート座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+
+        //体力が0以下 && ビューポート座標.Xが0未満であれば
+        if (hp <= 0 && viewPointX < 0)
+        {
+            Destroy(this.gameObject);//このオブジェクトを消す
+        }
     }
 
     //当たり判定(OnTriggerEnter)
@@ -99,11 +103,6 @@ public class RunEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
         {
             Damage();//関数Damageを呼び出す
-        }
-        //タグDeleteの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Delete")
-        {
-            Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 
@@ -129,6 +128,7 @@ public class RunEnemy : MonoBehaviour
         //体力が0以下だったら
         if (hp <= 0)
         {
+            hp = 0;
             GameManager.score += EnemyStatus.RunEnemy.score;//
             this.tag = "Death";                             //タグをDeathに変更する
             animator.SetInteger("Motion", 4);               //

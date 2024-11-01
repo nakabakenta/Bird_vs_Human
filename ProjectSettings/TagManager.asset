@@ -12,8 +12,7 @@ TagManager:
   - lb_perchTarget
   - lb_groundTarget
   - AICars
-  - BulletDelete
-  - EnemyActive
+  - BossEnemy
   layers:
   - Default
   - TransparentFX
