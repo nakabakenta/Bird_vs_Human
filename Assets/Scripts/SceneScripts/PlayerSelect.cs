@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSelect : MonoBehaviour
 {
-    private SceneLoader sceneLoader;//
+    private SceneLoader sceneLoader;//SceneLoader
 
     // Start is called before the first frame update
     void Start()

@@ -32,6 +32,26 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Stage1");
     }
 
+    public void Stage2()
+    {
+        SceneManager.LoadScene("Stage2");
+    }
+
+    public void Stage3()
+    {
+        SceneManager.LoadScene("Stage3");
+    }
+
+    public void Stage4()
+    {
+        SceneManager.LoadScene("Stage4");
+    }
+
+    public void Stage5()
+    {
+        SceneManager.LoadScene("Stage5");
+    }
+
     public void GameOver()
     {
         SceneManager.LoadScene("GameOver");

@@ -34,51 +34,13 @@ public class RunEnemy : MonoBehaviour
         localPosition.y = 0.0f;//
         localPosition.z = 0.0f;//
         localAngle.y = EnemyStatus.rotationY;//
-        setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
-        setTransform.localEulerAngles = localAngle;       //
+        setTransform.localPosition = localPosition;//ローカル座標での座標を設定
+        setTransform.localEulerAngles = localAngle;//
 
         //
-        if (hp > 0 && isAttack == false && this.transform.position.x > playerTransform.position.x)
+        if (viewPointX < 1)
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//左方向に移動する
-        }
-        //
-        else if (hp > 0 && isAttack == false && this.transform.position.x < playerTransform.position.x)
-        {
-            this.transform.position -= speed * transform.forward * Time.deltaTime;
-        }
-        //
-        else if (PlayerController.hp <= 0)
-        {
-            animator.SetInteger("Motion", 3);//AnimatorのMotion 3(ダンスモーション)を有効にする
-        }
-        //
-        if (PlayerController.hp > 0 && isAttack == true)
-        {
-            coolTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
-
-            //
-            if(random == 1)
-            {
-                //
-                if (coolTime >= 2.0f)
-                {
-                    coolTime = 0.0f;                       //
-                    animator.SetInteger("Motion", 0);//
-                    isAttack = false;
-                }
-            }
-            //
-            else if(random == 2)
-            {
-                //
-                if (coolTime >= 1.5f)
-                {
-                    coolTime = 0.0f;
-                    animator.SetInteger("Motion", 0);//
-                    isAttack = false;
-                }
-            }
+            Move();
         }
 
         //移動後のビューポート座標を取得
@@ -103,6 +65,53 @@ public class RunEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
         {
             Damage();//関数Damageを呼び出す
+        }
+    }
+
+    void Move()
+    {
+        //
+        if (hp > 0 && isAttack == false && this.transform.position.x > playerTransform.position.x)
+        {
+            this.transform.position += speed * transform.forward * Time.deltaTime;//左方向に移動する
+        }
+        //
+        else if (hp > 0 && isAttack == false && this.transform.position.x < playerTransform.position.x)
+        {
+            this.transform.position -= speed * transform.forward * Time.deltaTime;//右方向に移動する
+        }
+        //
+        else if (PlayerController.hp <= 0)
+        {
+            animator.SetInteger("Motion", 3);//AnimatorのMotion 3(ダンスモーション)を有効にする
+        }
+        //
+        if (PlayerController.hp > 0 && isAttack == true)
+        {
+            coolTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
+
+            //
+            if (random == 1)
+            {
+                //
+                if (coolTime >= 2.0f)
+                {
+                    coolTime = 0.0f;                       //
+                    animator.SetInteger("Motion", 0);//
+                    isAttack = false;
+                }
+            }
+            //
+            else if (random == 2)
+            {
+                //
+                if (coolTime >= 1.5f)
+                {
+                    coolTime = 0.0f;
+                    animator.SetInteger("Motion", 0);//
+                    isAttack = false;
+                }
+            }
         }
     }
 

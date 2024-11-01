@@ -138,9 +138,9 @@ public class BossEnemy : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
-            GameManager.score += EnemyStatus.RunEnemy.score;//
-            this.tag = "Death";                             //タグをDeathに変更する
-            animator.SetInteger("Motion", 4);               //
+            GameManager.score += EnemyStatus.BossEnemy.score[0];//
+            this.tag = "Death";                                 //タグをDeathに変更する
+            animator.SetInteger("Motion", 4);                   //
             Stage.BossEnemy[0] = false;
         }
     }

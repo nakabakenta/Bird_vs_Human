@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    public static int stage;
     public static bool[] BossEnemy = new bool[5];//É{ÉX
 
     private SceneLoader sceneLoader;//

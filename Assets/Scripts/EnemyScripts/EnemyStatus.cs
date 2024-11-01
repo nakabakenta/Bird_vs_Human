@@ -33,7 +33,7 @@ public class EnemyStatus : MonoBehaviour
         //ステータス
         public static int[] hp = new int[5] { 10, 10, 10, 10, 10 };//体力
         public static int[] power = new int[5] { 1, 1, 1, 1, 1 };  //攻撃力
-        public static int[] speed = new int[5] { 1, 1, 1, 1, 1 };  //移動速度
+        public static int[] speed = new int[5] { 2, 1, 1, 1, 1 };  //移動速度
         //その他設定
         public static int[] score = new int[5] { 1000, 1000, 1000, 1000, 1000 };//倒した時のスコア
     }
