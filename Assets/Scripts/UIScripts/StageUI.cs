@@ -9,6 +9,7 @@ public class StageUI : MonoBehaviour
     private TMP_Text remain;     //TMP_Text(écÇË)
     private TMP_Text hp;         //TMP_Text(ëÃóÕ)
     private GameObject gameClear;//TMP_Text(ÉQÅ[ÉÄÉNÉäÉA)
+    private GameObject pauseUI;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,10 @@ public class StageUI : MonoBehaviour
         hp = GameObject.Find("HP").GetComponent<TMP_Text>();
         gameClear = GameObject.Find("GAME CLEAR");
 
+        pauseUI = GameObject.Find("Menu_UI");
+
         gameClear.SetActive(false);
+        pauseUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -64,12 +68,12 @@ public class StageUI : MonoBehaviour
         //
         if (GameManager.remain >= 10)
         {
-            remain.text = "REMAIN : " + GameManager.remain;//
+            remain.text = "REMAIN Å~ " + GameManager.remain;//
         }
         //
         else if (GameManager.remain >= 0)
         {
-            remain.text = "REMAIN : 0" + GameManager.remain;//
+            remain.text = "REMAIN Å~ 0" + GameManager.remain;//
         }
 
         if (Stage.BossEnemy[0] == false)

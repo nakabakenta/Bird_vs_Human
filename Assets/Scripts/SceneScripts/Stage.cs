@@ -5,34 +5,14 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     public static int stage;
-    public static bool[] BossEnemy = new bool[5];//ボス
+    public static bool[] BossEnemy = new bool[5] { false, false, false, false, false };//ボス
 
     private SceneLoader sceneLoader;//
 
     // Start is called before the first frame update
     void Start()
     {
-        if(stage == 1)
-        {
-            BossEnemy[0] = true;
-        }
-        else if(stage == 2)
-        {
-            BossEnemy[1] = true;
-        }
-        else if (stage == 3)
-        {
-            BossEnemy[2] = true;
-        }
-        else if (stage == 4)
-        {
-            BossEnemy[3] = true;
-        }
-        else if (stage == 5)
-        {
-            BossEnemy[4] = true;
-        }
-
+        BossEnemy[stage - 1] = true;
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
     }
 

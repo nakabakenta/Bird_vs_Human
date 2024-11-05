@@ -9,7 +9,7 @@ public class BossEnemy : MonoBehaviour
     private float speed = EnemyStatus.BossEnemy.speed[0];//移動速度
     //処理
     private int random = 0;       //ランダム
-    private float waitTime = 0.0f;//待機時間
+    private float interval = 0.0f;//間隔
     private bool attack = false;  //攻撃フラグ
     private float viewPointX;     //ビューポイント座標.X
     //コンポーネント
@@ -32,25 +32,15 @@ public class BossEnemy : MonoBehaviour
         //移動後のビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //
-        if (viewPointX < 1)
+        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        if (hp > 0 && viewPointX < 1)
         {
-            Behavior();
+            Behavior();//
         }
-    }
-
-    //当たり判定(OnTriggerEnter)
-    void OnTriggerEnter(Collider collision)
-    {
-        //タグPlayerの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Player" && attack == false)
+        //体力が0以下 && ビューポート座標.Xが0未満であれば
+        else if (hp <= 0 && viewPointX < 0)
         {
-            Animation();
-        }
-        //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
-        {
-            Damage();//関数Damageを呼び出す
+            Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 
@@ -78,28 +68,19 @@ public class BossEnemy : MonoBehaviour
         setTransform.localEulerAngles = localAngle;//
 
         //
-        if(PlayerController.hp > 0)
+        if (attack == false)
         {
-            //
-            if (attack == false)
-            {
-                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-            }
+            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
         //
-        else if(PlayerController.hp <= 0)
-        {
-            Animation();//アニメーション関数を実行
-        }
-        //
-        if (attack == true)
+        else if (attack == true)
         {
             Wait();
         }
-        //体力が0以下 && ビューポート座標.Xが0未満であれば
-        if (hp <= 0 && viewPointX < 0)
+        //
+        if (PlayerController.hp <= 0)
         {
-            Destroy(this.gameObject);//このオブジェクトを消す
+            Animation();//アニメーション関数を実行
         }
     }
 
@@ -122,14 +103,14 @@ public class BossEnemy : MonoBehaviour
     //待機関数
     void Wait()
     {
-        waitTime += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
+        interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
         //
         if (random == 1)
         {
             //
-            if (waitTime >= 2.0f)
+            if (interval >= 2.0f)
             {
-                waitTime = 0.0f;                 //
+                interval = 0.0f;                 //
                 animator.SetInteger("Motion", 0);//
                 attack = false;
             }
@@ -138,9 +119,9 @@ public class BossEnemy : MonoBehaviour
         else if (random == 2)
         {
             //
-            if (waitTime >= 1.5f)
+            if (interval >= 1.5f)
             {
-                waitTime = 0.0f;
+                interval = 0.0f;
                 animator.SetInteger("Motion", 0);//
                 attack = false;
             }
@@ -150,16 +131,37 @@ public class BossEnemy : MonoBehaviour
     //ダメージ関数
     void Damage()
     {
-        hp -= 1;//体力を-1する
+        hp -= 1;//体力を"-1"する
 
         //体力が0以下だったら
         if (hp <= 0)
         {
-            hp = 0;
-            GameManager.score += EnemyStatus.BossEnemy.score[0];//
-            this.tag = "Death";                                 //タグをDeathに変更する
-            animator.SetInteger("Motion", 4);                   //
-            Stage.BossEnemy[0] = false;
+            Death();
+        }
+    }
+
+    //死亡関数
+    void Death()
+    {
+        hp = 0;                                             //体力を"0"にする
+        GameManager.score += EnemyStatus.BossEnemy.score[0];//
+        this.tag = "Death";                                 //タグを"Death"に変更する
+        animator.SetInteger("Motion", 4);                   //
+        Stage.BossEnemy[0] = false;
+    }
+
+    //当たり判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collision)
+    {
+        //タグPlayerのオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Player" && attack == false)
+        {
+            Animation();
+        }
+        //タグ"Bullet"のオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Bullet" && hp > 0)
+        {
+            Damage();//関数Damageを呼び出す
         }
     }
 }

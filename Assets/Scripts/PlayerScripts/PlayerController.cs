@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     public static bool useGage = false;//
     public static string status;       //
 
-    private float coolTimeL = 0.25f;//クールタイム(前方攻撃)
-    private float coolTimeR = 0.50f;//クールタイム(落下攻撃)
+    private float intervalF = 0.25f;//間隔(前方攻撃)
+    private float intervalD = 0.50f;//間隔(落下攻撃)
     private float attackL = 0.25f;  //攻撃が出るまでの間隔(前方攻撃)
     private float attackR = 0.50f;  //攻撃が出るまでの間隔(落下攻撃)
 
@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     private float invincibleTime = 10.0f;
 
     //ビューポート座標変数
-    private float viewX;//ビューポートX座標
-    private float viewY;//ビューポートY座標
+    private float viewPointX;//ビューポイント座標.X
+    private float viewPointY;//ビューポイント座標.Y
     //移動フラグ変数
     private bool forward; //前移動
     private bool backward;//後移動
@@ -71,21 +71,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //クールタイムにTime.deltaTimeを足す
-        coolTimeL += Time.deltaTime;
-        coolTimeR += Time.deltaTime;
+        intervalF += Time.deltaTime;
+        intervalD += Time.deltaTime;
 
         if(hp > 0)
         {
-            PlayControl();//関数PlayControlを呼び出す
-        }   
+            Behavior();//関数PlayControlを呼び出す
+        }
 
         //移動後のビューポート座標値を取得
-        viewX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
-        viewY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
+        viewPointY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
 
         //移動可能な画面範囲指定
         //-X座標
-        if (viewX >= 0)
+        if (viewPointX >= 0)
         {
             backward = true;
         }
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             backward = false;
         }
         //+X座標
-        if (viewX <= 1)
+        if (viewPointX <= 1)
         {
             forward = true;
         }
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             forward = false;
         }
         //-Y座標
-        if (viewY >= 0)
+        if (viewPointY >= 0)
         {
             down = true;
         }
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
             down = false;
         }
         //+Y座標
-        if (viewY <= 1)
+        if (viewPointY <= 1)
         {
             up = true;
         }
@@ -161,8 +161,8 @@ public class PlayerController : MonoBehaviour
         GameManager.remain = 3;
     }
 
-    //操作入力
-    void PlayControl()
+    //動作関数
+    void Behavior()
     {
         //体力が0より上だったら
         if (hp > 0)
@@ -189,16 +189,16 @@ public class PlayerController : MonoBehaviour
                 this.transform.position -= speed * transform.up * Time.deltaTime;
             }
             //前方攻撃
-            if (Input.GetMouseButton(0) && coolTimeL > attackL)
+            if (Input.GetMouseButton(0) && intervalF > attackL)
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-                coolTimeL = 0.0f;
+                intervalF = 0.0f;
             }
             //落下攻撃
-            if (Input.GetMouseButton(1) && coolTimeR > attackR)
+            if (Input.GetMouseButton(1) && intervalD > attackR)
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
-                coolTimeR = 0.0f;
+                intervalD = 0.0f;
             }
             //
             if (Input.GetKeyDown(KeyCode.E) && useGage == true)
@@ -207,17 +207,12 @@ public class PlayerController : MonoBehaviour
                 status = "Invincible";
                 Instantiate(aaa, this.transform.position, Quaternion.identity);
             }
-        }
-    }
+            //
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
 
-    //衝突判定(OnTriggerEnter)
-    void OnTriggerEnter(Collider collision)
-    {
-        //タグEnemyの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Enemy" && status == "Normal")
-        {
-            Damage();//関数Damageを呼び出す
-        } 
+            }
+        }
     }
 
     void SetObjRenderer(bool set)
@@ -291,5 +286,15 @@ public class PlayerController : MonoBehaviour
             elapsedTime = 0.0f;
             status = "Normal";
         }  
+    }
+
+    //衝突判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collision)
+    {
+        //タグEnemyの付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Enemy" && status == "Normal")
+        {
+            Damage();//関数Damageを呼び出す
+        }
     }
 }

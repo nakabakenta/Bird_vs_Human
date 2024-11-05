@@ -13,7 +13,7 @@ public class GageUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gage = GameObject.Find("GAGE").GetComponent<Slider>();//
+        gage = GameObject.Find("Gage").GetComponent<Slider>();//
 
         gage.value = 0;    //
         gage.minValue = 0; //
