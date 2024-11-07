@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     public static int stage;
-    public static bool[] BossEnemy = new bool[5] { false, false, false, false, false };//ボス
+    public static bool[] BossEnemy = new bool[5];//ボス
 
     public static string gameStatus;  //ゲームの状態
 
@@ -14,10 +14,11 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
+
+        BossEnemy = new bool[5] { false, false, false, false, false };
         BossEnemy[stage - 1] = true;
-
         gameStatus = "Play";
-
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float speed = 2.0f;          //カメラ移動速度
-    private float limitPositionX = 30.0f;//カメラ移動制限.X
+    private float speed = 2.0f;           //カメラ移動速度
+    private float limitPositionX = 100.0f;//カメラ移動制限.X
 
     // Start is called before the first frame update
     void Start()

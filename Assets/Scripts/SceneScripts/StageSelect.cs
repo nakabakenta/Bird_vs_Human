@@ -16,6 +16,6 @@ public class StageSelect : MonoBehaviour
     public void Stage1()
     {
         Stage.stage = 1;    //
-        sceneLoader.Stage1();
+        sceneLoader.StageScene();
     }
 }

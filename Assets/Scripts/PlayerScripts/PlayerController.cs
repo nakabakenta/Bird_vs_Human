@@ -15,22 +15,18 @@ public class PlayerController : MonoBehaviour
     public static bool gage;          //ゲージフラグ
     public static string playerStatus;//プレイヤーの状態
 
-    private float intervalF = 0.25f;//間隔(前方攻撃)
-    private float intervalD = 0.50f;//間隔(落下攻撃)
-    private float attackL = 0.25f;  //攻撃が出るまでの間隔(前方攻撃)
-    private float attackR = 0.50f;  //攻撃が出るまでの間隔(落下攻撃)
+    private float intervalTimerF = 0.25f; //間隔タイマー(前方攻撃)
+    private float intervalTimerD = 0.50f; //間隔タイマー(落下攻撃)
+    private float attackIntervalF = 0.25f;//攻撃間隔(前方攻撃)
+    private float attackIntervalD = 0.50f;//攻撃間隔(落下攻撃)
 
-    private float elapsedTime = 0.0f;
-    private float invincibleTime = 10.0f;
+    private float invincibleTimer = 0.0f;//無敵タイマー
+    private float invincible = 10.0f;    //無敵継続時間
 
     //ビューポート座標変数
-    private float viewPointX;//ビューポイント座標.X
-    private float viewPointY;//ビューポイント座標.Y
+    private float viewPointX, viewPointY;//ビューポイント座標.X, Y
     //移動フラグ変数
-    private bool forward; //前移動
-    private bool backward;//後移動
-    private bool up;      //上移動
-    private bool down;    //下移動
+    private bool forward, backward, up, down; //前移動, 後移動, 上移動, 下移動
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
@@ -46,6 +42,9 @@ public class PlayerController : MonoBehaviour
     private Renderer[] objRenderer;  //Renderer配列変数
     //コルーチン変数
     private Coroutine blinking;//
+
+    //マウス座標
+    private Vector3 mousePosition, worldPosition;
 
     void Awake()
     {
@@ -72,8 +71,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //クールタイムにTime.deltaTimeを足す
-        intervalF += Time.deltaTime;
-        intervalD += Time.deltaTime;
+        intervalTimerF += Time.deltaTime;
+        intervalTimerD += Time.deltaTime;
 
         if(hp > 0)
         {
@@ -122,9 +121,10 @@ public class PlayerController : MonoBehaviour
             up = false;
         }
 
-        if(playerStatus == "Invincible")
+        //プレイヤーの状態が"Invincible(無敵)"であれば
+        if (playerStatus == "Invincible")
         {
-            Invincible();
+            Invincible();//関数"Invincible(無敵)"を呼び出す
         }
     }
 
@@ -168,38 +168,22 @@ public class PlayerController : MonoBehaviour
         //体力が0より上だったら
         if (hp > 0)
         {
-            //移動処理
-            //前移動
-            if (Input.GetKey(KeyCode.D) && forward == true)
-            {
-                this.transform.position += speed * transform.forward * Time.deltaTime;
-            }
-            //後移動
-            if (Input.GetKey(KeyCode.A) && backward == true)
-            {
-                this.transform.position -= speed * transform.forward * Time.deltaTime;
-            }
-            //上移動
-            if (Input.GetKey(KeyCode.W) && up == true)
-            {
-                this.transform.position += speed * transform.up * Time.deltaTime;
-            }
-            //下移動
-            if (Input.GetKey(KeyCode.S) && down == true)
-            {
-                this.transform.position -= speed * transform.up * Time.deltaTime;
-            }
+            //マウス座標を取得して、スクリーン座標をワールド座標に変換する
+            worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7.0f));
+            //ワールド座標を自身の座標に設定
+            this.transform.position = worldPosition;
+
             //前方攻撃
-            if (Input.GetMouseButton(0) && intervalF > attackL)
+            if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-                intervalF = 0.0f;
+                intervalTimerF = 0.0f;
             }
             //落下攻撃
-            if (Input.GetMouseButton(1) && intervalD > attackR)
+            if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
-                intervalD = 0.0f;
+                intervalTimerD = 0.0f;
             }
             //
             if (Input.GetKeyDown(KeyCode.E) && gage == true)
@@ -212,6 +196,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
             {
                 Stage.gameStatus = "Menu";
+                Time.timeScale = 0;
+            }
+            else if(Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Menu")
+            {
+                Stage.gameStatus = "Play";
+                Time.timeScale = 1;
             }
         }
     }
@@ -224,7 +214,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ダメージ判定
+    //ダメージ関数
     void Damage()
     {
         //点滅中は二重に実行しない
@@ -278,13 +268,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //無敵関数
     void Invincible()
     {
-        elapsedTime += Time.deltaTime;
+        invincibleTimer += Time.deltaTime;
 
-        if(elapsedTime > invincibleTime)
+        if(invincibleTimer > invincible)
         {
-            elapsedTime = 0.0f;
+            invincibleTimer = 0.0f;
             playerStatus = "Normal";
         }  
     }

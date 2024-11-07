@@ -27,29 +27,28 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("StageSelect");
     }
 
-    public void Stage1()
+    public void StageScene()
     {
-        SceneManager.LoadScene("Stage1");
-    }
-
-    public void Stage2()
-    {
-        SceneManager.LoadScene("Stage2");
-    }
-
-    public void Stage3()
-    {
-        SceneManager.LoadScene("Stage3");
-    }
-
-    public void Stage4()
-    {
-        SceneManager.LoadScene("Stage4");
-    }
-
-    public void Stage5()
-    {
-        SceneManager.LoadScene("Stage5");
+        if(Stage.stage == 1)
+        {
+            SceneManager.LoadScene("Stage1");
+        }
+        else if (Stage.stage == 2)
+        {
+            SceneManager.LoadScene("Stage2");
+        }
+        else if (Stage.stage == 3)
+        {
+            SceneManager.LoadScene("Stage3");
+        }
+        else if (Stage.stage == 4)
+        {
+            SceneManager.LoadScene("Stage4");
+        }
+        else if (Stage.stage == 5)
+        {
+            SceneManager.LoadScene("Stage5");
+        }
     }
 
     public void GameOver()

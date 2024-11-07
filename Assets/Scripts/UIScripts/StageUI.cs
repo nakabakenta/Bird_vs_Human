@@ -85,5 +85,9 @@ public class StageUI : MonoBehaviour
         {
             pauseUI.SetActive(true);
         }
+        else if(Stage.gameStatus == "Play")
+        {
+            pauseUI.SetActive(false);
+        }
     }
 }
