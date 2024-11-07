@@ -80,5 +80,10 @@ public class StageUI : MonoBehaviour
         {
             gameClear.SetActive(true);
         }
+
+        if(Stage.gameStatus == "Menu")
+        {
+            pauseUI.SetActive(true);
+        }
     }
 }

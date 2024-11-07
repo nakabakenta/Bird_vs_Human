@@ -17,7 +17,7 @@ public class BirdGroup : MonoBehaviour
     {
         this.transform.position = playerTransform.position;
 
-        if (PlayerController.status == "Normal")
+        if (PlayerController.playerStatus == "Normal")
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }

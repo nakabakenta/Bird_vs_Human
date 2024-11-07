@@ -7,12 +7,17 @@ public class Stage : MonoBehaviour
     public static int stage;
     public static bool[] BossEnemy = new bool[5] { false, false, false, false, false };//ƒ{ƒX
 
+    public static string gameStatus;  //ƒQ[ƒ€‚Ìó‘Ô
+
     private SceneLoader sceneLoader;//
 
     // Start is called before the first frame update
     void Start()
     {
         BossEnemy[stage - 1] = true;
+
+        gameStatus = "Play";
+
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"‚ğæ“¾‚·‚é
     }
 

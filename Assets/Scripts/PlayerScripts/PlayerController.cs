@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
 
     public GameObject aaa;
 
-    public static int hp;              //体力
-    public static float speed;         //移動速度
-    public static bool useGage = false;//
-    public static string status;       //
+    public static int hp;             //体力
+    public static float speed;        //移動速度
+    public static bool gage;          //ゲージフラグ
+    public static string playerStatus;//プレイヤーの状態
 
     private float intervalF = 0.25f;//間隔(前方攻撃)
     private float intervalD = 0.50f;//間隔(落下攻撃)
@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
         rigidBody = this.gameObject.GetComponent<Rigidbody>();      //このオブジェクトのRigidbodyを取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
         animator = this.GetComponent<Animator>();                   //このオブジェクトのAnimatorを取得
-        status = "Normal";
+        gage = false;
+        playerStatus = "Normal";
     }
 
     // Update is called once per frame
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour
             up = false;
         }
 
-        if(status == "Invincible")
+        if(playerStatus == "Invincible")
         {
             Invincible();
         }
@@ -201,16 +202,16 @@ public class PlayerController : MonoBehaviour
                 intervalD = 0.0f;
             }
             //
-            if (Input.GetKeyDown(KeyCode.E) && useGage == true)
+            if (Input.GetKeyDown(KeyCode.E) && gage == true)
             {
-                useGage = false;
-                status = "Invincible";
+                gage = false;
+                playerStatus = "Invincible";
                 Instantiate(aaa, this.transform.position, Quaternion.identity);
             }
             //
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
             {
-
+                Stage.gameStatus = "Menu";
             }
         }
     }
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
         if(elapsedTime > invincibleTime)
         {
             elapsedTime = 0.0f;
-            status = "Normal";
+            playerStatus = "Normal";
         }  
     }
 
@@ -292,7 +293,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //タグEnemyの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Enemy" && status == "Normal")
+        if (collision.gameObject.tag == "Enemy" && playerStatus == "Normal")
         {
             Damage();//関数Damageを呼び出す
         }
