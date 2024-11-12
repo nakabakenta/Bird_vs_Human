@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
 
     //ビューポート座標変数
     private float viewPointX, viewPointY;//ビューポイント座標.X, Y
-    //移動フラグ変数
-    private bool forward, backward, up, down; //前移動, 後移動, 上移動, 下移動
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
@@ -82,50 +80,6 @@ public class PlayerController : MonoBehaviour
         //移動後のビューポート座標値を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
         viewPointY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
-
-        //移動可能な画面範囲指定
-        //-X座標
-        if (viewPointX >= 0)
-        {
-            backward = true;
-        }
-        else
-        {
-            backward = false;
-        }
-        //+X座標
-        if (viewPointX <= 1)
-        {
-            forward = true;
-        }
-        else
-        {
-            forward = false;
-        }
-        //-Y座標
-        if (viewPointY >= 0)
-        {
-            down = true;
-        }
-        else
-        {
-            down = false;
-        }
-        //+Y座標
-        if (viewPointY <= 1)
-        {
-            up = true;
-        }
-        else
-        {
-            up = false;
-        }
-
-        //プレイヤーの状態が"Invincible(無敵)"であれば
-        if (playerStatus == "Invincible")
-        {
-            Invincible();//関数"Invincible(無敵)"を呼び出す
-        }
     }
 
     //ステータスを設定
@@ -165,44 +119,73 @@ public class PlayerController : MonoBehaviour
     //動作関数
     void Behavior()
     {
-        //体力が0より上だったら
-        if (hp > 0)
-        {
-            //マウス座標を取得して、スクリーン座標をワールド座標に変換する
-            worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7.0f));
-            //ワールド座標を自身の座標に設定
-            this.transform.position = worldPosition;
+        //マウス座標を取得して、スクリーン座標をワールド座標に変換する
+        worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7.0f));
 
-            //前方攻撃
-            if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
-            {
-                Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-                intervalTimerF = 0.0f;
-            }
-            //落下攻撃
-            if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
-            {
-                Instantiate(downBullet, this.transform.position, Quaternion.identity);
-                intervalTimerD = 0.0f;
-            }
-            //
-            if (Input.GetKeyDown(KeyCode.E) && gage == true)
-            {
-                gage = false;
-                playerStatus = "Invincible";
-                Instantiate(aaa, this.transform.position, Quaternion.identity);
-            }
-            //
-            if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
-            {
-                Stage.gameStatus = "Menu";
-                Time.timeScale = 0;
-            }
-            else if(Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Menu")
-            {
-                Stage.gameStatus = "Play";
-                Time.timeScale = 1;
-            }
+        //
+        if(Stage.gameStatus == "Play")
+        {
+            this.transform.position = worldPosition;
+        }
+
+        
+
+
+        //Vector3 position = this.transform.position;
+
+        //if (viewPointX >= 0 && viewPointX <= 1)
+        //{
+        //    position.x = worldPosition.x;
+        //    this.transform.position = position;
+        //}
+        //else
+        //{
+
+        //}
+
+        //if (viewPointY >= 0 && viewPointY <= 1)
+        //{
+        //    position.y = worldPosition.y;
+        //    this.transform.position = position;
+        //}
+        //else
+        //{
+
+        //}
+
+        //前方攻撃
+        if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
+        {
+            Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
+            intervalTimerF = 0.0f;
+        }
+        //落下攻撃
+        if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
+        {
+            Instantiate(downBullet, this.transform.position, Quaternion.identity);
+            intervalTimerD = 0.0f;
+        }
+        //
+        if (Input.GetKeyDown(KeyCode.E) && gage == true)
+        {
+            gage = false;
+            playerStatus = "Invincible";
+            Instantiate(aaa, this.transform.position, Quaternion.identity);
+        }
+        //
+        if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
+        {
+            Stage.gameStatus = "Menu";
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Menu")
+        {
+            Stage.gameStatus = "Play";
+        }
+
+        //プレイヤーの状態が"Invincible(無敵)"であれば
+        if (playerStatus == "Invincible")
+        {
+            Invincible();//関数"Invincible(無敵)"を呼び出す
         }
     }
 

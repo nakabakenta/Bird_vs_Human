@@ -11,8 +11,12 @@ public class RunEnemy : MonoBehaviour
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
+    private float abc = 0.0f;//間隔
+
     private string nowAction;     //現在の動作
     private bool action = false;  //動作フラグ
+
+
 
     private float viewPointX;     //ビューポイント座標.X
     //コンポーネント
@@ -130,8 +134,9 @@ public class RunEnemy : MonoBehaviour
     void Wait()
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
+        abc += Time.deltaTime;
 
-        if(nowAction == "Attack")
+        if (nowAction == "Attack")
         {
             //
             if (random == 1)
@@ -161,15 +166,22 @@ public class RunEnemy : MonoBehaviour
         //
         else if(nowAction == "jump")
         {
-            this.transform.position += jump * transform.up * Time.deltaTime;
-            //
-            if (interval >= 1.5f)
+            if(abc >= 0.75f)
             {
-                interval = 0.0f;
-                animator.SetInteger("Motion", 0);//
-                action = false;
-                nowAction = "Run";
+                this.transform.position += jump * transform.up * Time.deltaTime;
+
+                //
+                if (interval >= 2.0f)
+                {
+                    abc = 0.0f;
+                    interval = 0.0f;
+                    animator.SetInteger("Motion", 0);//
+                    action = false;
+                    nowAction = "Run";
+                }
             }
+            
+            
         }
     }
 

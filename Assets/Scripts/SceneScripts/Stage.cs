@@ -25,6 +25,16 @@ public class Stage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gameStatus == "Play")
+        {
+            Time.timeScale = 1;
+        }
+        else if(gameStatus == "Menu")
+        {
+            Time.timeScale = 0;
+        }
+
+
         if(PlayerController.hp <= 0)
         {
             //sceneLoader.GameOver();

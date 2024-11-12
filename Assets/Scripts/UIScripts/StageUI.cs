@@ -8,8 +8,8 @@ public class StageUI : MonoBehaviour
     private TMP_Text score;      //TMP_Text(スコア)
     private TMP_Text remain;     //TMP_Text(残り)
     private TMP_Text hp;         //TMP_Text(体力)
-    private GameObject gameClear;//TMP_Text(ゲームクリア)
     private GameObject pauseUI;
+    private GameObject stageClearUI;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +17,12 @@ public class StageUI : MonoBehaviour
         score = GameObject.Find("SCORE").GetComponent<TMP_Text>();  //
         remain = GameObject.Find("REMAIN").GetComponent<TMP_Text>();//
         hp = GameObject.Find("HP").GetComponent<TMP_Text>();
-        gameClear = GameObject.Find("GAME CLEAR");
 
-        pauseUI = GameObject.Find("Menu_UI");
+        pauseUI = GameObject.Find("Pause_UI");
+        stageClearUI = GameObject.Find("StageClear_UI");
 
-        gameClear.SetActive(false);
         pauseUI.SetActive(false);
+        stageClearUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,9 +76,9 @@ public class StageUI : MonoBehaviour
             remain.text = "REMAIN × 0" + GameManager.remain;//
         }
 
-        if (Stage.BossEnemy[0] == false)
+        if (Stage.BossEnemy[Stage.stage - 1] == false)
         {
-            gameClear.SetActive(true);
+            stageClearUI.SetActive(true);
         }
 
         if(Stage.gameStatus == "Menu")
