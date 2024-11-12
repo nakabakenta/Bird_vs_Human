@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
         damageManager = GetComponent<DamageManager>();//
         rigidBody = this.gameObject.GetComponent<Rigidbody>();      //このオブジェクトのRigidbodyを取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
-        animator = this.GetComponent<Animator>();                   //このオブジェクトのAnimatorを取得
         gage = false;
         playerStatus = "Normal";
     }
@@ -88,18 +87,23 @@ public class PlayerController : MonoBehaviour
         //スズメ
         if (GameManager.playerSelect == "Sparrow")
         {
+            animator = GameObject.Find("Sparrow_Player").GetComponent<Animator>();//Animatorを取得
             hp = PlayerStatus.Sparrow.hp;      //体力
             speed = PlayerStatus.Sparrow.speed;//移動速度
         }
         //カラス
         else if(GameManager.playerSelect == "Crow")
         {
-
+            animator = GameObject.Find("Crow_Player").GetComponent<Animator>();//Animatorを取得
+            hp = PlayerStatus.Crow.hp;      //体力
+            speed = PlayerStatus.Crow.speed;//移動速度
         }
         //
         else if (GameManager.playerSelect == "Chickadee")
         {
-
+            animator = GameObject.Find("Chickadee_Player").GetComponent<Animator>();//Animatorを取得
+            hp = PlayerStatus.Chickadee.hp;      //体力
+            speed = PlayerStatus.Chickadee.speed;//移動速度
         }
         //
         else if (GameManager.playerSelect == "Penguin")
@@ -113,6 +117,7 @@ public class PlayerController : MonoBehaviour
             hp = PlayerStatus.Sparrow.hp;                        //体力
             speed = PlayerStatus.Sparrow.speed;                  //移動速度
         }
+
         GameManager.remain = 3;
     }
 

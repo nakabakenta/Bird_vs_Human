@@ -1541,12 +1541,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4292270667764699328}
   - component: {fileID: 4292270667755650908}
-  - component: {fileID: 4292270667758609564}
-  - component: {fileID: 4292270667759742972}
-  - component: {fileID: 8939107804469450965}
+  - component: {fileID: 238301013918774915}
   m_Layer: 0
   m_Name: Crow_Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1588,36 +1586,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!65 &4292270667758609564
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4292270667764993312}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.08, z: 0.04}
-  m_Center: {x: 0, y: 0.04, z: 0}
---- !u!54 &4292270667759742972
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4292270667764993312}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0.5
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &8939107804469450965
+--- !u!114 &238301013918774915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1626,12 +1595,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4292270667764993312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6fe40f96f03b594bb287e703a37a793, type: 3}
+  m_Script: {fileID: 11500000, guid: b75e88e52a9e48642b8ee7591c0d5572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardBullet: {fileID: 0}
-  downBullet: {fileID: 0}
-  aaa: {fileID: 0}
 --- !u!1 &4292270667764993316
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ public class RunEnemy : MonoBehaviour
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
         animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走る)を有効にする
-        playerTransform = GameObject.Find("Chickadee_Player").transform;
+        playerTransform = GameObject.Find("Player").transform;
         nowAction = "Run";
         rigidBody = this.GetComponent<Rigidbody>();
     }
