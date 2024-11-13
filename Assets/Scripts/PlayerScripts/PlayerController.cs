@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //プレイヤーオブジェクト
+    public GameObject sparrow, crow, chickadee;
     //ステータス
     public GameObject forwardBullet;//
     public GameObject downBullet;   //
-
+    //
     public GameObject aaa;
 
     public static int hp;             //体力
@@ -46,11 +48,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        if (GameManager.gameStart == false)
-        {
-            SetPlayerStatus();//関数"SetPlayerStatus"を呼び出す
-        }
-
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
     }
 
@@ -62,6 +59,11 @@ public class PlayerController : MonoBehaviour
         boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
         gage = false;
         playerStatus = "Normal";
+
+        if (GameManager.gameStart == false)
+        {
+            SetPlayerStatus();//関数"SetPlayerStatus"を呼び出す
+        }
     }
 
     // Update is called once per frame
@@ -87,21 +89,24 @@ public class PlayerController : MonoBehaviour
         //スズメ
         if (GameManager.playerSelect == "Sparrow")
         {
-            animator = GameObject.Find("Sparrow_Player").GetComponent<Animator>();//Animatorを取得
+            Instantiate(sparrow, this.transform.position, this.transform.rotation);
+            animator = sparrow.GetComponent<Animator>();//Animatorを取得
             hp = PlayerStatus.Sparrow.hp;      //体力
             speed = PlayerStatus.Sparrow.speed;//移動速度
         }
         //カラス
         else if(GameManager.playerSelect == "Crow")
         {
-            animator = GameObject.Find("Crow_Player").GetComponent<Animator>();//Animatorを取得
+            Instantiate(crow, this.transform.position, this.transform.rotation);
+            animator = crow.GetComponent<Animator>();//Animatorを取得
             hp = PlayerStatus.Crow.hp;      //体力
             speed = PlayerStatus.Crow.speed;//移動速度
         }
         //
         else if (GameManager.playerSelect == "Chickadee")
         {
-            animator = GameObject.Find("Chickadee_Player").GetComponent<Animator>();//Animatorを取得
+            Instantiate(chickadee, this.transform.position, this.transform.rotation);
+            animator = chickadee.GetComponent<Animator>();//Animatorを取得
             hp = PlayerStatus.Chickadee.hp;      //体力
             speed = PlayerStatus.Chickadee.speed;//移動速度
         }
