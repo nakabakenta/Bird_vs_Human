@@ -9,31 +9,31 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
+        sceneLoader = this.GetComponent<SceneLoader>();//このオブジェクトのScript"SceneLoader"を取得する
     }
 
     //スズメ
     public void Sparrow()
     {
-        GameManager.playerSelect = PlayerStatus.Sparrow.name;
-        sceneLoader.StageSelect();
+        GameManager.playerNumber = PlayerStatus.PlayerStatusList.number[0];//プレイヤー番号を"スズメ"の番号にする
+        sceneLoader.StageSelect();                                         //"sceneLoader"の関数"StageSelect"を呼び出す
     }
     //カラス
     public void Crow()
     {
-        GameManager.playerSelect = PlayerStatus.Crow.name;
+        GameManager.playerNumber = PlayerStatus.PlayerStatusList.number[1];
         sceneLoader.StageSelect();
     }
     //コガラ
     public void Chickadee()
     {
-        GameManager.playerSelect = PlayerStatus.Chickadee.name;
+        GameManager.playerNumber = PlayerStatus.PlayerStatusList.number[2];
         sceneLoader.StageSelect();
     }
     //ペンギン
     public void Penguin()
     {
-        GameManager.playerSelect = PlayerStatus.Penguin.name;
+        GameManager.playerNumber = PlayerStatus.PlayerStatusList.number[3];
         sceneLoader.StageSelect();
     }
 }

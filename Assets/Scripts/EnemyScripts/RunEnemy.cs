@@ -11,7 +11,6 @@ public class RunEnemy : MonoBehaviour
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-    private float abc = 0.0f;//間隔
 
     private string nowAction;     //現在の動作
     private bool action = false;  //動作フラグ
@@ -56,6 +55,8 @@ public class RunEnemy : MonoBehaviour
 
     void Behavior()
     {
+        
+
         Vector3 localPosition = setTransform.localPosition;//オブジェクトの
         Vector3 localAngle = setTransform.localEulerAngles;//
 
@@ -134,7 +135,6 @@ public class RunEnemy : MonoBehaviour
     void Wait()
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
-        abc += Time.deltaTime;
 
         if (nowAction == "Attack")
         {
@@ -166,14 +166,19 @@ public class RunEnemy : MonoBehaviour
         //
         else if(nowAction == "jump")
         {
-            if(abc >= 0.75f)
+            if (interval >= 0.75f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
+
+                if(interval >= 1.0f)
+                {
+                    animator.SetFloat("MoveSpeed", 0.0f);//一時停止
+                }
 
                 //
                 if (interval >= 2.0f)
                 {
-                    abc = 0.0f;
+                    animator.SetFloat("MoveSpeed", 1.0f);//
                     interval = 0.0f;
                     animator.SetInteger("Motion", 0);//
                     action = false;

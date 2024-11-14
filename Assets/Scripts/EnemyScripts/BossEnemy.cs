@@ -23,7 +23,7 @@ public class BossEnemy : MonoBehaviour
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
         animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走る)を有効にする
-        playerTransform = GameObject.Find("Player").transform;//
+        playerTransform = GameObject.Find("Player").transform;   //"Player"のTransformを取得
     }
 
     // Update is called once per frame
@@ -148,6 +148,7 @@ public class BossEnemy : MonoBehaviour
         this.tag = "Death";                                 //タグを"Death"に変更する
         animator.SetInteger("Motion", 4);                   //
         Stage.BossEnemy[0] = false;
+        Stage.gameStatus = "Clear";
     }
 
     //当たり判定(OnTriggerEnter)

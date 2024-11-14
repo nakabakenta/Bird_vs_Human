@@ -5,13 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //プレイヤーオブジェクト
-    public GameObject sparrow, crow, chickadee;
+    private GameObject[] player = new GameObject[3];
+    //弾オブジェクト
+    public GameObject forwardBullet, downBullet;
+    //群れオブジェクト
+    public GameObject[] group = new GameObject[3];
     //ステータス
-    public GameObject forwardBullet;//
-    public GameObject downBullet;   //
-    //
-    public GameObject aaa;
-
     public static int hp;             //体力
     public static float speed;        //移動速度
     public static bool gage;          //ゲージフラグ
@@ -34,36 +33,36 @@ public class PlayerController : MonoBehaviour
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージを受けているかのフラグ
     private bool isObjRenderer;            //objRendererの有効・無効フラグ
-    //コンポーネント取得変数
-    private DamageManager damageManager;
-    private Rigidbody rigidBody;     //Rigidbody変数
-    private BoxCollider boxCollider; //CapsuleCollider変数
-    private Animator animator = null;//Animator変数
-    private Renderer[] objRenderer;  //Renderer配列変数
-    //コルーチン変数
+    //コンポーネント取得用
+    private Rigidbody rigidBody;     //Rigidbody
+    private BoxCollider boxCollider; //CapsuleCollider
+    private Animator animator = null;//Animator
+    private Renderer[] objRenderer;  //Renderer
+    //コルーチン
     private Coroutine blinking;//
 
     //マウス座標
     private Vector3 mousePosition, worldPosition;
 
-    void Awake()
-    {
-        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        damageManager = GetComponent<DamageManager>();//
-        rigidBody = this.gameObject.GetComponent<Rigidbody>();      //このオブジェクトのRigidbodyを取得
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();  //このオブジェクトのBoxColliderを取得
+        //プレイヤーオブジェクトを探して取得する
+        player[0] = GameObject.Find("Sparrow_Player");
+        player[1] = GameObject.Find("Crow_Player");
+        player[2] = GameObject.Find("Chickadee_Player");
+
+        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
+        rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトのRigidbodyを取得
+        boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトのBoxColliderを取得
         gage = false;
         playerStatus = "Normal";
 
-        if (GameManager.gameStart == false)
-        {
-            SetPlayerStatus();//関数"SetPlayerStatus"を呼び出す
-        }
+        player[0].SetActive(false);
+        player[1].SetActive(false);
+        player[2].SetActive(false);
+
+        SetPlayer();//関数"SetPlayer"を呼び出す
     }
 
     // Update is called once per frame
@@ -84,46 +83,18 @@ public class PlayerController : MonoBehaviour
     }
 
     //ステータスを設定
-    void SetPlayerStatus()
+    void SetPlayer()
     {
-        //スズメ
-        if (GameManager.playerSelect == "Sparrow")
-        {
-            Instantiate(sparrow, this.transform.position, this.transform.rotation);
-            animator = sparrow.GetComponent<Animator>();//Animatorを取得
-            hp = PlayerStatus.Sparrow.hp;      //体力
-            speed = PlayerStatus.Sparrow.speed;//移動速度
-        }
-        //カラス
-        else if(GameManager.playerSelect == "Crow")
-        {
-            Instantiate(crow, this.transform.position, this.transform.rotation);
-            animator = crow.GetComponent<Animator>();//Animatorを取得
-            hp = PlayerStatus.Crow.hp;      //体力
-            speed = PlayerStatus.Crow.speed;//移動速度
-        }
-        //
-        else if (GameManager.playerSelect == "Chickadee")
-        {
-            Instantiate(chickadee, this.transform.position, this.transform.rotation);
-            animator = chickadee.GetComponent<Animator>();//Animatorを取得
-            hp = PlayerStatus.Chickadee.hp;      //体力
-            speed = PlayerStatus.Chickadee.speed;//移動速度
-        }
-        //
-        else if (GameManager.playerSelect == "Penguin")
-        {
+        player[GameManager.playerNumber].SetActive(true);
+        animator = player[GameManager.playerNumber].GetComponent<Animator>(); //Animatorを取得
 
-        }
-        //それ以外"デバック用"(自動敵にスズメのステータスを参照する)
-        else
+        if(GameManager.gameStart == false)
         {
-            GameManager.playerSelect = PlayerStatus.Sparrow.name;//
-            hp = PlayerStatus.Sparrow.hp;                        //体力
-            speed = PlayerStatus.Sparrow.speed;                  //移動速度
+            hp = PlayerStatus.PlayerStatusList.hp[GameManager.playerNumber];      //体力
+            speed = PlayerStatus.PlayerStatusList.speed[GameManager.playerNumber];//移動速度
+            GameManager.remain = 3;
+            GameManager.gameStart = true;
         }
-
-        GameManager.remain = 3;
     }
 
     //動作関数
@@ -136,10 +107,27 @@ public class PlayerController : MonoBehaviour
         if(Stage.gameStatus == "Play")
         {
             this.transform.position = worldPosition;
+
+            //前方攻撃
+            if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
+            {
+                Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
+                intervalTimerF = 0.0f;
+            }
+            //落下攻撃
+            if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
+            {
+                Instantiate(downBullet, this.transform.position, Quaternion.identity);
+                intervalTimerD = 0.0f;
+            }
+            //ゲージ解放
+            if (Input.GetKeyDown(KeyCode.E) && gage == true)
+            {
+                gage = false;
+                playerStatus = "Invincible";
+                Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
+            }
         }
-
-        
-
 
         //Vector3 position = this.transform.position;
 
@@ -163,25 +151,7 @@ public class PlayerController : MonoBehaviour
 
         //}
 
-        //前方攻撃
-        if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
-        {
-            Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-            intervalTimerF = 0.0f;
-        }
-        //落下攻撃
-        if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
-        {
-            Instantiate(downBullet, this.transform.position, Quaternion.identity);
-            intervalTimerD = 0.0f;
-        }
-        //
-        if (Input.GetKeyDown(KeyCode.E) && gage == true)
-        {
-            gage = false;
-            playerStatus = "Invincible";
-            Instantiate(aaa, this.transform.position, Quaternion.identity);
-        }
+        
         //
         if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
         {
@@ -216,18 +186,17 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //damageManager.PlayerDamage();
-
-        hp -= 1;//体力を-1する
+        if(hp > 0)
+        {
+            hp -= 1;//体力を-1する
+        }
 
         //体力が0以下だったら
         if (hp <= 0)
         {
-            hp = 0;                         //
-            boxCollider.enabled = false;    //BoxColliderを無効化する
-            animator.SetBool("Death", true);//AnimatorのDeath(死亡モーション)を有効化する
-            rigidBody.useGravity = true;    //RigidBodyの重力を有効化する
+            Death();//関数"Death"死亡を呼び出す
         }
+
         StartCoroutine("Blinking");//コルーチン(Blinking)を呼び出す
     }
 
@@ -271,6 +240,15 @@ public class PlayerController : MonoBehaviour
             invincibleTimer = 0.0f;
             playerStatus = "Normal";
         }  
+    }
+
+    //死亡関数
+    void Death()
+    {
+        hp = 0;                         //hpを"0"にする
+        boxCollider.enabled = false;    //BoxColliderを無効にする
+        animator.SetBool("Death", true);//Animatorの"Death"(死亡)を有効にする
+        rigidBody.useGravity = true;    //RigidBodyの重力を有効にする
     }
 
     //衝突判定(OnTriggerEnter)

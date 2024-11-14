@@ -4,28 +4,13 @@ using UnityEngine;
 
 public class BirdGroup : MonoBehaviour
 {
+    //コンポーネント取得用
     private Transform playerTransform;//Transform(プレイヤー)
-    private GameObject sparrow;
-    private GameObject crow;
-    private GameObject chickadee;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.playerSelect == "Sparrow")
-        {
-
-        }
-        else if (GameManager.playerSelect == "Crow")
-        {
-
-        }
-        else if (GameManager.playerSelect == "Chickadee")
-        {
-
-        }
-
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.Find("Player").transform;//
     }
 
     // Update is called once per frame
