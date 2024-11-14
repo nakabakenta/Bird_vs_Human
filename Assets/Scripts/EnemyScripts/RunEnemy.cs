@@ -11,12 +11,8 @@ public class RunEnemy : MonoBehaviour
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-
-    private string nowAction;     //現在の動作
-    private bool action = false;  //動作フラグ
-
-
-
+    private string nowAction;     //現在のアクション
+    private bool action = false;  //アクションフラグ
     private float viewPointX;     //ビューポイント座標.X
     //コンポーネント
     private Transform setTransform;   //Transform
@@ -29,22 +25,22 @@ public class RunEnemy : MonoBehaviour
     {
         setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
         animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走る)を有効にする
+        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(走る)を有効にする
         playerTransform = GameObject.Find("Player").transform;
         nowAction = "Run";
-        rigidBody = this.GetComponent<Rigidbody>();
+        //rigidBody = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //移動後のビューポート座標を取得
+        //ビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
         //体力が0より上 && ビューポート座標.Xが1より上であれば
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//
+            Behavior();//行動関数を呼び出す
         }
         //体力が0以下 && ビューポート座標.Xが0未満であれば
         else if (hp <= 0 && viewPointX < 0)
@@ -53,10 +49,9 @@ public class RunEnemy : MonoBehaviour
         }
     }
 
+    //行動関数
     void Behavior()
     {
-        
-
         Vector3 localPosition = setTransform.localPosition;//オブジェクトの
         Vector3 localAngle = setTransform.localEulerAngles;//
 
@@ -73,8 +68,6 @@ public class RunEnemy : MonoBehaviour
         if(nowAction == "Run")
         {
             localPosition.y = 0.0f;//
-
-            //this.transform.position -= jump * transform.up * Time.deltaTime;
         }
 
         localPosition.z = 0.0f;//
@@ -127,7 +120,7 @@ public class RunEnemy : MonoBehaviour
         else if (PlayerController.hp <= 0)
         {
             nowAction = "Dance";
-            animator.SetInteger("Motion", 3);//AnimatorのMotion 3(ダンスモーション)を有効にする
+            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンスモーション)を有効にする
         }
     }
 
@@ -185,8 +178,6 @@ public class RunEnemy : MonoBehaviour
                     nowAction = "Run";
                 }
             }
-            
-            
         }
     }
 
@@ -198,7 +189,7 @@ public class RunEnemy : MonoBehaviour
         //体力が0以下だったら
         if (hp <= 0)
         {
-            Death();
+            Death();//関数"Death"死亡を呼び出す
         }
     }
 

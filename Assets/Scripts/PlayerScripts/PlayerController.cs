@@ -186,10 +186,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if(hp > 0)
-        {
-            hp -= 1;//‘Ì—Í‚ð-1‚·‚é
-        }
+        hp -= 1;//‘Ì—Í‚ð-1‚·‚é
 
         //‘Ì—Í‚ª0ˆÈ‰º‚¾‚Á‚½‚ç
         if (hp <= 0)
