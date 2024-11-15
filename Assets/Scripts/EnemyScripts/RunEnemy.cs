@@ -14,19 +14,21 @@ public class RunEnemy : MonoBehaviour
     private string nowAction;     //現在のアクション
     private bool action = false;  //アクションフラグ
     private float viewPointX;     //ビューポイント座標.X
-    //コンポーネント
-    private Transform setTransform;   //Transform
-    private Transform playerTransform;//Transform(プレイヤー)
-    private Rigidbody rigidBody;
-    private Animator animator = null; //Animator
+    //このオブジェクトのコンポーネント
+    private Transform thisTransform;  //"Transform"(このオブジェクト)
+    private Animator animator = null; //"Animator"(このオブジェクト)
+    //他のオブジェクトのコンポーネント
+    private Transform playerTransform;//"Transform"(プレイヤー)
+
+    //private Rigidbody rigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
-        animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(走る)を有効にする
-        playerTransform = GameObject.Find("Player").transform;
+        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
+        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
+        animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
+        playerTransform = GameObject.Find("Player").transform;    //
         nowAction = "Run";
         //rigidBody = this.GetComponent<Rigidbody>();
     }
@@ -34,8 +36,8 @@ public class RunEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        //このオブジェクトのビューポート座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
         //体力が0より上 && ビューポート座標.Xが1より上であれば
         if (hp > 0 && viewPointX < 1)
@@ -52,12 +54,12 @@ public class RunEnemy : MonoBehaviour
     //行動関数
     void Behavior()
     {
-        Vector3 localPosition = setTransform.localPosition;//オブジェクトの
-        Vector3 localAngle = setTransform.localEulerAngles;//
+        Vector3 localPosition = thisTransform.localPosition;//
+        Vector3 localAngle = thisTransform.localEulerAngles;//
 
-        if (this.transform.position.y + 2.0f < playerTransform.position.y &&
-            this.transform.position.x + 0.5f > playerTransform.position.x &&
-            this.transform.position.x - 0.5f < playerTransform.position.x &&
+        if (this.transform.position.x + EnemyStatus.RunEnemy.rangeX > playerTransform.position.x &&
+            this.transform.position.x - EnemyStatus.RunEnemy.rangeX < playerTransform.position.x &&
+            this.transform.position.y + EnemyStatus.RunEnemy.rangeY < playerTransform.position.y &&
             nowAction == "Run" && action == false && this.transform.position.y == 0.0f)
         {
             action = true;
@@ -83,8 +85,8 @@ public class RunEnemy : MonoBehaviour
             localAngle.y = EnemyStatus.rotationY;//
         }
 
-        setTransform.localPosition = localPosition;//ローカル座標での座標を設定
-        setTransform.localEulerAngles = localAngle;//
+        thisTransform.localPosition = localPosition;//ローカル座標での座標を設定
+        thisTransform.localEulerAngles = localAngle;//
 
         //
         if (nowAction == "Run")
@@ -110,8 +112,8 @@ public class RunEnemy : MonoBehaviour
         if (PlayerController.hp > 0 && nowAction == "Attack")
         {
             random = (int)Random.Range(1, 3);     //ランダム処理(1～2)
-            animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効にする
-            Debug.Log(random);                    //Debug.Log(random)
+            animator.SetInteger("Motion", random);//"Animator"の"Motion, 1～2"(攻撃)を有効にする
+            Debug.Log(random);                    //デバックログ
         }
         else if(PlayerController.hp > 0 && nowAction == "jump")
         {
@@ -120,7 +122,7 @@ public class RunEnemy : MonoBehaviour
         else if (PlayerController.hp <= 0)
         {
             nowAction = "Dance";
-            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンスモーション)を有効にする
+            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンス)を有効にする
         }
     }
 

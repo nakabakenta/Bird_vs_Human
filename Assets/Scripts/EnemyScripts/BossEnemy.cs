@@ -7,35 +7,39 @@ public class BossEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyStatus.BossEnemy.hp[0];        //体力
     private float speed = EnemyStatus.BossEnemy.speed[0];//移動速度
+    private float jump = EnemyStatus.BossEnemy.speed[0]; //ジャンプ力
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-    private bool attack = false;  //攻撃フラグ
+    private string nowAction;     //現在のアクション
+    private bool action = false;  //アクションフラグ
     private float viewPointX;     //ビューポイント座標.X
-    //コンポーネント
-    private Transform setTransform;   //Transform
-    private Transform playerTransform;//Transform(プレイヤー)
-    private Animator animator = null; //Animator
+    //このオブジェクトのコンポーネント
+    private Transform thisTransform;  //"Transform"(このオブジェクト)
+    private Animator animator = null; //"Animator"(このオブジェクト)
+    //他のオブジェクトのコンポーネント
+    private Transform playerTransform;//"Transform"(プレイヤー)
 
     // Start is called before the first frame update
     void Start()
     {
-        setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
-        animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion 0"(走る)を有効にする
-        playerTransform = GameObject.Find("Player").transform;   //"Player"のTransformを取得
+        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
+        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
+        animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
+        playerTransform = GameObject.Find("Player").transform;    //
+        nowAction = "Run";
     }
 
     // Update is called once per frame
     void Update()
     {
-        //移動後のビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        //このオブジェクトのビューポート座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
         //体力が0より上 && ビューポート座標.Xが1より上であれば
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//
+            Behavior();//行動関数を呼び出す
         }
         //体力が0以下 && ビューポート座標.Xが0未満であれば
         else if (hp <= 0 && viewPointX < 0)
@@ -44,13 +48,26 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    //動作関数
     void Behavior()
     {
-        Vector3 localPosition = setTransform.localPosition;//オブジェクトの
-        Vector3 localAngle = setTransform.localEulerAngles;//
+        Vector3 localPosition = thisTransform.localPosition;//
+        Vector3 localAngle = thisTransform.localEulerAngles;//
 
-        localPosition.y = 0.0f;//
+        if (this.transform.position.x + EnemyStatus.RunEnemy.rangeX > playerTransform.position.x &&
+            this.transform.position.x - EnemyStatus.RunEnemy.rangeX < playerTransform.position.x &&
+            this.transform.position.y + EnemyStatus.RunEnemy.rangeY < playerTransform.position.y &&
+            nowAction == "Run" && action == false && this.transform.position.y == 0.0f)
+        {
+            action = true;
+            nowAction = "jump";
+            Animation();
+        }
+
+        if (nowAction == "Run")
+        {
+            localPosition.y = 0.0f;//
+        }
+
         localPosition.z = 0.0f;//
 
         //
@@ -64,21 +81,22 @@ public class BossEnemy : MonoBehaviour
             localAngle.y = EnemyStatus.rotationY;//
         }
 
-        setTransform.localPosition = localPosition;//ローカル座標での座標を設定
-        setTransform.localEulerAngles = localAngle;//
+        thisTransform.localPosition = localPosition;//ローカル座標での座標を設定
+        thisTransform.localEulerAngles = localAngle;//
 
         //
-        if (attack == false)
+        if (nowAction == "Run")
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
         //
-        else if (attack == true)
+        else if (nowAction != "Run" && action == true)
         {
             Wait();
         }
+
         //
-        if (PlayerController.hp <= 0)
+        if (PlayerController.hp <= 0 && action == false)
         {
             Animation();//アニメーション関数を実行
         }
@@ -87,16 +105,20 @@ public class BossEnemy : MonoBehaviour
     //アニメーション関数
     void Animation()
     {
-        if(PlayerController.hp > 0)
+        if (PlayerController.hp > 0 && nowAction == "Attack")
         {
-            attack = true;
             random = (int)Random.Range(1, 3);     //ランダム処理(1～2)
-            animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効にする
-            Debug.Log(random);                    //Debug.Log(random)
+            animator.SetInteger("Motion", random);//"Animator"の"Motion, 1～2"(攻撃)を有効にする
+            Debug.Log(random);                    //デバックログ
         }
-        else if(PlayerController.hp <= 0)
+        else if (PlayerController.hp > 0 && nowAction == "jump")
         {
-            animator.SetInteger("Motion", 3);//AnimatorのMotion 3(ダンスモーション)を有効にする
+            animator.SetInteger("Motion", 10);
+        }
+        else if (PlayerController.hp <= 0)
+        {
+            nowAction = "Dance";
+            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンス)を有効にする
         }
     }
 
@@ -104,26 +126,55 @@ public class BossEnemy : MonoBehaviour
     void Wait()
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
-        //
-        if (random == 1)
+
+        if (nowAction == "Attack")
         {
             //
-            if (interval >= 2.0f)
+            if (random == 1)
             {
-                interval = 0.0f;                 //
-                animator.SetInteger("Motion", 0);//
-                attack = false;
+                //
+                if (interval >= 2.0f)
+                {
+                    interval = 0.0f;                 //
+                    animator.SetInteger("Motion", 0);//
+                    action = false;
+                    nowAction = "Run";
+                }
+            }
+            //
+            else if (random == 2)
+            {
+                //
+                if (interval >= 1.5f)
+                {
+                    interval = 0.0f;
+                    animator.SetInteger("Motion", 0);//
+                    action = false;
+                    nowAction = "Run";
+                }
             }
         }
         //
-        else if (random == 2)
+        else if (nowAction == "jump")
         {
-            //
-            if (interval >= 1.5f)
+            if (interval >= 0.75f)
             {
-                interval = 0.0f;
-                animator.SetInteger("Motion", 0);//
-                attack = false;
+                this.transform.position += jump * transform.up * Time.deltaTime;
+
+                if (interval >= 1.0f)
+                {
+                    animator.SetFloat("MoveSpeed", 0.0f);//一時停止
+                }
+
+                //
+                if (interval >= 2.0f)
+                {
+                    animator.SetFloat("MoveSpeed", 1.0f);//
+                    interval = 0.0f;
+                    animator.SetInteger("Motion", 0);//
+                    action = false;
+                    nowAction = "Run";
+                }
             }
         }
     }
@@ -136,30 +187,30 @@ public class BossEnemy : MonoBehaviour
         //体力が0以下だったら
         if (hp <= 0)
         {
-            Death();
+            Death();//関数"Death"死亡を呼び出す
         }
     }
 
     //死亡関数
     void Death()
     {
-        hp = 0;                                             //体力を"0"にする
-        GameManager.score += EnemyStatus.BossEnemy.score[0];//
-        this.tag = "Death";                                 //タグを"Death"に変更する
-        animator.SetInteger("Motion", 4);                   //
-        Stage.BossEnemy[0] = false;
-        Stage.gameStatus = "Clear";
+        hp = 0;                                         //体力を"0"にする
+        GameManager.score += EnemyStatus.RunEnemy.score;//
+        this.tag = "Death";                             //タグを"Death"に変更する
+        animator.SetInteger("Motion", 4);               //
     }
 
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグPlayerのオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Player" && attack == false)
+        //タグPlayerの付いたオブジェクトに衝突したら
+        if (collision.gameObject.tag == "Player" && action == false)
         {
+            action = true;
+            nowAction = "Attack";
             Animation();
         }
-        //タグ"Bullet"のオブジェクトに衝突したら
+        //タグBulletの付いたオブジェクトに衝突したら
         if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
             Damage();//関数Damageを呼び出す
