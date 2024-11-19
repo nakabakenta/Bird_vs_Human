@@ -76,12 +76,12 @@ public class StageUI : MonoBehaviour
             remain.text = "REMAIN Å~ 0" + GameManager.remain;//
         }
 
-        if (Stage.BossEnemy[Stage.stage - 1] == false)
+        if (Stage.bossEnemy[Stage.stage - 1] == false)
         {
             stageClearUI.SetActive(true);
         }
 
-        if(Stage.gameStatus == "Menu")
+        if(Stage.gameStatus == "Pause")
         {
             pauseUI.SetActive(true);
         }

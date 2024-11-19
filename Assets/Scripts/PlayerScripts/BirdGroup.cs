@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BirdGroup : MonoBehaviour
 {
-    //コンポーネント取得用
+    //コンポーネント
     private Transform playerTransform;//Transform(プレイヤー)
 
     // Start is called before the first frame update

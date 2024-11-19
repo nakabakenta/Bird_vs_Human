@@ -194,10 +194,12 @@ public class BossEnemy : MonoBehaviour
     //€–SŠÖ”
     void Death()
     {
+        this.transform.position = new Vector3(thisTransform.position.x, 0.0f, thisTransform.position.z);
         hp = 0;                                         //‘Ì—Í‚ğ"0"‚É‚·‚é
         GameManager.score += EnemyStatus.RunEnemy.score;//
         this.tag = "Death";                             //ƒ^ƒO‚ğ"Death"‚É•ÏX‚·‚é
         animator.SetInteger("Motion", 4);               //
+        Stage.bossEnemy[Stage.stage - 1] = false;
     }
 
     //“–‚½‚è”»’è(OnTriggerEnter)

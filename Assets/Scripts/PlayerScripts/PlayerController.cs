@@ -13,29 +13,28 @@ public class PlayerController : MonoBehaviour
     //ステータス
     public static int hp;             //体力
     public static float speed;        //移動速度
-    public static bool gage;          //ゲージフラグ
     public static string playerStatus;//プレイヤーの状態
+    public static bool useGage;       //ゲージの使用可否
 
-    private float intervalTimerF = 0.25f; //間隔タイマー(前方攻撃)
-    private float intervalTimerD = 0.50f; //間隔タイマー(落下攻撃)
+    private float attackTimerF = 0.25f;   //前攻撃間隔タイマー
+    private float attackTimerD = 0.50f;  //下攻撃間隔タイマー
     private float attackIntervalF = 0.25f;//攻撃間隔(前方攻撃)
     private float attackIntervalD = 0.50f;//攻撃間隔(落下攻撃)
 
     private float invincibleTimer = 0.0f;//無敵タイマー
     private float invincible = 10.0f;    //無敵継続時間
-
-    //ビューポート座標変数
-    private float viewPointX, viewPointY;//ビューポイント座標.X, Y
+    //ビューポイント座標.X, Y
+    private float viewPointX, viewPointY;
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
     private float rendererElapsedTime;     //Rendererの有効・無効の経過時間(点滅の経過時間)
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
-    private bool isDamage;                 //ダメージを受けているかのフラグ
+    public static bool isDamage;           //ダメージの可否
     private bool isObjRenderer;            //objRendererの有効・無効フラグ
-    //コンポーネント取得用
+    //コンポーネント
     private Rigidbody rigidBody;     //Rigidbody
-    private BoxCollider boxCollider; //CapsuleCollider
+    private BoxCollider boxCollider; //BoxCollider
     private Animator animator = null;//Animator
     private Renderer[] objRenderer;  //Renderer
     //コルーチン
@@ -55,7 +54,7 @@ public class PlayerController : MonoBehaviour
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
         rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトのRigidbodyを取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトのBoxColliderを取得
-        gage = false;
+        useGage = false;
         playerStatus = "Normal";
 
         player[0].SetActive(false);
@@ -69,15 +68,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //クールタイムにTime.deltaTimeを足す
-        intervalTimerF += Time.deltaTime;
-        intervalTimerD += Time.deltaTime;
+        attackTimerF += Time.deltaTime;
+        attackTimerD += Time.deltaTime;
 
         if(hp > 0)
         {
             Behavior();//関数PlayControlを呼び出す
         }
 
-        //移動後のビューポート座標値を取得
+        //ビューポイント座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
         viewPointY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
     }
@@ -109,21 +108,21 @@ public class PlayerController : MonoBehaviour
             this.transform.position = worldPosition;
 
             //前方攻撃
-            if (Input.GetMouseButton(0) && intervalTimerF > attackIntervalF)
+            if (Input.GetMouseButton(0) && attackTimerF > attackIntervalF)
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-                intervalTimerF = 0.0f;
+                attackTimerF = 0.0f;
             }
             //落下攻撃
-            if (Input.GetMouseButton(1) && intervalTimerD > attackIntervalD)
+            if (Input.GetMouseButton(1) && attackTimerD > attackIntervalD)
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
-                intervalTimerD = 0.0f;
+                attackTimerD = 0.0f;
             }
             //ゲージ解放
-            if (Input.GetKeyDown(KeyCode.E) && gage == true)
+            if (Input.GetKeyDown(KeyCode.E) && useGage == true)
             {
-                gage = false;
+                useGage = false;
                 playerStatus = "Invincible";
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
             }
@@ -151,13 +150,12 @@ public class PlayerController : MonoBehaviour
 
         //}
 
-        
         //
         if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
         {
-            Stage.gameStatus = "Menu";
+            Stage.gameStatus = "Pause";
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Menu")
+        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Pause")
         {
             Stage.gameStatus = "Play";
         }
@@ -181,17 +179,17 @@ public class PlayerController : MonoBehaviour
     void Damage()
     {
         //点滅中は二重に実行しない
-        if (isDamage)
+        if (isDamage == true)
         {
             return;
         }
 
-        hp -= 1;//体力を-1する
+        hp -= 1;//体力を"-1"する
 
         //体力が0以下だったら
         if (hp <= 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            Death();//死亡関数"Death"実行する
         }
 
         StartCoroutine("Blinking");//コルーチン(Blinking)を呼び出す
@@ -251,10 +249,10 @@ public class PlayerController : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグEnemyの付いたオブジェクトに衝突したら
+        //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"だったら 
         if (collision.gameObject.tag == "Enemy" && playerStatus == "Normal")
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//ダメージ関数"Damage"を実行する
         }
     }
 }

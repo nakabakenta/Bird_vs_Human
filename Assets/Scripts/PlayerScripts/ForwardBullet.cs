@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ForwardBullet : MonoBehaviour
 {
-    public int speed;        //弾移動速度
+    //処理
+    public float speed;      //移動速度
     private float viewPointX;//ビューポイント座標.X
 
     // Start is called before the first frame update
@@ -18,7 +19,7 @@ public class ForwardBullet : MonoBehaviour
     {
         this.transform.position += speed * transform.right * Time.deltaTime;//
 
-        //移動後のビューポート座標値を取得
+        //ビューポイント座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
 
         //
@@ -31,8 +32,8 @@ public class ForwardBullet : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //下記のタグが付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Enemy")//敵
+        //衝突したオブジェクトのタグが"Enemy"だったら
+        if (collision.gameObject.tag == "Enemy")
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }

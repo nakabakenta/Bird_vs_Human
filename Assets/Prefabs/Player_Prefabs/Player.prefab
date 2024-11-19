@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardBullet: {fileID: 848321473181908946, guid: 1b7304acf64eb4948a6f940bc7732c35, type: 3}
-  downBullet: {fileID: 3969301995329424523, guid: c1077a3abc1757346a93ed64104541fa, type: 3}
+  downBullet: {fileID: 6450617237666396874, guid: 99e080b0641bdab44beaf325de2384da, type: 3}
   group:
   - {fileID: 6009275135945947292, guid: 2af1bd2499a25f84bbf325a876ac3b9d, type: 3}
   - {fileID: 1061544703686887077, guid: 2b0237fc08b86e949be24bcc14c17d1e, type: 3}

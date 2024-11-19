@@ -198,6 +198,7 @@ public class RunEnemy : MonoBehaviour
     //死亡関数
     void Death()
     {
+        this.transform.position = new Vector3(thisTransform.position.x, 0.0f, thisTransform.position.z);
         hp = 0;                                         //体力を"0"にする
         GameManager.score += EnemyStatus.RunEnemy.score;//
         this.tag = "Death";                             //タグを"Death"に変更する
@@ -207,7 +208,7 @@ public class RunEnemy : MonoBehaviour
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグPlayerの付いたオブジェクトに衝突したら
+        //衝突したオブジェクトのタグが"Player" && "action"が"false"だったら
         if (collision.gameObject.tag == "Player" && action == false)
         {
             action = true;

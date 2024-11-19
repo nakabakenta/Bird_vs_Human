@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     public static int stage;
-    public static bool[] BossEnemy = new bool[5];//ボス
+    public static bool[] bossEnemy = new bool[5];//ボス
 
     public static string gameStatus;  //ゲームの状態
 
@@ -16,10 +16,12 @@ public class Stage : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        BossEnemy = new bool[5] { false, false, false, false, false };
-        BossEnemy[stage - 1] = true;
-        gameStatus = "Play";
         sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
+
+        bossEnemy = new bool[5] { false, false, false, false, false };
+        bossEnemy[stage - 1] = true;
+
+        gameStatus = "Play";
     }
 
     // Update is called once per frame
@@ -29,14 +31,14 @@ public class Stage : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        else if(gameStatus == "Menu")
+        else if(gameStatus == "Pause")
         {
             Time.timeScale = 0;
         }
 
-        if(PlayerController.hp <= 0)
+        if(PlayerController.hp <= 0 && GameManager.remain <= 0)
         {
-            //sceneLoader.GameOver();
+            sceneLoader.GameOver();
         }
     }
 }
