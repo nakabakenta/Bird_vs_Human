@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //プレイヤーオブジェクト
-    private GameObject[] player = new GameObject[3];
-    //弾オブジェクト
-    public GameObject forwardBullet, downBullet;
-    //群れオブジェクト
-    public GameObject[] group = new GameObject[3];
     //ステータス
     public static int hp;             //体力
     public static float speed;        //移動速度
     public static string playerStatus;//プレイヤーの状態
     public static bool useGage;       //ゲージの使用可否
-
+    public static bool allySacrifice; //味方の犠牲可否
+    //処理
     private float attackTimerF = 0.25f;   //前攻撃間隔タイマー
-    private float attackTimerD = 0.50f;  //下攻撃間隔タイマー
+    private float attackTimerD = 0.50f;   //下攻撃間隔タイマー
     private float attackIntervalF = 0.25f;//攻撃間隔(前方攻撃)
     private float attackIntervalD = 0.50f;//攻撃間隔(落下攻撃)
-
-    private float invincibleTimer = 0.0f;//無敵タイマー
-    private float invincible = 10.0f;    //無敵継続時間
+    private float invincibleTimer = 0.0f; //無敵タイマー
+    private float invincible = 10.0f;     //無敵継続時間
     //ビューポイント座標.X, Y
     private float viewPointX, viewPointY;
     //ダメージ関係変数
@@ -30,22 +24,27 @@ public class PlayerController : MonoBehaviour
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
     private float rendererElapsedTime;     //Rendererの有効・無効の経過時間(点滅の経過時間)
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
-    public static bool isDamage;           //ダメージの可否
+    private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの有効・無効フラグ
+    //オブジェクト
+    private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
+    public GameObject forwardBullet, downBullet;    //弾オブジェクト
+    public GameObject[] group = new GameObject[3];  //群れオブジェクト
     //コンポーネント
-    private Rigidbody rigidBody;     //Rigidbody
-    private BoxCollider boxCollider; //BoxCollider
-    private Animator animator = null;//Animator
-    private Renderer[] objRenderer;  //Renderer
+    private Rigidbody rigidBody;     //"Rigidbody"
+    private BoxCollider boxCollider; //"BoxCollider"
+    private Animator animator = null;//"Animator"
+    private Renderer[] objRenderer;  //"Renderer"
     //コルーチン
     private Coroutine blinking;//
-
     //マウス座標
     private Vector3 mousePosition, worldPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        allySacrifice = false;
+
         //プレイヤーオブジェクトを探して取得する
         player[0] = GameObject.Find("Sparrow_Player");
         player[1] = GameObject.Find("Crow_Player");
@@ -100,7 +99,7 @@ public class PlayerController : MonoBehaviour
     void Behavior()
     {
         //マウス座標を取得して、スクリーン座標をワールド座標に変換する
-        worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7.0f));
+        worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.0f));
 
         //
         if(Stage.gameStatus == "Play")
@@ -184,15 +183,18 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        hp -= 1;//体力を"-1"する
+        hp--;//体力"hp"を"--"する
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //体力が0より上だったら
+        if (hp > 0)
         {
-            Death();//死亡関数"Death"実行する
+            StartCoroutine("Blinking");//コルーチン"Blinking"を実行する
         }
-
-        StartCoroutine("Blinking");//コルーチン(Blinking)を呼び出す
+        //体力が0以下だったら
+        else if (hp <= 0)
+        {
+            Death();//死亡関数"Death"を実行する
+        }
     }
 
     IEnumerator Blinking()
@@ -252,7 +254,15 @@ public class PlayerController : MonoBehaviour
         //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"だったら 
         if (collision.gameObject.tag == "Enemy" && playerStatus == "Normal")
         {
-            Damage();//ダメージ関数"Damage"を実行する
+            if(BirdAlly.allyCount > 0)
+            {
+                BirdAlly.allyCount--;
+                allySacrifice = true;
+            }
+            else if(BirdAlly.allyCount <= 0)
+            {
+                Damage();//ダメージ関数"Damage"を実行する
+            }
         }
     }
 }

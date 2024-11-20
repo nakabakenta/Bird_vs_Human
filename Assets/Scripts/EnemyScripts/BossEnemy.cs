@@ -68,7 +68,7 @@ public class BossEnemy : MonoBehaviour
             localPosition.y = 0.0f;//
         }
 
-        localPosition.z = 0.0f;//
+        localPosition.z = 1.0f;//
 
         //
         if (this.transform.position.x > playerTransform.position.x)

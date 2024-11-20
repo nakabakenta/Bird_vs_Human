@@ -4,35 +4,55 @@ using UnityEngine;
 
 public class BirdAlly : MonoBehaviour
 {
-    public static int count;
-    private bool follow;
+    //処理
+    public static int allyCount;//味方カウント
+    private int allyNumber;     //味方番号
+    private bool playerFollow;  //追尾の可否
+    //ビューポイント座標.X
+    private float viewPointX;
+    //オブジェクト
+    public GameObject[] ally = new GameObject[3];//仲間オブジェクト
     //コンポーネント
-    private BoxCollider boxCollider;  //BoxCollider
+    private Transform thisTransform;  //Transform(このオブジェクト)
     private Transform playerTransform;//Transform(プレイヤー)
+    private BoxCollider boxCollider;  //BoxCollider
+
 
     // Start is called before the first frame update
     void Start()
     {
+        thisTransform = this.gameObject.transform;
+        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して位置を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトの"BoxCollider"を取得
-        playerTransform = GameObject.Find("Player").transform;    //
-        follow = false;
+        playerFollow = false;
+
+        Instantiate(ally[GameManager.playerNumber], this.transform.position, this.transform.rotation, thisTransform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (follow == true && count == 1)
+        //ビューポイント座標を取得
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
+
+        if (playerFollow == true && allyNumber == 1)
         {
             this.transform.position = new Vector3(playerTransform.position.x - 1.0f, playerTransform.position.y, playerTransform.position.z);
         }
-        else if(follow == true && count == 2)
+        else if(playerFollow == true && allyNumber == 2)
         {
             this.transform.position = new Vector3(playerTransform.position.x - 2.0f, playerTransform.position.y, playerTransform.position.z);
         }
 
-        if (PlayerController.isDamage == true)
+        if(PlayerController.allySacrifice == true && playerFollow == true)
         {
-            Destroy(this.gameObject);//このオブジェクトを消す
+            Destroy(this.gameObject);
+            PlayerController.allySacrifice = false;
+        }
+
+        if(playerFollow == false && viewPointX < 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -40,10 +60,19 @@ public class BirdAlly : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトのタグが"Player"だったら
-        if (collision.gameObject.tag == "Player" && count < 3)
+        if (collision.gameObject.tag == "Player" && allyCount < 3)
         {
-            follow = true;
-            count++;
+            playerFollow = true;
+            allyCount++;
+
+            if(allyCount == 1)
+            {
+                allyNumber = 1;
+            }
+            else if (allyCount == 2)
+            {
+                allyNumber = 2;
+            }
         }
     }
 }

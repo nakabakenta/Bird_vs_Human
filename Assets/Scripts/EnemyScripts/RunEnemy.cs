@@ -20,17 +20,14 @@ public class RunEnemy : MonoBehaviour
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform"(プレイヤー)
 
-    //private Rigidbody rigidBody;
-
     // Start is called before the first frame update
     void Start()
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
         animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
-        playerTransform = GameObject.Find("Player").transform;    //
+        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して位置を取得
         nowAction = "Run";
-        //rigidBody = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -72,7 +69,7 @@ public class RunEnemy : MonoBehaviour
             localPosition.y = 0.0f;//
         }
 
-        localPosition.z = 0.0f;//
+        localPosition.z = playerTransform.position.z;//
 
         //
         if (this.transform.position.x > playerTransform.position.x)
