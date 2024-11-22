@@ -10,12 +10,12 @@ public class WalkEnemy : MonoBehaviour
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-    private string nowAction;     //現在のアクション
-    private bool action = false;  //アクションフラグ
+    private string nowAction;     //現在の動作
+    private bool action = false;  //動作フラグ
     private float viewPointX;     //ビューポイント座標.X
-    //コンポーネント
-    private Transform setTransform;  //Transform
-    private Animator animator = null;//Animator
+   //このオブジェクトのコンポーネント
+    private Transform setTransform;  //"Transform"
+    private Animator animator = null;//"Animator"
 
     // Start is called before the first frame update
     void Start()

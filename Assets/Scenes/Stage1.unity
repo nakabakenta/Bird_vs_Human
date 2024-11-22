@@ -5883,7 +5883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STAGE 1 - City -
+  m_text: STAGE 1 - CITY -
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 35052871032d2984f9b666f726822449, type: 2}
   m_sharedMaterial: {fileID: -486735737603008871, guid: 35052871032d2984f9b666f726822449, type: 2}
