@@ -7,24 +7,25 @@ public class BirdAlly : MonoBehaviour
     //処理
     public static int allyCount;//味方カウント
     private int allyNumber;     //味方番号
-    private bool playerFollow;  //追尾の可否
+    private bool playerFollow;  //プレイヤーへの追尾の可否
     //ビューポイント座標.X
     private float viewPointX;
     //オブジェクト
     public GameObject[] ally = new GameObject[3];//仲間オブジェクト
     //コンポーネント
-    private Transform thisTransform;  //Transform(このオブジェクト)
-    private Transform playerTransform;//Transform(プレイヤー)
-    private BoxCollider boxCollider;  //BoxCollider
-
+    private Transform thisTransform;  //"Transform"(このオブジェクト)
+    private Transform playerTransform;//"Transform"(プレイヤー)
+    private BoxCollider boxCollider;  //"BoxCollider"
+    //private Animator animator = null ;//"Animator"
 
     // Start is called before the first frame update
     void Start()
     {
-        thisTransform = this.gameObject.transform;
-        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して位置を取得
+        thisTransform = this.gameObject.transform;                //このオブジェクトの"Transform"を取得
+        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトの"BoxCollider"を取得
-        playerFollow = false;
+        //animator = this.gameObject.GetComponent<Animator>();      //このオブジェクトの"Animator"を取得
+        playerFollow = false;                                     //プレイヤーへの追尾を"false"にする
 
         Instantiate(ally[GameManager.playerNumber], this.transform.position, this.transform.rotation, thisTransform);
     }
@@ -48,6 +49,7 @@ public class BirdAlly : MonoBehaviour
         {
             Destroy(this.gameObject);
             PlayerController.allySacrifice = false;
+            //animator.SetBool("Death", true);//"Animator"の"Death"(死亡)を有効にする
         }
 
         if(playerFollow == false && viewPointX < 0)

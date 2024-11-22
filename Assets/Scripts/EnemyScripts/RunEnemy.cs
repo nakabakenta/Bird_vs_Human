@@ -11,8 +11,8 @@ public class RunEnemy : MonoBehaviour
     //処理
     private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-    private string nowAction;     //現在のアクション
-    private bool action = false;  //アクションフラグ
+    private bool action = false;  //動作フラグ
+    private string nowAction;     //現在の動作
     private float viewPointX;     //ビューポイント座標.X
     //このオブジェクトのコンポーネント
     private Transform thisTransform;  //"Transform"(このオブジェクト)
@@ -26,7 +26,7 @@ public class RunEnemy : MonoBehaviour
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
         animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
-        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して位置を取得
+        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         nowAction = "Run";
     }
 

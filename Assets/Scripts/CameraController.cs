@@ -16,8 +16,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         if(this.transform.position.x < limitPositionX)
         {
             this.transform.position += speed * transform.right * Time.deltaTime;//‰E•ûŒü‚ÉˆÚ“®‚·‚é

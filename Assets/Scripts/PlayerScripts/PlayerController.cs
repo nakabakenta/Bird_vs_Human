@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
-    private float rendererElapsedTime;     //Rendererの有効・無効の経過時間(点滅の経過時間)
+    private float rendererTimer;           //Rendererの有効・無効の経過時間(点滅の経過時間)
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの有効・無効フラグ
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     void SetPlayer()
     {
         player[GameManager.playerNumber].SetActive(true);
-        animator = player[GameManager.playerNumber].GetComponent<Animator>(); //Animatorを取得
+        animator = player[GameManager.playerNumber].GetComponent<Animator>();//"Animator"を取得
 
         if(GameManager.gameStart == false)
         {
@@ -202,15 +202,15 @@ public class PlayerController : MonoBehaviour
         isDamage = true;
 
         rendererTotalElapsedTime = 0;
-        rendererElapsedTime = 0;
+        rendererTimer = 0;
 
         while (true)
         {
             rendererTotalElapsedTime += Time.deltaTime;
-            rendererElapsedTime += Time.deltaTime;
-            if (rendererSwitch <= rendererElapsedTime)
+            rendererTimer += Time.deltaTime;
+            if (rendererSwitch <= rendererTimer)
             {
-                rendererElapsedTime = 0;       //被ダメージ点滅処理
+                rendererTimer = 0;             //被ダメージ点滅処理
                 isObjRenderer = !isObjRenderer;//Rendererの有効・無効を切り替える(点滅処理)
                 SetObjRenderer(isObjRenderer); //
             }

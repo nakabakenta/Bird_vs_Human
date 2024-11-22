@@ -58,7 +58,7 @@ public class WalkEnemy : MonoBehaviour
         //
         if (nowAction == "Run")
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//¶•ûŒü‚ÉˆÚ“®‚·‚é
+            this.transform.position += speed * transform.forward * Time.deltaTime;//‘O•ûŒü‚ÉˆÚ“®‚·‚é
         }
         //
         else if (nowAction != "Run" && action == true)
