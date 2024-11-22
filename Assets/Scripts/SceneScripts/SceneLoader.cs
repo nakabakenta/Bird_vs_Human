@@ -5,18 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void PlayerSelect()
     {
         SceneManager.LoadScene("PlayerSelect");
@@ -29,23 +17,23 @@ public class SceneLoader : MonoBehaviour
 
     public void StageScene()
     {
-        if(Stage.stage == 1)
+        if(Stage.nowStage == 1)
         {
             SceneManager.LoadScene("Stage1");
         }
-        else if (Stage.stage == 2)
+        else if (Stage.nowStage == 2)
         {
             SceneManager.LoadScene("Stage2");
         }
-        else if (Stage.stage == 3)
+        else if (Stage.nowStage == 3)
         {
             SceneManager.LoadScene("Stage3");
         }
-        else if (Stage.stage == 4)
+        else if (Stage.nowStage == 4)
         {
             SceneManager.LoadScene("Stage4");
         }
-        else if (Stage.stage == 5)
+        else if (Stage.nowStage == 5)
         {
             SceneManager.LoadScene("Stage5");
         }

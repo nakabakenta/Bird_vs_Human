@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    public static int stage;
-    public static bool[] bossEnemy = new bool[5];//ボス
-
-    public static string gameStatus;  //ゲームの状態
-
-    private SceneLoader sceneLoader;//
+    //処理
+    public static int nowStage;                  //現在のステージ
+    public static bool[] bossEnemy = new bool[5];//ボスの生存可否
+    public static string gameStatus;             //ゲームの状態
+    //このオブジェクトのコンポーネント
+    private SceneLoader sceneLoader;//"Script(SceneLoader)"
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1;
-
-        sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
-
-        bossEnemy = new bool[5] { false, false, false, false, false };
-        bossEnemy[stage - 1] = true;
-
-        gameStatus = "Play";
+        Time.timeScale = 1;                                           //"Time.timeScale(時間の進み)"を"1(通常)"にする
+        sceneLoader = this.GetComponent<SceneLoader>();               //この"Script(SceneLoader)"を取得する
+        bossEnemy = new bool[5] { false, false, false, false, false };//ボスの存在可否を"false(リセット)"する
+        bossEnemy[nowStage - 1] = true;                               //現在のステージのボスを"true(生存)"にする
+        gameStatus = "Play";                                          //ゲームの状態を"Play"にする
     }
 
     // Update is called once per frame

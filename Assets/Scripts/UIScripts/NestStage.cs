@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class NestStage : MonoBehaviour
 {
-    private SceneLoader sceneLoader;//
+    //このオブジェクトのコンポーネント
+    private SceneLoader sceneLoader;//"Script(SceneLoader)"
 
     // Start is called before the first frame update
     void Start()
     {
-        sceneLoader = GetComponent<SceneLoader>();//Script"SceneLoader"を取得する
+        sceneLoader = this.GetComponent<SceneLoader>();//この"Script(SceneLoader)"を取得する
     }
-
 
     public void NextStage()
     {
-        if (Stage.stage == 1)
+        if (Stage.nowStage == 1)
         {
-            Stage.stage = 2;
+            Stage.nowStage = 2;
         }
-        else if (Stage.stage == 2)
+        else if (Stage.nowStage == 2)
         {
-            Stage.stage = 3;
+            Stage.nowStage = 3;
         }
-        else if (Stage.stage == 3)
+        else if (Stage.nowStage == 3)
         {
-            Stage.stage = 4;
+            Stage.nowStage = 4;
         }
-        else if (Stage.stage == 4)
+        else if (Stage.nowStage == 4)
         {
-            Stage.stage = 5;
+            Stage.nowStage = 5;
         }
-        else if (Stage.stage == 5)
+        else if (Stage.nowStage == 5)
         {
             
         }

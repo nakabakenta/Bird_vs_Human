@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
     public GameObject forwardBullet, downBullet;    //弾オブジェクト
     public GameObject[] group = new GameObject[3];  //群れオブジェクト
-    //コンポーネント
+    //このオブジェクトのコンポーネント
     private Rigidbody rigidBody;     //"Rigidbody"
     private BoxCollider boxCollider; //"BoxCollider"
     private Animator animator = null;//"Animator"
@@ -88,11 +88,12 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.gameStart == false)
         {
-            hp = PlayerStatus.PlayerStatusList.hp[GameManager.playerNumber];      //体力
-            speed = PlayerStatus.PlayerStatusList.speed[GameManager.playerNumber];//移動速度
             GameManager.remain = 3;
             GameManager.gameStart = true;
         }
+
+        hp = PlayerList.Player.hp[GameManager.playerNumber];      //体力
+        speed = PlayerList.Player.speed[GameManager.playerNumber];//移動速度
     }
 
     //動作関数
@@ -183,7 +184,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        hp--;//体力"hp"を"--"する
+        hp -= 1;//体力"hp"を"-1"する
 
         //体力が0より上だったら
         if (hp > 0)
@@ -246,6 +247,7 @@ public class PlayerController : MonoBehaviour
         boxCollider.enabled = false;    //BoxColliderを無効にする
         animator.SetBool("Death", true);//Animatorの"Death"(死亡)を有効にする
         rigidBody.useGravity = true;    //RigidBodyの重力を有効にする
+        GameManager.remain--;
     }
 
     //衝突判定(OnTriggerEnter)

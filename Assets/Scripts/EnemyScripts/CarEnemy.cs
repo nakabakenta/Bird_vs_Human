@@ -11,12 +11,12 @@ public class CarEnemy : MonoBehaviour
     private float viewPointX;   //ビューポイント座標.X
     private bool action = false;//動作フラグ
     //他のオブジェクトのコンポーネント
-    private Transform playerTransform;//"Transform"(プレイヤー)
+    private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
+        playerTransform = GameObject.Find("Player").transform;//ゲームオブジェクト"Player"を探して"Transform"を取得
     }
 
     // Update is called once per frame
@@ -30,14 +30,14 @@ public class CarEnemy : MonoBehaviour
         {
             Behavior();//行動関数"Behavior"を実行する
         }
-        //(体力が"0より上 || 体力が"0以下") && ビューポート座標.Xが"0未満"であれば
-        else if ((hp > 0 || hp <= 0) && viewPointX < 0)
+        //(体力が"0以下" && ビューポート座標.Xが"0未満"であれば
+        else if (hp <= 0 || viewPointX < 0)
         {
-            Destroy();//破壊関数"Destroy"を実行する
+            Destroy();//関数"Destroy"を実行する
         }
     }
 
-    //行動関数"Behavior"
+    //関数"Behavior"
     void Behavior()
     {
         if(this.transform.position.x + EnemyStatus.CarEnemy.rangeX > playerTransform.position.x &&
@@ -46,13 +46,13 @@ public class CarEnemy : MonoBehaviour
         {
             action = true;
         }
-        else if (this.transform.position.z > 0 && action == true)
+        else if (this.transform.position.z > 1 && action == true)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
     }
 
-    //ダメージ判定関数
+    //関数"Damage"
     void Damage()
     {
         hp -= 1;//体力を"-1"する
@@ -64,7 +64,7 @@ public class CarEnemy : MonoBehaviour
         }
     }
 
-    //死亡関数"Death"
+    //関数"Death"
     void Death()
     {
         hp = 0;                                          //体力を"0"にする
@@ -72,7 +72,7 @@ public class CarEnemy : MonoBehaviour
         this.tag = "Death";                              //このタグを"Death"に変更する
     }
 
-    //破壊関数"Destroy"
+    //関数"Destroy"
     void Destroy()
     {
         Destroy(this.gameObject);//このオブジェクトを消す

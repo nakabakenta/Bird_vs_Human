@@ -88,12 +88,12 @@ public class StageUI : MonoBehaviour
             pauseUI.SetActive(false);
         }
 
-        if (Stage.bossEnemy[Stage.stage - 1] == false)
+        if (Stage.bossEnemy[Stage.nowStage - 1] == false)
         {
             stageClearUI.SetActive(true);
         }
 
-        if(PlayerController.hp <= 0)
+        if(GameManager.remain > 0 && PlayerController.hp <= 0)
         {
             continueUI.SetActive(true);
         }
