@@ -199,7 +199,7 @@ public class BossEnemy : MonoBehaviour
         GameManager.score += EnemyStatus.RunEnemy.score;//
         this.tag = "Death";                             //ƒ^ƒO‚ğ"Death"‚É•ÏX‚·‚é
         animator.SetInteger("Motion", 4);               //
-        Stage.bossEnemy[Stage.nowStage--] = false;
+        Stage.bossEnemy[Stage.nowStage - 1] = false;
     }
 
     //“–‚½‚è”»’è(OnTriggerEnter)
