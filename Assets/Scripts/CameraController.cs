@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //処理
-    private float speed = 2.0f;           //移動速度
-    private float limitPositionX = 100.0f;//移動制限.X
+    private float speed = 2.0f;         //移動速度
+    private float maxPositionX = 100.0f;//最大移動座標.X
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x < limitPositionX && PlayerController.hp > 0)
+        if (this.transform.position.x < maxPositionX && PlayerController.hp > 0)
         {
             this.transform.position += speed * transform.right * Time.deltaTime;//右方向に移動する
         }

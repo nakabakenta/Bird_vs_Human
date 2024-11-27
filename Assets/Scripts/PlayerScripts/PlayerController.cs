@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     private float attackIntervalD = 0.50f;//攻撃間隔(落下攻撃)
     private float invincibleTimer = 0.0f; //無敵タイマー
     private float invincible = 10.0f;     //無敵継続時間
-    //ビューポイント座標.X, Y
-    private float viewPointX, viewPointY;
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
@@ -30,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
     public GameObject forwardBullet, downBullet;    //弾オブジェクト
     public GameObject[] group = new GameObject[3];  //群れオブジェクト
+    //トランスフォーム
+    public Transform mainCamera;
     //このオブジェクトのコンポーネント
     private Rigidbody rigidBody;     //"Rigidbody"
     private BoxCollider boxCollider; //"BoxCollider"
@@ -37,11 +37,8 @@ public class PlayerController : MonoBehaviour
     private Renderer[] objRenderer;  //"Renderer"
     //コルーチン
     private Coroutine blinking;//
-    //マウス座標
-    private Vector3 mousePosition, worldPosition;
-
-    public Vector2 minBounds; // 移動範囲の最小値 (x, y)
-    public Vector2 maxBounds; // 移動範囲の最大値 (x, y)
+    //座標
+    private Vector3 mousePosition, worldPosition, viewPortPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -77,10 +74,6 @@ public class PlayerController : MonoBehaviour
         {
             Behavior();//関数PlayControlを呼び出す
         }
-
-        //ビューポイント座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
-        viewPointY = Camera.main.WorldToViewportPoint(this.transform.position).y;//画面Y座標
     }
 
     //ステータスを設定
@@ -102,26 +95,16 @@ public class PlayerController : MonoBehaviour
     //動作関数
     void Behavior()
     {
-
-        //mousePosition = Input.mousePosition;
-
-        //mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.0f));//カメラからの距離を指定
-
-        //worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-
-
-        //マウス座標を取得して、スクリーン座標をワールド座標に変換する
-        worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.0f));
-
-        //float clampedX = Mathf.Clamp(worldPosition.x, minBounds.x, maxBounds.x);
-        pos.x = Mathf.Clamp(worldPosition.y, minBounds.y, maxBounds.y);
-
         //
         if (Stage.gameStatus == "Play")
         {
-            //this.transform.position = worldPosition;
-            this.transform.position = new Vector3(worldPosition.x, clampedY, worldPosition.z);
+            mousePosition = Input.mousePosition;
+            viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
+
+            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, 0, 1);
+            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, 0.2f, 0.8f);
+
+            this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 
             //前方攻撃
             if (Input.GetMouseButton(0) && attackTimerF > attackIntervalF)
@@ -143,29 +126,6 @@ public class PlayerController : MonoBehaviour
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
             }
         }
-
-        //Vector3 position = this.transform.position;
-
-        //if (viewPointX >= 0 && viewPointX <= 1)
-        //{
-        //    position.x = worldPosition.x;
-        //    this.transform.position = position;
-        //}
-        //else
-        //{
-
-        //}
-
-        //if (viewPointY >= 0 && viewPointY <= 1)
-        //{
-        //    position.y = worldPosition.y;
-        //    this.transform.position = position;
-        //}
-        //else
-        //{
-
-        //}
-
         //
         if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
         {

@@ -36,7 +36,7 @@ public class EnemyStatus : MonoBehaviour
         //ステータス
         public static int hp = 10;        //体力
         public static int power = 2;      //攻撃力
-        public static float speed = 15.0f;//移動速度
+        public static float speed = 30.0f;//移動速度
         public static float rangeX = 3.0f;//プレイヤーの認識範囲.X
         public static int score = 500;    //倒した時のスコア
     }

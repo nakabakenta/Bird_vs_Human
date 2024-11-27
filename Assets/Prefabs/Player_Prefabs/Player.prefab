@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3185073247341996839}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -84,8 +84,7 @@ MonoBehaviour:
   - {fileID: 6009275135945947292, guid: 2af1bd2499a25f84bbf325a876ac3b9d, type: 3}
   - {fileID: 1061544703686887077, guid: 2b0237fc08b86e949be24bcc14c17d1e, type: 3}
   - {fileID: 5062882754484529865, guid: 90618d5b9f2b55e4fab358bb41c31dce, type: 3}
-  minBounds: {x: -5, y: -5}
-  maxBounds: {x: 5, y: 5}
+  mainCamera: {fileID: 5854828490306869540, guid: 6c6a3ade3c09ca4488a868a1bceba373, type: 3}
 --- !u!1001 &4719556588594329185
 PrefabInstance:
   m_ObjectHideFlags: 0
