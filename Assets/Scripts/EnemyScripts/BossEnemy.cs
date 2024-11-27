@@ -107,18 +107,18 @@ public class BossEnemy : MonoBehaviour
     {
         if (PlayerController.hp > 0 && nowAction == "Attack")
         {
-            random = (int)Random.Range(1, 3);     //ランダム処理(1～2)
+            random = (int)Random.Range(10, 12);     //ランダム処理(10～11)
             animator.SetInteger("Motion", random);//"Animator"の"Motion, 1～2"(攻撃)を有効にする
             Debug.Log(random);                    //デバックログ
         }
         else if (PlayerController.hp > 0 && nowAction == "jump")
         {
-            animator.SetInteger("Motion", 10);
+            animator.SetInteger("Motion", 20);
         }
         else if (PlayerController.hp <= 0)
         {
             nowAction = "Dance";
-            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンス)を有効にする
+            animator.SetInteger("Motion", 30);//"Animator"の"Motion, 3"(ダンス)を有効にする
         }
     }
 
@@ -198,7 +198,7 @@ public class BossEnemy : MonoBehaviour
         hp = 0;                                         //体力を"0"にする
         GameManager.score += EnemyStatus.RunEnemy.score;//
         this.tag = "Death";                             //タグを"Death"に変更する
-        animator.SetInteger("Motion", 4);               //
+        animator.SetInteger("Motion", 31);               //
         Stage.bossEnemy[Stage.nowStage - 1] = false;
     }
 

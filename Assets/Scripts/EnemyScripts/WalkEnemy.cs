@@ -78,14 +78,14 @@ public class WalkEnemy : MonoBehaviour
     {
         if (PlayerController.hp > 0 && nowAction == "Attack")
         {
-            random = (int)Random.Range(1, 3);     //ランダム処理(1～2)
+            random = (int)Random.Range(10, 12);     //ランダム処理(1～2)
             animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効にする
             Debug.Log(random);                    //Debug.Log(random)
         }
         else if (PlayerController.hp <= 0)
         {
             nowAction = "Dance";
-            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンスモーション)を有効にする
+            animator.SetInteger("Motion", 30);//"Animator"の"Motion, 3"(ダンスモーション)を有効にする
         }
     }
 
@@ -97,25 +97,25 @@ public class WalkEnemy : MonoBehaviour
         if (nowAction == "Attack")
         {
             //
-            if (random == 1)
+            if (random == 10)
             {
                 //
                 if (interval >= 2.0f)
                 {
-                    interval = 0.0f;                 //
-                    animator.SetInteger("Motion", 0);//
+                    interval = 0.0f;                      //
+                    animator.SetInteger("Motion", random);//
                     action = false;
                     nowAction = "Run";
                 }
             }
             //
-            else if (random == 2)
+            else if (random == 11)
             {
                 //
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
-                    animator.SetInteger("Motion", 0);//
+                    animator.SetInteger("Motion", random);//
                     action = false;
                     nowAction = "Run";
                 }
@@ -141,7 +141,7 @@ public class WalkEnemy : MonoBehaviour
         hp = 0;                                          //体力を"0"にする
         GameManager.score += EnemyStatus.WalkEnemy.score;//
         this.tag = "Death";                              //タグを"Death"に変更する
-        animator.SetInteger("Motion", 4);                //
+        animator.SetInteger("Motion", 31);               //
     }
 
     //当たり判定(OnTriggerEnter)

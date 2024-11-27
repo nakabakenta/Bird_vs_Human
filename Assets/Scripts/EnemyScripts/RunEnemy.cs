@@ -25,7 +25,7 @@ public class RunEnemy : MonoBehaviour
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
-        animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
+        animator.SetInteger("Motion", 1);                         //アニメーションを"Motion, 0"(走る)にする
         playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         nowAction = "Run";
     }
@@ -108,18 +108,18 @@ public class RunEnemy : MonoBehaviour
     {
         if (PlayerController.hp > 0 && nowAction == "Attack")
         {
-            random = (int)Random.Range(1, 3);     //ランダム処理(1～2)
+            random = (int)Random.Range(10, 12);     //ランダム処理(10～11)
             animator.SetInteger("Motion", random);//"Animator"の"Motion, 1～2"(攻撃)を有効にする
             Debug.Log(random);                    //デバックログ
         }
         else if(PlayerController.hp > 0 && nowAction == "jump")
         {
-            animator.SetInteger("Motion", 10);
+            animator.SetInteger("Motion", 20);
         }
         else if (PlayerController.hp <= 0)
         {
             nowAction = "Dance";
-            animator.SetInteger("Motion", 3);//"Animator"の"Motion, 3"(ダンス)を有効にする
+            animator.SetInteger("Motion", 30);//"Animator"の"Motion, 3"(ダンス)を有効にする
         }
     }
 
@@ -137,7 +137,7 @@ public class RunEnemy : MonoBehaviour
                 if (interval >= 2.0f)
                 {
                     interval = 0.0f;                 //
-                    animator.SetInteger("Motion", 0);//
+                    animator.SetInteger("Motion", 1);//
                     action = false;
                     nowAction = "Run";
                 }
@@ -149,7 +149,7 @@ public class RunEnemy : MonoBehaviour
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
-                    animator.SetInteger("Motion", 0);//
+                    animator.SetInteger("Motion", 1);//
                     action = false;
                     nowAction = "Run";
                 }
@@ -172,7 +172,7 @@ public class RunEnemy : MonoBehaviour
                 {
                     animator.SetFloat("MoveSpeed", 1.0f);//
                     interval = 0.0f;
-                    animator.SetInteger("Motion", 0);//
+                    animator.SetInteger("Motion", 1);//
                     action = false;
                     nowAction = "Run";
                 }
@@ -199,7 +199,7 @@ public class RunEnemy : MonoBehaviour
         hp = 0;                                         //体力を"0"にする
         GameManager.score += EnemyStatus.RunEnemy.score;//
         this.tag = "Death";                             //タグを"Death"に変更する
-        animator.SetInteger("Motion", 4);               //
+        animator.SetInteger("Motion", 31);              //
     }
 
     //当たり判定(OnTriggerEnter)
