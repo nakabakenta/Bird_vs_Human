@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
     //マウス座標
     private Vector3 mousePosition, worldPosition;
 
+    public Vector2 minBounds; // 移動範囲の最小値 (x, y)
+    public Vector2 maxBounds; // 移動範囲の最大値 (x, y)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,13 +102,26 @@ public class PlayerController : MonoBehaviour
     //動作関数
     void Behavior()
     {
+
+        //mousePosition = Input.mousePosition;
+
+        //mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.0f));//カメラからの距離を指定
+
+        //worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+
+
         //マウス座標を取得して、スクリーン座標をワールド座標に変換する
         worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9.0f));
 
+        //float clampedX = Mathf.Clamp(worldPosition.x, minBounds.x, maxBounds.x);
+        pos.x = Mathf.Clamp(worldPosition.y, minBounds.y, maxBounds.y);
+
         //
-        if(Stage.gameStatus == "Play")
+        if (Stage.gameStatus == "Play")
         {
-            this.transform.position = worldPosition;
+            //this.transform.position = worldPosition;
+            this.transform.position = new Vector3(worldPosition.x, clampedY, worldPosition.z);
 
             //前方攻撃
             if (Input.GetMouseButton(0) && attackTimerF > attackIntervalF)

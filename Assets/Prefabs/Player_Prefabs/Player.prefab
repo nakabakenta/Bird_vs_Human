@@ -84,6 +84,8 @@ MonoBehaviour:
   - {fileID: 6009275135945947292, guid: 2af1bd2499a25f84bbf325a876ac3b9d, type: 3}
   - {fileID: 1061544703686887077, guid: 2b0237fc08b86e949be24bcc14c17d1e, type: 3}
   - {fileID: 5062882754484529865, guid: 90618d5b9f2b55e4fab358bb41c31dce, type: 3}
+  minBounds: {x: -5, y: -5}
+  maxBounds: {x: 5, y: 5}
 --- !u!1001 &4719556588594329185
 PrefabInstance:
   m_ObjectHideFlags: 0
