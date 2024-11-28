@@ -8,22 +8,22 @@ public class WalkEnemy : MonoBehaviour
     private int hp = EnemyStatus.WalkEnemy.hp;        //体力
     private float speed = EnemyStatus.WalkEnemy.speed;//移動速度
     //処理
-    private int random = 0;       //ランダム
-    private float interval = 0.0f;//間隔
-    private string nowAction;     //現在の動作
-    private bool action = false;  //動作フラグ
-    private float viewPointX;     //ビューポイント座標.X
-   //このオブジェクトのコンポーネント
-    private Transform setTransform;  //"Transform"
+    private float interval = 0.0f;   //間隔
+    private float viewPointX;        //ビューポイント座標.X
+    //アニメーション
+    private int nowAnimation;        //現在のアニメーション
+    private bool isAnimation = false;//アニメーションの可否
+    //このオブジェクトのコンポーネント
+    private Transform thisTransform; //"Transform"
     private Animator animator = null;//"Animator"
 
     // Start is called before the first frame update
     void Start()
     {
-        setTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトのTransformを取得
-        animator = this.GetComponent<Animator>();                //このオブジェクトのAnimatorを取得
-        animator.SetInteger("Motion", 0);                        //Animatorの"Motion, 0"(歩く)を有効にする
-        nowAction = "Run";
+        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
+        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animatorを取得
+        nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+        Animation();
     }
 
     // Update is called once per frame
@@ -44,31 +44,31 @@ public class WalkEnemy : MonoBehaviour
         }
     }
 
-
     void Behavior()
     {
-        Vector3 localPosition = setTransform.localPosition;//オブジェクトの
-        Vector3 localAngle = setTransform.localEulerAngles;//
+        Vector3 localPosition = thisTransform.localPosition;//オブジェクトの
+        Vector3 localAngle = thisTransform.localEulerAngles;//
         localPosition.y = 0.0f;//
         localPosition.z = 1.0f;//
         localAngle.y = -EnemyStatus.rotationY;//
-        setTransform.localPosition = localPosition;       //ローカル座標での座標を設定
-        setTransform.localEulerAngles = localAngle;       //
+        thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
+        thisTransform.localEulerAngles = localAngle;       //
 
         //
-        if (nowAction == "Run")
+        if (nowAnimation == EnemyStatus.HumanoidAnimation.walk)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
         //
-        else if (nowAction != "Run" && action == true)
+        else if (nowAnimation != EnemyStatus.HumanoidAnimation.walk && isAnimation == true)
         {
             Wait();
         }
 
         //
-        if (PlayerController.hp <= 0 && action == false)
+        if (PlayerController.hp <= 0 && isAnimation == false)
         {
+            nowAnimation = EnemyStatus.HumanoidAnimation.dance;
             Animation();//アニメーション関数を実行
         }
     }
@@ -76,17 +76,8 @@ public class WalkEnemy : MonoBehaviour
     //アニメーション関数
     void Animation()
     {
-        if (PlayerController.hp > 0 && nowAction == "Attack")
-        {
-            random = (int)Random.Range(10, 12);     //ランダム処理(1～2)
-            animator.SetInteger("Motion", random);//AnimatorのAttackMotion(1～2)を有効にする
-            Debug.Log(random);                    //Debug.Log(random)
-        }
-        else if (PlayerController.hp <= 0)
-        {
-            nowAction = "Dance";
-            animator.SetInteger("Motion", 30);//"Animator"の"Motion, 3"(ダンスモーション)を有効にする
-        }
+        animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定する
+        Debug.Log(nowAnimation);//"Debug.Log(nowAnimation)"
     }
 
     //待機関数
@@ -94,30 +85,31 @@ public class WalkEnemy : MonoBehaviour
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-        if (nowAction == "Attack")
+        if (nowAnimation == EnemyStatus.HumanoidAnimation.punch ||
+            nowAnimation == EnemyStatus.HumanoidAnimation.kick)
         {
             //
-            if (random == 10)
+            if (nowAnimation == EnemyStatus.HumanoidAnimation.punch)
             {
                 //
                 if (interval >= 2.0f)
                 {
-                    interval = 0.0f;                      //
-                    animator.SetInteger("Motion", random);//
-                    action = false;
-                    nowAction = "Run";
+                    interval = 0.0f;
+                    isAnimation = false;
+                    nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+                    Animation();
                 }
             }
             //
-            else if (random == 11)
+            else if (nowAnimation == EnemyStatus.HumanoidAnimation.kick)
             {
                 //
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
-                    animator.SetInteger("Motion", random);//
-                    action = false;
-                    nowAction = "Run";
+                    isAnimation = false;
+                    nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+                    Animation();
                 }
             }
         }
@@ -138,20 +130,21 @@ public class WalkEnemy : MonoBehaviour
     //死亡関数
     void Death()
     {
-        hp = 0;                                          //体力を"0"にする
-        GameManager.score += EnemyStatus.WalkEnemy.score;//
-        this.tag = "Death";                              //タグを"Death"に変更する
-        animator.SetInteger("Motion", 31);               //
+        hp = 0;                                            //体力を"0"にする
+        GameManager.score += EnemyStatus.WalkEnemy.score;  //
+        this.tag = "Death";                                //タグを"Death"に変更する
+        nowAnimation = EnemyStatus.HumanoidAnimation.death;
+        Animation();
     }
 
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
         //タグPlayerの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Player" && action == false)
+        if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
-            action = true;
-            nowAction = "Attack";
+            isAnimation = true;
+            nowAnimation = (int)Random.Range(EnemyStatus.HumanoidAnimation.punch, EnemyStatus.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら

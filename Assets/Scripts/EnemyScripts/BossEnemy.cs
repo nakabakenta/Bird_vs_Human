@@ -9,11 +9,11 @@ public class BossEnemy : MonoBehaviour
     private float speed = EnemyStatus.BossEnemy.speed[0];//移動速度
     private float jump = EnemyStatus.BossEnemy.speed[0]; //ジャンプ力
     //処理
-    private int random = 0;       //ランダム
     private float interval = 0.0f;//間隔
-    private string nowAction;     //現在のアクション
-    private bool action = false;  //アクションフラグ
     private float viewPointX;     //ビューポイント座標.X
+    //アニメーション
+    private int nowAnimation;        //現在のアニメーション
+    private bool isAnimation = false;//アニメーションの可否
     //このオブジェクトのコンポーネント
     private Transform thisTransform;  //"Transform"(このオブジェクト)
     private Animator animator = null; //"Animator"(このオブジェクト)
@@ -25,9 +25,9 @@ public class BossEnemy : MonoBehaviour
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
-        animator.SetInteger("Motion", 0);                         //アニメーションを"Motion, 0"(走る)にする
-        playerTransform = GameObject.Find("Player").transform;    //
-        nowAction = "Run";
+        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
+        nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+        Animation();
     }
 
     // Update is called once per frame
@@ -56,14 +56,15 @@ public class BossEnemy : MonoBehaviour
         if (this.transform.position.x + EnemyStatus.RunEnemy.rangeX > playerTransform.position.x &&
             this.transform.position.x - EnemyStatus.RunEnemy.rangeX < playerTransform.position.x &&
             this.transform.position.y + EnemyStatus.RunEnemy.rangeY < playerTransform.position.y &&
-            nowAction == "Run" && action == false && this.transform.position.y == 0.0f)
+            this.transform.position.y == 0.0f && nowAnimation == EnemyStatus.HumanoidAnimation.walk &&
+            isAnimation == false)
         {
-            action = true;
-            nowAction = "jump";
+            isAnimation = true;
+            nowAnimation = EnemyStatus.HumanoidAnimation.jump;
             Animation();
         }
 
-        if (nowAction == "Run")
+        if (nowAnimation == EnemyStatus.HumanoidAnimation.walk)
         {
             localPosition.y = 0.0f;//
         }
@@ -85,19 +86,20 @@ public class BossEnemy : MonoBehaviour
         thisTransform.localEulerAngles = localAngle;//
 
         //
-        if (nowAction == "Run")
+        if (nowAnimation == EnemyStatus.HumanoidAnimation.walk)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
         //
-        else if (nowAction != "Run" && action == true)
+        else if (nowAnimation != EnemyStatus.HumanoidAnimation.walk && isAnimation == true)
         {
             Wait();
         }
 
         //
-        if (PlayerController.hp <= 0 && action == false)
+        if (PlayerController.hp <= 0 && isAnimation == false)
         {
+            nowAnimation = EnemyStatus.HumanoidAnimation.dance;
             Animation();//アニメーション関数を実行
         }
     }
@@ -105,21 +107,8 @@ public class BossEnemy : MonoBehaviour
     //アニメーション関数
     void Animation()
     {
-        if (PlayerController.hp > 0 && nowAction == "Attack")
-        {
-            random = (int)Random.Range(10, 12);     //ランダム処理(10～11)
-            animator.SetInteger("Motion", random);//"Animator"の"Motion, 1～2"(攻撃)を有効にする
-            Debug.Log(random);                    //デバックログ
-        }
-        else if (PlayerController.hp > 0 && nowAction == "jump")
-        {
-            animator.SetInteger("Motion", 20);
-        }
-        else if (PlayerController.hp <= 0)
-        {
-            nowAction = "Dance";
-            animator.SetInteger("Motion", 30);//"Animator"の"Motion, 3"(ダンス)を有効にする
-        }
+        animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定する
+        Debug.Log(nowAnimation);                    //"Debug.Log(nowAnimation)"
     }
 
     //待機関数
@@ -127,53 +116,52 @@ public class BossEnemy : MonoBehaviour
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-        if (nowAction == "Attack")
+        if (nowAnimation == EnemyStatus.HumanoidAnimation.punch ||
+            nowAnimation == EnemyStatus.HumanoidAnimation.kick)
         {
             //
-            if (random == 1)
+            if (nowAnimation == EnemyStatus.HumanoidAnimation.punch)
             {
                 //
                 if (interval >= 2.0f)
                 {
-                    interval = 0.0f;                 //
-                    animator.SetInteger("Motion", 0);//
-                    action = false;
-                    nowAction = "Run";
+                    interval = 0.0f;
+                    isAnimation = false;
+                    nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+                    Animation();
                 }
             }
             //
-            else if (random == 2)
+            else if (nowAnimation == EnemyStatus.HumanoidAnimation.kick)
             {
                 //
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
-                    animator.SetInteger("Motion", 0);//
-                    action = false;
-                    nowAction = "Run";
+                    isAnimation = false;
+                    nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+                    Animation();
                 }
             }
         }
         //
-        else if (nowAction == "jump")
+        else if (nowAnimation == EnemyStatus.HumanoidAnimation.jump)
         {
             if (interval >= 0.75f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (interval >= 1.0f)
-                {
-                    animator.SetFloat("MoveSpeed", 0.0f);//一時停止
-                }
-
-                //
                 if (interval >= 2.0f)
                 {
-                    animator.SetFloat("MoveSpeed", 1.0f);//
+                    animator.SetFloat("MoveSpeed", 1.0f);             //"animator(MoveSpeed)"を"1.0f(再生)"にする
                     interval = 0.0f;
-                    animator.SetInteger("Motion", 0);//
-                    action = false;
-                    nowAction = "Run";
+                    isAnimation = false;
+                    nowAnimation = EnemyStatus.HumanoidAnimation.walk;
+                    Animation();
+                }
+                else if (interval >= 1.0f)
+                {
+                    animator.SetFloat("MoveSpeed", 0.0f);             //"animator(MoveSpeed)"を"0.0f(停止)"にする
                 }
             }
         }
@@ -194,22 +182,22 @@ public class BossEnemy : MonoBehaviour
     //死亡関数
     void Death()
     {
-        this.transform.position = new Vector3(thisTransform.position.x, 0.0f, thisTransform.position.z);
-        hp = 0;                                         //体力を"0"にする
-        GameManager.score += EnemyStatus.RunEnemy.score;//
-        this.tag = "Death";                             //タグを"Death"に変更する
-        animator.SetInteger("Motion", 31);               //
+        hp = 0;                                            //体力を"0"にする
+        GameManager.score += EnemyStatus.WalkEnemy.score;  //
+        this.tag = "Death";                                //タグを"Death"に変更する
+        nowAnimation = EnemyStatus.HumanoidAnimation.death;
         Stage.bossEnemy[Stage.nowStage - 1] = false;
+        Animation();
     }
 
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグPlayerの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Player" && action == false)
+        //衝突したオブジェクトのタグが"Player" && "action"が"false"だったら
+        if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
-            action = true;
-            nowAction = "Attack";
+            isAnimation = true;
+            nowAnimation = (int)Random.Range(EnemyStatus.HumanoidAnimation.punch, EnemyStatus.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら

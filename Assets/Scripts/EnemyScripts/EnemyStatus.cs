@@ -51,4 +51,16 @@ public class EnemyStatus : MonoBehaviour
         public static float[] jump = new float[5] { 4.0f, 1.0f, 1.0f, 1.0f, 1.0f }; //ジャンプ力
         public static int[] score = new int[5] { 1000, 1000, 1000, 1000, 1000 };    //倒した時のスコア
     }
+
+    public static class HumanoidAnimation
+    {
+        public static int walk = 0;
+        public static int run  = 1;
+        public static int punch = 10;
+        public static int kick = 11;
+        public static int jump = 20;
+
+        public static int dance = 30;
+        public static int death = 31;
+    }
 }
