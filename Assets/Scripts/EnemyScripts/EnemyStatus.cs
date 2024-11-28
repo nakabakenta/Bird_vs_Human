@@ -29,6 +29,14 @@ public class EnemyStatus : MonoBehaviour
         public static float rangeY = 2.0f; //プレイヤーの認識範囲.Y
         public static int score = 100;     //倒した時のスコア
     }
+    //敵(しゃがむ)
+    public static class CrouchEnemy
+    {
+        //ステータス
+        public static int hp = 5;     //体力
+        public static int power = 1;  //攻撃力
+        public static int score = 100;//倒した時のスコア
+    }
 
     //敵(車)
     public static class CarEnemy
@@ -54,13 +62,14 @@ public class EnemyStatus : MonoBehaviour
 
     public static class HumanoidAnimation
     {
-        public static int walk = 0;
-        public static int run  = 1;
-        public static int punch = 10;
-        public static int kick = 11;
-        public static int jump = 20;
-
-        public static int dance = 30;
-        public static int death = 31;
+        public static int walk    = 0;
+        public static int run     = 1;
+        public static int punch   = 10;
+        public static int kick    = 11;
+        public static int jump    = 20; 
+        public static int crouch  = 21;
+        public static int carExit = 22;
+        public static int dance   = 30;
+        public static int death   = 31;
     }
 }

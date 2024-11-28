@@ -2675,9 +2675,9 @@ GameObject:
   - component: {fileID: 3437103679866220825}
   - component: {fileID: 1461107666547749730}
   - component: {fileID: -8988433909251710607}
-  - component: {fileID: -709451310557567968}
+  - component: {fileID: -2829179386873247155}
   m_Layer: 0
-  m_Name: Pete
+  m_Name: Pete_Crouch
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2757,7 +2757,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &-709451310557567968
+--- !u!114 &-2829179386873247155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2766,7 +2766,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8221593721495400921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808a97695e67f2f448d6e3139d4a5045, type: 3}
+  m_Script: {fileID: 11500000, guid: 85a78ad08212cd9478903ae02ec59e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8540364398915654150
