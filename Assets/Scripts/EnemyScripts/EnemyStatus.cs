@@ -60,6 +60,15 @@ public class EnemyStatus : MonoBehaviour
         public static int score = 100;     //倒した時のスコア
     }
 
+    public static class FighterJetEnemy
+    {
+        //ステータス
+        public static int hp = 5;        //体力
+        public static int power = 1;     //攻撃力
+        public static float speed = 8.0f;//移動速度
+        public static int score = 100;   //倒した時のスコア
+    }
+
     //ボス(ステージ1～5)
     public static class BossEnemy
     {

@@ -184,6 +184,7 @@ public class RunEnemy : MonoBehaviour
     void Death()
     {
         hp = 0;                                            //‘Ì—Í‚ğ"0"‚É‚·‚é
+        this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
         GameManager.score += EnemyStatus.WalkEnemy.score;  //
         this.tag = "Death";                                //ƒ^ƒO‚ğ"Death"‚É•ÏX‚·‚é
         nowAnimation = EnemyStatus.HumanoidAnimation.death;

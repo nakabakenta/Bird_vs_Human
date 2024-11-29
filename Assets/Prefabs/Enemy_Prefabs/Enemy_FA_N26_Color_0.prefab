@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 3869003692021146948}
   - component: {fileID: 172537900049688716}
   - component: {fileID: 4957846938622607865}
+  - component: {fileID: -4498956966397538262}
   m_Layer: 0
   m_Name: Enemy_FA_N26_Color_0
   m_TagString: Enemy
@@ -328,11 +329,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4376080108868839016}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 14, y: 2.5, z: 21}
   m_Center: {x: 0, y: 1.25, z: 1.125}
+--- !u!114 &-4498956966397538262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376080108868839016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9cbcdb3975a3748b912e84ca5ce2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBullet: {fileID: 1306594059243497752, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
 --- !u!1 &5967796465537801755
 GameObject:
   m_ObjectHideFlags: 0

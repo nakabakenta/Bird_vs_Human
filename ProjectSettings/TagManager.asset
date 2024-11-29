@@ -12,6 +12,7 @@ TagManager:
   - lb_groundTarget
   - AICars
   - BossEnemy
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

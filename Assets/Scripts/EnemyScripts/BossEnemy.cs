@@ -66,7 +66,7 @@ public class BossEnemy : MonoBehaviour
 
         if (nowAnimation == EnemyStatus.HumanoidAnimation.walk)
         {
-            this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
+            localPosition.y = 0.0f;//
         }
 
         localPosition.z = 1.0f;//
@@ -183,6 +183,7 @@ public class BossEnemy : MonoBehaviour
     void Death()
     {
         hp = 0;                                            //ëÃóÕÇ"0"Ç…Ç∑ÇÈ
+        this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
         GameManager.score += EnemyStatus.WalkEnemy.score;  //
         this.tag = "Death";                                //É^ÉOÇ"Death"Ç…ïœçXÇ∑ÇÈ
         nowAnimation = EnemyStatus.HumanoidAnimation.death;
