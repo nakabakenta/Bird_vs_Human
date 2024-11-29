@@ -2968,9 +2968,9 @@ GameObject:
   - component: {fileID: 2497062880926373734}
   - component: {fileID: 469077009388583473}
   - component: {fileID: -890447698132919617}
-  - component: {fileID: -6513567485943598896}
+  - component: {fileID: -1852375260758202553}
   m_Layer: 0
-  m_Name: Joe
+  m_Name: Joe_Run
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3051,7 +3051,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &-6513567485943598896
+--- !u!114 &-1852375260758202553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3060,7 +3060,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9154873621290915750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808a97695e67f2f448d6e3139d4a5045, type: 3}
+  m_Script: {fileID: 11500000, guid: e6ccde9e83c18e643b2117b783b6f0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9220971196131986995

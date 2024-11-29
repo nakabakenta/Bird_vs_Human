@@ -11,10 +11,8 @@ public class PlayerController : MonoBehaviour
     public static bool useGage;       //ƒQ[ƒW‚Ìg—p‰Â”Û
     public static bool allySacrifice; //–¡•û‚Ì‹]µ‰Â”Û
     //ˆ—
-    private float attackTimerF = 0.25f;   //‘OUŒ‚ŠÔŠuƒ^ƒCƒ}[
-    private float attackTimerD = 0.50f;   //‰ºUŒ‚ŠÔŠuƒ^ƒCƒ}[
-    private float attackIntervalF = 0.25f;//UŒ‚ŠÔŠu(‘O•ûUŒ‚)
-    private float attackIntervalD = 0.50f;//UŒ‚ŠÔŠu(—‰ºUŒ‚)
+    public static float[] attackTimer = new float[2];   //UŒ‚ŠÔŠuƒ^ƒCƒ}[
+    public static float[] attackInterval = new float[2];//UŒ‚ŠÔŠu
     private float invincibleTimer = 0.0f; //–³“Gƒ^ƒCƒ}[
     private float invincible = 10.0f;     //–³“GŒp‘±ŠÔ
     //ƒ_ƒ[ƒWŠÖŒW•Ï”
@@ -67,8 +65,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //ƒN[ƒ‹ƒ^ƒCƒ€‚ÉTime.deltaTime‚ğ‘«‚·
-        attackTimerF += Time.deltaTime;
-        attackTimerD += Time.deltaTime;
+        attackTimer[0] += Time.deltaTime;
+        attackTimer[1] += Time.deltaTime;
 
         if(hp > 0)
         {
@@ -90,6 +88,11 @@ public class PlayerController : MonoBehaviour
 
         hp = PlayerList.Player.hp[GameManager.playerNumber];      //‘Ì—Í
         speed = PlayerList.Player.speed[GameManager.playerNumber];//ˆÚ“®‘¬“x
+        attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
+        attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
+
+        attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
+        attackInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
     }
 
     //“®ìŠÖ”
@@ -107,16 +110,16 @@ public class PlayerController : MonoBehaviour
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 
             //‘O•ûUŒ‚
-            if (Input.GetMouseButton(0) && attackTimerF > attackIntervalF)
+            if (Input.GetMouseButton(0) && attackTimer[0] > attackInterval[0])
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
-                attackTimerF = 0.0f;
+                attackTimer[0] = 0.0f;
             }
             //—‰ºUŒ‚
-            if (Input.GetMouseButton(1) && attackTimerD > attackIntervalD)
+            if (Input.GetMouseButton(1) && attackTimer[1] > attackInterval[1])
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
-                attackTimerD = 0.0f;
+                attackTimer[1] = 0.0f;
             }
             //ƒQ[ƒW‰ğ•ú
             if (Input.GetKeyDown(KeyCode.E) && useGage == true)

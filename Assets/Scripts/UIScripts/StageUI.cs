@@ -1,27 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class StageUI : MonoBehaviour
 {
-    private TMP_Text score;      //TMP_Text(スコア)
-    private TMP_Text remain;     //TMP_Text(残り)
-    private TMP_Text hp;         //TMP_Text(体力)
+    private Image forwardBullet_UI;
+    private Image downBullet_UI;
+
     private GameObject pauseUI;
     private GameObject stageClearUI;
     private GameObject continueUI;
+    private TMP_Text score;      //TMP_Text(スコア)
+    private TMP_Text remain;     //TMP_Text(残り)
+    private TMP_Text hp;         //TMP_Text(体力)
 
     // Start is called before the first frame update
     void Start()
     {
-        score = GameObject.Find("SCORE").GetComponent<TMP_Text>();  //
-        remain = GameObject.Find("REMAIN").GetComponent<TMP_Text>();//
-        hp = GameObject.Find("HP").GetComponent<TMP_Text>();
+        forwardBullet_UI = GameObject.Find("ForwardBullet_Front_UI").GetComponent<Image>();
+        downBullet_UI = GameObject.Find("DownBullet_Front_UI").GetComponent<Image>();
 
         pauseUI = GameObject.Find("Pause_UI");
         stageClearUI = GameObject.Find("StageClear_UI");
         continueUI = GameObject.Find("Continue_UI");
+
+        score = GameObject.Find("SCORE").GetComponent<TMP_Text>();  //
+        remain = GameObject.Find("REMAIN").GetComponent<TMP_Text>();//
+        hp = GameObject.Find("HP").GetComponent<TMP_Text>();
 
         pauseUI.SetActive(false);
         stageClearUI.SetActive(false);
@@ -96,6 +103,32 @@ public class StageUI : MonoBehaviour
         if(GameManager.remain > 0 && PlayerController.hp <= 0)
         {
             continueUI.SetActive(true);
+        }
+
+        if (PlayerController.attackTimer[0] == 0)
+        {
+            forwardBullet_UI.fillAmount = 0;
+        }
+        else if (PlayerController.attackTimer[0] < PlayerController.attackInterval[0])
+        {
+            forwardBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[0] / PlayerController.attackInterval[0]);
+        }
+        else if (PlayerController.attackTimer[0] > PlayerController.attackInterval[0])
+        {
+            forwardBullet_UI.fillAmount = 1;
+        }
+
+        if (PlayerController.attackTimer[1] == 0)
+        {
+            downBullet_UI.fillAmount = 0;
+        }
+        else if (PlayerController.attackTimer[1] < PlayerController.attackInterval[1])
+        {
+            downBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[1] / PlayerController.attackInterval[1]);
+        }
+        else if (PlayerController.attackTimer[1] > PlayerController.attackInterval[1])
+        {
+            downBullet_UI.fillAmount = 1;
         }
     }
 }

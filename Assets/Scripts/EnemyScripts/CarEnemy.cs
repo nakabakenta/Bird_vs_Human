@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class CarEnemy : MonoBehaviour
 {
+    //
+    public GameObject carRideEnemy;
     //ステータス
     private int hp = EnemyStatus.CarEnemy.hp;        //体力
     private float speed = EnemyStatus.CarEnemy.speed;//移動速度
     //処理
-    private float viewPointX;   //ビューポイント座標.X
-    private bool action = false;//動作フラグ
+    private float viewPointX;        //ビューポイント座標.X
+    private bool isAnimation = false;//アニメーションの可否
+    private bool carExit = false;    //
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
 
@@ -42,13 +45,18 @@ public class CarEnemy : MonoBehaviour
     {
         if(this.transform.position.x + EnemyStatus.CarEnemy.rangeX > playerTransform.position.x &&
             this.transform.position.x - EnemyStatus.CarEnemy.rangeX < playerTransform.position.x &&
-            action == false)
+            isAnimation == false)
         {
-            action = true;
+            isAnimation = true;
         }
-        else if (this.transform.position.z > 1 && action == true)
+        else if (this.transform.position.z > playerTransform.position.z && isAnimation == true)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+        }
+        else if(this.transform.position.z <= playerTransform.position.z && carExit == false)
+        {
+            Instantiate(carRideEnemy, this.transform.position, this.transform.rotation);
+            carExit = true;
         }
     }
 

@@ -584,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carRideEnemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
 --- !u!1 &4086119471508052964
 GameObject:
   m_ObjectHideFlags: 0

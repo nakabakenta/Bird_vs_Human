@@ -66,7 +66,7 @@ public class BossEnemy : MonoBehaviour
 
         if (nowAnimation == EnemyStatus.HumanoidAnimation.walk)
         {
-            localPosition.y = 0.0f;//
+            this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
         }
 
         localPosition.z = 1.0f;//

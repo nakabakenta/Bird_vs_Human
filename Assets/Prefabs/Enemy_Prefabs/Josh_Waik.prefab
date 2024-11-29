@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 3588465342130984357}
   - component: {fileID: 8387616575375485498}
   m_Layer: 0
-  m_Name: Josh
+  m_Name: Josh_Waik
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

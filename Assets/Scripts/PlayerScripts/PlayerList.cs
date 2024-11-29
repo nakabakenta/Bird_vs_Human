@@ -12,5 +12,7 @@ public class PlayerList : MonoBehaviour
         public static int[] hp = new int[] { 6, 8, 5, 10 };        //‘Ì—Í
         public static int[] power = new int[] { 7, 10, 5, 10 };    //UŒ‚—Í
         public static float[] speed = new float[] { 8, 6, 10, 10 };//ˆÚ“®‘¬“x
+        public static float[,] attackInterval = new float[2, 4] { { 0.5f, 0.5f, 0.5f, 0.5f },  //‘O•ûŒüUŒ‚ŠÔŠu
+                                                                  { 1.0f, 1.0f, 1.0f, 1.0f } };//‰º•ûŒüUŒ‚ŠÔŠu
     }
 }

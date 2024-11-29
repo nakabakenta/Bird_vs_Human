@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Enemy
   - Bullet
-  - Delete
   - Death
   - lb_bird
   - lb_perchTarget
