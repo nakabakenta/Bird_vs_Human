@@ -6,8 +6,8 @@ public class FighterJetEnemy : MonoBehaviour
 {
     public GameObject enemyBullet;
     //ステータス
-    private int hp = EnemyStatus.FighterJetEnemy.hp;        //体力
-    private float speed = EnemyStatus.FighterJetEnemy.speed;//移動速度
+    private int hp = EnemyList.FighterJetEnemy.hp;        //体力
+    private float speed = EnemyList.FighterJetEnemy.speed;//移動速度
     //処理
     public float attackTimer = 0.25f;   //攻撃間隔タイマー
     public float attackInterval = 0.25f;//攻撃間隔
@@ -69,7 +69,7 @@ public class FighterJetEnemy : MonoBehaviour
     void Death()
     {
         hp = 0;                                          //体力を"0"にする
-        GameManager.score += EnemyStatus.WalkEnemy.score;//
+        GameManager.score += EnemyList.WalkEnemy.score;//
         this.tag = "Death";                              //このタグを"Death"に変更する
     }
 

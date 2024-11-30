@@ -5,9 +5,9 @@ using UnityEngine;
 public class CarRideEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyStatus.CarRideEnemy.hp;        //体力
-    private float speed = EnemyStatus.CarRideEnemy.speed;//移動速度
-    private float jump = EnemyStatus.CarRideEnemy.jump;  //ジャンプ力
+    private int hp = EnemyList.CarRideEnemy.hp;        //体力
+    private float speed = EnemyList.CarRideEnemy.speed;//移動速度
+    private float jump = EnemyList.CarRideEnemy.jump;  //ジャンプ力
     //処理
     private float interval = 0.0f;//間隔
     private float viewPointX;     //ビューポイント座標.X
@@ -26,7 +26,7 @@ public class CarRideEnemy : MonoBehaviour
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
         playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
-        nowAnimation = EnemyStatus.HumanoidAnimation.carExit;
+        nowAnimation = EnemyList.HumanoidAnimation.carExit;
         Animation();
     }
 
@@ -51,27 +51,27 @@ public class CarRideEnemy : MonoBehaviour
     //行動関数
     void Behavior()
     {
-        if(nowAnimation == EnemyStatus.HumanoidAnimation.carExit)
+        if(nowAnimation == EnemyList.HumanoidAnimation.carExit)
         {
             Wait();
         }
-        else if(nowAnimation != EnemyStatus.HumanoidAnimation.carExit)
+        else if(nowAnimation != EnemyList.HumanoidAnimation.carExit)
         {
             Vector3 localPosition = thisTransform.localPosition;//
             Vector3 localAngle = thisTransform.localEulerAngles;//
 
-            if (this.transform.position.x + EnemyStatus.RunEnemy.rangeX > playerTransform.position.x &&
-                this.transform.position.x - EnemyStatus.RunEnemy.rangeX < playerTransform.position.x &&
-                this.transform.position.y + EnemyStatus.RunEnemy.rangeY < playerTransform.position.y &&
-                this.transform.position.y == 0.0f && nowAnimation == EnemyStatus.HumanoidAnimation.run &&
+            if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
+                this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
+                this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
+                this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run &&
                 isAnimation == false)
             {
                 isAnimation = true;
-                nowAnimation = EnemyStatus.HumanoidAnimation.jump;
+                nowAnimation = EnemyList.HumanoidAnimation.jump;
                 Animation();
             }
 
-            if (nowAnimation == EnemyStatus.HumanoidAnimation.run)
+            if (nowAnimation == EnemyList.HumanoidAnimation.run)
             {
                 localPosition.y = 0.0f;//
             }
@@ -81,24 +81,24 @@ public class CarRideEnemy : MonoBehaviour
             //
             if (this.transform.position.x > playerTransform.position.x)
             {
-                localAngle.y = -EnemyStatus.rotationY;//
+                localAngle.y = -EnemyList.rotationY;//
             }
             //
             else if (this.transform.position.x < playerTransform.position.x)
             {
-                localAngle.y = EnemyStatus.rotationY;//
+                localAngle.y = EnemyList.rotationY;//
             }
 
             thisTransform.localPosition = localPosition;//ローカル座標での座標を設定
             thisTransform.localEulerAngles = localAngle;//
 
             //
-            if (nowAnimation == EnemyStatus.HumanoidAnimation.run)
+            if (nowAnimation == EnemyList.HumanoidAnimation.run)
             {
                 this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
             }
             //
-            else if (nowAnimation != EnemyStatus.HumanoidAnimation.run && isAnimation == true)
+            else if (nowAnimation != EnemyList.HumanoidAnimation.run && isAnimation == true)
             {
                 Wait();
             }
@@ -106,7 +106,7 @@ public class CarRideEnemy : MonoBehaviour
             //
             if (PlayerController.hp <= 0 && isAnimation == false)
             {
-                nowAnimation = EnemyStatus.HumanoidAnimation.dance;
+                nowAnimation = EnemyList.HumanoidAnimation.dance;
                 Animation();//アニメーション関数を実行
             }
         }
@@ -124,36 +124,36 @@ public class CarRideEnemy : MonoBehaviour
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-        if (nowAnimation == EnemyStatus.HumanoidAnimation.punch ||
-            nowAnimation == EnemyStatus.HumanoidAnimation.kick)
+        if (nowAnimation == EnemyList.HumanoidAnimation.punch ||
+            nowAnimation == EnemyList.HumanoidAnimation.kick)
         {
             //
-            if (nowAnimation == EnemyStatus.HumanoidAnimation.punch)
+            if (nowAnimation == EnemyList.HumanoidAnimation.punch)
             {
                 //
                 if (interval >= 2.0f)
                 {
                     interval = 0.0f;
                     isAnimation = false;
-                    nowAnimation = EnemyStatus.HumanoidAnimation.run;
+                    nowAnimation = EnemyList.HumanoidAnimation.run;
                     Animation();
                 }
             }
             //
-            else if (nowAnimation == EnemyStatus.HumanoidAnimation.kick)
+            else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
             {
                 //
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
                     isAnimation = false;
-                    nowAnimation = EnemyStatus.HumanoidAnimation.run;
+                    nowAnimation = EnemyList.HumanoidAnimation.run;
                     Animation();
                 }
             }
         }
         //
-        else if (nowAnimation == EnemyStatus.HumanoidAnimation.jump)
+        else if (nowAnimation == EnemyList.HumanoidAnimation.jump)
         {
             if (interval >= 0.75f)
             {
@@ -164,7 +164,7 @@ public class CarRideEnemy : MonoBehaviour
                     animator.SetFloat("MoveSpeed", 1.0f);            //"animator(MoveSpeed)"を"1.0f(再生)"にする
                     interval = 0.0f;
                     isAnimation = false;
-                    nowAnimation = EnemyStatus.HumanoidAnimation.run;
+                    nowAnimation = EnemyList.HumanoidAnimation.run;
                     Animation();
                 }
                 else if (interval >= 1.0f)
@@ -173,14 +173,14 @@ public class CarRideEnemy : MonoBehaviour
                 }
             }
         }
-        else if(nowAnimation == EnemyStatus.HumanoidAnimation.carExit)
+        else if(nowAnimation == EnemyList.HumanoidAnimation.carExit)
         {
             //
             if (interval >= 3.0f)
             {
                 interval = 0.0f;
                 isAnimation = false;
-                nowAnimation = EnemyStatus.HumanoidAnimation.run;
+                nowAnimation = EnemyList.HumanoidAnimation.run;
                 Animation();
             }
         }
@@ -203,9 +203,9 @@ public class CarRideEnemy : MonoBehaviour
     {
         hp = 0;                                            //体力を"0"にする
         this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
-        GameManager.score += EnemyStatus.WalkEnemy.score;  //
+        GameManager.score += EnemyList.WalkEnemy.score;  //
         this.tag = "Death";                                //タグを"Death"に変更する
-        nowAnimation = EnemyStatus.HumanoidAnimation.death;
+        nowAnimation = EnemyList.HumanoidAnimation.death;
         Animation();
     }
 
@@ -216,7 +216,7 @@ public class CarRideEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
             isAnimation = true;
-            nowAnimation = (int)Random.Range(EnemyStatus.HumanoidAnimation.punch, EnemyStatus.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
+            nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch, EnemyList.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら

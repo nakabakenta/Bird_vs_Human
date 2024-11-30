@@ -7,8 +7,8 @@ public class CarEnemy : MonoBehaviour
     //
     public GameObject carRideEnemy;
     //ステータス
-    private int hp = EnemyStatus.CarEnemy.hp;        //体力
-    private float speed = EnemyStatus.CarEnemy.speed;//移動速度
+    private int hp = EnemyList.CarEnemy.hp;        //体力
+    private float speed = EnemyList.CarEnemy.speed;//移動速度
     //処理
     private float viewPointX;        //ビューポイント座標.X
     private bool isAnimation = false;//アニメーションの可否
@@ -43,8 +43,8 @@ public class CarEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        if(this.transform.position.x + EnemyStatus.CarEnemy.rangeX > playerTransform.position.x &&
-            this.transform.position.x - EnemyStatus.CarEnemy.rangeX < playerTransform.position.x &&
+        if(this.transform.position.x + EnemyList.CarEnemy.rangeX > playerTransform.position.x &&
+            this.transform.position.x - EnemyList.CarEnemy.rangeX < playerTransform.position.x &&
             isAnimation == false)
         {
             isAnimation = true;
@@ -76,7 +76,7 @@ public class CarEnemy : MonoBehaviour
     void Death()
     {
         hp = 0;                                          //体力を"0"にする
-        GameManager.score += EnemyStatus.WalkEnemy.score;//
+        GameManager.score += EnemyList.WalkEnemy.score;//
         this.tag = "Death";                              //このタグを"Death"に変更する
     }
 

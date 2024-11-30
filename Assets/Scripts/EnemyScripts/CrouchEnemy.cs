@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrouchEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyStatus.CrouchEnemy.hp;//体力
+    private int hp = EnemyList.CrouchEnemy.hp;//体力
     //処理
     private float interval = 0.0f;//間隔
     private float viewPointX;     //ビューポイント座標.X
@@ -21,7 +21,7 @@ public class CrouchEnemy : MonoBehaviour
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animatorを取得
-        nowAnimation = EnemyStatus.HumanoidAnimation.crouch;
+        nowAnimation = EnemyList.HumanoidAnimation.crouch;
         Animation();
     }
 
@@ -48,12 +48,12 @@ public class CrouchEnemy : MonoBehaviour
         Vector3 localAngle = thisTransform.localEulerAngles;//
         localPosition.y = 0.0f;//
         localPosition.z = 1.0f;//
-        localAngle.y = EnemyStatus.rotationY;//
+        localAngle.y = EnemyList.rotationY;//
         thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         thisTransform.localEulerAngles = localAngle;       //
 
         //
-        if (nowAnimation != EnemyStatus.HumanoidAnimation.crouch && isAnimation == true)
+        if (nowAnimation != EnemyList.HumanoidAnimation.crouch && isAnimation == true)
         {
             Wait();
         }
@@ -61,7 +61,7 @@ public class CrouchEnemy : MonoBehaviour
         //
         if (PlayerController.hp <= 0 && isAnimation == false)
         {
-            nowAnimation = EnemyStatus.HumanoidAnimation.dance;
+            nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//アニメーション関数を実行
         }
     }
@@ -78,30 +78,30 @@ public class CrouchEnemy : MonoBehaviour
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
 
-        if (nowAnimation == EnemyStatus.HumanoidAnimation.punch ||
-            nowAnimation == EnemyStatus.HumanoidAnimation.kick)
+        if (nowAnimation == EnemyList.HumanoidAnimation.punch ||
+            nowAnimation == EnemyList.HumanoidAnimation.kick)
         {
             //
-            if (nowAnimation == EnemyStatus.HumanoidAnimation.punch)
+            if (nowAnimation == EnemyList.HumanoidAnimation.punch)
             {
                 //
                 if (interval >= 2.0f)
                 {
                     interval = 0.0f;
                     isAnimation = false;
-                    nowAnimation = EnemyStatus.HumanoidAnimation.crouch;
+                    nowAnimation = EnemyList.HumanoidAnimation.crouch;
                     Animation();
                 }
             }
             //
-            else if (nowAnimation == EnemyStatus.HumanoidAnimation.kick)
+            else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
             {
                 //
                 if (interval >= 1.5f)
                 {
                     interval = 0.0f;
                     isAnimation = false;
-                    nowAnimation = EnemyStatus.HumanoidAnimation.crouch;
+                    nowAnimation = EnemyList.HumanoidAnimation.crouch;
                     Animation();
                 }
             }
@@ -124,9 +124,9 @@ public class CrouchEnemy : MonoBehaviour
     void Death()
     {
         hp = 0;                                            //体力を"0"にする
-        GameManager.score += EnemyStatus.WalkEnemy.score;  //
+        GameManager.score += EnemyList.WalkEnemy.score;  //
         this.tag = "Death";                                //タグを"Death"に変更する
-        nowAnimation = EnemyStatus.HumanoidAnimation.death;
+        nowAnimation = EnemyList.HumanoidAnimation.death;
         Animation();
     }
 
@@ -137,7 +137,7 @@ public class CrouchEnemy : MonoBehaviour
         if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
             isAnimation = true;
-            nowAnimation = (int)Random.Range(EnemyStatus.HumanoidAnimation.punch, EnemyStatus.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
+            nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch, EnemyList.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
             Animation();
         }
         //タグBulletの付いたオブジェクトに衝突したら

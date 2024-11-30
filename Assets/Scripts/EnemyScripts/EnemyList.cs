@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatus : MonoBehaviour
+public class EnemyList : MonoBehaviour
 {
     //“G(‹¤’Ê)
     public static float rotationY = 90.0f;//YŽ²‰ñ“]ŒÅ’è
