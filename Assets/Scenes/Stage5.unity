@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4839628, g: 0.5757423, b: 0.6802007, a: 1}
+  m_IndirectSpecularColor: {r: 0.48395744, g: 0.57573867, b: 0.68019843, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2770,6 +2770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ce73d3799791e40a7e61d0495de58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gageLight: {fileID: 0}
+  gage: {fileID: 0}
 --- !u!114 &1500145370
 MonoBehaviour:
   m_ObjectHideFlags: 0

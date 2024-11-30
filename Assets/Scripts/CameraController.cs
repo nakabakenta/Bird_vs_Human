@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    //処理
-    private float speed = 2.0f;         //移動速度
-    private float maxPositionX = 100.0f;//最大移動座標.X
+    //カメラの移動速度
+    private float[] speed = new float[5]
+    { 2.0f, 2.0f, 2.0f, 2.0f, 2.0f };
+    //カメラの移動限界値
+    private Vector2[] limitPosition = new Vector2[5]
+    {
+        new Vector2(100.0f, 0.0f),
+        new Vector2(100.0f, 0.0f),
+        new Vector2(100.0f, 0.0f),
+        new Vector2(100.0f, 0.0f),
+        new Vector2(100.0f, 0.0f),
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -17,9 +26,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x < maxPositionX && PlayerController.hp > 0)
+        if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.hp > 0) 
         {
-            this.transform.position += speed * transform.right * Time.deltaTime;//右方向に移動する
+            this.transform.position += speed[Stage.nowStage-1] * transform.right * Time.deltaTime;//右方向に移動する
         }
     }
 }

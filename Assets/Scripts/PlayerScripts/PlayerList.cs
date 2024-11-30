@@ -8,11 +8,28 @@ public class PlayerList : MonoBehaviour
     public static class Player
     {
         //ƒXƒYƒ(0),ƒJƒ‰ƒX(1),ƒRƒKƒ‰(2),ƒyƒ“ƒMƒ“(3)
-        public static int[] number = new int[] { 0, 1, 2, 3 };     //”Ô†
-        public static int[] hp = new int[] { 6, 8, 5, 10 };        //‘Ì—Í
-        public static int[] power = new int[] { 7, 10, 5, 10 };    //UŒ‚—Í
-        public static float[] speed = new float[] { 8, 6, 10, 10 };//ˆÚ“®‘¬“x
-        public static float[,] attackInterval = new float[2, 4] { { 0.5f, 0.5f, 0.5f, 0.5f },  //‘O•ûŒüUŒ‚ŠÔŠu
-                                                                  { 1.0f, 1.0f, 1.0f, 1.0f } };//‰º•ûŒüUŒ‚ŠÔŠu
+        //”Ô†
+        public static int[] number = new int[] 
+        { 0, 1, 2, 3 };
+        //‘Ì—Í
+        public static int[] hp = new int[] 
+        { 6, 8, 5, 10 };
+        //UŒ‚—Í
+        public static int[] power = new int[] 
+        { 7, 10, 5, 10 };
+        //ˆÚ“®‘¬“x
+        public static float[] speed = new float[] 
+        { 8.0f, 6.0f, 10.0f, 10.0f };
+        //UŒ‚ŠÔŠu
+        public static float[,] attackInterval = new float[2, 4]
+        { 
+            { 0.5f, 0.5f, 0.5f, 0.5f },//‘O•ûŒü
+            { 1.0f, 1.0f, 1.0f, 1.0f } //‰º•ûŒü
+        };
+    }
+
+    public static class Invincible
+    {
+        public static float[] attackInterval = new float[2] { 0.25f, 0.25f };
     }
 }

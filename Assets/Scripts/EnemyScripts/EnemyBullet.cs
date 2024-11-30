@@ -17,7 +17,7 @@ public class EnemyBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += speed * transform.right * Time.deltaTime;//
+        this.transform.position += speed * transform.up * Time.deltaTime;//
 
         //ビューポイント座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標
@@ -35,7 +35,7 @@ public class EnemyBullet : MonoBehaviour
         //衝突したオブジェクトのタグが"Enemy"だったら
         if (collision.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);//このオブジェクトを消す
+            //Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 }

@@ -10,11 +10,20 @@ public class PlayerController : MonoBehaviour
     public static string playerStatus;//プレイヤーの状態
     public static bool useGage;       //ゲージの使用可否
     public static bool allySacrifice; //味方の犠牲可否
+    //プレイヤーの移動限界値
+    private Vector2[,] limitPosition = new Vector2[5, 2]
+    {
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+    };
     //処理
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
-    private float invincibleTimer = 0.0f; //無敵タイマー
-    private float invincible = 10.0f;     //無敵継続時間
+    private float invincibleTimer = 0.0f;               //無敵タイマー
+    private float invincible = 10.0f;                   //無敵継続時間
     //ダメージ関係変数
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
@@ -58,7 +67,7 @@ public class PlayerController : MonoBehaviour
         player[1].SetActive(false);
         player[2].SetActive(false);
 
-        SetPlayer();//関数"SetPlayer"を呼び出す
+        SetPlayerStatus();//関数"SetPlayerStatus)"を実行
     }
 
     // Update is called once per frame
@@ -74,8 +83,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ステータスを設定
-    void SetPlayer()
+    //関数"SetPlayerStatus)"
+    void SetPlayerStatus()
     {
         player[GameManager.playerNumber].SetActive(true);
         animator = player[GameManager.playerNumber].GetComponent<Animator>();//"Animator"を取得
@@ -89,10 +98,7 @@ public class PlayerController : MonoBehaviour
         hp = PlayerList.Player.hp[GameManager.playerNumber];      //体力
         speed = PlayerList.Player.speed[GameManager.playerNumber];//移動速度
         attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
-        attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
-
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
-        attackInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
     }
 
     //動作関数
@@ -104,10 +110,21 @@ public class PlayerController : MonoBehaviour
             mousePosition = Input.mousePosition;
             viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
 
-            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, 0, 1);
-            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, 0.2f, 0.8f);
+            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, limitPosition[Stage.nowStage, 0].x, limitPosition[Stage.nowStage, 1].x);
+            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, limitPosition[Stage.nowStage, 0].y, limitPosition[Stage.nowStage, 1].y);
 
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
+
+            if (playerStatus == "Normal")
+            {
+                attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
+                attackInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
+            }
+            else if(playerStatus == "Invincible")
+            {
+                attackInterval[0] = PlayerList.Invincible.attackInterval[0];
+                attackInterval[1] = PlayerList.Invincible.attackInterval[1];
+            }
 
             //前方攻撃
             if (Input.GetMouseButton(0) && attackTimer[0] > attackInterval[0])
@@ -154,7 +171,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ダメージ関数
+    //関数"Damage"
     void Damage()
     {
         //点滅中は二重に実行しない
