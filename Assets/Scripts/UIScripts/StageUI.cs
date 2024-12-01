@@ -15,10 +15,6 @@ public class StageUI : MonoBehaviour
     private TMP_Text score;         //TMP_Text(スコア)
     private TMP_Text remain;        //TMP_Text(残り)
     private TMP_Text hp;            //TMP_Text(体力)
-
-    //処理
-    private float gageTimer = 0.0f;   //ゲージタイマー
-    private float gageInterval = 0.5f;//ゲージが増える間隔
     //コンポーネント(public)
     public Image gageLight;
     //コンポーネント(private)
@@ -42,9 +38,9 @@ public class StageUI : MonoBehaviour
         stageClearUI.SetActive(false);
         continueUI.SetActive(false);
 
-        gage.value = 0;    //
-        gage.minValue = 0; //
-        gage.maxValue = 20;//
+        gage.value = 0;   //
+        gage.minValue = 0;//
+        gage.maxValue = 1;//
     }
 
     // Update is called once per frame
@@ -143,15 +139,11 @@ public class StageUI : MonoBehaviour
             downBullet_UI.fillAmount = 1;
         }
 
-        //ゲージタイマーにTime.deltaTimeを足す
-        gageTimer += Time.deltaTime;
-
-        if (gage.value < gage.maxValue && gageTimer > gageInterval && PlayerController.playerStatus == "Normal")
+        if (gage.value < gage.maxValue && PlayerController.gageTimer < PlayerController.gageInterval)
         {
-            gage.value++;
-            gageTimer = 0.0f;
+            gage.value = Mathf.Clamp01(PlayerController.gageTimer / PlayerController.gageInterval);
         }
-        else if (gage.value == gage.maxValue && PlayerController.playerStatus == "Normal")
+        else if (gage.value == gage.maxValue)
         {
             gageLight.color = new Color32(255, 255, 255, 255);
             PlayerController.useGage = true;

@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     //ƒJƒƒ‰‚ÌˆÚ“®ŒÀŠE’l
     private Vector2[] limitPosition = new Vector2[5]
     {
-        new Vector2(100.0f, 0.0f),
+        new Vector2(245.0f, 0.0f),
         new Vector2(100.0f, 0.0f),
         new Vector2(100.0f, 0.0f),
         new Vector2(100.0f, 0.0f),

@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     //処理
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
+    public static float gageTimer = 0.0f;               //ゲージタイマー
+    public static float gageInterval = 10.0f;           //ゲージ間隔
     private float invincibleTimer = 0.0f;               //無敵タイマー
     private float invincible = 10.0f;                   //無敵継続時間
     //ダメージ関係変数
@@ -73,11 +75,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //クールタイムにTime.deltaTimeを足す
-        attackTimer[0] += Time.deltaTime;
-        attackTimer[1] += Time.deltaTime;
-
-        if(hp > 0)
+        if (hp > 0)
         {
             Behavior();//関数PlayControlを呼び出す
         }
@@ -107,6 +105,10 @@ public class PlayerController : MonoBehaviour
         //
         if (Stage.gameStatus == "Play")
         {
+            //クールタイムにTime.deltaTimeを足す
+            attackTimer[0] += Time.deltaTime;
+            attackTimer[1] += Time.deltaTime;
+
             mousePosition = Input.mousePosition;
             viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
 
@@ -119,6 +121,7 @@ public class PlayerController : MonoBehaviour
             {
                 attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
                 attackInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
+                gageTimer += Time.deltaTime;//ゲージタイマーにTime.deltaTimeを足す
             }
             else if(playerStatus == "Invincible")
             {
@@ -141,6 +144,7 @@ public class PlayerController : MonoBehaviour
             //ゲージ解放
             if (Input.GetKeyDown(KeyCode.E) && useGage == true)
             {
+                gageTimer = 0.0f;
                 useGage = false;
                 playerStatus = "Invincible";
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
