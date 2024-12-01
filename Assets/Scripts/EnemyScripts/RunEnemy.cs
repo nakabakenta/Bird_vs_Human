@@ -9,8 +9,8 @@ public class RunEnemy : MonoBehaviour
     private float speed = EnemyList.RunEnemy.speed;//移動速度
     private float jump = EnemyList.RunEnemy.jump;  //ジャンプ力
     //処理
-    private float interval = 0.0f;//間隔
     private float viewPointX;     //ビューポイント座標.X
+    private float interval = 0.0f;//間隔
     //アニメーション
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
@@ -75,12 +75,12 @@ public class RunEnemy : MonoBehaviour
         //
         if (this.transform.position.x > playerTransform.position.x)
         {
-            localAngle.y = -EnemyList.rotationY;//
+            localAngle.y = -EnemyList.direction;//
         }
         //
         else if (this.transform.position.x < playerTransform.position.x)
         {
-            localAngle.y = EnemyList.rotationY;//
+            localAngle.y = EnemyList.direction;//
         }
 
         thisTransform.localPosition = localPosition;//ローカル座標での座標を設定

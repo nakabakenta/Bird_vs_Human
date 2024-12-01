@@ -7,8 +7,8 @@ public class CrouchEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyList.CrouchEnemy.hp;//体力
     //処理
-    private float interval = 0.0f;//間隔
     private float viewPointX;     //ビューポイント座標.X
+    private float interval = 0.0f;//間隔
     //アニメーション
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
@@ -48,7 +48,7 @@ public class CrouchEnemy : MonoBehaviour
         Vector3 localAngle = thisTransform.localEulerAngles;//
         localPosition.y = 0.0f;//
         localPosition.z = 1.0f;//
-        localAngle.y = EnemyList.rotationY;//
+        localAngle.y = -EnemyList.direction;//
         thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         thisTransform.localEulerAngles = localAngle;       //
 

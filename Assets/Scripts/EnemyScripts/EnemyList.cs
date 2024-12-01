@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyList : MonoBehaviour
 {
-    //“G(‹¤’Ê)
-    public static float rotationY = 90.0f;//Y²‰ñ“]ŒÅ’è
+    //‹¤’Ê
+    public static float direction = 90.0f;//i‚Ş•ûŒü
 
     //“G(•à‚­)
     public static class WalkEnemy

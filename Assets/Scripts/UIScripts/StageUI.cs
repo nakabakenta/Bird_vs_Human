@@ -103,7 +103,8 @@ public class StageUI : MonoBehaviour
             pauseUI.SetActive(false);
         }
 
-        if (Stage.bossEnemy[Stage.nowStage - 1] == false)
+
+        if (Stage.gameStatus == "Clear")
         {
             stageClearUI.SetActive(true);
         }
@@ -113,7 +114,7 @@ public class StageUI : MonoBehaviour
             continueUI.SetActive(true);
         }
 
-        if (PlayerController.attackTimer[0] == 0)
+        if (PlayerController.attackTimer[0] == 0.0f)
         {
             forwardBullet_UI.fillAmount = 0;
         }
@@ -126,7 +127,7 @@ public class StageUI : MonoBehaviour
             forwardBullet_UI.fillAmount = 1;
         }
 
-        if (PlayerController.attackTimer[1] == 0)
+        if (PlayerController.attackTimer[1] == 0.0f)
         {
             downBullet_UI.fillAmount = 0;
         }
@@ -139,19 +140,21 @@ public class StageUI : MonoBehaviour
             downBullet_UI.fillAmount = 1;
         }
 
-        if (gage.value < gage.maxValue && PlayerController.gageTimer < PlayerController.gageInterval)
+        
+        if (PlayerController.gageTimer < PlayerController.gageInterval)
         {
             gage.value = Mathf.Clamp01(PlayerController.gageTimer / PlayerController.gageInterval);
+            gageLight.color = new Color32(127, 127, 127, 255);
         }
-        else if (gage.value == gage.maxValue)
+        else if (PlayerController.gageTimer > PlayerController.gageInterval)
         {
+            gage.value = 1;
             gageLight.color = new Color32(255, 255, 255, 255);
-            PlayerController.useGage = true;
         }
-        else if (PlayerController.playerStatus == "Invincible")
+
+        if (PlayerController.playerStatus == "Invincible")
         {
             gage.value = 0;
-            gageLight.color = new Color32(127, 127, 127, 255);
         }
     }
 }

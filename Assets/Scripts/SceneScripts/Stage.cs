@@ -15,11 +15,14 @@ private SceneLoader sceneLoader;//"Script(SceneLoader)"
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1;                                           //"Time.timeScale(時間の進み)"を"1(通常)"にする
-        sceneLoader = this.GetComponent<SceneLoader>();               //この"Script(SceneLoader)"を取得する
-        bossEnemy = new bool[5] { false, false, false, false, false };//ボスの存在可否を"false(リセット)"する
-        bossEnemy[nowStage - 1] = true;                               //現在のステージのボスを"true(生存)"にする
-        gameStatus = "Play";                                          //ゲームの状態を"Play"にする
+        Time.timeScale = 1;                            //"Time.timeScale(時間の進み)"を"1(通常)"にする
+        sceneLoader = this.GetComponent<SceneLoader>();//この"Script(SceneLoader)"を取得する
+        bossEnemy = new bool[5]                        //ボスの存在可否を"false(リセット)"する
+        { 
+            false, false, false, false, false 
+        };
+        bossEnemy[nowStage - 1] = true;                //現在のステージのボスを"true(生存)"にする
+        gameStatus = "Play";                           //ゲームの状態を"Play"にする
     }
 
     // Update is called once per frame
@@ -37,6 +40,11 @@ private SceneLoader sceneLoader;//"Script(SceneLoader)"
         if(PlayerController.hp <= 0 && GameManager.remain <= 0)
         {
             sceneLoader.GameOver();
+        }
+
+        if(bossEnemy[nowStage - 1] == false)
+        {
+            gameStatus = "Clear";
         }
     }
 }

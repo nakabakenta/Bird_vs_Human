@@ -8,8 +8,8 @@ public class WalkEnemy : MonoBehaviour
     private int hp = EnemyList.WalkEnemy.hp;        //体力
     private float speed = EnemyList.WalkEnemy.speed;//移動速度
     //処理
-    private float interval = 0.0f;   //間隔
-    private float viewPointX;        //ビューポイント座標.X
+    private float viewPointX;     //ビューポイント座標.X
+    private float interval = 0.0f;//間隔
     //アニメーション
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
@@ -48,9 +48,9 @@ public class WalkEnemy : MonoBehaviour
     {
         Vector3 localPosition = thisTransform.localPosition;//オブジェクトの
         Vector3 localAngle = thisTransform.localEulerAngles;//
-        localPosition.y = 0.0f;//
-        localPosition.z = 1.0f;//
-        localAngle.y = -EnemyList.rotationY;//
+        localPosition.y = 0.0f;  //
+        localPosition.z = 1.0f;  //
+        localAngle.y = -EnemyList.direction;//
         thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         thisTransform.localEulerAngles = localAngle;       //
 

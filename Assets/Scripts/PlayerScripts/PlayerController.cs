@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     public static int hp;             //体力
     public static float speed;        //移動速度
     public static string playerStatus;//プレイヤーの状態
-    public static bool useGage;       //ゲージの使用可否
     public static bool allySacrifice; //味方の犠牲可否
     //プレイヤーの移動限界値
     private Vector2[,] limitPosition = new Vector2[5, 2]
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
-    public static float gageInterval = 10.0f;           //ゲージ間隔
+    public static float gageInterval = 10.0f;           //ゲージ蓄積時間
     private float invincibleTimer = 0.0f;               //無敵タイマー
     private float invincible = 10.0f;                   //無敵継続時間
     //ダメージ関係変数
@@ -62,7 +61,6 @@ public class PlayerController : MonoBehaviour
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
         rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトのRigidbodyを取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトのBoxColliderを取得
-        useGage = false;
         playerStatus = "Normal";
 
         player[0].SetActive(false);
@@ -130,22 +128,21 @@ public class PlayerController : MonoBehaviour
             }
 
             //前方攻撃
-            if (Input.GetMouseButton(0) && attackTimer[0] > attackInterval[0])
+            if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval[0])
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
                 attackTimer[0] = 0.0f;
             }
             //落下攻撃
-            if (Input.GetMouseButton(1) && attackTimer[1] > attackInterval[1])
+            if (Input.GetMouseButton(1) && attackTimer[1] >= attackInterval[1])
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
                 attackTimer[1] = 0.0f;
             }
             //ゲージ解放
-            if (Input.GetKeyDown(KeyCode.E) && useGage == true)
+            if (Input.GetKeyDown(KeyCode.E) && gageTimer >= gageInterval)
             {
                 gageTimer = 0.0f;
-                useGage = false;
                 playerStatus = "Invincible";
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
             }
