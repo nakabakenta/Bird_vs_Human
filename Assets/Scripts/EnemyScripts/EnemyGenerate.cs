@@ -10,5 +10,6 @@ public class EnemyGenerate : MonoBehaviour
     void Start()
     {
         Instantiate(enemyObject[(int)Random.Range(0, 16)], this.transform.position, this.transform.rotation);
+        Destroy(this.gameObject);//このオブジェクトを消す
     }
 }

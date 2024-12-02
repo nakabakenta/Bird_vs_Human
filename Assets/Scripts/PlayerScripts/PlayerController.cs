@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"だったら 
-        if (collision.gameObject.tag == "Enemy" && playerStatus == "Normal")
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy") && playerStatus == "Normal")
         {
             if(BirdAlly.allyCount > 0)
             {
