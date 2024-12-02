@@ -13,7 +13,7 @@ public class BirdAlly : MonoBehaviour
     //オブジェクト
     public GameObject[] ally = new GameObject[3];//仲間オブジェクト
     //コンポーネント
-    private Transform thisTransform;  //"Transform"(このオブジェクト)
+    private Transform thisTransform;  //"Transform"
     private Transform playerTransform;//"Transform"(プレイヤー)
     private BoxCollider boxCollider;  //"BoxCollider"
     //private Animator animator = null ;//"Animator"
@@ -24,7 +24,7 @@ public class BirdAlly : MonoBehaviour
         thisTransform = this.gameObject.transform;                //このオブジェクトの"Transform"を取得
         playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトの"BoxCollider"を取得
-        //animator = this.gameObject.GetComponent<Animator>();      //このオブジェクトの"Animator"を取得
+        //animator = this.gameObject.GetComponent<Animator>();    //このオブジェクトの"Animator"を取得
         playerFollow = false;                                     //プレイヤーへの追尾を"false"にする
 
         Instantiate(ally[GameManager.playerNumber], this.transform.position, this.transform.rotation, thisTransform);
@@ -64,6 +64,8 @@ public class BirdAlly : MonoBehaviour
         //衝突したオブジェクトのタグが"Player"だったら
         if (collision.gameObject.tag == "Player" && allyCount < 3)
         {
+            //this.transform.rotation = new Quaternion(0, 0, 0, 0);
+
             playerFollow = true;
             allyCount++;
 

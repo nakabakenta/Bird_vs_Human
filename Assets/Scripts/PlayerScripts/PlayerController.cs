@@ -36,8 +36,6 @@ public class PlayerController : MonoBehaviour
     private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
     public GameObject forwardBullet, downBullet;    //弾オブジェクト
     public GameObject[] group = new GameObject[3];  //群れオブジェクト
-    //トランスフォーム
-    public Transform mainCamera;
     //このオブジェクトのコンポーネント
     private Rigidbody rigidBody;     //"Rigidbody"
     private BoxCollider boxCollider; //"BoxCollider"
@@ -58,9 +56,9 @@ public class PlayerController : MonoBehaviour
         player[1] = GameObject.Find("Crow_Player");
         player[2] = GameObject.Find("Chickadee_Player");
 
-        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトのRenderer(子オブジェクトを含む)を取得
-        rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトのRigidbodyを取得
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトのBoxColliderを取得
+        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトの"Renderer(子オブジェクトを含む)を取得
+        rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトの"Rigidbody"を取得
+        boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトの"BoxCollider"を取得
         playerStatus = "Normal";
 
         player[0].SetActive(false);
@@ -110,8 +108,8 @@ public class PlayerController : MonoBehaviour
             mousePosition = Input.mousePosition;
             viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
 
-            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, limitPosition[Stage.nowStage, 0].x, limitPosition[Stage.nowStage, 1].x);
-            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, limitPosition[Stage.nowStage, 0].y, limitPosition[Stage.nowStage, 1].y);
+            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, limitPosition[Stage.nowStage - 1, 0].x, limitPosition[Stage.nowStage - 1, 1].x);
+            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, limitPosition[Stage.nowStage - 1, 0].y, limitPosition[Stage.nowStage - 1, 1].y);
 
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 

@@ -30,12 +30,12 @@ public class FighterJetEnemy : MonoBehaviour
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
         //体力が0より上 && ビューポート座標.Xが1より上であれば
-        if (hp > 0 && viewPointX < 1.25)
+        if (hp > 0)
         {
             Behavior();//行動関数"Behavior"を実行する
         }
         //(体力が"0以下" && ビューポート座標.Xが"0未満"であれば
-        else if (hp <= 0 || viewPointX < 0)
+        else if (hp <= 0 && viewPointX < 0)
         {
             Destroy();//関数"Destroy"を実行する
         }

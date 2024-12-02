@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RunEnemy : MonoBehaviour
 {
+    public AudioClip damage;
+    public AudioClip scream;
+
     //ステータス
     private int hp = EnemyList.RunEnemy.hp;        //体力
     private float speed = EnemyList.RunEnemy.speed;//移動速度
@@ -15,8 +18,9 @@ public class RunEnemy : MonoBehaviour
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
     //このオブジェクトのコンポーネント
-    private Transform thisTransform;  //"Transform"(このオブジェクト)
-    private Animator animator = null; //"Animator"(このオブジェクト)
+    private Transform thisTransform; //"Transform"
+    private Animator animator = null;//"Animator"
+    private AudioSource audioSource; //"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform"(プレイヤー)
 
@@ -25,6 +29,7 @@ public class RunEnemy : MonoBehaviour
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
+        audioSource = this.GetComponent<AudioSource>();
         playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         nowAnimation = EnemyList.HumanoidAnimation.run;
         Animation();
@@ -173,16 +178,22 @@ public class RunEnemy : MonoBehaviour
     {
         hp -= 1;//体力を"-1"する
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp"が"0"より上だったら
+        if (hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            audioSource.PlayOneShot(damage);
+        }
+        //"hp"が"0"以下だったら
+        else if (hp <= 0)
+        {
+            Death();//"Death(関数)"を呼び出す
         }
     }
 
     //死亡関数
     void Death()
     {
+        audioSource.PlayOneShot(scream);
         hp = 0;                                            //体力を"0"にする
         this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
         GameManager.score += EnemyList.WalkEnemy.score;  //

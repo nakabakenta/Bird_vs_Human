@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WalkEnemy : MonoBehaviour
 {
+    public AudioClip damage;
+    public AudioClip scream;
+
     //ステータス
     private int hp = EnemyList.WalkEnemy.hp;        //体力
     private float speed = EnemyList.WalkEnemy.speed;//移動速度
@@ -16,12 +19,14 @@ public class WalkEnemy : MonoBehaviour
     //このオブジェクトのコンポーネント
     private Transform thisTransform; //"Transform"
     private Animator animator = null;//"Animator"
+    private AudioSource audioSource; //"AudioSource"
 
     // Start is called before the first frame update
     void Start()
     {
         thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
         animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animatorを取得
+        audioSource = this.GetComponent<AudioSource>();
         nowAnimation = EnemyList.HumanoidAnimation.walk;
         Animation();
     }
@@ -120,16 +125,22 @@ public class WalkEnemy : MonoBehaviour
     {
         hp -= 1;//体力を"-1"する
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp"が"0"より上だったら
+        if(hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            audioSource.PlayOneShot(damage);
+        }
+        //"hp"が"0"以下だったら
+        else if (hp <= 0)
+        {
+            Death();//"Death(関数)"を呼び出す
         }
     }
 
     //死亡関数
     void Death()
     {
+        audioSource.PlayOneShot(scream);
         hp = 0;                                            //体力を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;  //
         this.tag = "Death";                                //タグを"Death"に変更する

@@ -17,7 +17,7 @@ public class ForwardBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += speed * transform.right * Time.deltaTime;//
+        this.transform.position += (speed + CameraController.speed[Stage.nowStage - 1]) * transform.right * Time.deltaTime;//
 
         //ビューポイント座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面X座標

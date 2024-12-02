@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //カメラの移動速度
-    private float[] speed = new float[5]
-    { 2.0f, 2.0f, 2.0f, 2.0f, 2.0f };
+    public static float[] speed = new float[5]
+    { 2.0f, 2.0f, 2.0f, 2.0f, 10.0f };
     //カメラの移動限界値
     private Vector2[] limitPosition = new Vector2[5]
     {
@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
         new Vector2(245.0f, 0.0f),
         new Vector2(100.0f, 0.0f),
         new Vector2(100.0f, 0.0f),
-        new Vector2(100.0f, 0.0f),
+        new Vector2(10000.0f, 0.0f),
     };
 
     // Start is called before the first frame update
