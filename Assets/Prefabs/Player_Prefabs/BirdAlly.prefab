@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1247188643432182193}
   - component: {fileID: -4555409667886917662}
   m_Layer: 0
-  m_Name: Ally
+  m_Name: BirdAlly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

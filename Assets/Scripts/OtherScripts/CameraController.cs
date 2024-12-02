@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour
     {
         new Vector2(245.0f, 0.0f),
         new Vector2(245.0f, 0.0f),
-        new Vector2(100.0f, 0.0f),
-        new Vector2(100.0f, 0.0f),
+        new Vector2(245.0f, 0.0f),
+        new Vector2(245.0f, 0.0f),
         new Vector2(10000.0f, 0.0f),
     };
 

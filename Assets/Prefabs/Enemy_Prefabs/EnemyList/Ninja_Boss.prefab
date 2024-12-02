@@ -1000,10 +1000,10 @@ GameObject:
   - component: {fileID: 2173348779402452158}
   - component: {fileID: 2891309653627569632}
   - component: {fileID: 6533463388354600146}
-  - component: {fileID: -9218808693051242606}
+  - component: {fileID: 8948917184010821129}
   - component: {fileID: -7797084026357207635}
   m_Layer: 0
-  m_Name: Ninja
+  m_Name: Ninja_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,7 +1076,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &-9218808693051242606
+--- !u!114 &8948917184010821129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1085,10 +1085,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4864649882021026942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808a97695e67f2f448d6e3139d4a5045, type: 3}
+  m_Script: {fileID: 11500000, guid: 44276220b72dd464e94b689eb22af33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scream: {fileID: 0}
 --- !u!82 &-7797084026357207635
 AudioSource:
   m_ObjectHideFlags: 0

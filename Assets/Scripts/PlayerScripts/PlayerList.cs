@@ -13,23 +13,21 @@ public class PlayerList : MonoBehaviour
         { 0, 1, 2, 3 };
         //‘Ì—Í
         public static int[] hp = new int[] 
-        { 6, 8, 5, 10 };
+        { 5, 5, 5, 5 };
         //UŒ‚—Í
-        public static int[] power = new int[] 
-        { 7, 10, 5, 10 };
-        //ˆÚ“®‘¬“x
-        public static float[] speed = new float[] 
-        { 8.0f, 6.0f, 10.0f, 10.0f };
+        public static int[] power = new int[]
+        { 3, 5, 1, 5 };
         //UŒ‚ŠÔŠu
         public static float[,] attackInterval = new float[2, 4]
         { 
-            { 0.5f, 0.5f, 0.5f, 0.5f },//‘O•ûŒü
-            { 1.0f, 1.0f, 1.0f, 1.0f } //‰º•ûŒü
+            { 1.0f, 2.0f, 0.5f, 0.5f },//‘O•ûŒü
+            { 2.5f, 3.5f, 2.0f, 0.5f } //‰º•ûŒü
         };
     }
 
     public static class Invincible
     {
+        public static int power = 6;
         public static float[] attackInterval = new float[2] { 0.25f, 0.25f };
     }
 }

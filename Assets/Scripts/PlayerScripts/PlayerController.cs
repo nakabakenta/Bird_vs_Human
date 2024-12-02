@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //ステータス
-    public static int hp;             //体力
-    public static float speed;        //移動速度
+    //ステータス(public)
+    public static int hp;             //プレイヤーの体力
     public static string playerStatus;//プレイヤーの状態
-    public static bool allySacrifice; //味方の犠牲可否
     //プレイヤーの移動限界値
     private Vector2[,] limitPosition = new Vector2[5, 2]
     {
@@ -18,20 +16,21 @@ public class PlayerController : MonoBehaviour
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
     };
-    //処理
+    //処理(public)
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
     public static float gageInterval = 10.0f;           //ゲージ蓄積時間
-    private float invincibleTimer = 0.0f;               //無敵タイマー
-    private float invincible = 10.0f;                   //無敵継続時間
-    //ダメージ関係変数
+    public static bool allySacrifice;                   //味方の犠牲可否
+    //処理(private)
+    private float invincibleTimer = 0.0f;  //無敵タイマー
+    private float invincible = 10.0f;      //無敵継続時間
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
     private float rendererSwitch = 0.05f;  //Rendererの有効・無効を切り替える時間(点滅の切り替える時間)
     private float rendererTimer;           //Rendererの有効・無効の経過時間(点滅の経過時間)
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージの可否
-    private bool isObjRenderer;            //objRendererの有効・無効フラグ
+    private bool isObjRenderer;            //objRendererの可否
     //オブジェクト
     private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
     public GameObject forwardBullet, downBullet;    //弾オブジェクト
@@ -77,7 +76,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //関数"SetPlayerStatus)"
+    //"SetPlayerStatus(関数)"
     void SetPlayerStatus()
     {
         player[GameManager.playerNumber].SetActive(true);
@@ -89,8 +88,7 @@ public class PlayerController : MonoBehaviour
             GameManager.gameStart = true;
         }
 
-        hp = PlayerList.Player.hp[GameManager.playerNumber];      //体力
-        speed = PlayerList.Player.speed[GameManager.playerNumber];//移動速度
+        hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
         attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
     }
@@ -258,7 +256,7 @@ public class PlayerController : MonoBehaviour
             }
             else if(BirdAlly.allyCount <= 0)
             {
-                Damage();//ダメージ関数"Damage"を実行する
+                Damage();//"Damage(関数)"を実行する
             }
         }
     }

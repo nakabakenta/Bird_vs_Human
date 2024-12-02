@@ -33,7 +33,7 @@ public class ForwardBullet : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトのタグが"Enemy"だったら
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy")
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }

@@ -63,7 +63,7 @@ public class CarEnemy : MonoBehaviour
     //ŠÖ”"Damage"
     void Damage()
     {
-        hp -= 1;//‘Ì—Í‚ğ"-1"‚·‚é
+        hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
         //‘Ì—Í‚ª0ˆÈ‰º‚¾‚Á‚½‚ç
         if (hp <= 0)

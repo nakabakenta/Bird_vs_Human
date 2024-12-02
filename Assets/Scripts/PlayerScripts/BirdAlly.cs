@@ -12,11 +12,12 @@ public class BirdAlly : MonoBehaviour
     private float viewPointX;
     //オブジェクト
     public GameObject[] ally = new GameObject[3];//仲間オブジェクト
-    //コンポーネント
+    //コンポーネント(このオブジェクト)
     private Transform thisTransform;  //"Transform"
-    private Transform playerTransform;//"Transform"(プレイヤー)
     private BoxCollider boxCollider;  //"BoxCollider"
-    //private Animator animator = null ;//"Animator"
+    //private Animator animator = null;//"Animator"
+    //コンポーネント(他のオブジェクト)
+    private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +65,7 @@ public class BirdAlly : MonoBehaviour
         //衝突したオブジェクトのタグが"Player"だったら
         if (collision.gameObject.tag == "Player" && allyCount < 3)
         {
-            //this.transform.rotation = new Quaternion(0, 0, 0, 0);
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, 90.0f, this.transform.rotation.z);
 
             playerFollow = true;
             allyCount++;

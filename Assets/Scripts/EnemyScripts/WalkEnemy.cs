@@ -8,8 +8,8 @@ public class WalkEnemy : MonoBehaviour
     public AudioClip scream;
 
     //ステータス
-    private int hp = EnemyList.WalkEnemy.hp;        //体力
-    private float speed = EnemyList.WalkEnemy.speed;//移動速度
+    private int hp = EnemyList.WalkEnemy.hp;        //敵の体力
+    private float speed = EnemyList.WalkEnemy.speed;//敵の移動速度
     //処理
     private float viewPointX;     //ビューポイント座標.X
     private float interval = 0.0f;//間隔
@@ -123,7 +123,7 @@ public class WalkEnemy : MonoBehaviour
     //ダメージ判定関数
     void Damage()
     {
-        hp -= 1;//体力を"-1"する
+        hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
         //"hp"が"0"より上だったら
         if(hp > 0)

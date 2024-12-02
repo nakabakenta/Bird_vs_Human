@@ -176,7 +176,7 @@ public class RunEnemy : MonoBehaviour
     //ƒ_ƒ[ƒWŠÖ”
     void Damage()
     {
-        hp -= 1;//‘Ì—Í‚ð"-1"‚·‚é
+        hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
         //"hp"‚ª"0"‚æ‚èã‚¾‚Á‚½‚ç
         if (hp > 0)
