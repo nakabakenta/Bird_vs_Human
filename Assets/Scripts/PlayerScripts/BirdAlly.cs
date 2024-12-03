@@ -6,6 +6,7 @@ public class BirdAlly : MonoBehaviour
 {
     //処理
     public static int allyCount;//味方カウント
+    public static bool damege;  //
     private int allyNumber;     //味方番号
     private bool playerFollow;  //プレイヤーへの追尾の可否
     //ビューポイント座標.X
@@ -13,8 +14,8 @@ public class BirdAlly : MonoBehaviour
     //オブジェクト
     public GameObject[] ally = new GameObject[3];//仲間オブジェクト
     //コンポーネント(このオブジェクト)
-    private Transform thisTransform;  //"Transform"
-    private BoxCollider boxCollider;  //"BoxCollider"
+    private Transform thisTransform;//"Transform"
+    private BoxCollider boxCollider;//"BoxCollider"
     //private Animator animator = null;//"Animator"
     //コンポーネント(他のオブジェクト)
     private Transform playerTransform;//"Transform(プレイヤー)"
@@ -46,17 +47,24 @@ public class BirdAlly : MonoBehaviour
             this.transform.position = new Vector3(playerTransform.position.x - 2.0f, playerTransform.position.y, playerTransform.position.z);
         }
 
-        if(PlayerController.allySacrifice == true && playerFollow == true)
+        if(damege == true && playerFollow == true && allyNumber == 1)
         {
             Destroy(this.gameObject);
-            PlayerController.allySacrifice = false;
+            allyCount -= 1;
+            damege = false;
             //animator.SetBool("Death", true);//"Animator"の"Death"(死亡)を有効にする
+        }
+        else if(allyNumber == 2)
+        {
+            allyNumber = 1;
         }
 
         if(playerFollow == false && viewPointX < 0)
         {
             Destroy(this.gameObject);
         }
+
+        Debug.Log(allyCount);
     }
 
     //衝突判定(OnTriggerEnter)

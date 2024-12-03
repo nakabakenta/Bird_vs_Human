@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public static float[] attackInterval = new float[2];//UŒ‚ŠÔŠu
     public static float gageTimer = 0.0f;               //ƒQ[ƒWƒ^ƒCƒ}[
     public static float gageInterval = 10.0f;           //ƒQ[ƒW’~ÏŽžŠÔ
-    public static bool allySacrifice;                   //–¡•û‚Ì‹]µ‰Â”Û
     //ˆ—(private)
     private float invincibleTimer = 0.0f;  //–³“Gƒ^ƒCƒ}[
     private float invincible = 10.0f;      //–³“GŒp‘±ŽžŠÔ
@@ -48,8 +47,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        allySacrifice = false;
-
         //ƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒg‚ð’T‚µ‚ÄŽæ“¾‚·‚é
         player[0] = GameObject.Find("Sparrow_Player");
         player[1] = GameObject.Find("Crow_Player");
@@ -251,8 +248,7 @@ public class PlayerController : MonoBehaviour
         {
             if(BirdAlly.allyCount > 0)
             {
-                BirdAlly.allyCount--;
-                allySacrifice = true;
+                BirdAlly.damege = true;
             }
             else if(BirdAlly.allyCount <= 0)
             {

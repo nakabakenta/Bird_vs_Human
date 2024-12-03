@@ -82,7 +82,6 @@ public class WalkEnemy : MonoBehaviour
     void Animation()
     {
         animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"Ç…"nowAnimation"Çê›íËÇ∑ÇÈ
-        Debug.Log(nowAnimation);//"Debug.Log(nowAnimation)"
     }
 
     //ë“ã@ä÷êî
