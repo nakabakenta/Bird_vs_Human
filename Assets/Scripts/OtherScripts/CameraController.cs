@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     //カメラの移動速度
     public static float[] speed = new float[5]
-    { 2.0f, 2.0f, 2.0f, 2.0f, 10.0f };
+    { 2.0f, 2.0f, 2.0f, 2.0f, 0.0f };
     //カメラの移動限界値
     private Vector2[] limitPosition = new Vector2[5]
     {

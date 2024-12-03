@@ -55,7 +55,7 @@ public class WalkEnemy : MonoBehaviour
         Vector3 localAngle = thisTransform.localEulerAngles;//
         localPosition.y = 0.0f;  //
         localPosition.z = 1.0f;  //
-        localAngle.y = -EnemyList.direction;//
+        localAngle.y = -EnemyList.rotation;//
         thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
         thisTransform.localEulerAngles = localAngle;       //
 

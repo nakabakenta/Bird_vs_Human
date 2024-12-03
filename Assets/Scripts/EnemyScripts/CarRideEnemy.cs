@@ -81,12 +81,12 @@ public class CarRideEnemy : MonoBehaviour
             //
             if (this.transform.position.x > playerTransform.position.x)
             {
-                localAngle.y = -EnemyList.direction;//
+                localAngle.y = -EnemyList.rotation;//
             }
             //
             else if (this.transform.position.x < playerTransform.position.x)
             {
-                localAngle.y = EnemyList.direction;//
+                localAngle.y = EnemyList.rotation;//
             }
 
             thisTransform.localPosition = localPosition;//ローカル座標での座標を設定

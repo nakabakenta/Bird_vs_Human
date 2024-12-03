@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     //処理
-    public float speed;      //移動速度
-    private float viewPointX;//ビューポイント座標.X
+    private float speed = 20.0f;//移動速度
+    private float viewPointX;   //ビューポイント座標.X
 
     // Start is called before the first frame update
     void Start()

@@ -9,9 +9,10 @@ public class FighterJetEnemy : MonoBehaviour
     private int hp = EnemyList.FighterJetEnemy.hp;        //体力
     private float speed = EnemyList.FighterJetEnemy.speed;//移動速度
     //処理
-    public float attackTimer = 0.25f;   //攻撃間隔タイマー
-    public float attackInterval = 0.25f;//攻撃間隔
+    private float attackTimer = 0.5f;   //攻撃間隔タイマー
+    private float attackInterval = 0.5f;//攻撃間隔
     private float viewPointX;           //ビューポイント座標.X
+    private float bulletRotation;       //発射する弾の方向
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
 
@@ -44,11 +45,24 @@ public class FighterJetEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
+        if (viewPointX < -0.5)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+            bulletRotation = -EnemyList.rotation;
+        }
+        else if (viewPointX > 1.5)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+            bulletRotation = EnemyList.rotation;
+        }
+
         this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
 
         if (attackTimer > attackInterval)
         {
-            Instantiate(enemyBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, 90));
+            Instantiate(enemyBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, bulletRotation));
             attackTimer = 0.0f;
         }
     }

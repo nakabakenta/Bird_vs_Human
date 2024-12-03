@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyList : MonoBehaviour
 {
     //共通
-    public static float direction = 90.0f;//進む方向
+    public static float rotation = 90.0f;//進む方向
 
     //敵(歩く)
     public static class WalkEnemy
@@ -64,7 +64,7 @@ public class EnemyList : MonoBehaviour
         //ステータス
         public static int hp = 20;        //体力
         public static int power = 2;      //攻撃力
-        public static float speed = 15.0f;//移動速度
+        public static float speed = 10.0f;//移動速度
         public static int score = 1000;   //倒した時のスコア
     }
 
