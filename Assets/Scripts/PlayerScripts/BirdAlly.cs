@@ -47,31 +47,43 @@ public class BirdAlly : MonoBehaviour
             this.transform.position = new Vector3(playerTransform.position.x - 2.0f, playerTransform.position.y, playerTransform.position.z);
         }
 
-        if(damege == true && playerFollow == true && allyNumber == 1)
+        if(damege == true && playerFollow == true)
         {
-            Destroy(this.gameObject);
-            allyCount -= 1;
-            damege = false;
-            //animator.SetBool("Death", true);//"Animator"の"Death"(死亡)を有効にする
+            Sacrifice();
         }
-        else if(allyNumber == 2)
-        {
-            allyNumber = 1;
-        }
+        
 
         if(playerFollow == false && viewPointX < 0)
         {
             Destroy(this.gameObject);
         }
 
-        Debug.Log(allyCount);
+        Debug.Log(allyNumber);
+    }
+
+    void Sacrifice()
+    {
+        
+
+        if (allyNumber == 1)
+        {
+            allyCount -= 1;
+            Destroy(this.gameObject);
+        }
+        else if (allyNumber == 2)
+        {
+            allyNumber = 1;
+        }
+
+        damege = false;
+        //animator.SetBool("Death", true);//"Animator"の"Death"(死亡)を有効にする
     }
 
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトのタグが"Player"だったら
-        if (collision.gameObject.tag == "Player" && allyCount < 3)
+        if (collision.gameObject.tag == "Player" && allyCount < 2)
         {
             this.transform.eulerAngles = new Vector3(this.transform.rotation.x, 90.0f, this.transform.rotation.z);
 
