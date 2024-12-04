@@ -16,7 +16,6 @@ public class WalkEnemy : MonoBehaviour
     public AudioClip damage;
     public AudioClip scream;
     //このオブジェクトのコンポーネント(private)
-    private Transform thisTransform; //"Transform"
     private Animator animator = null;//"Animator"
     private AudioSource audioSource; //"AudioSource"
 
@@ -24,10 +23,9 @@ public class WalkEnemy : MonoBehaviour
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
-        thisTransform = this.gameObject.GetComponent<Transform>();//"Transform"
-        animator = this.GetComponent<Animator>();                 //"Animator"
-        audioSource = this.GetComponent<AudioSource>();           //"AudioSource"
-        
+        animator = this.GetComponent<Animator>();      //"Animator"
+        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //
         nowAnimation = EnemyList.HumanoidAnimation.walk;//"nowAnimation"を"walk(歩く)"にする        
         Animation();                                    //関数"Animation"を実行
     }
@@ -35,30 +33,26 @@ public class WalkEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ビューポート座標を取得
+        //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        //"hp"が"0"より上 && "viewPointX"が"1"より上の場合
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//行動関数を呼び出す
+            Behavior();//関数"Behavior"を実行
         }
-        //体力が0以下 && ビューポート座標.Xが0未満であれば
+        //"hp"が"0"以下 && "viewPointX"が"0"未満の場合
         else if (hp <= 0 && viewPointX < 0)
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 
+    //関数"Behavior"
     void Behavior()
     {
-        Vector3 localPosition = thisTransform.localPosition;//オブジェクトの
-        Vector3 localAngle = thisTransform.localEulerAngles;//
-        localPosition.y = 0.0f;  //
-        localPosition.z = 1.0f;  //
-        localAngle.y = -EnemyList.rotation;//
-        thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
-        thisTransform.localEulerAngles = localAngle;       //
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
         if (nowAnimation == EnemyList.HumanoidAnimation.walk)
@@ -141,10 +135,10 @@ public class WalkEnemy : MonoBehaviour
     void Death()
     {
         this.tag = "Untagged";                           //このタグを"Untagged"に変更する
-        hp = 0;                                          //敵の体力を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;  //
-        nowAnimation = EnemyList.HumanoidAnimation.death;
-        audioSource.PlayOneShot(scream);
+        hp = 0;                                          //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
+        nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation"を"death(死亡)"にする
+        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
         Animation();                                     //関数"Animation"を実行
     }
 
@@ -161,7 +155,7 @@ public class WalkEnemy : MonoBehaviour
         //衝突したオブジェクトのタグが"Bullet"の場合
         if (collision.gameObject.tag == "Bullet" && this.tag != "Untagged")
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//関数"Damage"を実行
         }
     }
 }

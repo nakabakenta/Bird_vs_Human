@@ -7,22 +7,25 @@ public class CrouchEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyList.CrouchEnemy.hp;//体力
     //処理
-    private float viewPointX;     //ビューポイント座標.X
-    private float interval = 0.0f;//間隔
-    //アニメーション
+    private float viewPointX;        //ビューポイント座標.X
+    private float interval = 0.0f;   //間隔
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
-    //このオブジェクトのコンポーネント
-    private Transform thisTransform; //"Transform"
+    //このオブジェクトのコンポーネント(public)
+    public AudioClip damage;
+    public AudioClip scream;
+    //このオブジェクトのコンポーネント(private)
     private Animator animator = null;//"Animator"
+    private AudioSource audioSource; //"AudioSource"
 
     // Start is called before the first frame update
     void Start()
     {
-        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
-        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animatorを取得
-        nowAnimation = EnemyList.HumanoidAnimation.crouch;
-        Animation();
+        //このオブジェクトのコンポーネントを取得
+        animator = this.GetComponent<Animator>();//"Animator"
+        //
+        nowAnimation = EnemyList.HumanoidAnimation.crouch;//"nowAnimation"を"crouch(しゃがむ)"にする
+        Animation();                                      //関数"Animation"を実行
     }
 
     // Update is called once per frame
@@ -31,26 +34,23 @@ public class CrouchEnemy : MonoBehaviour
         //ビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        //"hp"が"0"より上 && "viewPointX"が"1"より上の場合
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//行動関数を呼び出す
+            Behavior();///関数"Behavior"を実行
         }
-        //体力が0以下 && ビューポート座標.Xが0未満であれば
+        //"hp"が"0"以下 && "viewPointX"が"0"未満の場合
         else if (hp <= 0 && viewPointX < 0)
         {
             Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
+
+    //関数"Behavior"
     void Behavior()
     {
-        Vector3 localPosition = thisTransform.localPosition;//オブジェクトの
-        Vector3 localAngle = thisTransform.localEulerAngles;//
-        localPosition.y = 0.0f;//
-        localPosition.z = 1.0f;//
-        localAngle.y = -EnemyList.rotation;//
-        thisTransform.localPosition = localPosition;       //ローカル座標での座標を設定
-        thisTransform.localEulerAngles = localAngle;       //
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
         if (nowAnimation != EnemyList.HumanoidAnimation.crouch && isAnimation == true)
@@ -62,18 +62,17 @@ public class CrouchEnemy : MonoBehaviour
         if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
-            Animation();//アニメーション関数を実行
+            Animation();//関数"Animation"を実行
         }
     }
 
-    //アニメーション関数
+    //関数"Animation"
     void Animation()
     {
         animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定する
-        Debug.Log(nowAnimation);//"Debug.Log(nowAnimation)"
     }
 
-    //待機関数
+    //関数"Wait"
     void Wait()
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
@@ -108,42 +107,48 @@ public class CrouchEnemy : MonoBehaviour
         }
     }
 
-    //ダメージ判定関数
+    //関数"Damage"
     void Damage()
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp"が"0"より上だったら
+        if (hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            audioSource.PlayOneShot(damage);
+        }
+        //"hp"が"0"以下だったら
+        else if (hp <= 0)
+        {
+            Invoke("Death", 0.01f);//関数"Death"を"0.01f"後に実行
         }
     }
 
-    //死亡関数
+    //関数"Death"
     void Death()
     {
-        hp = 0;                                          //体力を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;  //
-        this.tag = "Untagged";                           //タグを"Untagged"に変更する                                //タグを"Death"に変更する
-        nowAnimation = EnemyList.HumanoidAnimation.death;
+        this.tag = "Untagged";                           //このタグを"Untagged"に変更する
+        hp = 0;                                          //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
+        nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation"を"death(死亡)"にする
+        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
         Animation();
     }
 
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグPlayerの付いたオブジェクトに衝突したら
+        //衝突したオブジェクトのタグが"Player" && "isAnimation"が"false"の場合
         if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
             isAnimation = true;
             nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch, EnemyList.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
             Animation();
         }
-        //タグBulletの付いたオブジェクトに衝突したら
+        //衝突したオブジェクトのタグが"Bullet"の場合
         if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//関数"Damage"を実行
         }
     }
 }

@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class RunEnemy : MonoBehaviour
 {
-    public AudioClip damage;
-    public AudioClip scream;
-
     //ステータス
     private int hp = EnemyList.RunEnemy.hp;        //体力
     private float speed = EnemyList.RunEnemy.speed;//移動速度
     private float jump = EnemyList.RunEnemy.jump;  //ジャンプ力
     //処理
-    private float viewPointX;     //ビューポイント座標.X
-    private float interval = 0.0f;//間隔
-    //アニメーション
+    private float viewPointX;        //ビューポイント座標.X
+    private float interval = 0.0f;   //間隔
     private int nowAnimation;        //現在のアニメーション
     private bool isAnimation = false;//アニメーションの可否
-    //このオブジェクトのコンポーネント
-    private Transform thisTransform; //"Transform"
+    //このオブジェクトのコンポーネント(public)
+    public AudioClip damage;
+    public AudioClip scream;
+    //このオブジェクトのコンポーネント(private)
     private Animator animator = null;//"Animator"
     private AudioSource audioSource; //"AudioSource"
-    //他のオブジェクトのコンポーネント
+    //他のオブジェクトのコンポーネント(private)
     private Transform playerTransform;//"Transform"(プレイヤー)
 
     // Start is called before the first frame update
     void Start()
     {
-        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
-        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
-        audioSource = this.GetComponent<AudioSource>();
-        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
-        nowAnimation = EnemyList.HumanoidAnimation.run;
-        Animation();
+        //このオブジェクトのコンポーネントを取得
+        animator = this.GetComponent<Animator>();      //"Animator"
+        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform"(プレイヤー)
+        //
+        nowAnimation = EnemyList.HumanoidAnimation.run;//"nowAnimation"を"walk(走る)"にする
+        Animation();                                   //関数"Animation"を実行
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class RunEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        //"hp"が"0"より上 && "viewPointX"が"1"より上であれば
         if (hp > 0 && viewPointX < 1)
         {
             Behavior();//行動関数を呼び出す
@@ -53,12 +53,9 @@ public class RunEnemy : MonoBehaviour
         }
     }
 
-    //行動関数
+    //関数"Behavior"
     void Behavior()
     {
-        Vector3 localPosition = thisTransform.localPosition;//
-        Vector3 localAngle = thisTransform.localEulerAngles;//
-
         if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
             this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
             this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
@@ -72,24 +69,18 @@ public class RunEnemy : MonoBehaviour
 
         if(nowAnimation == EnemyList.HumanoidAnimation.run)
         {
-            localPosition.y = 0.0f;//
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
         }
-
-        localPosition.z = playerTransform.position.z;//
-
         //
         if (this.transform.position.x > playerTransform.position.x)
         {
-            localAngle.y = -EnemyList.rotation;//
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
         }
         //
         else if (this.transform.position.x < playerTransform.position.x)
         {
-            localAngle.y = EnemyList.rotation;//
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
         }
-
-        thisTransform.localPosition = localPosition;//ローカル座標での座標を設定
-        thisTransform.localEulerAngles = localAngle;//
 
         //
         if (nowAnimation == EnemyList.HumanoidAnimation.run)
@@ -110,13 +101,13 @@ public class RunEnemy : MonoBehaviour
         }
     }
 
-    //アニメーション関数
+    //関数"Animation"
     void Animation()
     {
         animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定する
     }
 
-    //待機関数
+    //関数"Wait"
     void Wait()
     {
         interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
@@ -172,7 +163,7 @@ public class RunEnemy : MonoBehaviour
         }
     }
 
-    //ダメージ関数
+    //関数"Damage"
     void Damage()
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
@@ -185,20 +176,20 @@ public class RunEnemy : MonoBehaviour
         //"hp"が"0"以下だったら
         else if (hp <= 0)
         {
-            Death();//"Death(関数)"を呼び出す
+            Invoke("Death", 0.01f);//関数"Death"を"0.01f"後に実行
         }
     }
 
-    //死亡関数
+    //関数"Death"
     void Death()
     {
-        audioSource.PlayOneShot(scream);
-        hp = 0;                                            //体力を"0"にする
-        this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
-        GameManager.score += EnemyList.WalkEnemy.score;  //
-        this.tag = "Untagged";                           //タグを"Untagged"に変更する
-        nowAnimation = EnemyList.HumanoidAnimation.death;
-        Animation();
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);//
+        this.tag = "Untagged";                           //このタグを"Untagged"に変更する
+        hp = 0;                                          //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
+        nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation"を"death(死亡)"にする
+        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
+        Animation();                                     //関数"Animation"を実行
     }
 
     //当たり判定(OnTriggerEnter)
