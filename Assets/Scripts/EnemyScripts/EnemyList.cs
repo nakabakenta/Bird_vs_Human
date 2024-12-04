@@ -89,6 +89,7 @@ public class EnemyList : MonoBehaviour
         public static int crouch  = 21;
         public static int carExit = 22;
         public static int dance   = 30;
-        public static int death   = 31;
+        public static int damage  = 31;
+        public static int death   = 32;
     }
 }

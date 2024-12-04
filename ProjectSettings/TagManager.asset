@@ -6,13 +6,13 @@ TagManager:
   tags:
   - Enemy
   - Bullet
-  - Death
   - lb_bird
   - lb_perchTarget
   - lb_groundTarget
   - AICars
   - BossEnemy
   - EnemyBullet
+  - PlayerAlly
   layers:
   - Default
   - TransparentFX

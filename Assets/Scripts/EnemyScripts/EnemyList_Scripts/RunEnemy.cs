@@ -196,7 +196,7 @@ public class RunEnemy : MonoBehaviour
         hp = 0;                                            //体力を"0"にする
         this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
         GameManager.score += EnemyList.WalkEnemy.score;  //
-        this.tag = "Death";                                //タグを"Death"に変更する
+        this.tag = "Untagged";                           //タグを"Untagged"に変更する
         nowAnimation = EnemyList.HumanoidAnimation.death;
         Animation();
     }

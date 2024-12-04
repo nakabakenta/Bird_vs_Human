@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public static float gageTimer = 0.0f;               //ゲージタイマー
     public static float gageInterval = 10.0f;           //ゲージ蓄積時間
     //処理(private)
+    private int ally = 0;                  //味方数
     private float invincibleTimer = 0.0f;  //無敵タイマー
     private float invincible = 10.0f;      //無敵継続時間
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
@@ -30,14 +31,16 @@ public class PlayerController : MonoBehaviour
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの可否
-    //オブジェクト
-    private GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
-    public GameObject forwardBullet, downBullet;    //弾オブジェクト
-    public GameObject[] group = new GameObject[3];  //群れオブジェクト
+    //オブジェクト(public)
+    public GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
+    public GameObject forwardBullet, downBullet;   //弾オブジェクト
+    public GameObject[] group = new GameObject[3]; //群れオブジェクト
+    //オブジェクト(private)
+    private GameObject nowPlayer;//現在のプレイヤーオブジェクト
     //このオブジェクトのコンポーネント
+    private Transform thisTransform ;//"Transform"
     private Rigidbody rigidBody;     //"Rigidbody"
     private BoxCollider boxCollider; //"BoxCollider"
-    private Animator animator = null;//"Animator"
     private Renderer[] objRenderer;  //"Renderer"
     //コルーチン
     private Coroutine blinking;//
@@ -47,21 +50,14 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //プレイヤーオブジェクトを探して取得する
-        player[0] = GameObject.Find("Sparrow_Player");
-        player[1] = GameObject.Find("Crow_Player");
-        player[2] = GameObject.Find("Chickadee_Player");
 
+        thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
+        SetPlayer();                              //関数"SetPlayer"を実行
+        //コンポーネントを取得
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトの"Renderer(子オブジェクトを含む)を取得
         rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトの"Rigidbody"を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトの"BoxCollider"を取得
         playerStatus = "Normal";
-
-        player[0].SetActive(false);
-        player[1].SetActive(false);
-        player[2].SetActive(false);
-
-        SetPlayerStatus();//関数"SetPlayerStatus)"を実行
     }
 
     // Update is called once per frame
@@ -73,11 +69,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //"SetPlayerStatus(関数)"
-    void SetPlayerStatus()
+    //関数"SetPlayer"
+    void SetPlayer()
     {
+        nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         player[GameManager.playerNumber].SetActive(true);
-        animator = player[GameManager.playerNumber].GetComponent<Animator>();//"Animator"を取得
 
         if(GameManager.gameStart == false)
         {
@@ -233,6 +229,7 @@ public class PlayerController : MonoBehaviour
     //死亡関数
     void Death()
     {
+        Animator animator = nowPlayer.GetComponent<Animator>();//
         hp = 0;                         //hpを"0"にする
         boxCollider.enabled = false;    //BoxColliderを無効にする
         animator.SetBool("Death", true);//Animatorの"Death"(死亡)を有効にする
@@ -243,17 +240,34 @@ public class PlayerController : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"だったら 
+        //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"の場合
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy") && playerStatus == "Normal")
         {
-            if(BirdAlly.allyCount > 0)
-            {
-                BirdAlly.damege = true;
-            }
-            else if(BirdAlly.allyCount <= 0)
-            {
-                Damage();//"Damage(関数)"を実行する
-            }
+            Damage();//"Damage(関数)"を実行する
+
+            //if (ally > 0)
+            //{
+            //    ally -= 1;
+            //}
+            //else if(ally <= 0)
+            //{
+            //    Damage();//"Damage(関数)"を実行する
+            //}
+        }
+
+        //衝突したオブジェクトのタグが"PlayerAlly"の場合
+        if (collision.gameObject.tag == "PlayerAlly")
+        {
+            ally += 1;
+
+            //if (playerFollow == true && allyNumber == 1)
+            //{
+            //    this.transform.position = new Vector3(playerTransform.position.x - 1.0f, playerTransform.position.y, playerTransform.position.z);
+            //}
+            //else if (playerFollow == true && allyNumber == 2)
+            //{
+            //    this.transform.position = new Vector3(playerTransform.position.x - 2.0f, playerTransform.position.y, playerTransform.position.z);
+            //}
         }
     }
 }

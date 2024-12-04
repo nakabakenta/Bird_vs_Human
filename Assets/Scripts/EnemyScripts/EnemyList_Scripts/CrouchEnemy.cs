@@ -123,9 +123,9 @@ public class CrouchEnemy : MonoBehaviour
     //死亡関数
     void Death()
     {
-        hp = 0;                                            //体力を"0"にする
+        hp = 0;                                          //体力を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;  //
-        this.tag = "Death";                                //タグを"Death"に変更する
+        this.tag = "Untagged";                           //タグを"Untagged"に変更する                                //タグを"Death"に変更する
         nowAnimation = EnemyList.HumanoidAnimation.death;
         Animation();
     }

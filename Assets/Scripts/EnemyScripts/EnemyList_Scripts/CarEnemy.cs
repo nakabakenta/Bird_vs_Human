@@ -75,9 +75,9 @@ public class CarEnemy : MonoBehaviour
     //関数"Death"
     void Death()
     {
-        hp = 0;                                          //体力を"0"にする
+        hp = 0;                                        //体力を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;//
-        this.tag = "Death";                              //このタグを"Death"に変更する
+        this.tag = "Untagged";                         //このタグを"Untagged"に変更する
     }
 
     //関数"Destroy"
