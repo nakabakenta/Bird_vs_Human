@@ -9,25 +9,29 @@ public class BossEnemy : MonoBehaviour
     private float speed = EnemyList.BossEnemy.speed[0];//移動速度
     private float jump = EnemyList.BossEnemy.speed[0]; //ジャンプ力
     //処理
-    private float viewPointX;     //ビューポイント座標.X
-    private float interval = 0.0f;//間隔
-    //アニメーション
-    private int nowAnimation;        //現在のアニメーション
-    private bool isAnimation = false;//アニメーションの可否
-    //このオブジェクトのコンポーネント
-    private Transform thisTransform;  //"Transform"(このオブジェクト)
-    private Animator animator = null; //"Animator"(このオブジェクト)
+    private float viewPointX;           //ビューポイント座標.X
+    private int nowAnimation;           //現在のアニメーション
+    private float animationTimer = 0.0f;//アニメーションタイマー
+    private bool isAnimation = false;   //アニメーションの可否
+    //このオブジェクトのコンポーネント                               
+    public AudioClip damage;         //"AudioClip(ダメージ)"
+    public AudioClip scream;         //"AudioClip(叫び声)"
+    private Animator animator = null;//"Animator"(このオブジェクト)
+    private AudioSource audioSource; //"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform"(プレイヤー)
 
     // Start is called before the first frame update
     void Start()
     {
-        thisTransform = this.gameObject.GetComponent<Transform>();//このオブジェクトの"Transform"を取得
-        animator = this.GetComponent<Animator>();                 //このオブジェクトの"Animator"を取得
-        playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
-        nowAnimation = EnemyList.HumanoidAnimation.walk;
-        Animation();
+        //このオブジェクトのコンポーネントを取得
+        animator = this.GetComponent<Animator>();      //"Animator"
+        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
+        //
+        nowAnimation = EnemyList.HumanoidAnimation.walk;//"nowAnimation"を"walk(歩く)"にする
+        Animation();                                    //関数"Animation"を実行
     }
 
     // Update is called once per frame
@@ -36,23 +40,21 @@ public class BossEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        //"hp > 0" && "viewPointX < 1"の場合
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//行動関数を呼び出す
+            Behavior();//関数"Behavior"を実行
         }
-        //体力が0以下 && ビューポート座標.Xが0未満であれば
+        //"hp <= 0" && "viewPointX < 0"の場合
         else if (hp <= 0 && viewPointX < 0)
         {
-            Destroy(this.gameObject);//このオブジェクトを消す
+            Destroy();//関数"Destroy"を実行
         }
     }
 
+    //関数"Behavior"
     void Behavior()
     {
-        Vector3 localPosition = thisTransform.localPosition;//
-        Vector3 localAngle = thisTransform.localEulerAngles;//
-
         if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
             this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
             this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
@@ -66,24 +68,18 @@ public class BossEnemy : MonoBehaviour
 
         if (nowAnimation == EnemyList.HumanoidAnimation.walk)
         {
-            localPosition.y = 0.0f;//
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
         }
-
-        localPosition.z = 1.0f;//
-
         //
         if (this.transform.position.x > playerTransform.position.x)
         {
-            localAngle.y = -EnemyList.rotation;//
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
         }
         //
         else if (this.transform.position.x < playerTransform.position.x)
         {
-            localAngle.y = EnemyList.rotation;//
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
         }
-
-        thisTransform.localPosition = localPosition;//ローカル座標での座標を設定
-        thisTransform.localEulerAngles = localAngle;//
 
         //
         if (nowAnimation == EnemyList.HumanoidAnimation.walk)
@@ -93,118 +89,142 @@ public class BossEnemy : MonoBehaviour
         //
         else if (nowAnimation != EnemyList.HumanoidAnimation.walk && isAnimation == true)
         {
-            Wait();
+            Wait();//関数"Wait"を実行
         }
 
         //
         if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
-            Animation();//アニメーション関数を実行
+            Animation();//関数"Animation"を実行
         }
     }
 
-    //アニメーション関数
+    //関数"Animation"
     void Animation()
     {
-        animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定する
-        Debug.Log(nowAnimation);                    //"Debug.Log(nowAnimation)"
+        animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"に"nowAnimation"を設定して再生
     }
 
-    //待機関数
+    //関数"Wait"
     void Wait()
     {
-        interval += Time.deltaTime;//クールタイムにTime.deltaTimeを足す
+        animationTimer += Time.deltaTime;//間隔に"Time.deltaTime(経過時間)"を足す
 
-        if (nowAnimation == EnemyList.HumanoidAnimation.punch ||
-            nowAnimation == EnemyList.HumanoidAnimation.kick)
+        //
+        if (nowAnimation == EnemyList.HumanoidAnimation.punch)
         {
             //
-            if (nowAnimation == EnemyList.HumanoidAnimation.punch)
+            if (animationTimer >= 2.0f)
             {
-                //
-                if (interval >= 2.0f)
-                {
-                    interval = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.walk;
-                    Animation();
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.walk;
+                Animation();
             }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+        {
             //
-            else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+            if (animationTimer >= 1.5f)
             {
-                //
-                if (interval >= 1.5f)
-                {
-                    interval = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.walk;
-                    Animation();
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.walk;
+                Animation();
             }
         }
         //
         else if (nowAnimation == EnemyList.HumanoidAnimation.jump)
         {
-            if (interval >= 0.75f)
+            if (animationTimer >= 0.75f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (interval >= 2.0f)
+                if (animationTimer >= 2.0f)
                 {
-                    animator.SetFloat("MoveSpeed", 1.0f);             //"animator(MoveSpeed)"を"1.0f(再生)"にする
-                    interval = 0.0f;
+                    animator.SetFloat("MoveSpeed", 1.0f);//"animator(MoveSpeed)"を"1.0f(再生)"にする
+                    animationTimer = 0.0f;
                     isAnimation = false;
                     nowAnimation = EnemyList.HumanoidAnimation.walk;
                     Animation();
                 }
-                else if (interval >= 1.0f)
+                else if (animationTimer >= 1.0f)
                 {
-                    animator.SetFloat("MoveSpeed", 0.0f);             //"animator(MoveSpeed)"を"0.0f(停止)"にする
+                    animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"を"0.0f(停止)"にする
                 }
+            }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.damage)
+        {
+            //
+            if (animationTimer >= 1.0f)
+            {
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.walk;
+                Animation();//関数"Animation"を実行
             }
         }
     }
 
-    //ダメージ関数
+    //関数"Damage"
     void Damage()
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp > 0"の場合
+        if (hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            isAnimation = true;                               //"isAnimation = true"にする
+            nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする
+            audioSource.PlayOneShot(damage);                  //"damage"を鳴らす
+            Animation();                                      //関数"Animation"を実行
+        }
+        //"hp <= 0"の場合
+        else if (hp <= 0)
+        {
+            Invoke("Death", 0.01f);//関数"Death"を"0.01f"後に実行
         }
     }
 
-    //死亡関数
+    //関数"Death"
     void Death()
     {
-        hp = 0;                                            //体力を"0"にする
-        this.thisTransform.position = new Vector3(this.thisTransform.position.x, 0.0f, this.thisTransform.position.z);//
-        GameManager.score += EnemyList.WalkEnemy.score;   //
-        this.tag = "Untagged";                            //タグを"Untagged"に変更する
-        nowAnimation = EnemyList.HumanoidAnimation.death;
-        Stage.bossEnemy[Stage.nowStage - 1] = false;
-        Animation();
+        Stage.bossEnemy[Stage.nowStage - 1] = false;     //
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);//
+        this.tag = "Untagged";                           //この"this.tag == Untagged"にする
+        hp = 0;                                          //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
+        nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation"を"death(死亡)"にする
+        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
+        Animation();                                     //関数"Animation"を実行
+    }
+
+    //関数"Destroy"
+    void Destroy()
+    {
+        Destroy(this.gameObject);//このオブジェクトを消す
     }
 
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Player" && "action"が"false"だったら
+        //衝突したオブジェクトのタグが"Player" && "isAnimation == false"の場合
         if (collision.gameObject.tag == "Player" && isAnimation == false)
         {
+            //ランダム"10(パンチ)"～"12(キック)"
             isAnimation = true;
-            nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch, EnemyList.HumanoidAnimation.kick + 1);//ランダム"10(パンチ)"～"12(キック)"
-            Animation();
+            nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch,
+                                             EnemyList.HumanoidAnimation.kick + 1);
+            Animation();//関数"Animation"を実行
         }
-        //タグBulletの付いたオブジェクトに衝突したら
+        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
         if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//関数"Damage"を実行
         }
     }
 }

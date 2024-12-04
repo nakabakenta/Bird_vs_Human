@@ -585,7 +585,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carRideEnemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
+  enemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  explosion: {fileID: 0}
 --- !u!82 &4881597750803010628
 AudioSource:
   m_ObjectHideFlags: 0

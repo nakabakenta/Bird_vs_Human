@@ -28,7 +28,21 @@ public class CameraController : MonoBehaviour
     {
         if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.hp > 0) 
         {
-            this.transform.position += speed[Stage.nowStage-1] * transform.right * Time.deltaTime;//右方向に移動する
+            this.transform.position += speed[Stage.nowStage - 1] * transform.right * Time.deltaTime;//右方向に移動する
+        }
+
+        //デバック用
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            speed[Stage.nowStage - 1] = 10.0f;
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            speed[Stage.nowStage - 1] = 20.0f;
+        }
+        else
+        {
+            speed[Stage.nowStage - 1] = 2.0f;
         }
     }
 }

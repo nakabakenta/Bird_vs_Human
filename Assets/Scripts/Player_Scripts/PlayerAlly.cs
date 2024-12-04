@@ -32,7 +32,7 @@ public class PlayerAlly : MonoBehaviour
 
         if(viewPointX < 0)
         {
-            Destroy();//ŠÖ”"Destroy"‚ðŽÀs‚·‚é
+            Destroy();//ŠÖ”"Destroy"‚ðŽÀs
         }
     }
 

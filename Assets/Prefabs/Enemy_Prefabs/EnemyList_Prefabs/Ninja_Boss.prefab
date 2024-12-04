@@ -1088,6 +1088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44276220b72dd464e94b689eb22af33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  scream: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
 --- !u!82 &-7797084026357207635
 AudioSource:
   m_ObjectHideFlags: 0

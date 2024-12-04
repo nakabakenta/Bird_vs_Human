@@ -16,12 +16,11 @@ public class PlayerController : MonoBehaviour
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
     };
-    //処理(public)
+    //処理
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
     public static float gageInterval = 10.0f;           //ゲージ蓄積時間
-    //処理(private)
     private int ally = 0;                  //味方数
     private float invincibleTimer = 0.0f;  //無敵タイマー
     private float invincible = 10.0f;      //無敵継続時間
@@ -31,17 +30,15 @@ public class PlayerController : MonoBehaviour
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの可否
-    //オブジェクト(public)
-    public GameObject[] player = new GameObject[3];//プレイヤーオブジェクト
-    public GameObject forwardBullet, downBullet;   //弾オブジェクト
-    public GameObject[] group = new GameObject[3]; //群れオブジェクト
-    //オブジェクト(private)
-    private GameObject nowPlayer;//現在のプレイヤーオブジェクト
     //このオブジェクトのコンポーネント
-    private Transform thisTransform ;//"Transform"
-    private Rigidbody rigidBody;     //"Rigidbody"
-    private BoxCollider boxCollider; //"BoxCollider"
-    private Renderer[] objRenderer;  //"Renderer"
+    public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
+    public GameObject forwardBullet, downBullet;   //"GameObject(弾)"
+    public GameObject[] group = new GameObject[3]; //"GameObject(群れ)"
+    private GameObject nowPlayer;                  //"GameObject(現在のプレイヤー)"
+    private Transform thisTransform ;              //"Transform"
+    private Rigidbody rigidBody;                   //"Rigidbody"
+    private BoxCollider boxCollider;               //"BoxCollider"
+    private Renderer[] objRenderer;                //"Renderer"
     //コルーチン
     private Coroutine blinking;//
     //座標
@@ -50,7 +47,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
         SetPlayer();                              //関数"SetPlayer"を実行
         //コンポーネントを取得

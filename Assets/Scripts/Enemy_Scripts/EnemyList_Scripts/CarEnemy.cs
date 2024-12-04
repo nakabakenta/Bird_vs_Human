@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CarEnemy : MonoBehaviour
 {
-    //
-    public GameObject carRideEnemy;
     //ステータス
     private int hp = EnemyList.CarEnemy.hp;        //体力
     private float speed = EnemyList.CarEnemy.speed;//移動速度
@@ -13,30 +11,38 @@ public class CarEnemy : MonoBehaviour
     private float viewPointX;        //ビューポイント座標.X
     private bool isAnimation = false;//アニメーションの可否
     private bool carExit = false;    //
+    //このオブジェクトのコンポーネント
+    public GameObject enemy;        //"GameObject(敵)"
+    public AudioClip damage;        //"AudioClip(ダメージ)"
+    public AudioClip explosion;     //"AudioClip(爆発)"
+    private AudioSource audioSource;//"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.Find("Player").transform;//ゲームオブジェクト"Player"を探して"Transform"を取得
+        //このオブジェクトのコンポーネントを取得
+        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ビューポート座標を取得
+        //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
+        //"hp > 0" && "viewPointX < 1"の場合
         if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//行動関数"Behavior"を実行する
+            Behavior();//関数"Behavior"を実行
         }
-        //(体力が"0以下" && ビューポート座標.Xが"0未満"であれば
-        else if (hp <= 0 || viewPointX < 0)
+        //"hp <= 0" && "viewPointX < 0"の場合
+        else if (hp <= 0 && viewPointX < 0)
         {
-            Destroy();//関数"Destroy"を実行する
+            Destroy();//関数"Destroy"を実行
         }
     }
 
@@ -55,7 +61,7 @@ public class CarEnemy : MonoBehaviour
         }
         else if(this.transform.position.z <= playerTransform.position.z && carExit == false)
         {
-            Instantiate(carRideEnemy, this.transform.position, this.transform.rotation);
+            Instantiate(enemy, this.transform.position, this.transform.rotation);
             carExit = true;
         }
     }
@@ -65,19 +71,25 @@ public class CarEnemy : MonoBehaviour
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp > 0"の場合
+        if (hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            audioSource.PlayOneShot(damage);
+        }
+        //"hp <= 0"の場合
+        else if (hp <= 0)
+        {
+            Invoke("Death", 0.01f);//関数"Death"を"0.01f"後に実行
         }
     }
 
     //関数"Death"
     void Death()
     {
-        hp = 0;                                        //体力を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;//
-        this.tag = "Untagged";                         //このタグを"Untagged"に変更する
+        this.tag = "Untagged";                         //この"this.tag == Untagged"にする
+        hp = 0;                                        //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;//"score"を足す
+        audioSource.PlayOneShot(explosion);            //"explosion"を鳴らす
     }
 
     //関数"Destroy"
@@ -89,10 +101,10 @@ public class CarEnemy : MonoBehaviour
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
+        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//関数"Damage"を実行
         }
     }
 }

@@ -1112,6 +1112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1d6ad874ec04a4b8b840edc8ad7934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  scream: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
 --- !u!82 &4213856176169282724
 AudioSource:
   m_ObjectHideFlags: 0

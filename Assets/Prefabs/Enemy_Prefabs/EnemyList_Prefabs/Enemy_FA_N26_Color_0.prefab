@@ -347,9 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9cbcdb3975a3748b912e84ca5ce2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBullet: {fileID: 1306594059243497752, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
-  attackTimer: 0.25
-  attackInterval: 0.25
+  bullet: {fileID: 1306594059243497752, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  explosion: {fileID: 0}
 --- !u!82 &1368777600782297130
 AudioSource:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FighterJetEnemy : MonoBehaviour
 {
-    public GameObject enemyBullet;
     //ステータス
     private int hp = EnemyList.FighterJetEnemy.hp;        //体力
     private float speed = EnemyList.FighterJetEnemy.speed;//移動速度
@@ -13,38 +12,46 @@ public class FighterJetEnemy : MonoBehaviour
     private float attackInterval = 0.5f;//攻撃間隔
     private float viewPointX;           //ビューポイント座標.X
     private float bulletRotation;       //発射する弾の方向
+    //このオブジェクトのコンポーネント
+    public GameObject bullet;       //"GameObject(弾)"
+    public AudioClip damage;        //"AudioClip(ダメージ)"
+    public AudioClip explosion;     //"AudioClip(爆発)"
+    private AudioSource audioSource;//"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.Find("Player").transform;//ゲームオブジェクト"Player"を探して"Transform"を取得
+        //このオブジェクトのコンポーネントを取得
+        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
     }
 
     // Update is called once per frame
     void Update()
     {
-        attackTimer += Time.deltaTime;
-
-        //ビューポート座標を取得
+        //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //体力が0より上 && ビューポート座標.Xが1より上であれば
-        if (hp > 0)
+        //"hp > 0" && "viewPointX < 1"の場合
+        if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//行動関数"Behavior"を実行する
+            Behavior();//関数"Behavior"を実行
         }
-        //(体力が"0以下" && ビューポート座標.Xが"0未満"であれば
+        //"hp <= 0" && "viewPointX < 0"の場合
         else if (hp <= 0 && viewPointX < 0)
         {
-            Destroy();//関数"Destroy"を実行する
+            Destroy();//関数"Destroy"を実行
         }
     }
 
     //関数"Behavior"
     void Behavior()
     {
+        attackTimer += Time.deltaTime;//攻撃間隔に"Time.deltaTime(経過時間)"を足す
+
         if (viewPointX < -0.5)
         {
             this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
@@ -62,7 +69,7 @@ public class FighterJetEnemy : MonoBehaviour
 
         if (attackTimer > attackInterval)
         {
-            Instantiate(enemyBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, bulletRotation));
+            Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, bulletRotation));
             attackTimer = 0.0f;
         }
     }
@@ -72,19 +79,25 @@ public class FighterJetEnemy : MonoBehaviour
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //体力が0以下だったら
-        if (hp <= 0)
+        //"hp > 0"の場合
+        if (hp > 0)
         {
-            Death();//関数"Death"死亡を呼び出す
+            audioSource.PlayOneShot(damage);
+        }
+        //"hp <= 0"の場合
+        else if (hp <= 0)
+        {
+            Invoke("Death", 0.01f);//関数"Death"を"0.01f"後に実行
         }
     }
 
     //関数"Death"
     void Death()
     {
-        hp = 0;                                        //体力を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;//
-        this.tag = "Untagged";                         //タグを"Untagged"に変更する
+        this.tag = "Untagged";                         //この"this.tag == Untagged"にする
+        hp = 0;                                        //"hp"を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;//"score"を足す
+        audioSource.PlayOneShot(explosion);            //"explosion"を鳴らす
     }
 
     //関数"Destroy"
@@ -96,10 +109,10 @@ public class FighterJetEnemy : MonoBehaviour
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //タグBulletの付いたオブジェクトに衝突したら
-        if (collision.gameObject.tag == "Bullet" && this.tag != "Death")
+        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
-            Damage();//関数Damageを呼び出す
+            Damage();//関数"Damage"を実行
         }
     }
 }
