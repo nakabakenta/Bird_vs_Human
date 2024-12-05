@@ -15,6 +15,8 @@ public class CarEnemy : MonoBehaviour
     public GameObject enemy;        //"GameObject(敵)"
     public GameObject effect;       //"GameObject(エフェクト)"
     public AudioClip damage;        //"AudioClip(ダメージ)"
+    public AudioClip brake;         //"AudioClip(ブレーキ)"
+    public AudioClip horn;          //"AudioClip(クラクション)"
     public AudioClip explosion;     //"AudioClip(爆発)"
     private Transform thisTransform;//"Transform"
     private AudioSource audioSource;//"AudioSource"
@@ -65,6 +67,8 @@ public class CarEnemy : MonoBehaviour
         else if(this.transform.position.z <= playerTransform.position.z && carExit == false)
         {
             Instantiate(enemy, this.transform.position, this.transform.rotation);
+            audioSource.PlayOneShot(horn);
+            audioSource.PlayOneShot(brake);
             carExit = true;
         }
     }

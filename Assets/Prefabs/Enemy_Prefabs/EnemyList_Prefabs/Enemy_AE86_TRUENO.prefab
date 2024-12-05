@@ -588,6 +588,8 @@ MonoBehaviour:
   enemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}
+  horn: {fileID: 8300000, guid: 3d876fa0688ebc248b1bea3114023730, type: 3}
   explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!82 &4881597750803010628
 AudioSource:

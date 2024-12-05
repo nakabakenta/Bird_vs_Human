@@ -38,8 +38,8 @@ public class FighterJetEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
+        //"hp > 0"の場合
+        if (hp > 0)
         {
             Behavior();//関数"Behavior"を実行
         }

@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            speed[Stage.nowStage - 1] = 2.0f;
+            //speed[Stage.nowStage - 1] = 2.0f;
         }
     }
 }
