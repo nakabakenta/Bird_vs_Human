@@ -34,15 +34,15 @@ public class CrouchEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
-        {
-            Behavior();//関数"Behavior"を実行
-        }
-        //"hp <= 0" && "viewPointX < 0"の場合
-        else if (hp <= 0 && viewPointX < 0)
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
         {
             Destroy();//関数"Destroy"を実行
+        }
+        //"hp > 0" && "viewPointX < 1"の場合
+        else if (hp > 0 && viewPointX < 1)
+        {
+            Behavior();//関数"Behavior"を実行
         }
     }
 
@@ -53,7 +53,7 @@ public class CrouchEnemy : MonoBehaviour
         this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
-        if (nowAnimation != EnemyList.HumanoidAnimation.crouch && isAnimation == true)
+        if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }

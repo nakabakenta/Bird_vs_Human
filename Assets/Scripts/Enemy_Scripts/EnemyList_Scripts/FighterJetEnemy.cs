@@ -14,8 +14,10 @@ public class FighterJetEnemy : MonoBehaviour
     private float bulletRotation;       //発射する弾の方向
     //このオブジェクトのコンポーネント
     public GameObject bullet;       //"GameObject(弾)"
+    public GameObject effect;       //"GameObject(エフェクト)"
     public AudioClip damage;        //"AudioClip(ダメージ)"
     public AudioClip explosion;     //"AudioClip(爆発)"
+    private Transform thisTransform;//"Transform"
     private AudioSource audioSource;//"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
@@ -24,6 +26,7 @@ public class FighterJetEnemy : MonoBehaviour
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
+        thisTransform = this.GetComponent<Transform>();//"Transform"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
@@ -97,6 +100,9 @@ public class FighterJetEnemy : MonoBehaviour
         this.tag = "Untagged";                         //この"this.tag == Untagged"にする
         hp = 0;                                        //"hp"を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;//"score"を足す
+
+        //
+        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
         audioSource.PlayOneShot(explosion);            //"explosion"を鳴らす
     }
 

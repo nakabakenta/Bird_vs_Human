@@ -40,6 +40,10 @@ public class CameraController : MonoBehaviour
         {
             speed[Stage.nowStage - 1] = 20.0f;
         }
+        else if (Input.GetKey(KeyCode.Alpha9))
+        {
+            speed[Stage.nowStage - 1] = 200.0f;
+        }
         else
         {
             speed[Stage.nowStage - 1] = 2.0f;

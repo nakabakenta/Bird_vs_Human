@@ -82,15 +82,17 @@ public class EnemyList : MonoBehaviour
     //ヒューマノイドアニメーション
     public static class HumanoidAnimation
     {
-        public static int walk    = 0;
-        public static int run     = 1;
-        public static int punch   = 10;
-        public static int kick    = 11;
-        public static int jump    = 20; 
-        public static int crouch  = 21;
-        public static int carExit = 22;
-        public static int dance   = 30;
-        public static int damage  = 31;
-        public static int death   = 32;
+        public static int walk       = 0;
+        public static int run        = 1;
+        public static int mutantRun  = 2;
+        public static int punch      = 10;
+        public static int kick       = 11;
+        public static int jumpAttack = 12;
+        public static int jump       = 20; 
+        public static int crouch     = 21;
+        public static int carExit    = 22;
+        public static int dance      = 30;
+        public static int damage     = 31;
+        public static int death      = 32;
     }
 }

@@ -348,8 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1306594059243497752, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
+  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  explosion: {fileID: 0}
+  explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!82 &1368777600782297130
 AudioSource:
   m_ObjectHideFlags: 0

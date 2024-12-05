@@ -13,8 +13,10 @@ public class CarEnemy : MonoBehaviour
     private bool carExit = false;    //
     //このオブジェクトのコンポーネント
     public GameObject enemy;        //"GameObject(敵)"
+    public GameObject effect;       //"GameObject(エフェクト)"
     public AudioClip damage;        //"AudioClip(ダメージ)"
     public AudioClip explosion;     //"AudioClip(爆発)"
+    private Transform thisTransform;//"Transform"
     private AudioSource audioSource;//"AudioSource"
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
@@ -23,6 +25,7 @@ public class CarEnemy : MonoBehaviour
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
+        thisTransform = this.GetComponent<Transform>();//"Transform"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
@@ -89,7 +92,10 @@ public class CarEnemy : MonoBehaviour
         this.tag = "Untagged";                         //この"this.tag == Untagged"にする
         hp = 0;                                        //"hp"を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;//"score"を足す
-        audioSource.PlayOneShot(explosion);            //"explosion"を鳴らす
+
+        //
+        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
+        audioSource.PlayOneShot(explosion);//"explosion"を鳴らす
     }
 
     //関数"Destroy"

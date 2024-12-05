@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
     }
 
-    //“®ìŠÖ”
+    //ŠÖ”"Behavior"
     void Behavior()
     {
         //

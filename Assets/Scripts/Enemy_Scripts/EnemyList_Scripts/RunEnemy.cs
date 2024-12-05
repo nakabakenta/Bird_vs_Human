@@ -42,15 +42,15 @@ public class RunEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
-        {
-            Behavior();//関数"Behavior"を実行
-        }
-        //"hp <= 0" && "viewPointX < 0"の場合
-        else if (hp <= 0 && viewPointX < 0)
+        //"(hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false)"の場合
+        if ((hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false))
         {
             Destroy();//関数"Destroy"を実行
+        }
+        //"hp > 0 && viewPointX < 1"の場合
+        else if (hp > 0 && viewPointX < 1)
+        {
+            Behavior();//関数"Behavior"を実行
         }
     }
 
@@ -68,10 +68,6 @@ public class RunEnemy : MonoBehaviour
             Animation();
         }
 
-        if(nowAnimation == EnemyList.HumanoidAnimation.run)
-        {
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-        }
         //
         if (this.transform.position.x > playerTransform.position.x)
         {
@@ -84,12 +80,13 @@ public class RunEnemy : MonoBehaviour
         }
 
         //
-        if (nowAnimation == EnemyList.HumanoidAnimation.run)
+        if (isAnimation == false)
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+            this.transform.position += speed * transform.forward * Time.deltaTime;       //前方向に移動する
         }
         //
-        else if (nowAnimation != EnemyList.HumanoidAnimation.run && isAnimation == true)
+        else if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }

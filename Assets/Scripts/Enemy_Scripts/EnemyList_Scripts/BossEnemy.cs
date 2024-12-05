@@ -7,12 +7,14 @@ public class BossEnemy : MonoBehaviour
     //ステータス
     private int hp = EnemyList.BossEnemy.hp[0];        //体力
     private float speed = EnemyList.BossEnemy.speed[0];//移動速度
-    private float jump = EnemyList.BossEnemy.speed[0]; //ジャンプ力
+    private float jump = EnemyList.BossEnemy.jump[0];  //ジャンプ力
     //処理
-    private float viewPointX;           //ビューポイント座標.X
-    private int nowAnimation;           //現在のアニメーション
-    private float animationTimer = 0.0f;//アニメーションタイマー
-    private bool isAnimation = false;   //アニメーションの可否
+    private float viewPointX;                 //ビューポイント座標.X
+    private int nowAnimation;                 //現在のアニメーション
+    private float animationTimer = 0.0f;      //アニメーションタイマー
+    private float changeAnimationTimer = 0.0f;//チェンジアニメーションタイマー
+    private float jumpTimer = 0.0f;           //ジャンプタイマー
+    private bool isAnimation = false;         //アニメーションの可否
     //このオブジェクトのコンポーネント                               
     public AudioClip damage;         //"AudioClip(ダメージ)"
     public AudioClip scream;         //"AudioClip(叫び声)"
@@ -65,11 +67,6 @@ public class BossEnemy : MonoBehaviour
             nowAnimation = EnemyList.HumanoidAnimation.jump;
             Animation();
         }
-
-        if (nowAnimation == EnemyList.HumanoidAnimation.walk)
-        {
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-        }
         //
         if (this.transform.position.x > playerTransform.position.x)
         {
@@ -82,21 +79,45 @@ public class BossEnemy : MonoBehaviour
         }
 
         //
-        if (nowAnimation == EnemyList.HumanoidAnimation.walk)
+        if (isAnimation == false)
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+            changeAnimationTimer += Time.deltaTime;
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+            this.transform.position += speed * transform.forward * Time.deltaTime;      //前方向に移動する
+
+            if(changeAnimationTimer >= 5.0f)
+            {
+                changeAnimationTimer = 0.0f;
+                ChangeAnimation();
+            }
         }
         //
-        else if (nowAnimation != EnemyList.HumanoidAnimation.walk && isAnimation == true)
+        else if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }
-
         //
         if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//関数"Animation"を実行
+        }
+    }
+
+    //関数"ChangeAnimation"
+    void ChangeAnimation()
+    {
+        if (nowAnimation == EnemyList.HumanoidAnimation.walk)
+        {
+            nowAnimation = EnemyList.HumanoidAnimation.mutantRun;
+            speed *= 2.0f;
+            Animation();
+        }
+        else if (nowAnimation == EnemyList.HumanoidAnimation.mutantRun)
+        {
+            isAnimation = true;
+            nowAnimation = EnemyList.HumanoidAnimation.jumpAttack;
+            Animation();
         }
     }
 
@@ -136,21 +157,47 @@ public class BossEnemy : MonoBehaviour
             }
         }
         //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.jumpAttack)
+        {
+            //
+            if (animationTimer >= 3.21f)
+            {
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.walk;
+                speed = EnemyList.BossEnemy.speed[0];
+                Animation();
+            }
+        }
+        //
         else if (nowAnimation == EnemyList.HumanoidAnimation.jump)
         {
+            jumpTimer += Time.deltaTime;//"jumpTimer"に"Time.deltaTime(経過時間)"を足す
+
+            if (jumpTimer >= 0.1f)
+            {
+                jump -= 0.5f;
+                jumpTimer = 0.0f;
+            }
+
             if (animationTimer >= 0.75f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (animationTimer >= 2.0f)
+                if (animationTimer >= 3.5f)
+                {
+                    jump = EnemyList.RunEnemy.jump;
+                    animationTimer = 0.0f;
+                    jumpTimer = 0.0f;
+                    isAnimation = false;
+                    nowAnimation = EnemyList.HumanoidAnimation.walk;//
+                    Animation();                                    //関数"Animation"を実行
+                }
+                else if (animationTimer >= 3.0f)
                 {
                     animator.SetFloat("MoveSpeed", 1.0f);//"animator(MoveSpeed)"を"1.0f(再生)"にする
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.walk;
-                    Animation();
                 }
-                else if (animationTimer >= 1.0f)
+                else if (animationTimer >= 1.25f)
                 {
                     animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"を"0.0f(停止)"にする
                 }

@@ -35,15 +35,15 @@ public class WalkEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
-        {
-            Behavior();//関数"Behavior"を実行
-        }
-        //"hp <= 0" && "viewPointX < 0"の場合
-        else if (hp <= 0 && viewPointX < 0)
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
         {
             Destroy();//関数"Destroy"を実行
+        }
+        //"hp > 0" && "viewPointX < 1"の場合
+        else if (hp > 0 && viewPointX < 1)
+        {
+            Behavior();//関数"Behavior"を実行
         }
     }
 
@@ -54,12 +54,12 @@ public class WalkEnemy : MonoBehaviour
         this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
-        if (nowAnimation == EnemyList.HumanoidAnimation.walk)
+        if (isAnimation == false)
         {
             this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
         }
         //
-        else if (nowAnimation != EnemyList.HumanoidAnimation.walk && isAnimation == true)
+        else if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }
@@ -131,7 +131,7 @@ public class WalkEnemy : MonoBehaviour
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
         //"hp > 0"の場合
-        if(hp > 0)
+        if (hp > 0)
         {
             isAnimation = true;                               //"isAnimation = true"にする
             nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする

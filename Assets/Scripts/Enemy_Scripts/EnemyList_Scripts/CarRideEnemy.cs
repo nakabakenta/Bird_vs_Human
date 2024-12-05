@@ -12,6 +12,7 @@ public class CarRideEnemy : MonoBehaviour
     private float viewPointX;           //ビューポイント座標.X
     private int nowAnimation;           //現在のアニメーション
     private float animationTimer = 0.0f;//アニメーションタイマー
+    private float jumpTimer = 0.0f;     //ジャンプタイマー
     private bool isAnimation = false;   //アニメーションの可否
     //このオブジェクトのコンポーネント
     private Animator animator = null;//"Animator"
@@ -40,15 +41,15 @@ public class CarRideEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
-        {
-            Behavior();//関数"Behavior"を実行
-        }
-        //"hp <= 0" && "viewPointX < 0"の場合
-        else if (hp <= 0 && viewPointX < 0)
+        //"(hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false)"の場合
+        if ((hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false))
         {
             Destroy();//関数"Destroy"を実行
+        }
+        //"hp > 0 && viewPointX < 1"の場合
+        else if (hp > 0 && viewPointX < 1)
+        {
+            Behavior();//関数"Behavior"を実行
         }
     }
 
@@ -72,10 +73,6 @@ public class CarRideEnemy : MonoBehaviour
                 Animation();
             }
 
-            if (nowAnimation == EnemyList.HumanoidAnimation.run)
-            {
-                this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-            }
             //
             if (this.transform.position.x > playerTransform.position.x)
             {
@@ -88,12 +85,13 @@ public class CarRideEnemy : MonoBehaviour
             }
 
             //
-            if (nowAnimation == EnemyList.HumanoidAnimation.run)
+            if (isAnimation == false)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+                this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+                this.transform.position += speed * transform.forward * Time.deltaTime;       //前方向に移動する
             }
             //
-            else if (nowAnimation != EnemyList.HumanoidAnimation.run && isAnimation == true)
+            else if (isAnimation == true)
             {
                 Wait();//関数"Wait"を実行
             }
@@ -145,24 +143,38 @@ public class CarRideEnemy : MonoBehaviour
         //
         else if (nowAnimation == EnemyList.HumanoidAnimation.jump)
         {
+            jumpTimer += Time.deltaTime;//"jumpTimer"に"Time.deltaTime(経過時間)"を足す
+
+            if (jumpTimer >= 0.1f)
+            {
+                jump -= 0.5f;
+                jumpTimer = 0.0f;
+            }
+
             if (animationTimer >= 0.75f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (animationTimer >= 2.0f)
+                if (animationTimer >= 3.5f)
+                {
+                    jump = EnemyList.RunEnemy.jump;
+                    animationTimer = 0.0f;
+                    jumpTimer = 0.0f;
+                    isAnimation = false;
+                    nowAnimation = EnemyList.HumanoidAnimation.run;//
+                    Animation();                                   //関数"Animation"を実行
+                }
+                else if (animationTimer >= 3.0f)
                 {
                     animator.SetFloat("MoveSpeed", 1.0f);//"animator(MoveSpeed)"を"1.0f(再生)"にする
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.run;
-                    Animation();
                 }
-                else if (animationTimer >= 1.0f)
+                else if (animationTimer >= 1.25f)
                 {
                     animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"を"0.0f(停止)"にする
                 }
             }
         }
+        //
         else if(nowAnimation == EnemyList.HumanoidAnimation.carExit)
         {
             //
@@ -216,6 +228,7 @@ public class CarRideEnemy : MonoBehaviour
         hp = 0;                                          //"hp"を"0"にする
         GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
         nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation"を"death(死亡)"にする
+        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
         Animation();                                     //関数"Animation"を実行
     }
 
