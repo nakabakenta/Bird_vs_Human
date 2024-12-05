@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
         new Vector2(245.0f, 0.0f),
         new Vector2(245.0f, 0.0f),
         new Vector2(245.0f, 0.0f),
-        new Vector2(245.0f, 0.0f),
+        new Vector2(250.0f, 0.0f),
         new Vector2(10000.0f, 0.0f),
     };
 
@@ -29,24 +29,6 @@ public class CameraController : MonoBehaviour
         if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.hp > 0) 
         {
             this.transform.position += speed[Stage.nowStage - 1] * transform.right * Time.deltaTime;//右方向に移動する
-        }
-
-        //デバック用
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            speed[Stage.nowStage - 1] = 10.0f;
-        }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            speed[Stage.nowStage - 1] = 20.0f;
-        }
-        else if (Input.GetKey(KeyCode.Alpha9))
-        {
-            speed[Stage.nowStage - 1] = 200.0f;
-        }
-        else
-        {
-            //speed[Stage.nowStage - 1] = 2.0f;
         }
     }
 }

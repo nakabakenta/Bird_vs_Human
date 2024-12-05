@@ -2121,10 +2121,10 @@ GameObject:
   - component: {fileID: 3985081609292839912}
   - component: {fileID: 1734329729614039349}
   - component: {fileID: 5482730215180168610}
-  - component: {fileID: -4338118793228212316}
+  - component: {fileID: 4340176774524834710}
   - component: {fileID: -8473730078431224476}
   m_Layer: 0
-  m_Name: Swat_Run
+  m_Name: Swat_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2197,7 +2197,7 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &-4338118793228212316
+--- !u!114 &4340176774524834710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7702886973443865384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ccde9e83c18e643b2117b783b6f0ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 44276220b72dd464e94b689eb22af33e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}

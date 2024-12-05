@@ -2209,8 +2209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808a97695e67f2f448d6e3139d4a5045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: {fileID: 0}
-  scream: {fileID: 0}
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  scream: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
 --- !u!82 &7773158454734530012
 AudioSource:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class WalkEnemy : MonoBehaviour
         {
             Destroy();//ŠÖ”"Destroy"‚ðŽÀs
         }
-        //"hp > 0" && "viewPointX < 1"‚Ìê‡
+        //"hp > 0 && viewPointX < 1"‚Ìê‡
         else if (hp > 0 && viewPointX < 1)
         {
             Behavior();//ŠÖ”"Behavior"‚ðŽÀs

@@ -45,11 +45,10 @@ public class PlayerAlly : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Player"だった場合
-        if (collision.gameObject.tag == "Player")
+        //衝突したオブジェクトのタグが"Player"の場合
+        if (collision.gameObject.tag == "Player" && PlayerController.ally < 2)
         {
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, 90.0f, this.transform.rotation.z);
-            Destroy();//関数"Destroy"を実行する
+            Destroy();//関数"Destroy"を実行
         }
     }
 }

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
     public static float gageInterval = 10.0f;           //ゲージ蓄積時間
-    private int ally = 0;                  //味方数
+    public static int ally = 0;            //味方数
     private float invincibleTimer = 0.0f;  //無敵タイマー
     private float invincible = 10.0f;      //無敵継続時間
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
@@ -31,14 +31,15 @@ public class PlayerController : MonoBehaviour
     private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの可否
     //このオブジェクトのコンポーネント
-    public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
-    public GameObject forwardBullet, downBullet;   //"GameObject(弾)"
-    public GameObject[] group = new GameObject[3]; //"GameObject(群れ)"
-    private GameObject nowPlayer;                  //"GameObject(現在のプレイヤー)"
-    private Transform thisTransform ;              //"Transform"
-    private Rigidbody rigidBody;                   //"Rigidbody"
-    private BoxCollider boxCollider;               //"BoxCollider"
-    private Renderer[] objRenderer;                //"Renderer"
+    public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
+    public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
+    public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
+    private GameObject nowPlayer;                    //"GameObject(現在のプレイヤー)"
+    private GameObject[] nowally = new GameObject[2];//
+    private Transform thisTransform ;                //"Transform"
+    private Rigidbody rigidBody;                     //"Rigidbody"
+    private BoxCollider boxCollider;                 //"BoxCollider"
+    private Renderer[] objRenderer;                  //"Renderer"
     //コルーチン
     private Coroutine blinking;//
     //座標
@@ -236,34 +237,33 @@ public class PlayerController : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Enemy" && "playerStatus"が"Normal"の場合
+        //衝突したオブジェクトのタグが"Enemy && playerStatus"が"Normal"の場合
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy") && playerStatus == "Normal")
         {
-            Damage();//"Damage(関数)"を実行する
-
-            //if (ally > 0)
-            //{
-            //    ally -= 1;
-            //}
-            //else if(ally <= 0)
-            //{
-            //    Damage();//"Damage(関数)"を実行する
-            //}
+            if (ally > 0)
+            {
+                Destroy(nowally[ally - 1]);
+                ally -= 1;
+            }
+            else if (ally <= 0)
+            {
+                Damage();//関数"Damage"を実行
+            }
         }
 
         //衝突したオブジェクトのタグが"PlayerAlly"の場合
-        if (collision.gameObject.tag == "PlayerAlly")
+        if (collision.gameObject.tag == "PlayerAlly" && ally < 2)
         {
-            ally += 1;
+            if (ally == 0)
+            {
+                nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            }
+            else if (ally == 1)
+            {
+                nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            }
 
-            //if (playerFollow == true && allyNumber == 1)
-            //{
-            //    this.transform.position = new Vector3(playerTransform.position.x - 1.0f, playerTransform.position.y, playerTransform.position.z);
-            //}
-            //else if (playerFollow == true && allyNumber == 2)
-            //{
-            //    this.transform.position = new Vector3(playerTransform.position.x - 2.0f, playerTransform.position.y, playerTransform.position.z);
-            //}
+            ally += 1;
         }
     }
 }

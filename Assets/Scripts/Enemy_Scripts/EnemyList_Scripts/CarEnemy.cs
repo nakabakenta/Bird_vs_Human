@@ -39,15 +39,15 @@ public class CarEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
-        if (hp > 0 && viewPointX < 1)
-        {
-            Behavior();//関数"Behavior"を実行
-        }
-        //"hp <= 0" && "viewPointX < 0"の場合
-        else if (hp <= 0 && viewPointX < 0)
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
         {
             Destroy();//関数"Destroy"を実行
+        }
+        //"hp > 0 && viewPointX < 1"の場合
+        else if (hp > 0 && viewPointX < 1)
+        {
+            Behavior();//関数"Behavior"を実行
         }
     }
 
@@ -111,7 +111,7 @@ public class CarEnemy : MonoBehaviour
     //当たり判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        //衝突したオブジェクトのタグが"Bullet && hp > 0"の場合
         if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
             Damage();//関数"Damage"を実行
