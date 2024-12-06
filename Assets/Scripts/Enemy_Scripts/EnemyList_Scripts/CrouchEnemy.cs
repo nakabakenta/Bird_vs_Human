@@ -39,7 +39,7 @@ public class CrouchEnemy : MonoBehaviour
         {
             Destroy();//ŠÖ”"Destroy"‚ðŽÀs
         }
-        //"hp > 0" && "viewPointX < 1"‚Ìê‡
+        //"hp > 0 && viewPointX < 1"‚Ìê‡
         else if (hp > 0 && viewPointX < 1)
         {
             Behavior();//ŠÖ”"Behavior"‚ðŽÀs
@@ -57,7 +57,6 @@ public class CrouchEnemy : MonoBehaviour
         {
             Wait();//ŠÖ”"Wait"‚ðŽÀs
         }
-
         //
         if (PlayerController.hp <= 0 && isAnimation == false)
         {

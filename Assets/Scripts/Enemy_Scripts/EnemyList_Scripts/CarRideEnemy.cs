@@ -56,52 +56,55 @@ public class CarRideEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        if(nowAnimation == EnemyList.HumanoidAnimation.carExit)
+        //
+        if (PlayerController.hp > 0)
         {
-            Wait();
+            if (nowAnimation == EnemyList.HumanoidAnimation.carExit)
+            {
+                Wait();
+            }
+            else if (nowAnimation != EnemyList.HumanoidAnimation.carExit)
+            {
+                if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
+                    this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
+                    this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
+                    this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run &&
+                    isAnimation == false)
+                {
+                    isAnimation = true;
+                    nowAnimation = EnemyList.HumanoidAnimation.jump;
+                    Animation();
+                }
+
+                //
+                if (this.transform.position.x > playerTransform.position.x)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                }
+                //
+                else if (this.transform.position.x < playerTransform.position.x)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+                }
+
+                //
+                if (isAnimation == false)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+                    this.transform.position += speed * transform.forward * Time.deltaTime;       //前方向に移動する
+                }
+                //
+                else if (isAnimation == true)
+                {
+                    Wait();//関数"Wait"を実行
+                }
+            }
         }
-        else if(nowAnimation != EnemyList.HumanoidAnimation.carExit)
+        //
+        else if (PlayerController.hp <= 0 && isAnimation == false)
         {
-            if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
-                this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
-                this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
-                this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run &&
-                isAnimation == false)
-            {
-                isAnimation = true;
-                nowAnimation = EnemyList.HumanoidAnimation.jump;
-                Animation();
-            }
-
-            //
-            if (this.transform.position.x > playerTransform.position.x)
-            {
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-            }
-            //
-            else if (this.transform.position.x < playerTransform.position.x)
-            {
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-            }
-
-            //
-            if (isAnimation == false)
-            {
-                this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-                this.transform.position += speed * transform.forward * Time.deltaTime;       //前方向に移動する
-            }
-            //
-            else if (isAnimation == true)
-            {
-                Wait();//関数"Wait"を実行
-            }
-
-            //
-            if (PlayerController.hp <= 0 && isAnimation == false)
-            {
-                nowAnimation = EnemyList.HumanoidAnimation.dance;
-                Animation();//関数"Animation"を実行
-            }
+            nowAnimation = EnemyList.HumanoidAnimation.dance;
+            Animation();//関数"Animation"を実行
         }
     }
 

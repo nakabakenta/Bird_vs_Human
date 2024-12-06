@@ -5,9 +5,9 @@ using UnityEngine;
 public class BossEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.BossEnemy.hp[0];        //体力
-    private float speed = EnemyList.BossEnemy.speed[0];//移動速度
-    private float jump = EnemyList.BossEnemy.jump[0];  //ジャンプ力
+    private int hp;     //体力
+    private float speed;//移動速度
+    private float jump; //ジャンプ力
     //処理
     private float viewPointX;                 //ビューポイント座標.X
     private int nowAnimation;                 //現在のアニメーション
@@ -26,6 +26,10 @@ public class BossEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.BossEnemy.hp[Stage.nowStage - 1];      //体力
+        speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];//移動速度
+        jump = EnemyList.BossEnemy.jump[Stage.nowStage - 1];  //ジャンプ力
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
@@ -42,12 +46,12 @@ public class BossEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //"hp > 0" && "viewPointX < 1"の場合
+        //"hp > 0 && viewPointX < 1"の場合
         if (hp > 0 && viewPointX < 1)
         {
             Behavior();//関数"Behavior"を実行
         }
-        //"hp <= 0" && "viewPointX < 0"の場合
+        //"hp <= 0 && viewPointX < 0"の場合
         else if (hp <= 0 && viewPointX < 0)
         {
             Destroy();//関数"Destroy"を実行
@@ -57,47 +61,50 @@ public class BossEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
+        if (PlayerController.hp > 0)
+        {
+            if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
             this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
             this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
             this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.walk &&
             isAnimation == false)
-        {
-            isAnimation = true;
-            nowAnimation = EnemyList.HumanoidAnimation.jump;
-            Animation();
-        }
-        //
-        if (this.transform.position.x > playerTransform.position.x)
-        {
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-        }
-        //
-        else if (this.transform.position.x < playerTransform.position.x)
-        {
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-        }
-
-        //
-        if (isAnimation == false)
-        {
-            changeAnimationTimer += Time.deltaTime;
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-            this.transform.position += speed * transform.forward * Time.deltaTime;      //前方向に移動する
-
-            if(changeAnimationTimer >= 5.0f)
             {
-                changeAnimationTimer = 0.0f;
-                ChangeAnimation();
+                isAnimation = true;
+                nowAnimation = EnemyList.HumanoidAnimation.jump;
+                Animation();
+            }
+            //
+            if (this.transform.position.x > playerTransform.position.x)
+            {
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+            }
+            //
+            else if (this.transform.position.x < playerTransform.position.x)
+            {
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+            }
+
+            //
+            if (isAnimation == false)
+            {
+                changeAnimationTimer += Time.deltaTime;
+                this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+                this.transform.position += speed * transform.forward * Time.deltaTime;      //前方向に移動する
+
+                if (changeAnimationTimer >= 5.0f)
+                {
+                    changeAnimationTimer = 0.0f;
+                    ChangeAnimation();
+                }
+            }
+            //
+            else if (isAnimation == true)
+            {
+                Wait();//関数"Wait"を実行
             }
         }
         //
-        else if (isAnimation == true)
-        {
-            Wait();//関数"Wait"を実行
-        }
-        //
-        if (PlayerController.hp <= 0 && isAnimation == false)
+        else if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//関数"Animation"を実行
@@ -222,8 +229,8 @@ public class BossEnemy : MonoBehaviour
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //"hp > 0"の場合
-        if (hp > 0)
+        //"hp > 0 && nowAnimation != jump"の場合
+        if (hp > 0 && nowAnimation != EnemyList.HumanoidAnimation.jump)
         {
             isAnimation = true;                               //"isAnimation = true"にする
             nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする

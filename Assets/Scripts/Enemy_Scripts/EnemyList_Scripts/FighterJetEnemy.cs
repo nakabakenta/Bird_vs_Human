@@ -43,11 +43,6 @@ public class FighterJetEnemy : MonoBehaviour
         {
             Behavior();//ŠÖ”"Behavior"‚ğÀs
         }
-        //"hp <= 0" && "viewPointX < 0"‚Ìê‡
-        else if (hp <= 0 && viewPointX < 0)
-        {
-            Destroy();//ŠÖ”"Destroy"‚ğÀs
-        }
     }
 
     //ŠÖ”"Behavior"
@@ -57,7 +52,7 @@ public class FighterJetEnemy : MonoBehaviour
 
         if (viewPointX < -0.5)
         {
-            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
             this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
             bulletRotation = -EnemyList.rotation;
         }
@@ -99,11 +94,13 @@ public class FighterJetEnemy : MonoBehaviour
     {
         this.tag = "Untagged";                         //‚±‚Ì"this.tag == Untagged"‚É‚·‚é
         hp = 0;                                        //"hp"‚ğ"0"‚É‚·‚é
-        GameManager.score += EnemyList.WalkEnemy.score;//"score"‚ğ‘«‚·
+        GameManager.score += EnemyList.FighterJetEnemy.score;//"score"‚ğ‘«‚·
 
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
         audioSource.PlayOneShot(explosion);            //"explosion"‚ğ–Â‚ç‚·
+
+        Invoke("Destroy", 1.0f);//ŠÖ”"Destroy"‚ğ"5.0f"Œã‚ÉÀs
     }
 
     //ŠÖ”"Destroy"

@@ -5,16 +5,15 @@ using UnityEngine;
 public class RunEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.RunEnemy.hp;        //体力
-    private float speed = EnemyList.RunEnemy.speed;//移動速度
-    private float jump = EnemyList.RunEnemy.jump;  //ジャンプ力
+    private int hp;     //体力
+    private float speed;//移動速度
+    private float jump; //ジャンプ力
     //処理
     private float viewPointX;           //ビューポイント座標.X
     private int nowAnimation;           //現在のアニメーション
     private float animationTimer = 0.0f;//アニメーションタイマー
     private float jumpTimer = 0.0f;     //ジャンプタイマー
     private bool isAnimation = false;   //アニメーションの可否
-
     //このオブジェクトのコンポーネント
     public AudioClip damage;         //"AudioClip(ダメージ)"
     public AudioClip scream;         //"AudioClip(叫び声)"
@@ -26,6 +25,10 @@ public class RunEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.RunEnemy.hp;      //体力
+        speed = EnemyList.RunEnemy.speed;//移動速度
+        jump = EnemyList.RunEnemy.jump;  //ジャンプ力
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
@@ -57,42 +60,42 @@ public class RunEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
-            this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
-            this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
-            this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run && 
-            isAnimation == false)
-        {
-            isAnimation = true;
-            nowAnimation = EnemyList.HumanoidAnimation.jump;
-            Animation();
-        }
-
-        //
-        if (this.transform.position.x > playerTransform.position.x)
-        {
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-        }
-        //
-        else if (this.transform.position.x < playerTransform.position.x)
-        {
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-        }
-
-        //
-        if (isAnimation == false)
+        if (nowAnimation != EnemyList.HumanoidAnimation.jump)
         {
             this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-            this.transform.position += speed * transform.forward * Time.deltaTime;       //前方向に移動する
         }
+
         //
-        else if (isAnimation == true)
+        if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }
 
         //
-        if (PlayerController.hp <= 0 && isAnimation == false)
+        if (PlayerController.hp > 0 && isAnimation == false)
+        {
+            if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
+            this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
+            this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
+            this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run)
+            {
+                isAnimation = true;
+                nowAnimation = EnemyList.HumanoidAnimation.jump;
+                Animation();
+            }
+            //
+            if (this.transform.position.x > playerTransform.position.x)
+            {
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+            }
+            //
+            else if (this.transform.position.x < playerTransform.position.x)
+            {
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+            }
+            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
+        }
+        else if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//関数"Animation"を実行
@@ -114,7 +117,7 @@ public class RunEnemy : MonoBehaviour
         if (nowAnimation == EnemyList.HumanoidAnimation.punch)
         {
             //
-            if (animationTimer >= 2.0f)
+            if (animationTimer >= 2.12f)
             {
                 animationTimer = 0.0f;
                 isAnimation = false;
@@ -126,7 +129,7 @@ public class RunEnemy : MonoBehaviour
         else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
         {
             //
-            if (animationTimer >= 1.5f)
+            if (animationTimer >= 1.15f)
             {
                 animationTimer = 0.0f;
                 isAnimation = false;
@@ -139,17 +142,17 @@ public class RunEnemy : MonoBehaviour
         {
             jumpTimer += Time.deltaTime;//"jumpTimer"に"Time.deltaTime(経過時間)"を足す
 
-            if (jumpTimer >= 0.1f)
+            if (animationTimer >= 0.8f && jumpTimer >= 0.1f)
             {
-                jump -= 0.5f;
+                jump -= 1.0f;
                 jumpTimer = 0.0f;
             }
 
-            if (animationTimer >= 0.75f)
+            if (animationTimer >= 0.8f)
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (animationTimer >= 3.5f)
+                if (animationTimer >= 2.8f)
                 {
                     jump = EnemyList.RunEnemy.jump;
                     animationTimer = 0.0f;
@@ -158,11 +161,11 @@ public class RunEnemy : MonoBehaviour
                     nowAnimation = EnemyList.HumanoidAnimation.run;//
                     Animation();                                   //関数"Animation"を実行
                 }
-                else if(animationTimer >= 3.0f)
+                else if(animationTimer >= 2.3f)
                 {
                     animator.SetFloat("MoveSpeed", 1.0f);//"animator(MoveSpeed)"を"1.0f(再生)"にする
                 }
-                else if (animationTimer >= 1.25f)
+                else if (animationTimer >= 1.2f)
                 {
                     animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"を"0.0f(停止)"にする
                 }
@@ -172,7 +175,7 @@ public class RunEnemy : MonoBehaviour
         else if (nowAnimation == EnemyList.HumanoidAnimation.damage)
         {
             //
-            if (animationTimer >= 1.0f)
+            if (animationTimer >= 1.13f)
             {
                 animationTimer = 0.0f;
                 isAnimation = false;
@@ -187,8 +190,8 @@ public class RunEnemy : MonoBehaviour
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //"hp > 0"の場合
-        if (hp > 0)
+        //"hp > 0 && nowAnimation != jump"の場合
+        if (hp > 0 && nowAnimation != EnemyList.HumanoidAnimation.jump)
         {
             isAnimation = true;                               //"isAnimation = true"にする
             nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする

@@ -5,8 +5,8 @@ using UnityEngine;
 public class WalkEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.WalkEnemy.hp;        //体力
-    private float speed = EnemyList.WalkEnemy.speed;//移動速度
+    private int hp;     //体力
+    private float speed;//移動速度
     //処理
     private float viewPointX;           //ビューポイント座標.X
     private int nowAnimation;           //現在のアニメーション
@@ -21,6 +21,9 @@ public class WalkEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.WalkEnemy.hp;      //体力
+        speed = EnemyList.WalkEnemy.speed;//移動速度
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
@@ -54,18 +57,16 @@ public class WalkEnemy : MonoBehaviour
         this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
-        if (isAnimation == false)
-        {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-        }
-        //
-        else if (isAnimation == true)
+        if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }
-
         //
-        if (PlayerController.hp <= 0 && isAnimation == false)
+        if (PlayerController.hp > 0 && isAnimation == false)
+        {
+            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+        }
+        else if (PlayerController.hp <= 0 && isAnimation == false)
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//関数"Animation"を実行
@@ -90,7 +91,7 @@ public class WalkEnemy : MonoBehaviour
             if (nowAnimation == EnemyList.HumanoidAnimation.punch)
             {
                 //
-                if (animationTimer >= 2.0f)
+                if (animationTimer >= 2.12f)
                 {
                     animationTimer = 0.0f;
                     isAnimation = false;
@@ -102,7 +103,7 @@ public class WalkEnemy : MonoBehaviour
             else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
             {
                 //
-                if (animationTimer >= 1.5f)
+                if (animationTimer >= 1.15f)
                 {
                     animationTimer = 0.0f;
                     isAnimation = false;
@@ -115,7 +116,7 @@ public class WalkEnemy : MonoBehaviour
         else if(nowAnimation == EnemyList.HumanoidAnimation.damage)
         {
             //
-            if (animationTimer >= 1.0f)
+            if (animationTimer >= 1.13f)
             {
                 animationTimer = 0.0f;
                 isAnimation = false;

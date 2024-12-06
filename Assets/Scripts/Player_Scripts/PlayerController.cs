@@ -14,14 +14,14 @@ public class PlayerController : MonoBehaviour
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
-        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
     };
     //処理
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
-    public static float gageInterval = 10.0f;           //ゲージ蓄積時間
-    public static int ally = 0;            //味方数
+    public static float gageInterval = 20.0f;           //ゲージ蓄積時間
+    public static int ally;                //味方数
     private float invincibleTimer = 0.0f;  //無敵タイマー
     private float invincible = 10.0f;      //無敵継続時間
     private float blinkingTime = 1.0f;     //点滅・無敵の持続時間
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ally = 0;
         thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
         SetPlayer();                              //関数"SetPlayer"を実行
         //コンポーネントを取得
@@ -126,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 attackTimer[1] = 0.0f;
             }
             //ゲージ解放
-            if (Input.GetKeyDown(KeyCode.E) && gageTimer >= gageInterval)
+            if (gageTimer >= gageInterval)
             {
                 gageTimer = 0.0f;
                 playerStatus = "Invincible";
@@ -134,11 +135,11 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
-        if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
+        if (Input.GetMouseButtonDown(2) && Stage.gameStatus == "Play")
         {
             Stage.gameStatus = "Pause";
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Pause")
+        else if (Input.GetMouseButtonDown(2) && Stage.gameStatus == "Pause")
         {
             Stage.gameStatus = "Play";
         }
@@ -238,7 +239,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトのタグが"Enemy && playerStatus"が"Normal"の場合
-        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy") && playerStatus == "Normal")
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy" || collision.gameObject.tag == "EnemyBullet") && playerStatus == "Normal")
         {
             if (ally > 0)
             {
@@ -263,7 +264,14 @@ public class PlayerController : MonoBehaviour
                 nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
             }
 
-            ally += 1;
+            Invoke("AAA", 0.01f);
+
+            
         }
+    }
+
+    void AAA()
+    {
+        ally += 1;
     }
 }
