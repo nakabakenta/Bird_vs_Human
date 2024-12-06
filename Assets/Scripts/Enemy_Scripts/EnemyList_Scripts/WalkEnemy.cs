@@ -17,6 +17,8 @@ public class WalkEnemy : MonoBehaviour
     public AudioClip scream;         //"AudioClip(叫び声)"
     private Animator animator = null;//"Animator"
     private AudioSource audioSource; //"AudioSource"
+    //他のオブジェクトのコンポーネント
+    private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,8 @@ public class WalkEnemy : MonoBehaviour
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
         //
         nowAnimation = EnemyList.HumanoidAnimation.walk;//"nowAnimation = walk(歩く)"にする        
         Animation();                                    //関数"Animation"を実行
@@ -53,23 +57,41 @@ public class WalkEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+        if (this.transform.position.z > 1.2f)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+        }
+        else if (this.transform.position.z >= 0.9f && this.transform.position.z <= 1.1f)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+        }
 
         //
         if (isAnimation == true)
         {
             Wait();//関数"Wait"を実行
         }
-        //
-        if (PlayerController.hp > 0 && isAnimation == false)
+        else if(isAnimation == false)
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-        }
-        else if (PlayerController.hp <= 0 && isAnimation == false)
-        {
-            nowAnimation = EnemyList.HumanoidAnimation.dance;
-            Animation();//関数"Animation"を実行
+            //
+            if (PlayerController.hp > 0)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+
+                if (this.transform.position.z > 1.2f)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+                }
+                else if (this.transform.position.z >= 0.9f && this.transform.position.z <= 1.1f)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                }
+            }
+            else if (PlayerController.hp <= 0)
+            {
+                nowAnimation = EnemyList.HumanoidAnimation.dance;
+                Animation();//関数"Animation"を実行
+            }
         }
     }
 

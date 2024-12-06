@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrouchEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.CrouchEnemy.hp;//体力
+    private int hp;//体力
     //処理
     private float viewPointX;           //ビューポイント座標.X
     private int nowAnimation;           //現在のアニメーション
@@ -20,6 +20,8 @@ public class CrouchEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.CrouchEnemy.hp;//体力
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
@@ -57,11 +59,14 @@ public class CrouchEnemy : MonoBehaviour
         {
             Wait();//関数"Wait"を実行
         }
-        //
-        if (PlayerController.hp <= 0 && isAnimation == false)
+        else if(isAnimation == false)
         {
-            nowAnimation = EnemyList.HumanoidAnimation.dance;
-            Animation();//関数"Animation"を実行
+            //
+            if (PlayerController.hp <= 0)
+            {
+                nowAnimation = EnemyList.HumanoidAnimation.dance;
+                Animation();//関数"Animation"を実行
+            }
         }
     }
 
@@ -83,7 +88,7 @@ public class CrouchEnemy : MonoBehaviour
             if (nowAnimation == EnemyList.HumanoidAnimation.punch)
             {
                 //
-                if (animationTimer >= 2.0f)
+                if (animationTimer >= 2.12f)
                 {
                     animationTimer = 0.0f;
                     isAnimation = false;
@@ -95,7 +100,7 @@ public class CrouchEnemy : MonoBehaviour
             else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
             {
                 //
-                if (animationTimer >= 1.5f)
+                if (animationTimer >= 1.15f)
                 {
                     animationTimer = 0.0f;
                     isAnimation = false;
@@ -107,7 +112,7 @@ public class CrouchEnemy : MonoBehaviour
             else if (nowAnimation == EnemyList.HumanoidAnimation.damage)
             {
                 //
-                if (animationTimer >= 1.0f)
+                if (animationTimer >= 1.13f)
                 {
                     animationTimer = 0.0f;
                     isAnimation = false;

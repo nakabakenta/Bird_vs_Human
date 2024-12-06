@@ -62,7 +62,14 @@ public class RunEnemy : MonoBehaviour
     {
         if (nowAnimation != EnemyList.HumanoidAnimation.jump)
         {
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+            if (this.transform.position.z > 1.2f)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+            }
+            else if (this.transform.position.z >= 0.9f && this.transform.position.z <= 1.1f)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+            }
         }
 
         //
@@ -70,35 +77,43 @@ public class RunEnemy : MonoBehaviour
         {
             Wait();//関数"Wait"を実行
         }
+        else if(isAnimation == false)
+        {
+            //
+            if (PlayerController.hp > 0)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
 
-        //
-        if (PlayerController.hp > 0 && isAnimation == false)
-        {
-            if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
-            this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
-            this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
-            this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run)
-            {
-                isAnimation = true;
-                nowAnimation = EnemyList.HumanoidAnimation.jump;
-                Animation();
+                if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
+                    this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
+                    this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
+                    this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run)
+                {
+                    isAnimation = true;
+                    nowAnimation = EnemyList.HumanoidAnimation.jump;
+                    Animation();
+                }
+
+                if (this.transform.position.z > 1.2f)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+                }
+                //
+                else if (this.transform.position.x > playerTransform.position.x)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                }
+                //
+                else if (this.transform.position.x < playerTransform.position.x)
+                {
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+                }
             }
-            //
-            if (this.transform.position.x > playerTransform.position.x)
+            else if (PlayerController.hp <= 0)
             {
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                nowAnimation = EnemyList.HumanoidAnimation.dance;
+                Animation();//関数"Animation"を実行
             }
-            //
-            else if (this.transform.position.x < playerTransform.position.x)
-            {
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-            }
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
-        }
-        else if (PlayerController.hp <= 0 && isAnimation == false)
-        {
-            nowAnimation = EnemyList.HumanoidAnimation.dance;
-            Animation();//関数"Animation"を実行
         }
     }
 
@@ -152,7 +167,7 @@ public class RunEnemy : MonoBehaviour
             {
                 this.transform.position += jump * transform.up * Time.deltaTime;
 
-                if (animationTimer >= 2.8f)
+                if (animationTimer >= 2.7f)
                 {
                     jump = EnemyList.RunEnemy.jump;
                     animationTimer = 0.0f;

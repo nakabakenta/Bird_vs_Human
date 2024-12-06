@@ -5,8 +5,8 @@ using UnityEngine;
 public class CarEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.CarEnemy.hp;        //体力
-    private float speed = EnemyList.CarEnemy.speed;//移動速度
+    private int hp;     //体力
+    private float speed;//移動速度
     //処理
     private float viewPointX;        //ビューポイント座標.X
     private bool isAnimation = false;//アニメーションの可否
@@ -26,6 +26,9 @@ public class CarEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.CarEnemy.hp;      //体力
+        speed = EnemyList.CarEnemy.speed;//移動速度
         //このオブジェクトのコンポーネントを取得
         thisTransform = this.GetComponent<Transform>();//"Transform"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
@@ -54,22 +57,28 @@ public class CarEnemy : MonoBehaviour
     //関数"Behavior"
     void Behavior()
     {
-        if(this.transform.position.x + EnemyList.CarEnemy.rangeX > playerTransform.position.x &&
-            this.transform.position.x - EnemyList.CarEnemy.rangeX < playerTransform.position.x &&
-            isAnimation == false)
+        //
+        if (isAnimation == true)
         {
-            isAnimation = true;
+            if (this.transform.position.z > playerTransform.position.z)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+            }
+            else if (this.transform.position.z <= playerTransform.position.z && carExit == false)
+            {
+                Instantiate(enemy, this.transform.position, this.transform.rotation);
+                audioSource.PlayOneShot(horn);
+                audioSource.PlayOneShot(brake);
+                carExit = true;
+            }
         }
-        else if (this.transform.position.z > playerTransform.position.z && isAnimation == true)
+        else if(isAnimation == false)
         {
-            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-        }
-        else if(this.transform.position.z <= playerTransform.position.z && carExit == false)
-        {
-            Instantiate(enemy, this.transform.position, this.transform.rotation);
-            audioSource.PlayOneShot(horn);
-            audioSource.PlayOneShot(brake);
-            carExit = true;
+            if (this.transform.position.x + EnemyList.CarEnemy.rangeX > playerTransform.position.x &&
+                this.transform.position.x - EnemyList.CarEnemy.rangeX < playerTransform.position.x)
+            {
+                isAnimation = true;
+            }
         }
     }
 
