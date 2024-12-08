@@ -8,9 +8,9 @@ public class CarEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;        //ビューポイント座標.X
-    private bool isAnimation = false;//アニメーションの可否
-    private bool carExit = false;    //
+    private float viewPointX;     //ビューポイント座標.X
+    private bool isAction = false;//行動の可否
+    private bool carExit = false; //
     //このオブジェクトのコンポーネント
     public GameObject enemy;        //"GameObject(敵)"
     public GameObject effect;       //"GameObject(エフェクト)"
@@ -47,18 +47,24 @@ public class CarEnemy : MonoBehaviour
         {
             Destroy();//関数"Destroy"を実行
         }
-        //"hp > 0 && viewPointX < 1"の場合
-        else if (hp > 0 && viewPointX < 1)
+        //"viewPointX < 1"の場合
+        else if (viewPointX < 1)
         {
-            Behavior();//関数"Behavior"を実行
+            isAction = true;
+        }
+
+        //"hp > 0 && isAction == true"
+        if (hp > 0 && isAction == true)
+        {
+            Action();//関数"Action"を実行
         }
     }
 
-    //関数"Behavior"
-    void Behavior()
+    //関数"Action"
+    void Action()
     {
         //
-        if (isAnimation == true)
+        if (isAction == true)
         {
             if (this.transform.position.z > playerTransform.position.z)
             {
@@ -70,14 +76,6 @@ public class CarEnemy : MonoBehaviour
                 audioSource.PlayOneShot(horn);
                 audioSource.PlayOneShot(brake);
                 carExit = true;
-            }
-        }
-        else if(isAnimation == false)
-        {
-            if (this.transform.position.x + EnemyList.CarEnemy.rangeX > playerTransform.position.x &&
-                this.transform.position.x - EnemyList.CarEnemy.rangeX < playerTransform.position.x)
-            {
-                isAnimation = true;
             }
         }
     }

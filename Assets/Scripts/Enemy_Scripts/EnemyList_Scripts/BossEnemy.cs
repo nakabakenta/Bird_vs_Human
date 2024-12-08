@@ -54,12 +54,12 @@ public class BossEnemy : MonoBehaviour
         //"hp > 0 && viewPointX < 1"‚Ìê‡
         else if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//ŠÖ”"Behavior"‚ðŽÀs
+            Action();//ŠÖ”"Action"‚ðŽÀs
         }
     }
 
-    //ŠÖ”"Behavior"
-    void Behavior()
+    //ŠÖ”"Action"
+    void Action()
     {
         if (nowAnimation != EnemyList.HumanoidAnimation.jump)
         {

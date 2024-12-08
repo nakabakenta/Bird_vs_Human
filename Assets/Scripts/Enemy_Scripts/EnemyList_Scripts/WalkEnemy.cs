@@ -9,9 +9,12 @@ public class WalkEnemy : MonoBehaviour
     private float speed;//移動速度
     //処理
     private float viewPointX;           //ビューポイント座標.X
+    private bool isAction = false;      //行動の可否
     private int nowAnimation;           //現在のアニメーション
     private float animationTimer = 0.0f;//アニメーションタイマー
     private bool isAnimation = false;   //アニメーションの可否
+    private delegate void ActionDelegate();
+    private ActionDelegate nowAction;
     //このオブジェクトのコンポーネント
     public AudioClip damage;         //"AudioClip(ダメージ)"
     public AudioClip scream;         //"AudioClip(叫び声)"
@@ -47,25 +50,39 @@ public class WalkEnemy : MonoBehaviour
         {
             Destroy();//関数"Destroy"を実行
         }
-        //"hp > 0 && viewPointX < 1"の場合
-        else if (hp > 0 && viewPointX < 1)
+
+        //
+        if (this.transform.position.z > playerTransform.position.z + 0.1f)
         {
-            Behavior();//関数"Behavior"を実行
+            //"viewPointX < 1"の場合
+            if (viewPointX < 1)
+            {
+                nowAction = Vertical;//
+                isAction = true;
+            }
+        }
+        //
+        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
+                 this.transform.position.z <= playerTransform.position.z + 0.1f)
+        {
+            //"viewPointX < 1"の場合
+            if (viewPointX < 1)
+            {
+                nowAction = Horizontal;//
+                isAction = true;
+            }
+        }
+
+        //"hp > 0 && isAction == true"
+        if (hp > 0 && isAction == true)
+        {
+            nowAction();
         }
     }
 
-    //関数"Behavior"
-    void Behavior()
+    //関数"Vertical"
+    void Vertical()
     {
-        if (this.transform.position.z > 1.2f)
-        {
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
-        }
-        else if (this.transform.position.z >= 0.9f && this.transform.position.z <= 1.1f)
-        {
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
-        }
-
         //
         if (isAnimation == true)
         {
@@ -76,16 +93,8 @@ public class WalkEnemy : MonoBehaviour
             //
             if (PlayerController.hp > 0)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-
-                if (this.transform.position.z > 1.2f)
-                {
-                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
-                }
-                else if (this.transform.position.z >= 0.9f && this.transform.position.z <= 1.1f)
-                {
-                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-                }
+                this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
             }
             else if (PlayerController.hp <= 0)
             {
@@ -93,6 +102,34 @@ public class WalkEnemy : MonoBehaviour
                 Animation();//関数"Animation"を実行
             }
         }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+    }
+
+    //関数"Horizontal"
+    void Horizontal()
+    {
+        //
+        if (isAnimation == true)
+        {
+            Wait();//関数"Wait"を実行
+        }
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerController.hp > 0)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+            }
+            else if (PlayerController.hp <= 0)
+            {
+                nowAnimation = EnemyList.HumanoidAnimation.dance;
+                Animation();//関数"Animation"を実行
+            }
+        }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
     }
 
     //関数"Animation"
