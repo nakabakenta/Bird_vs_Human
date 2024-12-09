@@ -8,11 +8,11 @@ public class WalkEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;           //ビューポイント座標.X
-    private bool isAction = false;      //行動の可否
-    private int nowAnimation;           //現在のアニメーション
-    private float animationTimer = 0.0f;//アニメーションタイマー
-    private bool isAnimation = false;   //アニメーションの可否
+    private float viewPointX;              //ビューポイント座標.X
+    private bool isAction = false;         //行動の可否
+    private int nowAnimation;              //現在のアニメーション
+    private float animationTimer = 0.0f;   //アニメーションタイマー
+    private bool isAnimation = false;      //アニメーションの可否
     private delegate void ActionDelegate();
     private ActionDelegate nowAction;
     //このオブジェクトのコンポーネント
@@ -47,43 +47,15 @@ public class WalkEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"viewPointX < 0"の場合
-        if (viewPointX < 0)
+        if (isAction == true)
         {
-            Destroy();//関数"Destroy"を実行
+            Direction();
         }
-
-        //
-        if (this.transform.position.z > playerTransform.position.z + 0.1f)
+        else if (isAction == false)
         {
-            if (isAction == true)
+            if (viewPointX < 1)
             {
-                Direction();
-            }
-            else if(isAction == false)
-            {
-                //"viewPointX < 1"の場合
-                if (viewPointX < 1)
-                {
-                    isAction = true;
-                }
-            }
-        }
-        //
-        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
-                 this.transform.position.z <= playerTransform.position.z + 0.1f)
-        {
-            if (isAction == true)
-            {
-                Direction();
-            }
-            else if (isAction == false)
-            {
-                //"viewPointX < 1"の場合
-                if (viewPointX < 1)
-                {
-                    isAction = true;
-                }
+                isAction = true;
             }
         }
 
@@ -92,19 +64,25 @@ public class WalkEnemy : MonoBehaviour
         {
             nowAction();
         }
+
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
+        {
+            Destroy();//関数"Destroy"を実行
+        }
     }
 
     //関数"Direction"
     void Direction()
     {
         //
-        if (this.transform.position.z > playerTransform.position.z + 0.1f)
+        if (this.transform.position.z > playerTransform.position.z + 0.5f)
         {
             nowAction = Vertical;//
         }
         //
-        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
-                 this.transform.position.z <= playerTransform.position.z + 0.1f)
+        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+            this.transform.position.z <= playerTransform.position.z + 0.5f)
         {
             nowAction = Horizontal;//
         }

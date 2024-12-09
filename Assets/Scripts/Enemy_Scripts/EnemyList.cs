@@ -42,7 +42,7 @@ public class EnemyList : MonoBehaviour
         //ステータス
         public static int hp = 20;        //体力
         public static int power = 2;      //攻撃力
-        public static float speed = 30.0f;//移動速度
+        public static float speed = 8.0f; //移動速度
         public static float rangeX = 5.0f;//プレイヤーの認識範囲.X
         public static int score = 1000;   //倒した時のスコア
     }

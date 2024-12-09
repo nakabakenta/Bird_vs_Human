@@ -272,8 +272,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3869003692021146948}
   - component: {fileID: 172537900049688716}
-  - component: {fileID: 4957846938622607865}
   - component: {fileID: -4498956966397538262}
+  - component: {fileID: 4957846938622607865}
   - component: {fileID: 1368777600782297130}
   m_Layer: 0
   m_Name: Enemy_FA_N26_Color_0
@@ -322,19 +322,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4672523355563568777}
   m_Enabled: 1
---- !u!65 &4957846938622607865
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376080108868839016}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 14, y: 2.5, z: 21}
-  m_Center: {x: 0, y: 1.25, z: 1.125}
 --- !u!114 &-4498956966397538262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +338,19 @@ MonoBehaviour:
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
+--- !u!65 &4957846938622607865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376080108868839016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14, y: 2.5, z: 21}
+  m_Center: {x: 0, y: 1.25, z: 1.125}
 --- !u!82 &1368777600782297130
 AudioSource:
   m_ObjectHideFlags: 0

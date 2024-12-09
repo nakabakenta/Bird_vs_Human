@@ -507,9 +507,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4519278299573805524}
+  - component: {fileID: -867090158618690034}
   - component: {fileID: 1193044051624625542}
   - component: {fileID: 8966801196965213606}
-  - component: {fileID: -867090158618690034}
   - component: {fileID: 4881597750803010628}
   m_Layer: 0
   m_Name: Enemy_AE86_TRUENO
@@ -544,6 +544,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-867090158618690034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3890093063305575278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
+  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}
+  horn: {fileID: 8300000, guid: 3d876fa0688ebc248b1bea3114023730, type: 3}
+  explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!54 &1193044051624625542
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -573,24 +591,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.535, y: 1.335, z: 4.22}
   m_Center: {x: 0, y: 0.6675, z: -0.07}
---- !u!114 &-867090158618690034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3890093063305575278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 2693787814016711249, guid: b022b030a64ee9943ab24fa53406353b, type: 3}
-  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}
-  horn: {fileID: 8300000, guid: 3d876fa0688ebc248b1bea3114023730, type: 3}
-  explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!82 &4881597750803010628
 AudioSource:
   m_ObjectHideFlags: 0

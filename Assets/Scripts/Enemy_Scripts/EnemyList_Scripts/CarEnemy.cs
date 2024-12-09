@@ -8,9 +8,11 @@ public class CarEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;     //ビューポイント座標.X
-    private bool isAction = false;//行動の可否
-    private bool carExit = false; //
+    private float viewPointX;              //ビューポイント座標.X
+    private bool isAction = false;         //行動の可否
+    private bool carExit = false;          //
+    private delegate void ActionDelegate();//
+    private ActionDelegate nowAction;      //
     //このオブジェクトのコンポーネント
     public GameObject enemy;        //"GameObject(敵)"
     public GameObject effect;       //"GameObject(エフェクト)"
@@ -26,15 +28,19 @@ public class CarEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        carExit = false;
+
         //ステータスを設定
-        hp = EnemyList.CarEnemy.hp;      //体力
+        hp = EnemyList.CarEnemy.hp;      //体力                       
         speed = EnemyList.CarEnemy.speed;//移動速度
         //このオブジェクトのコンポーネントを取得
         thisTransform = this.GetComponent<Transform>();//"Transform"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
-    }
+        //
+        Direction();
+    }                                   
 
     // Update is called once per frame
     void Update()
@@ -42,42 +48,68 @@ public class CarEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //"viewPointX < 0"の場合
-        if (viewPointX < 0)
+        if (isAction == false)
         {
-            Destroy();//関数"Destroy"を実行
-        }
-        //"viewPointX < 1"の場合
-        else if (viewPointX < 1)
-        {
-            isAction = true;
+            //"viewPointX < 1 && nowAction == Vertical"の場合
+            if (viewPointX < 0.6 && nowAction == Vertical)
+            {
+                isAction = true;
+            }
+            //"viewPointX < 1 && nowAction == Horizontal"の場合
+            else if (viewPointX < 1.2 && nowAction == Horizontal)
+            {
+                isAction = true;
+            }
         }
 
         //"hp > 0 && isAction == true"
         if (hp > 0 && isAction == true)
         {
-            Action();//関数"Action"を実行
+            nowAction();//関数"Action"を実行
+        }
+
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
+        {
+            Destroy();//関数"Destroy"を実行
         }
     }
 
-    //関数"Action"
-    void Action()
+    void Direction()
     {
         //
-        if (isAction == true)
+        if (this.transform.position.z > playerTransform.position.z + 0.5f)
         {
-            if (this.transform.position.z > playerTransform.position.z)
-            {
-                this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
-            }
-            else if (this.transform.position.z <= playerTransform.position.z && carExit == false)
-            {
-                Instantiate(enemy, this.transform.position, this.transform.rotation);
-                audioSource.PlayOneShot(horn);
-                audioSource.PlayOneShot(brake);
-                carExit = true;
-            }
+            nowAction = Vertical;//
         }
+        //
+        else if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+                 this.transform.position.z <= playerTransform.position.z + 0.5f)
+        {
+            nowAction = Horizontal;//
+        }
+    }
+
+    //関数"Vertical"
+    void Vertical()
+    {
+        if (this.transform.position.z > playerTransform.position.z)
+        {
+            this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+        }
+        else if (this.transform.position.z <= playerTransform.position.z && carExit == false)
+        {
+            Instantiate(enemy, this.transform.position, this.transform.rotation);
+            audioSource.PlayOneShot(horn);
+            audioSource.PlayOneShot(brake);
+            carExit = true;
+        }
+    }
+
+    //関数"Horizontal"
+    void Horizontal()
+    {
+        this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
     }
 
     //関数"Damage"

@@ -50,43 +50,19 @@ public class RunEnemy : MonoBehaviour
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//ビューポート座標.X
 
-        //"(hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false)"の場合
-        if ((hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false))
+        if (isAction == true)
         {
-            Destroy();//関数"Destroy"を実行
+            Direction();
         }
-
-        //
-        if (this.transform.position.z > playerTransform.position.z + 0.1f)
+        else if (isAction == false)
         {
-            if (isAction == true)
+            if (viewPointX < 0.7 && nowAction == Vertical)
             {
-                Direction();
+                isAction = true;
             }
-            else if (isAction == false)
+            else if (viewPointX < 1 && nowAction == Horizontal)
             {
-                //"viewPointX < 1"の場合
-                if (viewPointX < 1)
-                {
-                    isAction = true;
-                }
-            }
-        }
-        //
-        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
-                 this.transform.position.z <= playerTransform.position.z + 0.1f)
-        {
-            if (isAction == true)
-            {
-                Direction();
-            }
-            else if (isAction == false)
-            {
-                //"viewPointX < 1"の場合
-                if (viewPointX < 1)
-                {
-                    isAction = true;
-                }
+                isAction = true;
             }
         }
 
@@ -95,19 +71,25 @@ public class RunEnemy : MonoBehaviour
         {
             nowAction();
         }
+
+        //"(hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false)"の場合
+        if ((hp <= 0 && viewPointX < 0) || (hp > 0 && Stage.bossEnemy[Stage.nowStage - 1] == false))
+        {
+            Destroy();//関数"Destroy"を実行
+        }
     }
 
     //関数"Direction"
     void Direction()
     {
         //
-        if (this.transform.position.z > playerTransform.position.z + 0.1f)
+        if (this.transform.position.z > playerTransform.position.z + 0.5f)
         {
             nowAction = Vertical;//
         }
         //
-        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
-                 this.transform.position.z <= playerTransform.position.z + 0.1f)
+        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+            this.transform.position.z <= playerTransform.position.z + 0.5f)
         {
             nowAction = Horizontal;//
         }
