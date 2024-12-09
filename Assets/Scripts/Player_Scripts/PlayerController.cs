@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 attackTimer[1] = 0.0f;
             }
             //ƒQ[ƒW‰ð•ú
-            if (gageTimer >= gageInterval)
+            if (Input.GetMouseButtonDown(2) && gageTimer >= gageInterval)
             {
                 gageTimer = 0.0f;
                 playerStatus = "Invincible";
@@ -135,11 +135,11 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
-        if (Input.GetMouseButtonDown(2) && Stage.gameStatus == "Play")
+        if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
         {
             Stage.gameStatus = "Pause";
         }
-        else if (Input.GetMouseButtonDown(2) && Stage.gameStatus == "Pause")
+        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Pause")
         {
             Stage.gameStatus = "Play";
         }

@@ -38,6 +38,8 @@ public class RunEnemy : MonoBehaviour
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
         //
+        Direction();
+        //
         nowAnimation = EnemyList.HumanoidAnimation.run;//"nowAnimation = walk(走る)"にする
         Animation();                                   //関数"Animation"を実行
     }
@@ -57,22 +59,34 @@ public class RunEnemy : MonoBehaviour
         //
         if (this.transform.position.z > playerTransform.position.z + 0.1f)
         {
-            //"viewPointX < 1"の場合
-            if (viewPointX < 1)
+            if (isAction == true)
             {
-                nowAction = Vertical;//
-                isAction = true;
+                Direction();
+            }
+            else if (isAction == false)
+            {
+                //"viewPointX < 1"の場合
+                if (viewPointX < 1)
+                {
+                    isAction = true;
+                }
             }
         }
         //
         else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
                  this.transform.position.z <= playerTransform.position.z + 0.1f)
         {
-            //"viewPointX < 1"の場合
-            if (viewPointX < 1)
+            if (isAction == true)
             {
-                nowAction = Horizontal;//
-                isAction = true;
+                Direction();
+            }
+            else if (isAction == false)
+            {
+                //"viewPointX < 1"の場合
+                if (viewPointX < 1)
+                {
+                    isAction = true;
+                }
             }
         }
 
@@ -80,6 +94,22 @@ public class RunEnemy : MonoBehaviour
         if (hp > 0 && isAction == true)
         {
             nowAction();
+        }
+    }
+
+    //関数"Direction"
+    void Direction()
+    {
+        //
+        if (this.transform.position.z > playerTransform.position.z + 0.1f)
+        {
+            nowAction = Vertical;//
+        }
+        //
+        else if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
+                 this.transform.position.z <= playerTransform.position.z + 0.1f)
+        {
+            nowAction = Horizontal;//
         }
     }
 
