@@ -61,7 +61,8 @@ public class BossEnemy : MonoBehaviour
     //ŠÖ”"Action"
     void Action()
     {
-        if (nowAnimation != EnemyList.HumanoidAnimation.jump)
+        if (nowAnimation != EnemyList.HumanoidAnimation.jumpAttack && 
+            nowAnimation != EnemyList.HumanoidAnimation.jump)
         {
             this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
         }
@@ -119,8 +120,8 @@ public class BossEnemy : MonoBehaviour
     {
         if (nowAnimation == EnemyList.HumanoidAnimation.walk)
         {
-            nowAnimation = EnemyList.HumanoidAnimation.mutantRun;
-            speed *= 2.0f;
+            isAnimation = true;
+            nowAnimation = EnemyList.HumanoidAnimation.battlecry;
             Animation();
         }
         else if (nowAnimation == EnemyList.HumanoidAnimation.mutantRun)
@@ -211,6 +212,19 @@ public class BossEnemy : MonoBehaviour
                 {
                     animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"‚ð"0.0f(’âŽ~)"‚É‚·‚é
                 }
+            }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.battlecry)
+        {
+            //
+            if (animationTimer >= 1.125f)
+            {
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.mutantRun;
+                speed *= 3.0f;
+                Animation();
             }
         }
         //

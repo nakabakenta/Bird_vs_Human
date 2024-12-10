@@ -91,6 +91,7 @@ public class EnemyList : MonoBehaviour
         public static int jump       = 20; 
         public static int crouch     = 21;
         public static int carExit    = 22;
+        public static int battlecry  = 23;
         public static int dance      = 30;
         public static int damage     = 31;
         public static int death      = 32;
