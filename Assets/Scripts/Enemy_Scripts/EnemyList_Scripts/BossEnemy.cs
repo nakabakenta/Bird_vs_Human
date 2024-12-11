@@ -171,7 +171,7 @@ public class BossEnemy : MonoBehaviour
         else if (nowAnimation == EnemyList.HumanoidAnimation.jumpAttack)
         {
             //
-            if (animationTimer >= 3.21f)
+            if (animationTimer >= 1.605f)
             {
                 animationTimer = 0.0f;
                 isAnimation = false;
