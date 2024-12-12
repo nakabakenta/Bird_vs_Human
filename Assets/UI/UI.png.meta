@@ -239,7 +239,7 @@ TextureImporter:
         width: 64
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -252,10 +252,31 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level_Front
+      name: Level_Back
       rect:
         serializedVersion: 2
         x: 64
+        y: 0
+        width: 64
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff7e8cd7a8209b54c8683b50763f05d6
+      internalID: 1567737202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Level_Front
+      rect:
+        serializedVersion: 2
+        x: 128
         y: 0
         width: 64
         height: 512
@@ -266,8 +287,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff7e8cd7a8209b54c8683b50763f05d6
-      internalID: 1567737202
+      spriteID: 7860fe374745249428831581c8e25fb7
+      internalID: -1486301215
       vertices: []
       indices: 
       edges: []
@@ -289,8 +310,9 @@ TextureImporter:
       Gage_Base: -749384880
       Gage_Front: -392512870
       Gage_Light: 23619407
+      Level_Back: 1567737202
       Level_Base: 1455617132
-      Level_Front: 1567737202
+      Level_Front: -1486301215
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
