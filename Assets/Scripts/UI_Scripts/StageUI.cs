@@ -30,9 +30,9 @@ public class StageUI : MonoBehaviour
         stageClearUI = GameObject.Find("StageClear_UI");
         continueUI = GameObject.Find("Continue_UI");
 
-        score = GameObject.Find("SCORE").GetComponent<TMP_Text>();  //
-        remain = GameObject.Find("REMAIN").GetComponent<TMP_Text>();//
-        hp = GameObject.Find("HP").GetComponent<TMP_Text>();
+        remain = GameObject.Find("Remain_Number").GetComponent<TMP_Text>();//
+        hp = GameObject.Find("Hp_Number").GetComponent<TMP_Text>();
+        score = GameObject.Find("Score_Number").GetComponent<TMP_Text>();  //
 
         pauseUI.SetActive(false);
         stageClearUI.SetActive(false);
@@ -49,49 +49,49 @@ public class StageUI : MonoBehaviour
         //
         if (PlayerController.hp >= 10)
         {
-            hp.text = "HP : " + PlayerController.hp;//
+            hp.text = "" + PlayerController.hp;//
         }
         //
         else if(PlayerController.hp >= 0)
         {
-            hp.text = "HP : 0" + PlayerController.hp;//
+            hp.text = "0" + PlayerController.hp;//
         }
 
         //
         if(GameManager.score >= 10000)
         {
-            score.text = "SCORE : " + GameManager.score;
+            score.text = "" + GameManager.score;
         }
         //
         else if(GameManager.score >= 1000)
         {
-            score.text = "SCORE : 0" + GameManager.score;
+            score.text = "0" + GameManager.score;
         }
         //
         else if (GameManager.score >= 100)
         {
-            score.text = "SCORE : 00" + GameManager.score;
+            score.text = "00" + GameManager.score;
         }
         //
         else if (GameManager.score >= 10)
         {
-            score.text = "SCORE : 000" + GameManager.score;
+            score.text = "000" + GameManager.score;
         }
         //
         else if (GameManager.score >= 0)
         {
-            score.text = "SCORE : 0000" + GameManager.score;
+            score.text = "0000" + GameManager.score;
         }
 
         //
         if (GameManager.remain >= 10)
         {
-            remain.text = "REMAIN Å~ " + GameManager.remain;//
+            remain.text = "" + GameManager.remain;//
         }
         //
         else if (GameManager.remain >= 0)
         {
-            remain.text = "REMAIN Å~ 0" + GameManager.remain;//
+            remain.text = "0" + GameManager.remain;//
         }
 
         if(Stage.gameStatus == "Pause")
