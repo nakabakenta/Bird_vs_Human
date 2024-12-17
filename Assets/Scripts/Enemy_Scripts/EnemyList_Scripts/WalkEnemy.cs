@@ -219,6 +219,7 @@ public class WalkEnemy : MonoBehaviour
         this.tag = "Untagged";                           //"this.tag = Untagged"‚É‚·‚é
         hp = 0;                                          //"hp = 0"‚É‚·‚é
         GameManager.score += EnemyList.WalkEnemy.score;  //"score"‚ğ‘«‚·
+        PlayerController.exp += 10;
         nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation = death(€–S)"‚É‚·‚é
         audioSource.PlayOneShot(scream);                 //"scream"‚ğ–Â‚ç‚·
         Animation();                                     //ŠÖ”"Animation"‚ğÀs

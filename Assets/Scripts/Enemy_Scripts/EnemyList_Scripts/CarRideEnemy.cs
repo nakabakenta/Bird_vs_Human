@@ -32,7 +32,7 @@ public class CarRideEnemy : MonoBehaviour
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
         //
         isAnimation = true;
-        nowAnimation = EnemyList.HumanoidAnimation.carExit;//"nowAnimation = carExit(車から出る)"にする
+        nowAnimation = EnemyList.HumanoidAnimation.exitCar;//"nowAnimation = carExit(車から出る)"にする
         Animation();                                       //関数"Animation"を実行
     }
 
@@ -172,7 +172,7 @@ public class CarRideEnemy : MonoBehaviour
             }
         }
         //
-        else if(nowAnimation == EnemyList.HumanoidAnimation.carExit)
+        else if(nowAnimation == EnemyList.HumanoidAnimation.exitCar)
         {
             //
             if (animationTimer >= 2.62f)

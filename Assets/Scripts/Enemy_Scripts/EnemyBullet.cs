@@ -5,13 +5,14 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     //処理
-    private float speed = 20.0f;//移動速度
-    private float viewPointX;   //ビューポイント座標.X
+    private float speed;     //弾の移動速度
+    private float viewPointX;//ビューポイント座標.X
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //speed = EnemyList.EnemyBullet.speed[Stage.nowStage - 1];
+        speed = 10.0f;
     }
 
     // Update is called once per frame
@@ -32,10 +33,10 @@ public class EnemyBullet : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     void OnTriggerEnter(Collider collision)
     {
-        //衝突したオブジェクトのタグが"Enemy"だったら
+        //
         if (collision.gameObject.tag == "Player")
         {
-            //Destroy(this.gameObject);//このオブジェクトを消す
+            Destroy(this.gameObject);//このオブジェクトを消す
         }
     }
 }

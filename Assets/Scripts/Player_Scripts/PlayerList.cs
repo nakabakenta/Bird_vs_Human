@@ -23,6 +23,9 @@ public class PlayerList : MonoBehaviour
             { 1.0f, 2.0f, 0.5f, 0.5f },//‘O•ûŒü
             { 2.5f, 3.5f, 2.0f, 0.5f } //‰º•ûŒü
         };
+        //Å‘åŒoŒ±’l
+        public static int[] maxExp = new int[]
+        { 100, 100, 100, 100 };
     }
 
     public static class Invincible

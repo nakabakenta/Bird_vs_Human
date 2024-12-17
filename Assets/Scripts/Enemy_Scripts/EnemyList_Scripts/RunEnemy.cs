@@ -279,6 +279,7 @@ public class RunEnemy : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);//
         this.tag = "Untagged";                           //"this.tag = Untagged"‚É‚·‚é
         hp = 0;                                          //"hp"‚ð"0"‚É‚·‚é
+        PlayerController.exp += 10;
         GameManager.score += EnemyList.WalkEnemy.score;  //"score"‚ð‘«‚·
         nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation = death(Ž€–S)"‚É‚·‚é
         audioSource.PlayOneShot(scream);                 //"scream"‚ð–Â‚ç‚·

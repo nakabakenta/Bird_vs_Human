@@ -13,9 +13,8 @@ public class HaveGunEnemy : MonoBehaviour
     private int nowAnimation;              //現在のアニメーション
     private float animationTimer = 0.0f;   //アニメーションタイマー
     private bool isAnimation = false;      //アニメーションの可否
-    //private delegate void ActionDelegate();
-    //private ActionDelegate nowAction;
     //このオブジェクトのコンポーネント
+    public GameObject bullet;
     public AudioClip damage;         //"AudioClip(ダメージ)"
     public AudioClip scream;         //"AudioClip(叫び声)"
     private Animator animator = null;//"Animator"
@@ -29,89 +28,39 @@ public class HaveGunEnemy : MonoBehaviour
         //ステータスを設定
         hp = EnemyList.HaveGunEnemy.hp;      //体力
         speed = EnemyList.HaveGunEnemy.speed;//移動速度
+        isAnimation = true;
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
-        //
-        //Direction();
-        //
-        nowAnimation = EnemyList.HumanoidAnimation.haveGunWalk;//"nowAnimation = haveGunWalk(歩く(銃持ち))"にする        
-        Animation();                                           //関数"Animation"を実行
+        nowAnimation = EnemyList.HumanoidAnimation.gunPlay;   //        
+        Animation();                                          //関数"Animation"を実行
     }
 
     // Update is called once per frame
     void Update()
     {
         //このオブジェクトのビューポート座標を取得
-        //viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        //if (isAction == true)
-        //{
-        //    Direction();
-        //}
-        //else if (isAction == false)
-        //{
-        //    if (viewPointX < 1)
-        //    {
-        //        isAction = true;
-        //    }
-        //}
-
-        ////"hp > 0 && isAction == true"
-        //if (hp > 0 && isAction == true)
-        //{
-        //    nowAction();
-        //}
-
-        ////"viewPointX < 0"の場合
-        //if (viewPointX < 0)
-        //{
-        //    Destroy();//関数"Destroy"を実行
-        //}
-    }
-
-    //関数"Direction"
-    void Direction()
-    {
-        //
-        if (this.transform.position.z > playerTransform.position.z + 0.5f)
+        if (isAction == true)
         {
-            //nowAction = Vertical;//
+            Horizontal();
         }
-        //
-        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
-            this.transform.position.z <= playerTransform.position.z + 0.5f)
+        else if (isAction == false)
         {
-            //nowAction = Horizontal;//
-        }
-    }
-
-    //関数"Vertical"
-    void Vertical()
-    {
-        //
-        if (isAnimation == true)
-        {
-            Wait();//関数"Wait"を実行
-        }
-        else if(isAnimation == false)
-        {
-            //
-            if (PlayerController.hp > 0)
+            if (viewPointX < 1)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
-            }
-            else if (PlayerController.hp <= 0)
-            {
-                nowAnimation = EnemyList.HumanoidAnimation.dance;
-                Animation();//関数"Animation"を実行
+                isAction = true;
             }
         }
 
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+        //"viewPointX < 0"の場合
+        if (viewPointX < 0)
+        {
+            Destroy();//関数"Destroy"を実行
+        }
     }
 
     //関数"Horizontal"
@@ -127,8 +76,7 @@ public class HaveGunEnemy : MonoBehaviour
             //
             if (PlayerController.hp > 0)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+               
             }
             else if (PlayerController.hp <= 0)
             {
@@ -151,32 +99,34 @@ public class HaveGunEnemy : MonoBehaviour
     {
         animationTimer += Time.deltaTime;//" animationTimer"に"Time.deltaTime(経過時間)"を足す
 
-        if (nowAnimation == EnemyList.HumanoidAnimation.punch ||
-            nowAnimation == EnemyList.HumanoidAnimation.kick)
+        //
+        if (nowAnimation == EnemyList.HumanoidAnimation.punch)
         {
             //
-            if (nowAnimation == EnemyList.HumanoidAnimation.punch)
+            if (animationTimer >= 2.12f)
             {
-                //
-                if (animationTimer >= 2.12f)
-                {
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.walk;
-                    Animation();//関数"Animation"を実行
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
             }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+        {
             //
-            else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+            if (animationTimer >= 1.15f)
             {
-                //
-                if (animationTimer >= 1.15f)
-                {
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.walk;
-                    Animation();//関数"Animation"を実行
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+            }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.gunPlay)
+        {
+            if (animationTimer >= 0.34f)
+            {
+                Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, 90));
+                animationTimer = 0.0f;
+                Animation();//関数"Animation"を実行
             }
         }
         //
@@ -187,8 +137,6 @@ public class HaveGunEnemy : MonoBehaviour
             {
                 animationTimer = 0.0f;
                 isAnimation = false;
-                nowAnimation = EnemyList.HumanoidAnimation.walk;
-                Animation();//関数"Animation"を実行
             }
         }
     }
@@ -230,23 +178,23 @@ public class HaveGunEnemy : MonoBehaviour
         Destroy(this.gameObject);//このオブジェクトを消す
     }
 
-    ////当たり判定(OnTriggerEnter)
-    //void OnTriggerEnter(Collider collision)
-    //{
-    //    //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
-    //    if (collision.gameObject.tag == "Player" && isAnimation == false)
-    //    {
-    //        isAnimation = true;//"isAnimation = true"にする
+    //当たり判定(OnTriggerEnter)
+    void OnTriggerEnter(Collider collision)
+    {
+        //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
+        if (collision.gameObject.tag == "Player" && isAnimation == false)
+        {
+            isAnimation = true;//"isAnimation = true"にする
 
-    //        //ランダム"10(パンチ)"～"12(キック)"
-    //        nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch, 
-    //                                         EnemyList.HumanoidAnimation.kick + 1);
-    //        Animation();//関数"Animation"を実行
-    //    }
-    //    //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
-    //    if (collision.gameObject.tag == "Bullet" && hp > 0)
-    //    {
-    //        Damage();//関数"Damage"を実行
-    //    }
-    //}
+            //ランダム"10(パンチ)"～"12(キック)"
+            nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch,
+                                             EnemyList.HumanoidAnimation.kick + 1);
+            Animation();//関数"Animation"を実行
+        }
+        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        if (collision.gameObject.tag == "Bullet" && hp > 0)
+        {
+            Damage();//関数"Damage"を実行
+        }
+    }
 }

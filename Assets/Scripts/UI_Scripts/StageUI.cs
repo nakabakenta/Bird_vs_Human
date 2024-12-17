@@ -12,13 +12,14 @@ public class StageUI : MonoBehaviour
     private GameObject continueUI;
     private Image forwardBullet_UI;
     private Image downBullet_UI;
-    private TMP_Text score;         //TMP_Text(スコア)
-    private TMP_Text remain;        //TMP_Text(残り)
-    private TMP_Text hp;            //TMP_Text(体力)
+    private TMP_Text score; //TMP_Text(スコア)
+    private TMP_Text remain;//TMP_Text(残り)
+    private TMP_Text hp;    //TMP_Text(体力)
     //コンポーネント(public)
     public Image gageLight;
     //コンポーネント(private)
     public Slider gage;//Slider(ゲージ)
+    public Slider level;
 
     // Start is called before the first frame update
     void Start()
@@ -41,11 +42,17 @@ public class StageUI : MonoBehaviour
         gage.value = 0;   //
         gage.minValue = 0;//
         gage.maxValue = 1;//
+
+        level.value = 0;
+        level.minValue = 0;
+        level.maxValue = PlayerList.Player.maxExp[GameManager.playerNumber];
     }
 
     // Update is called once per frame
     void Update()
     {
+        level.value = PlayerController.exp;
+
         //
         if (PlayerController.hp >= 10)
         {
@@ -155,6 +162,11 @@ public class StageUI : MonoBehaviour
         if (PlayerController.playerStatus == "Invincible")
         {
             gage.value = 0;
+        }
+
+        if(level.value >= level.maxValue)
+        {
+            level.value = 0;
         }
     }
 }

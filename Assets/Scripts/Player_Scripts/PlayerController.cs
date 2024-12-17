@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public static float[] attackInterval = new float[2];//攻撃間隔
     public static float gageTimer = 0.0f;               //ゲージタイマー
     public static float gageInterval = 20.0f;           //ゲージ蓄積時間
+    public static int level;               //レベル
+    public static int exp;                 //経験値
     public static int ally;                //味方数
     private float invincibleTimer = 0.0f;  //無敵タイマー
     private float invincible = 10.0f;      //無敵継続時間
@@ -49,6 +51,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         ally = 0;
+        level = 1;
+        exp = 0;
+
         thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
         SetPlayer();                              //関数"SetPlayer"を実行
         //コンポーネントを取得
@@ -133,6 +138,11 @@ public class PlayerController : MonoBehaviour
                 playerStatus = "Invincible";
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
             }
+
+            if(exp == PlayerList.Player.maxExp[GameManager.playerNumber])
+            {
+                LevelUp();
+            }
         }
         //
         if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
@@ -157,6 +167,33 @@ public class PlayerController : MonoBehaviour
         {
             objRenderer[i].enabled = set;//RendererをobjRendererにセットする
         }
+    }
+
+    ///関数"LevelUp"
+    void LevelUp()
+    {
+        if(level == 1)
+        {
+
+        }
+        else if(level == 2)
+        {
+
+        }
+        else if (level == 3)
+        {
+
+        }
+        else if (level == 4)
+        {
+
+        }
+        else if (level == 5)
+        {
+
+        }
+
+        exp = 0;
     }
 
     //関数"Damage"
@@ -264,14 +301,7 @@ public class PlayerController : MonoBehaviour
                 nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
             }
 
-            Invoke("AAA", 0.01f);
-
-            
+            ally += 1;
         }
-    }
-
-    void AAA()
-    {
-        ally += 1;
     }
 }

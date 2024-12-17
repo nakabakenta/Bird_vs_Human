@@ -5,9 +5,9 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     //処理
-    public static int nowStage;                         //現在のステージ
-    public static bool[] bossEnemy = new bool[5];       //ボスの生存可否
-    public static string gameStatus;                    //ゲームの状態
+    public static int nowStage;                  //現在のステージ
+    public static bool[] bossEnemy = new bool[5];//ボスの生存可否
+    public static string gameStatus;             //ゲームの状態
 
 //このオブジェクトのコンポーネント
 private SceneLoader sceneLoader;//"Script(SceneLoader)"
