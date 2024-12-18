@@ -5,13 +5,13 @@ using UnityEngine;
 public class FighterJetEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp = EnemyList.FighterJetEnemy.hp;        //体力
-    private float speed = EnemyList.FighterJetEnemy.speed;//移動速度
+    private int hp;     //体力
+    private float speed;//移動速度
     //処理
     private float attackTimer = 0.5f;   //攻撃間隔タイマー
     private float attackInterval = 0.5f;//攻撃間隔
     private float viewPointX;           //ビューポイント座標.X
-    private float bulletRotation;       //発射する弾の方向
+    private float bulletRotation;       //弾の回転
     //このオブジェクトのコンポーネント
     public GameObject bullet;       //"GameObject(弾)"
     public GameObject effect;       //"GameObject(エフェクト)"
@@ -25,6 +25,9 @@ public class FighterJetEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ステータスを設定
+        hp = EnemyList.FighterJetEnemy.hp;      //体力
+        speed = EnemyList.FighterJetEnemy.speed;//移動速度
         //このオブジェクトのコンポーネントを取得
         thisTransform = this.GetComponent<Transform>();//"Transform"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"

@@ -8,11 +8,12 @@ public class HaveGunEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;              //ビューポイント座標.X
-    private bool isAction = false;         //行動の可否
-    private int nowAnimation;              //現在のアニメーション
-    private float animationTimer = 0.0f;   //アニメーションタイマー
-    private bool isAnimation = false;      //アニメーションの可否
+    private float viewPointX;           //ビューポイント座標.X
+    private bool isAction = false;      //行動の可否
+    private bool isReload = false;
+    private int nowAnimation;           //現在のアニメーション
+    private float animationTimer = 0.0f;//アニメーションタイマー
+    private float bulletRotation;       //弾の回転
     //このオブジェクトのコンポーネント
     public GameObject bullet;
     public AudioClip damage;         //"AudioClip(ダメージ)"
@@ -28,19 +29,20 @@ public class HaveGunEnemy : MonoBehaviour
         //ステータスを設定
         hp = EnemyList.HaveGunEnemy.hp;      //体力
         speed = EnemyList.HaveGunEnemy.speed;//移動速度
-        isAnimation = true;
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
-        nowAnimation = EnemyList.HumanoidAnimation.gunPlay;   //        
-        Animation();                                          //関数"Animation"を実行
+
+        nowAnimation = EnemyList.HumanoidAnimation.reload;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(nowAnimation);
+
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
@@ -53,6 +55,7 @@ public class HaveGunEnemy : MonoBehaviour
             if (viewPointX < 1)
             {
                 isAction = true;
+                Animation();   //関数"Animation"を実行
             }
         }
 
@@ -66,26 +69,30 @@ public class HaveGunEnemy : MonoBehaviour
     //関数"Horizontal"
     void Horizontal()
     {
-        //
-        if (isAnimation == true)
+        if (PlayerController.hp <= 0)
         {
-            Wait();//関数"Wait"を実行
+            nowAnimation = EnemyList.HumanoidAnimation.dance;
+            Animation();//関数"Animation"を実行
         }
-        else if (isAnimation == false)
+        else
         {
             //
-            if (PlayerController.hp > 0)
+            if (this.transform.position.x > playerTransform.position.x)
             {
-               
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                bulletRotation = EnemyList.rotation;
             }
-            else if (PlayerController.hp <= 0)
+            //
+            else if (this.transform.position.x < playerTransform.position.x)
             {
-                nowAnimation = EnemyList.HumanoidAnimation.dance;
-                Animation();//関数"Animation"を実行
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
+                bulletRotation = -EnemyList.rotation;
             }
+
+            Wait();//関数"Wait"を実行
         }
 
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
     }
 
     //関数"Animation"
@@ -106,7 +113,6 @@ public class HaveGunEnemy : MonoBehaviour
             if (animationTimer >= 2.12f)
             {
                 animationTimer = 0.0f;
-                isAnimation = false;
             }
         }
         //
@@ -116,16 +122,32 @@ public class HaveGunEnemy : MonoBehaviour
             if (animationTimer >= 1.15f)
             {
                 animationTimer = 0.0f;
-                isAnimation = false;
             }
         }
         //
         else if (nowAnimation == EnemyList.HumanoidAnimation.gunPlay)
         {
+            if(isReload == false)
+            {
+                Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, bulletRotation));
+                isReload = true;
+            }
+
             if (animationTimer >= 0.34f)
             {
-                Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, 90));
                 animationTimer = 0.0f;
+                nowAnimation = EnemyList.HumanoidAnimation.reload;
+                Animation();//関数"Animation"を実行
+            }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.reload)
+        {
+            if (animationTimer >= 3.09f)
+            {
+                isReload = false;
+                animationTimer = 0.0f;
+                nowAnimation = EnemyList.HumanoidAnimation.gunPlay;
                 Animation();//関数"Animation"を実行
             }
         }
@@ -136,7 +158,6 @@ public class HaveGunEnemy : MonoBehaviour
             if (animationTimer >= 1.13f)
             {
                 animationTimer = 0.0f;
-                isAnimation = false;
             }
         }
     }
@@ -149,7 +170,6 @@ public class HaveGunEnemy : MonoBehaviour
         //"hp > 0"の場合
         if (hp > 0)
         {
-            isAnimation = true;                               //"isAnimation = true"にする
             nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする
             audioSource.PlayOneShot(damage);                  //"damage"を鳴らす
             Animation();                                      //関数"Animation"を実行
@@ -182,10 +202,8 @@ public class HaveGunEnemy : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
-        if (collision.gameObject.tag == "Player" && isAnimation == false)
+        if (collision.gameObject.tag == "Player")
         {
-            isAnimation = true;//"isAnimation = true"にする
-
             //ランダム"10(パンチ)"～"12(キック)"
             nowAnimation = (int)Random.Range(EnemyList.HumanoidAnimation.punch,
                                              EnemyList.HumanoidAnimation.kick + 1);
