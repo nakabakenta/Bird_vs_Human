@@ -8,11 +8,11 @@ public class WalkEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;              //ビューポイント座標.X
-    private bool isAction = false;         //行動の可否
-    private int nowAnimation;              //現在のアニメーション
-    private float animationTimer = 0.0f;   //アニメーションタイマー
-    private bool isAnimation = false;      //アニメーションの可否
+    private Vector2 viewPoint;          //ビューポイント座標
+    private bool isAction = false;      //行動の可否
+    private int nowAnimation;           //現在のアニメーション
+    private float animationTimer = 0.0f;//アニメーションタイマー
+    private bool isAnimation = false;   //アニメーションの可否
     private delegate void ActionDelegate();
     private ActionDelegate nowAction;
     //このオブジェクトのコンポーネント
@@ -45,7 +45,7 @@ public class WalkEnemy : MonoBehaviour
     void Update()
     {
         //このオブジェクトのビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        viewPoint.x = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.x
 
         if (isAction == true)
         {
@@ -53,7 +53,7 @@ public class WalkEnemy : MonoBehaviour
         }
         else if (isAction == false)
         {
-            if (viewPointX < 1)
+            if (viewPoint.x < 1)
             {
                 isAction = true;
             }
@@ -65,8 +65,8 @@ public class WalkEnemy : MonoBehaviour
             nowAction();
         }
 
-        //"viewPointX < 0"の場合
-        if (viewPointX < 0)
+        //"viewPoint.x < 0"の場合
+        if (viewPoint.x < 0)
         {
             Destroy();//関数"Destroy"を実行
         }
@@ -216,10 +216,10 @@ public class WalkEnemy : MonoBehaviour
     //関数"Death"
     void Death()
     {
-        this.tag = "Untagged";                           //"this.tag = Untagged"にする
-        hp = 0;                                          //"hp = 0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;  //"score"を足す
-        PlayerController.exp += 10;
+        this.tag = "Untagged";                           //このタグを"Untagged"にする
+        hp = 0;                                          //体力を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;  //スコアを足す
+        PlayerController.exp += EnemyList.WalkEnemy.exp; //経験値を足す
         nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation = death(死亡)"にする
         audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
         Animation();                                     //関数"Animation"を実行

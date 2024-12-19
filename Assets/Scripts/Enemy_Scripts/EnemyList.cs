@@ -15,18 +15,22 @@ public class EnemyList : MonoBehaviour
         public static int power = 1;     //攻撃力
         public static float speed = 2.0f;//移動速度
         public static int score = 100;   //倒した時のスコア
+        public static int exp = 10;      //倒した時の経験値
     }
     //敵(走る)
     public static class RunEnemy
     {
         //ステータス
-        public static int hp = 5;          //体力
-        public static int power = 1;       //攻撃力
-        public static float speed = 4.0f;  //移動速度
-        public static float jump = 10.0f;  //ジャンプ力
-        public static float rangeX = 0.25f;//プレイヤーの認識範囲.X
-        public static float rangeY = 2.0f; //プレイヤーの認識範囲.Y
-        public static int score = 150;     //倒した時のスコア
+        public static int hp = 5;        //体力
+        public static int power = 1;     //攻撃力
+        public static float speed = 4.0f;//移動速度
+        public static float jump = 10.0f;//ジャンプ力
+        public static int score = 150;   //倒した時のスコア
+        public static int exp = 10;      //倒した時の経験値
+
+        //プレイヤーの認識範囲
+        public static Vector3 range =
+            new Vector3(0.25f, 2.0f, 0.0f);
     }
     //敵(しゃがむ)
     public static class CrouchEnemy
@@ -35,40 +39,49 @@ public class EnemyList : MonoBehaviour
         public static int hp = 10;    //体力
         public static int power = 1;  //攻撃力
         public static int score = 300;//倒した時のスコア
+        public static int exp = 10;   //倒した時の経験値
     }
     //敵(車)
     public static class CarEnemy
     {
         //ステータス
-        public static int hp = 20;        //体力
-        public static int power = 2;      //攻撃力
-        public static float speed = 8.0f; //移動速度
-        public static float rangeX = 5.0f;//プレイヤーの認識範囲.X
-        public static int score = 1000;   //倒した時のスコア
+        public static int hp = 20;       //体力
+        public static int power = 2;     //攻撃力
+        public static float speed = 8.0f;//移動速度
+        public static int score = 1000;  //倒した時のスコア
+        public static int exp = 10;      //倒した時の経験値
+
+        //プレイヤーの認識範囲
+        public static Vector3 range =
+            new Vector3(5.0f, 0.0f, 0.0f);
     }
 
     //敵(車乗車)
     public static class CarRideEnemy
     {
         //ステータス
-        public static int hp = 5;          //体力
-        public static int power = 1;       //攻撃力
-        public static float speed = 4.0f;  //移動速度
-        public static float jump = 10.0f;  //ジャンプ力
-        public static float rangeX = 0.25f;//プレイヤーの認識範囲.X
-        public static float rangeY = 2.0f; //プレイヤーの認識範囲.Y
-        public static int score = 150;     //倒した時のスコア
+        public static int hp = 5;        //体力
+        public static int power = 1;     //攻撃力
+        public static float speed = 4.0f;//移動速度
+        public static float jump = 10.0f;//ジャンプ力
+        public static int score = 150;   //倒した時のスコア
+        public static int exp = 10;      //倒した時の経験値
+
+        //プレイヤーの認識範囲
+        public static Vector3 range =
+            new Vector3(0.25f, 2.0f, 0.0f);
     }
 
     //敵(銃持ち)
     public static class HaveGunEnemy
     {
         //ステータス
-        public static int hp = 2;               //体力
+        public static int hp = 5;               //体力
         public static int power = 1;            //攻撃力
         public static float speed = 2.0f;       //移動速度
         public static float bulletSpeed = 15.0f;//弾の速度
         public static int score = 200;          //倒した時のスコア
+        public static int exp = 10;             //倒した時の経験値
     }
 
     //敵(戦闘機)
@@ -80,6 +93,7 @@ public class EnemyList : MonoBehaviour
         public static float speed = 10.0f;      //移動速度
         public static float bulletSpeed = 20.0f;//弾の速度
         public static int score = 1000;         //倒した時のスコア
+        public static int exp = 10;             //倒した時の経験値
     }
 
     //ボス(ステージ1～5)
@@ -91,6 +105,16 @@ public class EnemyList : MonoBehaviour
         public static float[] speed = new float[5] { 2.0f, 2.0f, 2.0f, 2.0f, 15.0f };   //移動速度
         public static float[] jump = new float[5] { 10.0f, 10.0f, 10.0f, 10.0f, 10.0f };//ジャンプ力
         public static int[] score = new int[5] { 1000, 2000, 3000, 4000, 5000 };        //倒した時のスコア
+
+        //プレイヤーの認識範囲
+        public static Vector3[] range = new Vector3[5]
+        {
+            new Vector3 (0.25f, 2.0f, 0.0f),
+            new Vector3 (0.25f, 2.0f, 0.0f),
+            new Vector3 (0.25f, 2.0f, 0.0f),
+            new Vector3 (0.25f, 2.0f, 0.0f),
+            new Vector3 (0.25f, 2.0f, 0.0f)
+        };
     }
 
     //ヒューマノイドアニメーション

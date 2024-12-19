@@ -76,10 +76,10 @@ public class BossEnemy : MonoBehaviour
         {
             if (PlayerController.hp > 0)
             {
-                if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
-                this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
-                this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
-                this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.walk)
+                if (this.transform.position.x + EnemyList.BossEnemy.range[Stage.nowStage - 1].x > playerTransform.position.x &&
+                    this.transform.position.x - EnemyList.BossEnemy.range[Stage.nowStage - 1].x < playerTransform.position.x &&
+                    this.transform.position.y + EnemyList.BossEnemy.range[Stage.nowStage - 1].y < playerTransform.position.y &&
+                    this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.walk)
                 {
                     isAnimation = true;
                     nowAnimation = EnemyList.HumanoidAnimation.jump;

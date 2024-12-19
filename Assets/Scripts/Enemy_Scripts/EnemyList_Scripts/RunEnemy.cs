@@ -136,9 +136,9 @@ public class RunEnemy : MonoBehaviour
             {
                 this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
 
-                if (this.transform.position.x + EnemyList.RunEnemy.rangeX > playerTransform.position.x &&
-                    this.transform.position.x - EnemyList.RunEnemy.rangeX < playerTransform.position.x &&
-                    this.transform.position.y + EnemyList.RunEnemy.rangeY < playerTransform.position.y &&
+                if (this.transform.position.x + EnemyList.RunEnemy.range.x > playerTransform.position.x &&
+                    this.transform.position.x - EnemyList.RunEnemy.range.x < playerTransform.position.x &&
+                    this.transform.position.y + EnemyList.RunEnemy.range.y < playerTransform.position.y &&
                     this.transform.position.y == 0.0f && nowAnimation == EnemyList.HumanoidAnimation.run)
                 {
                     isAnimation = true;
@@ -258,8 +258,8 @@ public class RunEnemy : MonoBehaviour
     {
         hp -= PlayerList.Player.power[GameManager.playerNumber];//
 
-        //"hp > 0 && nowAnimation != jump"の場合
-        if (hp > 0 && nowAnimation != EnemyList.HumanoidAnimation.jump)
+        //"hp > 0 && nowAnimation == run"の場合
+        if (hp > 0 && nowAnimation == EnemyList.HumanoidAnimation.run)
         {
             isAnimation = true;                               //"isAnimation = true"にする
             nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする

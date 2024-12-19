@@ -8,7 +8,7 @@ public class CarEnemy : MonoBehaviour
     private int hp;     //体力
     private float speed;//移動速度
     //処理
-    private float viewPointX;              //ビューポイント座標.X
+    private Vector2 viewPoint;             //ビューポイント座標
     private bool isAction = false;         //行動の可否
     private bool carExit = false;          //
     private delegate void ActionDelegate();//
@@ -46,17 +46,17 @@ public class CarEnemy : MonoBehaviour
     void Update()
     {
         //このオブジェクトのビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        viewPoint.x = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
         if (isAction == false)
         {
             //"viewPointX < 1 && nowAction == Vertical"の場合
-            if (viewPointX < 0.6 && nowAction == Vertical)
+            if (viewPoint.x < 0.6 && nowAction == Vertical)
             {
                 isAction = true;
             }
             //"viewPointX < 1 && nowAction == Horizontal"の場合
-            else if (viewPointX < 1.2 && nowAction == Horizontal)
+            else if (viewPoint.x < 1.2 && nowAction == Horizontal)
             {
                 isAction = true;
             }
@@ -69,7 +69,7 @@ public class CarEnemy : MonoBehaviour
         }
 
         //"viewPointX < 0"の場合
-        if (viewPointX < 0)
+        if (viewPoint.x < 0)
         {
             Destroy();//関数"Destroy"を実行
         }
@@ -132,10 +132,10 @@ public class CarEnemy : MonoBehaviour
     //関数"Death"
     void Death()
     {
-        this.tag = "Untagged";                         //この"this.tag == Untagged"にする
-        hp = 0;                                        //"hp"を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;//"score"を足す
-
+        this.tag = "Untagged";                         //このタグを"Untagged"にする
+        hp = 0;                                        //体力を"0"にする
+        GameManager.score += EnemyList.CarEnemy.score; //スコアを足す
+        PlayerController.exp += EnemyList.CarEnemy.exp;//経験値を足す
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
         audioSource.PlayOneShot(explosion);//"explosion"を鳴らす

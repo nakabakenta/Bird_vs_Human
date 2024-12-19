@@ -87,44 +87,40 @@ public class CrouchEnemy : MonoBehaviour
     {
         animationTimer += Time.deltaTime;//間隔に"Time.deltaTime(経過時間)"を足す
 
-        if (nowAnimation == EnemyList.HumanoidAnimation.punch ||
-            nowAnimation == EnemyList.HumanoidAnimation.kick)
+        //
+        if (nowAnimation == EnemyList.HumanoidAnimation.punch)
         {
             //
-            if (nowAnimation == EnemyList.HumanoidAnimation.punch)
+            if (animationTimer >= 2.12f)
             {
-                //
-                if (animationTimer >= 2.12f)
-                {
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.crouch;
-                    Animation();//関数"Animation"を実行
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.crouch;
+                Animation();//関数"Animation"を実行
             }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+        {
             //
-            else if (nowAnimation == EnemyList.HumanoidAnimation.kick)
+            if (animationTimer >= 1.15f)
             {
-                //
-                if (animationTimer >= 1.15f)
-                {
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.crouch;
-                    Animation();//関数"Animation"を実行
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.crouch;
+                Animation();//関数"Animation"を実行
             }
+        }
+        //
+        else if (nowAnimation == EnemyList.HumanoidAnimation.damage)
+        {
             //
-            else if (nowAnimation == EnemyList.HumanoidAnimation.damage)
+            if (animationTimer >= 1.13f)
             {
-                //
-                if (animationTimer >= 1.13f)
-                {
-                    animationTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimation = EnemyList.HumanoidAnimation.crouch;
-                    Animation();//関数"Animation"を実行
-                }
+                animationTimer = 0.0f;
+                isAnimation = false;
+                nowAnimation = EnemyList.HumanoidAnimation.crouch;
+                Animation();//関数"Animation"を実行
             }
         }
     }

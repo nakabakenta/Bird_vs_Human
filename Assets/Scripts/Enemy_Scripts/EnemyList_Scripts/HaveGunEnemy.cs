@@ -5,9 +5,9 @@ using UnityEngine;
 public class HaveGunEnemy : MonoBehaviour
 {
     //ステータス
-    private int hp;     //体力
+    private int hp;                     //体力
     //処理
-    private float viewPointX;           //ビューポイント座標.X
+    private Vector2 viewPoint;          //ビューポイント座標.X
     private bool isAction = false;      //行動の可否
     private bool isReload = false;
     private int nowAnimation;           //現在のアニメーション
@@ -41,7 +41,7 @@ public class HaveGunEnemy : MonoBehaviour
     void Update()
     {
         //このオブジェクトのビューポート座標を取得
-        viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
+        viewPoint.x = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
         if(isAction == true)
         {
@@ -53,7 +53,7 @@ public class HaveGunEnemy : MonoBehaviour
         }
         else if(isAction == false)
         {
-            if (viewPointX < 1)
+            if (viewPoint.x < 1)
             {
                 isAction = true;
                 nowAnimation = EnemyList.HumanoidAnimation.gunPlay;
@@ -62,7 +62,7 @@ public class HaveGunEnemy : MonoBehaviour
         }
 
         //"viewPointX < 0"の場合
-        if (viewPointX < 0)
+        if (viewPoint.x < 0)
         {
             Destroy();//関数"Destroy"を実行
         }
