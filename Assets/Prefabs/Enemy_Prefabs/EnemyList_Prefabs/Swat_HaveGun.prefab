@@ -2242,6 +2242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaf10866eef9fa4e9f50f2e76c7b129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 2936595066548630347}
   bullet: {fileID: 1306594059243497752, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   scream: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
@@ -2761,5 +2762,10 @@ PrefabInstance:
 --- !u!4 &2561194740237986289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4102668766864162057, guid: 4fbc9570e398f4f459fcf3c943d79712, type: 3}
+  m_PrefabInstance: {fileID: 1973890047794795768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2936595066548630347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3721181849477146547, guid: 4fbc9570e398f4f459fcf3c943d79712, type: 3}
   m_PrefabInstance: {fileID: 1973890047794795768}
   m_PrefabAsset: {fileID: 0}

@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
             //ëOï˚çUåÇ
             if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval[0])
             {
-                Instantiate(forwardBullet, this.transform.position, Quaternion.identity);
+                Instantiate(forwardBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
                 attackTimer[0] = 0.0f;
             }
             //óéâ∫çUåÇ

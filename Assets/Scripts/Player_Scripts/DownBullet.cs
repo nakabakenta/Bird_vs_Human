@@ -5,7 +5,7 @@ using UnityEngine;
 public class DownBullet : MonoBehaviour
 {
     //処理
-    public float speed;      //移動速度
+    public float speed;      //弾の移動速度
     private float viewPointY;//ビューポイント座標.Y
 
     // Start is called before the first frame update

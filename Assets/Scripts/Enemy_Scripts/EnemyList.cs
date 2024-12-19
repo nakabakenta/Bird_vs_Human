@@ -64,20 +64,22 @@ public class EnemyList : MonoBehaviour
     public static class HaveGunEnemy
     {
         //ステータス
-        public static int hp = 2;        //体力
-        public static int power = 1;     //攻撃力
-        public static float speed = 2.0f;//移動速度
-        public static int score = 200;   //倒した時のスコア
+        public static int hp = 2;               //体力
+        public static int power = 1;            //攻撃力
+        public static float speed = 2.0f;       //移動速度
+        public static float bulletSpeed = 15.0f;//弾の速度
+        public static int score = 200;          //倒した時のスコア
     }
 
     //敵(戦闘機)
     public static class FighterJetEnemy
     {
         //ステータス
-        public static int hp = 5;         //体力
-        public static int power = 1;      //攻撃力
-        public static float speed = 10.0f;//移動速度
-        public static int score = 1000;   //倒した時のスコア
+        public static int hp = 5;               //体力
+        public static int power = 1;            //攻撃力
+        public static float speed = 10.0f;      //移動速度
+        public static float bulletSpeed = 20.0f;//弾の速度
+        public static int score = 1000;         //倒した時のスコア
     }
 
     //ボス(ステージ1～5)
@@ -91,20 +93,14 @@ public class EnemyList : MonoBehaviour
         public static int[] score = new int[5] { 1000, 2000, 3000, 4000, 5000 };        //倒した時のスコア
     }
 
-    //弾
-    public static class EnemyBullet
-    {
-        //ステータス
-        public static float[] speed = new float[5] { 10.0f, 10.0f, 10.0f, 10.0f, 20.0f };//移動速度
-    }
-
     //ヒューマノイドアニメーション
     public static class HumanoidAnimation
     {
         public static int walk         = 0;
         public static int run          = 1;
         public static int mutantRun    = 2;
-        public static int haveGunWalk  = 3;
+        public static int haveGunIdle  = 3;
+        public static int haveGunWalk  = 4;
         public static int punch        = 10;
         public static int kick         = 11;
         public static int jumpAttack   = 12;

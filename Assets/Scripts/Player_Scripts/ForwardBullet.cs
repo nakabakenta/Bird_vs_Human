@@ -5,7 +5,7 @@ using UnityEngine;
 public class ForwardBullet : MonoBehaviour
 {
     //処理
-    public float speed;      //移動速度
+    public float speed;      //弾の移動速度
     private float viewPointX;//ビューポイント座標.X
 
     // Start is called before the first frame update

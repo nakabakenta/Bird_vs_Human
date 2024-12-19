@@ -6,16 +6,15 @@ public class HaveGunEnemy : MonoBehaviour
 {
     //ステータス
     private int hp;     //体力
-    private float speed;//移動速度
     //処理
     private float viewPointX;           //ビューポイント座標.X
     private bool isAction = false;      //行動の可否
     private bool isReload = false;
     private int nowAnimation;           //現在のアニメーション
     private float animationTimer = 0.0f;//アニメーションタイマー
-    private float bulletRotation;       //弾の回転
     //このオブジェクトのコンポーネント
-    public GameObject bullet;
+    public GameObject gun;           //"GameObject(銃)"
+    public GameObject bullet;        //"GameObject(弾)"
     public AudioClip damage;         //"AudioClip(ダメージ)"
     public AudioClip scream;         //"AudioClip(叫び声)"
     private Animator animator = null;//"Animator"
@@ -27,15 +26,15 @@ public class HaveGunEnemy : MonoBehaviour
     void Start()
     {
         //ステータスを設定
-        hp = EnemyList.HaveGunEnemy.hp;      //体力
-        speed = EnemyList.HaveGunEnemy.speed;//移動速度
+        hp = EnemyList.HaveGunEnemy.hp;                //体力
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
 
-        nowAnimation = EnemyList.HumanoidAnimation.reload;
+        nowAnimation = EnemyList.HumanoidAnimation.haveGunIdle;
+        Animation();   //関数"Animation"を実行
     }
 
     // Update is called once per frame
@@ -55,7 +54,8 @@ public class HaveGunEnemy : MonoBehaviour
             if (viewPointX < 1)
             {
                 isAction = true;
-                Animation();   //関数"Animation"を実行
+                nowAnimation = EnemyList.HumanoidAnimation.gunPlay;
+                Animation();//関数"Animation"を実行
             }
         }
 
@@ -80,13 +80,11 @@ public class HaveGunEnemy : MonoBehaviour
             if (this.transform.position.x > playerTransform.position.x)
             {
                 this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-                bulletRotation = EnemyList.rotation;
             }
             //
             else if (this.transform.position.x < playerTransform.position.x)
             {
                 this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-                bulletRotation = -EnemyList.rotation;
             }
 
             Wait();//関数"Wait"を実行
@@ -129,10 +127,11 @@ public class HaveGunEnemy : MonoBehaviour
         {
             if(isReload == false)
             {
-                Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, bulletRotation));
+                Instantiate(bullet, gun.transform.position, Quaternion.identity);
                 isReload = true;
             }
 
+            // 弾の方向を計算
             if (animationTimer >= 0.34f)
             {
                 animationTimer = 0.0f;
@@ -158,6 +157,8 @@ public class HaveGunEnemy : MonoBehaviour
             if (animationTimer >= 1.13f)
             {
                 animationTimer = 0.0f;
+                nowAnimation = EnemyList.HumanoidAnimation.gunPlay;
+                Animation();//関数"Animation"を実行
             }
         }
     }
