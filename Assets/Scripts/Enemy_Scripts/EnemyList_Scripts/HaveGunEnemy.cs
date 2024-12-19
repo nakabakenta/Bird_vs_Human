@@ -40,16 +40,18 @@ public class HaveGunEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(nowAnimation);
-
         //このオブジェクトのビューポート座標を取得
         viewPointX = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.X
 
-        if (isAction == true)
+        if(isAction == true)
         {
-            Horizontal();
+            //"hp > 0"
+            if (hp > 0)
+            {
+                Horizontal();
+            }
         }
-        else if (isAction == false)
+        else if(isAction == false)
         {
             if (viewPointX < 1)
             {

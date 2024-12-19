@@ -16,6 +16,8 @@ public class CrouchEnemy : MonoBehaviour
     public AudioClip scream;         //"AudioClip(叫び声)"
     private Animator animator = null;//"Animator"
     private AudioSource audioSource; //"AudioSource"
+    //他のオブジェクトのコンポーネント
+    private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,8 @@ public class CrouchEnemy : MonoBehaviour
         //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();      //"Animator"
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
+        //他のオブジェクトのコンポーネントを取得
+        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
         //
         nowAnimation = EnemyList.HumanoidAnimation.crouch;//"nowAnimation = crouch(しゃがむ)"にする
         Animation();                                      //関数"Animation"を実行
@@ -44,14 +48,14 @@ public class CrouchEnemy : MonoBehaviour
         //"hp > 0 && viewPointX < 1"の場合
         else if (hp > 0 && viewPointX < 1)
         {
-            Behavior();//関数"Behavior"を実行
+            Horizontal();//関数"Behavior"を実行
         }
     }
 
-    //関数"Behavior"
-    void Behavior()
+    //関数"Horizontal"
+    void Horizontal()
     {
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, 1.0f);
+        
         this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
 
         //
@@ -68,6 +72,8 @@ public class CrouchEnemy : MonoBehaviour
                 Animation();//関数"Animation"を実行
             }
         }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
     }
 
     //関数"Animation"

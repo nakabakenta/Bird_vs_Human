@@ -292,16 +292,21 @@ public class PlayerController : MonoBehaviour
         //衝突したオブジェクトのタグが"PlayerAlly"の場合
         if (collision.gameObject.tag == "PlayerAlly" && ally < 2)
         {
-            if (ally == 0)
-            {
-                nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-            }
-            else if (ally == 1)
-            {
-                nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-            }
-
-            ally += 1;
+            Invoke("Ally", 0.01f);//関数"Ally"を"0.01f"後に実行
         }
+    }
+
+    void Ally()
+    {
+        if (ally == 0)
+        {
+            nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        }
+        else if (ally == 1)
+        {
+            nowally[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        }
+
+        ally += 1;
     }
 }
