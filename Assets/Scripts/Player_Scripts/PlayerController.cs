@@ -19,8 +19,8 @@ public class PlayerController : MonoBehaviour
     //処理
     public static float[] attackTimer = new float[2];   //攻撃間隔タイマー
     public static float[] attackInterval = new float[2];//攻撃間隔
-    public static float gageTimer = 0.0f;               //ゲージタイマー
-    public static float gageInterval = 20.0f;           //ゲージ蓄積時間
+    public static float gageTimer;         //ゲージタイマー
+    public static float gageInterval;      //ゲージ蓄積時間
     public static int level;               //レベル
     public static int exp;                 //経験値
     public static int ally;                //味方数
@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private float rendererTotalElapsedTime;//Rendererの有効・無効の合計経過時間
     private bool isDamage;                 //ダメージの可否
     private bool isObjRenderer;            //objRendererの可否
+    private float levelattackInterval = 0;
+
     //このオブジェクトのコンポーネント
     public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
     public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gageTimer = 0.0f;    //ゲージタイマー
+        gageInterval = 20.0f;//ゲージ蓄積時間
         ally = 0;
         level = 1;
         exp = 0;
@@ -120,13 +124,13 @@ public class PlayerController : MonoBehaviour
             }
 
             //前方攻撃
-            if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval[0])
+            if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval[0] - levelattackInterval)
             {
                 Instantiate(forwardBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
                 attackTimer[0] = 0.0f;
             }
             //落下攻撃
-            if (Input.GetMouseButton(1) && attackTimer[1] >= attackInterval[1])
+            if (Input.GetMouseButton(1) && attackTimer[1] >= attackInterval[1] - levelattackInterval)
             {
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
                 attackTimer[1] = 0.0f;
@@ -172,23 +176,23 @@ public class PlayerController : MonoBehaviour
     ///関数"LevelUp"
     void LevelUp()
     {
-        if(level == 1)
+        if(level == 2)
         {
-
-        }
-        else if(level == 2)
-        {
-
+            levelattackInterval -= 0.1f;
         }
         else if (level == 3)
         {
-
+            levelattackInterval -= 0.1f;
         }
         else if (level == 4)
         {
-
+            levelattackInterval -= 0.1f;
         }
         else if (level == 5)
+        {
+            levelattackInterval -= 0.1f;
+        }
+        else
         {
 
         }
