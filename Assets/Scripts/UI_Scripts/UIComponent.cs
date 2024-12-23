@@ -6,24 +6,51 @@ using UnityEngine.UI;
 public class UIComponent : MonoBehaviour
 {
     //処理
-    public TitleUIClass titleUIClass;   //タイトルUIクラス
+    public FlashUIClass flashUIClass;//点滅UIクラス
+    public TitleUIClass titleUIClass;//タイトルUIクラス
     //このオブジェクトのコンポーネント
-    private RectTransform rectTransform;//"RectTransform"
+    public Image image;                //"Image"
+    public RectTransform rectTransform;//"RectTransform"
 
     // Start is called before the first frame update
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
-        rectTransform = this.gameObject.GetComponent<RectTransform>();//"RectTransform"
+
+        //点滅UI使用の可否が"true"の場合
+        if (flashUIClass.use == true)
+        {
+            StartCoroutine("Flash");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         //タイトルUI使用の可否が"true"の場合
-        if(titleUIClass.use == true)
+        if (titleUIClass.use == true)
         {
             TitleUI();//関数"TitleUI"を実行
+        }
+    }
+
+    IEnumerator Flash()
+    {
+        while (true)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                image.color = image.color - new Color32(0, 0, 0, 10);
+                yield return new WaitForSeconds(flashUIClass.interval);
+            }
+
+            for (int k = 0; k < 25; k++)
+            {
+                image.color = image.color + new Color32(0, 0, 0, 10);
+                yield return new WaitForSeconds(flashUIClass.interval);
+            }
         }
     }
 
@@ -58,6 +85,15 @@ public class UIComponent : MonoBehaviour
         }
     }
 
+    //点滅UIクラス
+    [System.Serializable]
+    public class FlashUIClass
+    {
+        //処理
+        public bool use;              //使用の可否
+        public float interval = 0.05f;//間隔
+    }
+    
     //タイトルUIクラス
     [System.Serializable]
     public class TitleUIClass
