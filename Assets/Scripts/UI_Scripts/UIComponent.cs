@@ -9,13 +9,15 @@ public class UIComponent : MonoBehaviour
     public FlashUIClass flashUIClass;//点滅UIクラス
     public TitleUIClass titleUIClass;//タイトルUIクラス
     //このオブジェクトのコンポーネント
-    public Image image;                //"Image"
-    public RectTransform rectTransform;//"RectTransform"
+    private Image[] image;                //"Image"
+    private RectTransform[] rectTransform;//"RectTransform"
 
     // Start is called before the first frame update
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
+        image = this.gameObject.GetComponentsInChildren<Image>();
+        rectTransform = this.gameObject.GetComponentsInChildren<RectTransform>();
 
         //点滅UI使用の可否が"true"の場合
         if (flashUIClass.use == true)

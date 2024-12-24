@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
         thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
         SetPlayer();                              //関数"SetPlayer"を実行
-        //コンポーネントを取得
+        //このオブジェクトのコンポーネントを取得
         objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();//このオブジェクトの"Renderer(子オブジェクトを含む)を取得
         rigidBody = this.gameObject.GetComponent<Rigidbody>();            //このオブジェクトの"Rigidbody"を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();        //このオブジェクトの"BoxCollider"を取得
