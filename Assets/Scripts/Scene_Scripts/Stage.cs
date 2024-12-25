@@ -15,7 +15,6 @@ private SceneLoader sceneLoader;//"Script(SceneLoader)"
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 1;                            //"Time.timeScale(時間の進み)"を"1(通常)"にする
         sceneLoader = this.GetComponent<SceneLoader>();//この"Script(SceneLoader)"を取得する
         bossEnemy = new bool[5]                        //ボスの存在可否を"false(リセット)"する
         { 
@@ -37,7 +36,7 @@ private SceneLoader sceneLoader;//"Script(SceneLoader)"
             Time.timeScale = 0;
         }
 
-        if(PlayerController.hp <= 0 && GameManager.remain <= 0)
+        if(PlayerController.remain <= 0 && PlayerController.hp <= 0)
         {
             sceneLoader.GameOver();
         }

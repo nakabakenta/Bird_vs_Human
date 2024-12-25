@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //ステータス(public)
+    //ステータス
     public static int hp;             //プレイヤーの体力
+    public static int remain;         //プレイヤーの残機
     public static string playerStatus;//プレイヤーの状態
     //プレイヤーの移動限界値
     private Vector2[,] limitPosition = new Vector2[5, 2]
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.gameStart == false)
         {
-            GameManager.remain = 3;
+            remain = 3;
             GameManager.gameStart = true;
         }
 
@@ -273,7 +274,7 @@ public class PlayerController : MonoBehaviour
         boxCollider.enabled = false;    //BoxColliderを無効にする
         animator.SetBool("Death", true);//Animatorの"Death"(死亡)を有効にする
         rigidBody.useGravity = true;    //RigidBodyの重力を有効にする
-        GameManager.remain--;
+        remain -= 1;
     }
 
     //衝突判定(OnTriggerEnter)

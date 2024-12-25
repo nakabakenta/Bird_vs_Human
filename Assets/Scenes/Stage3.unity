@@ -3741,7 +3741,6 @@ GameObject:
   - component: {fileID: 959021693}
   - component: {fileID: 959021692}
   - component: {fileID: 959021691}
-  - component: {fileID: 959021690}
   - component: {fileID: 959021689}
   m_Layer: 5
   m_Name: Button_NEXT STAGE
@@ -3781,18 +3780,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cef7644b1a0bba4f81e7089e8a8f3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &959021690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 959021687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9ef53646581a440a3882b6dcd64eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &959021691
@@ -3839,8 +3826,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 959021690}
-        m_TargetAssemblyTypeName: NestStage, Assembly-CSharp
+      - m_Target: {fileID: 959021689}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: NextStage
         m_Mode: 1
         m_Arguments:

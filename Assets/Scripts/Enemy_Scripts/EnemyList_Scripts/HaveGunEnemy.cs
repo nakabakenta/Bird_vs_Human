@@ -92,7 +92,7 @@ public class HaveGunEnemy : MonoBehaviour
             Wait();//関数"Wait"を実行
         }
 
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
     }
 
     //関数"Animation"
@@ -152,17 +152,6 @@ public class HaveGunEnemy : MonoBehaviour
                 Animation();//関数"Animation"を実行
             }
         }
-        //
-        else if(nowAnimation == EnemyList.HumanoidAnimation.damage)
-        {
-            //
-            if (animationTimer >= 1.13f)
-            {
-                animationTimer = 0.0f;
-                nowAnimation = EnemyList.HumanoidAnimation.gunPlay;
-                Animation();//関数"Animation"を実行
-            }
-        }
     }
 
     //関数"Damage"
@@ -173,9 +162,7 @@ public class HaveGunEnemy : MonoBehaviour
         //"hp > 0"の場合
         if (hp > 0)
         {
-            nowAnimation = EnemyList.HumanoidAnimation.damage;//"nowAnimation = damage(ダメージ)"にする
             audioSource.PlayOneShot(damage);                  //"damage"を鳴らす
-            Animation();                                      //関数"Animation"を実行
         }
         //"hp <= 0"の場合
         else if (hp <= 0)

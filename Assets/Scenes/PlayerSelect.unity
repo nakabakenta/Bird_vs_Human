@@ -651,14 +651,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashUIClass:
     use: 0
-    interval: 0.1
+    interval: 0
   titleUIClass:
     use: 1
     direction: 0001
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 213230294}
-  rectTransform: {fileID: 213230292}
 --- !u!114 &213230294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,6 +820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 271100332}
+  - component: {fileID: 271100333}
   m_Layer: 5
   m_Name: PLAYER SELECT
   m_TagString: Untagged
@@ -851,6 +850,26 @@ RectTransform:
   m_AnchoredPosition: {x: -500, y: -490}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &271100333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271100331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d13acd8f6ebcade498d5448c5bfa356d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashUIClass:
+    use: 1
+    interval: 0.05
+  titleUIClass:
+    use: 0
+    direction: 0000
+    speed: 0
+    limitPosition: {x: 0, y: 0}
 --- !u!1 &362881943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,8 +1426,6 @@ MonoBehaviour:
     direction: 0100
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 693194063}
-  rectTransform: {fileID: 693194062}
 --- !u!1 &763934649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,8 +1920,6 @@ MonoBehaviour:
     direction: 0100
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1031996289}
-  rectTransform: {fileID: 1031996287}
 --- !u!114 &1031996289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2040,8 +2055,6 @@ MonoBehaviour:
     direction: 0100
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1180382011}
-  rectTransform: {fileID: 1180382009}
 --- !u!114 &1180382011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,14 +2222,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashUIClass:
     use: 0
-    interval: 0.1
+    interval: 0
   titleUIClass:
     use: 1
     direction: 0001
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1276148557}
-  rectTransform: {fileID: 1276148555}
 --- !u!114 &1276148557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,8 +2325,6 @@ MonoBehaviour:
     direction: 0100
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1293035070}
-  rectTransform: {fileID: 1293035068}
 --- !u!114 &1293035070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2521,14 +2530,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashUIClass:
     use: 0
-    interval: 0.1
+    interval: 0
   titleUIClass:
     use: 1
     direction: 0001
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1328621657}
-  rectTransform: {fileID: 1328621656}
 --- !u!1 &1328864108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,14 +3492,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashUIClass:
     use: 0
-    interval: 0.1
+    interval: 0
   titleUIClass:
     use: 1
     direction: 0001
     speed: 100
     limitPosition: {x: 1176, y: 0}
-  image: {fileID: 1878985328}
-  rectTransform: {fileID: 1878985326}
 --- !u!114 &1878985328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3541,8 +3546,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2009913255}
   - component: {fileID: 2009913254}
+  - component: {fileID: 2009913256}
   m_Layer: 0
-  m_Name: Select
+  m_Name: BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3659,6 +3665,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2009913256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009913253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d46ea10f7a24f48bf92ccc56bdb76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2069396226
 GameObject:
   m_ObjectHideFlags: 0

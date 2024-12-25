@@ -79,7 +79,7 @@ MonoBehaviour:
   - {fileID: 6633350471093756902, guid: f9820f4ec8aae164e82c757295878599, type: 3}
   - {fileID: 4292270667764993312, guid: bac8ff40b0f6d4843a28406160aae77d, type: 3}
   - {fileID: 1411164257525991245, guid: 5007bd9881064a343bbdba360aec2e0f, type: 3}
-  forwardBullet: {fileID: 5093564640183891357, guid: d024a6bd0937fb549a9f2896f59f72c8, type: 3}
+  forwardBullet: {fileID: 5890399457625550922, guid: 132ef0fb41224b94f81929e83bdf1bb7, type: 3}
   downBullet: {fileID: 6450617237666396874, guid: 99e080b0641bdab44beaf325de2384da, type: 3}
   group:
   - {fileID: 6009275135945947292, guid: 2af1bd2499a25f84bbf325a876ac3b9d, type: 3}

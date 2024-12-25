@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //プレイヤーセレクトシーン
-    public static int playerNumber;//プレイヤー番号
+    //プレイヤー番号
+    public static int playerNumber;
     //ゲームシーン
     public static bool gameStart = false;//ゲームスタートフラグ
     public static int score;             //スコア
-    public static int remain;            //残機
+    public static string nowScene;
+
     //共通
     public static bool[] stageClear = new bool[5] { false, false, false, false, false };//ステージクリアフラグ
-    public static bool secretCharacter;//
 }

@@ -91,14 +91,14 @@ public class StageUI : MonoBehaviour
         }
 
         //
-        if (GameManager.remain >= 10)
+        if (PlayerController.remain >= 10)
         {
-            remain.text = "" + GameManager.remain;//
+            remain.text = "" + PlayerController.remain;//
         }
         //
-        else if (GameManager.remain >= 0)
+        else if (PlayerController.remain >= 0)
         {
-            remain.text = "0" + GameManager.remain;//
+            remain.text = "0" + PlayerController.remain;//
         }
 
         if(Stage.gameStatus == "Pause")
@@ -116,7 +116,7 @@ public class StageUI : MonoBehaviour
             stageClearUI.SetActive(true);
         }
 
-        if(GameManager.remain > 0 && PlayerController.hp <= 0)
+        if(PlayerController.remain > 0 && PlayerController.hp <= 0)
         {
             continueUI.SetActive(true);
         }

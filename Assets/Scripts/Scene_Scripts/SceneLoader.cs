@@ -5,47 +5,91 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    // Start is called before the first frame update
+    void Start()
+    {
+        Time.timeScale = 1;//"Time.timeScale"‚ð"1"‚É‚·‚é
+    }
+
     public void PlayerSelect()
     {
-        SceneManager.LoadScene("PlayerSelect");
+        GameManager.nowScene = "PlayerSelect";
+        LoadScene();
     }
 
     public void StageSelect()
     {
-        SceneManager.LoadScene("StageSelect");
+        GameManager.nowScene = "StageSelect";
+        LoadScene();
     }
 
     public void StageScene()
     {
         if(Stage.nowStage == 1)
         {
-            SceneManager.LoadScene("Stage1");
+            GameManager.nowScene = "Stage1";
+            LoadScene();
         }
         else if (Stage.nowStage == 2)
         {
-            SceneManager.LoadScene("Stage2");
+            GameManager.nowScene = "Stage2";
+            LoadScene();
         }
         else if (Stage.nowStage == 3)
         {
-            SceneManager.LoadScene("Stage3");
+            GameManager.nowScene = "Stage3";
+            LoadScene();
         }
         else if (Stage.nowStage == 4)
         {
-            SceneManager.LoadScene("Stage4");
+            GameManager.nowScene = "Stage4";
+            LoadScene();
         }
         else if (Stage.nowStage == 5)
         {
-            SceneManager.LoadScene("Stage5");
+            GameManager.nowScene = "Stage5";
+            LoadScene();
+        }
+    }
+
+    public void NextStage()
+    {
+        if (Stage.nowStage == 1)
+        {
+            GameManager.nowScene = "Stage2";
+            LoadScene();
+        }
+        else if (Stage.nowStage == 2)
+        {
+            GameManager.nowScene = "Stage3";
+            LoadScene();
+        }
+        else if (Stage.nowStage == 3)
+        {
+            GameManager.nowScene = "Stage4";
+            LoadScene();
+        }
+        else if (Stage.nowStage == 4)
+        {
+            GameManager.nowScene = "Stage5";
+            LoadScene();
         }
     }
 
     public void GameClear()
     {
-        SceneManager.LoadScene("GameClear");
+        GameManager.nowScene = "GameClear";
+        LoadScene();
     }
 
     public void GameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        GameManager.nowScene = "GameOver";
+        LoadScene();
+    }
+
+    public void LoadScene()
+    {
+        SceneManager.LoadScene(GameManager.nowScene);
     }
 }
