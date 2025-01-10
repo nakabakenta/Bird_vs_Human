@@ -4,80 +4,98 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public Button[] button = new Button[3];
-    public AudioClip cursor;               //"AudioClip(カーソル)"
-    private AudioSource audioSource;       //"AudioSource"
-    private SceneLoader sceneLoader;       //"Script(SceneLoader)"
+    //処理
+    public static bool buttonSelect;//ボタンを押した可否
+    //このオブジェクトのコンポーネント
+    public AudioClip cursor;        //"AudioClip(カーソル)"
+    public AudioClip select;        //"AudioClip(選択)"
+    private Button button;          //"Button" 
+    private AudioSource audioSource;//"AudioSource"
+    private SceneLoader sceneLoader;//"Script(SceneLoader)"
 
     // Start is called before the first frame update
     void Start()
     {
+        //処理を初期化
+        buttonSelect = false;                          //ボタンを"押していない"にする
+        //このオブジェクトのコンポーネントを取得
+        button = this.GetComponent<Button>();
         audioSource = this.GetComponent<AudioSource>();//"AudioSource"
-        sceneLoader = this.GetComponent<SceneLoader>();//この"Script(SceneLoader)"を取得する
-
-        button[0].onClick.AddListener(Sparrow);
-        button[1].onClick.AddListener(Crow);
-        button[2].onClick.AddListener(Chickadee);
-
-        GameManager.gameStart = false;
+        sceneLoader = this.GetComponent<SceneLoader>();//"Script(SceneLoader)"
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerPress == button[0])
+        //ボタンを"押していない"場合
+        if (buttonSelect == false)
         {
-            audioSource.PlayOneShot(cursor);
-            Debug.Log("aaa");
-        }
+            audioSource.PlayOneShot(cursor);//"select(カーソル)"を鳴らす
 
-        if (eventData.pointerPress == button[1])
-        {
-            audioSource.PlayOneShot(cursor);
-            Debug.Log("bbb");
-        }
-
-        if (eventData.pointerPress == button[2])
-        {
-            audioSource.PlayOneShot(cursor);
-            Debug.Log("ccc");
+            //スズメ
+            if (button.gameObject.name == "Button_Sparrow")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
+            }
+            //カラス
+            else if (button.gameObject.name == "Button_Crow")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
+            }
+            //コガラ
+            else if (button.gameObject.name == "Button_Chickadee")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
+            }
+            //ペンギン
+            else if (button.gameObject.name == "Button_Penguin")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
+            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //Debug.Log("カーソルがボタンから離れました！");
+        
     }
 
-    //プレイヤーセレクト一覧
-    //スズメ
-    public void Sparrow()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
-        sceneLoader.StageSelect();                           //"Script(SceneLoader)"の"関数(StageSelect)"を実行する
+        //ボタンを"押していない"場合
+        if (buttonSelect == false)
+        {
+            //スズメ
+            if (button.gameObject.name == "Button_Sparrow")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
+            }
+            //カラス
+            else if (button.gameObject.name == "Button_Crow")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
+            }
+            //コガラ
+            else if (button.gameObject.name == "Button_Chickadee")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
+            }
+            //ペンギン
+            else if (button.gameObject.name == "Button_Penguin")
+            {
+                GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
+            }
 
-         Debug.Log("1");
+            buttonSelect = true;            //ボタンを"押した"にする
+            audioSource.PlayOneShot(select);//"select(選択)"を鳴らす
+            Invoke("SceneLoad", 1.515f);    //関数"SceneLoad"を"1.515f"後に実行する
+        }
     }
-    //カラス
-    public void Crow()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
-        sceneLoader.StageSelect();                             //"Script(SceneLoader)"の"関数(StageSelect)"を実行する
 
-        Debug.Log("2");
-    }
-    //コガラ
-    public void Chickadee()
+    //関数"SceneLoad"
+    void SceneLoad()
     {
-        GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
-        sceneLoader.StageSelect();                             //"Script(SceneLoader)"の"関数(StageSelect)"を実行する
-        Debug.Log("3");
-    }
-    //ペンギン
-    public void Penguin()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
-        sceneLoader.StageSelect();                             //"Script(SceneLoader)"の"関数(StageSelect)"を実行する
+        sceneLoader.StageSelect();//"SceneLoader"の関数"StageSelect"を実行する
     }
 }

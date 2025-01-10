@@ -11,40 +11,29 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+        GameManager.gameStart = false;
+
+        player[0].SetActive(false);
+        player[1].SetActive(false);
+        player[2].SetActive(false);
     }
 
-    // カーソルがボタンに重なったときに実行されるイベント
-    public void OnPointerEnter(PointerEventData eventData)
+    // Update is called once per frame
+    void Update()
     {
-        
-        Debug.Log("ボタンにカーソルが重なりました");
-    }
-
-    //プレイヤーセレクト一覧
-    //スズメ
-    public void Sparrow()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
-        
-    }
-    //カラス
-    public void Crow()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
-        
-    }
-    //コガラ
-    public void Chickadee()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
-        
-    }
-    //ペンギン
-    public void Penguin()
-    {
-        GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
-        
+        if(PlayerSelectButton.buttonSelect == false)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == GameManager.playerNumber)
+                {
+                    player[i].SetActive(true);
+                }
+                else
+                {
+                    player[i].SetActive(false);
+                }
+            }
+        }
     }
 }
