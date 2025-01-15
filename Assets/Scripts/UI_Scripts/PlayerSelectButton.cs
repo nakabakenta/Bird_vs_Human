@@ -10,7 +10,7 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerE
     public static bool buttonSelect;//ボタンを押した可否
     private bool setActive;         //オブジェクト表示の可否
     //このオブジェクトのコンポーネント
-    public GameObject notSelect;    //"GameObject(非選択)"
+    public GameObject buttonAlpha;  //"GameObject(非選択)"
     public AudioClip cursor;        //"AudioClip(カーソル)"
     public AudioClip select;        //"AudioClip(選択)"
     private Button button;          //"Button" 
