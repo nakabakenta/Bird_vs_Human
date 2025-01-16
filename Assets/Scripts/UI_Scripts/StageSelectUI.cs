@@ -16,7 +16,7 @@ public class StageSelectUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if StageSelectButton.buttonSelect == true)
+        if (StageSelectButton.buttonSelect == true) 
         {
             stageSelect.SetActive(false);
         }

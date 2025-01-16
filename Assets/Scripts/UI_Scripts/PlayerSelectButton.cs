@@ -4,77 +4,94 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     //処理
-    public static bool buttonSelect;//ボタンを押した可否
-    private bool setActive;         //オブジェクト表示の可否
+    public static string selectButton;  //選択しているボタン
+    public static bool buttonClick;     //ボタンのクリック可否
+    private Vector2 buttonPosition;     //ボタンの位置
+    private bool setActive;             //オブジェクト表示の可否
     //このオブジェクトのコンポーネント
-    public GameObject buttonAlpha;  //"GameObject(非選択)"
-    public AudioClip cursor;        //"AudioClip(カーソル)"
-    public AudioClip select;        //"AudioClip(選択)"
-    private Button button;          //"Button" 
-    private AudioSource audioSource;//"AudioSource"
-    private SceneLoader sceneLoader;//"Script(SceneLoader)"
+    public GameObject alpha;            //"GameObject(半透明)"
+    public GameObject selectMark;       //"GameObject(選択マーク)"
+    public AudioClip enter;             //"AudioClip(入場)"
+    public AudioClip click;             //"AudioClip(クリック)"
+    private Button button;              //"Button" 
+    private RectTransform rectTransform;//"RectTransform"
+    private AudioSource audioSource;    //"AudioSource"
+    private SceneLoader sceneLoader;    //"Script(SceneLoader)"
 
     // Start is called before the first frame update
     void Start()
     {
         //このオブジェクトのコンポーネントを取得
         button = this.GetComponent<Button>();
-        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
-        sceneLoader = this.GetComponent<SceneLoader>();//"Script(SceneLoader)"
+        rectTransform = this.GetComponent<RectTransform>();
+        audioSource = this.GetComponent<AudioSource>();
+        sceneLoader = this.GetComponent<SceneLoader>();
         //処理を初期化
-        buttonSelect = false;                          //ボタンを"押していない"にする
+        buttonPosition = rectTransform.anchoredPosition;
+        buttonClick = false;
+        //コンポーネントを初期化
+        selectMark.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //ボタンを"押していない"場合
-        if (buttonSelect == false)
+        //ボタンを"クリックしていない"場合
+        if (buttonClick == false)
         {
-            notSelect.SetActive(false);
-            audioSource.PlayOneShot(cursor);//"select(カーソル)"を鳴らす
+            if (selectButton != null)
+            {
+                //選択しているボタンを探す
+                Transform findAlpha = GameObject.Find(selectButton).transform.Find("Alpha_UI_Base_02");
+                Transform findSelectMark = GameObject.Find(selectButton).transform.Find("UI_Base_03");
+                //選択しているボタンを探してコンポーネントを取得
+                RectTransform findRectTransform = GameObject.Find(selectButton).GetComponent<RectTransform>();
+                //選択しているボタンを初期化
+                findRectTransform.anchoredPosition = new Vector2(buttonPosition.x, findRectTransform.anchoredPosition.y);
+                findAlpha.gameObject.SetActive(true);
+                findSelectMark.gameObject.SetActive(false);
+            }
+
+            selectButton = button.gameObject.name;//選択しているボタンの名前を入れる
 
             //スズメ
-            if (button.gameObject.name == "Button_Sparrow")
+            if (selectButton == "Button_Sparrow")
             {
                 GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
             }
             //カラス
-            else if (button.gameObject.name == "Button_Crow")
+            else if (selectButton == "Button_Crow")
             {
                 GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
             }
             //コガラ
-            else if (button.gameObject.name == "Button_Chickadee")
+            else if (selectButton == "Button_Chickadee")
             {
                 GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
             }
             //ペンギン
-            else if (button.gameObject.name == "Button_Penguin")
+            else if (selectButton == "Button_Penguin")
             {
                 GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
             }
-        }
-    }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (buttonSelect == false)
-        {
-            notSelect.SetActive(true);
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
+            alpha.SetActive(false);
+            selectMark.SetActive(true);
+            audioSource.PlayOneShot(enter);//"入場"を鳴らす
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //ボタンを"押していない"場合
-        if (buttonSelect == false)
+        //ボタンを"クリックしていない"場合
+        if (buttonClick == false)
         {
-            buttonSelect = true;            //ボタンを"押した"にする
-            audioSource.PlayOneShot(select);//"select(選択)"を鳴らす
-            Invoke("SceneLoad", 2.0f);      //関数"SceneLoad"を"2.0f"後に実行する
+            buttonClick = true;            //ボタンを"クリックした"にする
+            audioSource.PlayOneShot(click);//"クリック"を鳴らす
+            Invoke("SceneLoad", 2.0f);     //関数"SceneLoad"を"2.0f"後に実行する
         }
 
         InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行して"0.25f"毎に繰り返す
@@ -89,7 +106,7 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerE
         //子オブジェクトを取得
         foreach (Transform child in transform)
         {
-            //子オブジェクトの名前が"Alpha"の場合
+            //子オブジェクトの名前が"Alpha_UI_Base_02"の場合
             if (child.name == "Alpha_UI_Base_02")
             {
                 //子オブジェクトを非表示にする

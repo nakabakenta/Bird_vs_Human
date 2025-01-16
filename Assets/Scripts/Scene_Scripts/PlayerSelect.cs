@@ -6,34 +6,39 @@ using UnityEngine.EventSystems;
 public class PlayerSelect : MonoBehaviour
 {
     //このオブジェクトのコンポーネント
-    public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
+    public GameObject[] meshPlayer = new GameObject[3];//メッシュプレイヤー
+    public GameObject UIPlayerSelect;                  //UIプレイヤーセレクト
 
     // Start is called before the first frame update
     void Start()
     {
         GameManager.gameStart = false;
 
-        player[0].SetActive(false);
-        player[1].SetActive(false);
-        player[2].SetActive(false);
+        meshPlayer[0].SetActive(false);
+        meshPlayer[1].SetActive(false);
+        meshPlayer[2].SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(PlayerSelectButton.buttonSelect == false)
+        if(PlayerSelectButton.buttonClick == false)
         {
             for (int i = 0; i < 3; i++)
             {
                 if (i == GameManager.playerNumber)
                 {
-                    player[i].SetActive(true);
+                    meshPlayer[i].SetActive(true);
                 }
                 else
                 {
-                    player[i].SetActive(false);
+                    meshPlayer[i].SetActive(false);
                 }
             }
+        }
+        else if (PlayerSelectButton.buttonClick == true)
+        {
+            UIPlayerSelect.SetActive(false);
         }
     }
 }

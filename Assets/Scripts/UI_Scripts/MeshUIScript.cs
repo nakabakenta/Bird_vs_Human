@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectUIScript : MonoBehaviour
+public class MeshUIScript : MonoBehaviour
 {
     //クラス
     public RotateUIClass rotateUIClass;//回転UIクラス
