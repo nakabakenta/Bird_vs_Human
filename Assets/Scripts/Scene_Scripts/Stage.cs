@@ -9,8 +9,8 @@ public class Stage : MonoBehaviour
     public static bool[] bossEnemy = new bool[5];//ボスの生存可否
     public static string gameStatus;             //ゲームの状態
 
-//このオブジェクトのコンポーネント
-private SceneLoader sceneLoader;//"Script(SceneLoader)"
+　  //このオブジェクトのコンポーネント
+　  private SceneLoader sceneLoader;//"Script(SceneLoader)"
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,7 @@ private SceneLoader sceneLoader;//"Script(SceneLoader)"
             Time.timeScale = 0;
         }
 
-        if(PlayerController.remain <= 0 && PlayerController.hp <= 0)
+        if (PlayerController.remain <= 0 && gameStatus == "Death")
         {
             sceneLoader.GameOver();
         }

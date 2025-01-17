@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : PlayerBase
 {
-    //ステータス
-    public static int hp;             //体力
-    public static int remain;         //残機
-    public static string playerStatus;//プレイヤーの状態
     //移動の限界位置
     private Vector2[,] limitPosition = new Vector2[5, 2]
     {
@@ -17,37 +13,16 @@ public class PlayerController : MonoBehaviour
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
     };
-    //処理
-    public static float[] attackTimer = new float[2];   //攻撃タイマー([前方],[下方])
-    public static float[] attackInterval = new float[2];//攻撃間隔([前方],[下方])
-    public static float gageTimer;                      //ゲージタイマー
-    public static float gageInterval;                   //ゲージ蓄積時間
-    public static int level;                            //レベル
-    public static int exp;                              //経験値
-    public static int ally;                             //味方数
-    private float invincibleTimer = 0.0f;               //無敵タイマー
-    private float invincibleInterval = 10.0f;           //無敵持続時間
-    private float blinkingTime = 1.0f;                  //点滅持続時間
-    private float rendererSwitch = 0.05f;               //Renderer切り替え時間
-    private float rendererTimer;                        //Renderer切り替えの経過時間
-    private float rendererTotalTime;                    //Renderer切り替えの合計経過時間
-    private bool isDamage;                              //ダメージの可否
-    private bool isObjRenderer;                         //objRendererの可否
-    private float levelAttackInterval = 0.0f;           //レベルアップ時の攻撃間隔短縮
+    
     //このオブジェクトのコンポーネント
     public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
     public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
     public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
     private GameObject nowPlayer;                    //"GameObject(現在のプレイヤー)"
     private GameObject[] nowAlly = new GameObject[2];//"GameObject(現在の味方)"
-    private Transform thisTransform ;                //"Transform"
-    private Rigidbody rigidBody;                     //"Rigidbody"
-    private BoxCollider boxCollider;                 //"BoxCollider"
-    private Renderer[] objRenderer;                  //"Renderer"
+    
     //コルーチン
     private Coroutine blinking;//
-    //座標
-    private Vector3 mousePosition, worldPosition, viewPortPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -58,13 +33,9 @@ public class PlayerController : MonoBehaviour
         ally = 0;
         level = 1;
         exp = 0;
-        thisTransform = this.gameObject.transform;//このオブジェクトの"Transform"を取得
-        //このオブジェクトのコンポーネントを取得する
-        objRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
-        rigidBody = this.gameObject.GetComponent<Rigidbody>();            
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();
-        
-        SetPlayer();//関数"SetPlayer"を実行する
+
+        GetComponent();//関数"GetComponent"を実行
+        SetPlayer();   //関数"SetPlayer"を実行する
     }
 
     // Update is called once per frame
@@ -77,6 +48,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public override void GetComponent()
+    {
+        base.GetComponent();
+    }
+
     //関数"SetPlayer"
     void SetPlayer()
     {
@@ -86,7 +62,7 @@ public class PlayerController : MonoBehaviour
         hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
         attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];//攻撃タイマー[前方]
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];//攻撃タイマー[下方]
-        playerStatus = "Normal";                                                       //プレイヤーの状態を"Normal"にする
+        status = "Normal";                                                          //プレイヤーの状態を"Normal"にする
         //ゲームを"開始していない"場合
         if (GameManager.gameStart == false)
         {
@@ -115,7 +91,7 @@ public class PlayerController : MonoBehaviour
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 
             //プレイヤーの状態が"Normal"の場合
-            if (playerStatus == "Normal")
+            if (status == "Normal")
             {
                 //選択したプレイヤーの攻撃間隔を設定する
                 attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
@@ -124,7 +100,7 @@ public class PlayerController : MonoBehaviour
                 gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
             }
             //プレイヤーの状態が"Invincible"の場合
-            else if (playerStatus == "Invincible")
+            else if (status == "Invincible")
             {
                 //無敵時の攻撃間隔を設定する
                 attackInterval[0] = PlayerList.Invincible.attackInterval[0];
@@ -154,7 +130,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(2) && gageTimer >= gageInterval)
             {
                 //プレイヤーの状態を"Invincible"にする
-                playerStatus = "Invincible";
+                status = "Invincible";
                 //このオブジェクトの位置に群れを生成する
                 Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
                 //ゲージタイマーを初期化する
@@ -177,7 +153,7 @@ public class PlayerController : MonoBehaviour
             Stage.gameStatus = "Play";//ゲームの状態を"Play"にする
         }
         //プレイヤーの状態が"Invincible"の場合
-        if (playerStatus == "Invincible")
+        if (status == "Invincible")
         {
             Invincible();//関数"Invincible"を実行する
         }
@@ -186,9 +162,9 @@ public class PlayerController : MonoBehaviour
     //関数"SetObjRenderer"
     void SetObjRenderer(bool set)
     {
-        for (int i = 0; i < objRenderer.Length; i++)
+        for (int i = 0; i < thisRenderer.Length; i++)
         {
-            objRenderer[i].enabled = set;//RendererをobjRendererにセットする
+            thisRenderer[i].enabled = set;//RendererをthisRendererにセットする
         }
     }
 
@@ -205,7 +181,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //関数"Damage"
-    void Damage()
+    public override void Damage()
     {
         //ダメージが"受けている"場合
         if (isDamage == true)
@@ -267,16 +243,15 @@ public class PlayerController : MonoBehaviour
         if (invincibleTimer >= invincibleInterval)
         {
             invincibleTimer = 0.0f; //無敵タイマーを初期化する
-            playerStatus = "Normal";//プレイヤーの状態を"Normal"にする
+            status = "Normal";//プレイヤーの状態を"Normal"にする
         }  
     }
 
     //関数"Death"
-    void Death()
+    public override void Death()
     {
         //アニメーターコンポーネントを取得する
         Animator animator = nowPlayer.GetComponent<Animator>();
-        hp = 0;                         //体力を"0"にする
         boxCollider.enabled = false;    //BoxColliderを"無効"にする
         animator.SetBool("Death", true);//Animatorを"Death"にする
         rigidBody.useGravity = true;    //RigidBodyの重力を有効にする
@@ -287,7 +262,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         //(衝突したオブジェクトのタグが"Enemy" || "BossEnemy" || "EnemyBullet" ) && プレイヤーの状態が"Normal"の場合
-        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy" || collision.gameObject.tag == "EnemyBullet") && playerStatus == "Normal")
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy" || collision.gameObject.tag == "EnemyBullet") && status == "Normal")
         {
             //味方数が"0より上"の場合
             if (ally > 0)
@@ -329,10 +304,3 @@ public class PlayerController : MonoBehaviour
     }
 }
 
-public class PlayerBase : CharacterBase
-{
-    //public override void Damage()
-    //{
-
-    //}
-}

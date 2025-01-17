@@ -2,38 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkEnemy : MonoBehaviour
+public class WalkEnemy : EnmeyBase
 {
-    //ステータス
-    private int hp;     //体力
-    private float speed;//移動速度
     //処理
-    private Vector2 viewPoint;          //ビューポイント座標
-    private bool isAction = false;      //行動の可否
-    private int nowAnimation;           //現在のアニメーション
-    private float animationTimer = 0.0f;//アニメーションタイマー
-    private bool isAnimation = false;   //アニメーションの可否
+    private int nowAnimation;              //現在のアニメーション
     private delegate void ActionDelegate();
     private ActionDelegate nowAction;
-    //このオブジェクトのコンポーネント
-    public AudioClip damage;         //"AudioClip(ダメージ)"
-    public AudioClip scream;         //"AudioClip(叫び声)"
-    private Animator animator = null;//"Animator"
-    private AudioSource audioSource; //"AudioSource"
-    //他のオブジェクトのコンポーネント
-    private Transform playerTransform;//"Transform(プレイヤー)"
 
     // Start is called before the first frame update
     void Start()
     {
         //ステータスを設定
-        hp = EnemyList.WalkEnemy.hp;      //体力
-        speed = EnemyList.WalkEnemy.speed;//移動速度
-        //このオブジェクトのコンポーネントを取得
-        animator = this.GetComponent<Animator>();      //"Animator"
-        audioSource = this.GetComponent<AudioSource>();//"AudioSource"
-        //他のオブジェクトのコンポーネントを取得
-        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
+        hp = EnemyList.WalkEnemy.hp;                   //体力
+        speed = EnemyList.WalkEnemy.speed;             //移動速度
+        GetComponent();//関数"GetComponent"を実行
         //
         Direction();
         //
@@ -45,7 +27,7 @@ public class WalkEnemy : MonoBehaviour
     void Update()
     {
         //このオブジェクトのビューポート座標を取得
-        viewPoint.x = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.x
+        viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;//画面座標.x
 
         if (isAction == true)
         {
@@ -53,7 +35,7 @@ public class WalkEnemy : MonoBehaviour
         }
         else if (isAction == false)
         {
-            if (viewPoint.x < 1)
+            if (viewPortPosition.x < 1)
             {
                 isAction = true;
             }
@@ -66,10 +48,15 @@ public class WalkEnemy : MonoBehaviour
         }
 
         //"viewPoint.x < 0"の場合
-        if (viewPoint.x < 0)
+        if (viewPortPosition.x < 0)
         {
             Destroy();//関数"Destroy"を実行
         }
+    }
+
+    public override void GetComponent()
+    {
+        base.GetComponent();
     }
 
     //関数"Direction"

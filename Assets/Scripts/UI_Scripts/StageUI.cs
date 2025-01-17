@@ -116,7 +116,7 @@ public class StageUI : MonoBehaviour
             stageClearUI.SetActive(true);
         }
 
-        if(PlayerController.remain > 0 && PlayerController.hp <= 0)
+        if(PlayerController.remain > 0 && Stage.gameStatus == "Death")
         {
             continueUI.SetActive(true);
         }
