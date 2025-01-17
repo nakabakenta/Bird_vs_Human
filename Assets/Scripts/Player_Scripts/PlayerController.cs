@@ -328,3 +328,11 @@ public class PlayerController : MonoBehaviour
         ally += 1;//–¡•û”‚ğ"+1"‚·‚é
     }
 }
+
+public class PlayerBase : CharacterBase
+{
+    //public override void Damage()
+    //{
+
+    //}
+}
