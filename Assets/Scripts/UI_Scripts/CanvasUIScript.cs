@@ -118,6 +118,6 @@ public class CanvasUIScript : MonoBehaviour
         public bool use;                      //使用の可否
         public bool[] direction = new bool[2];//移動方向(左方向[0],右方向[1]の可否
         public float speed;                   //移動速度
-        public Vector2 limitPosition;         //移動の限界値
+        public Vector2 limitPosition;         //移動限界位置
     }
 }

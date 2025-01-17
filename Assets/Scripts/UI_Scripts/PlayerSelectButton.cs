@@ -24,15 +24,15 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
     // Start is called before the first frame update
     void Start()
     {
-        //このオブジェクトのコンポーネントを取得
+        //処理を初期化
+        buttonPosition = rectTransform.anchoredPosition;
+        buttonClick = false;
+        //このオブジェクトのコンポーネントを取得する
         button = this.GetComponent<Button>();
         rectTransform = this.GetComponent<RectTransform>();
         audioSource = this.GetComponent<AudioSource>();
         sceneLoader = this.GetComponent<SceneLoader>();
-        //処理を初期化
-        buttonPosition = rectTransform.anchoredPosition;
-        buttonClick = false;
-        //コンポーネントを初期化
+        //このオブジェクトのコンポーネントを初期化
         selectMark.SetActive(false);
     }
 
@@ -91,10 +91,10 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
         {
             buttonClick = true;            //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);//"クリック"を鳴らす
-            Invoke("SceneLoad", 2.0f);     //関数"SceneLoad"を"2.0f"後に実行する
+            Invoke("SceneLoad", 2.0f);     //関数"SceneLoad"を"2.0f"後に実行
         }
 
-        InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行して"0.25f"毎に繰り返す
+        InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
     }
 
     //関数"Flash"
@@ -124,6 +124,6 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
     //関数"SceneLoad"
     void SceneLoad()
     {
-        sceneLoader.StageSelect();//"SceneLoader"の関数"StageSelect"を実行する
+        sceneLoader.StageSelect();//"SceneLoader"の関数"StageSelect"を実行
     }
 }
