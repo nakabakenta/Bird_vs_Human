@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
     //プレイヤー番号
     public static int playerNumber;
     //ゲームシーン
-    public static bool gameStart = false;//ゲームスタートフラグ
-    public static int score;             //スコア
+    public static string status;  //状態
+    public static int score;      //スコア
     public static string nowScene;
 
     //共通

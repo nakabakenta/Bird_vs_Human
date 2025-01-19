@@ -7,7 +7,7 @@ public class Stage : MonoBehaviour
     //処理
     public static int nowStage;                  //現在のステージ
     public static bool[] bossEnemy = new bool[5];//ボスの生存可否
-    public static string gameStatus;             //ゲームの状態
+    public static string status;                 //状態
 
 　  //このオブジェクトのコンポーネント
 　  private SceneLoader sceneLoader;//"Script(SceneLoader)"
@@ -21,29 +21,29 @@ public class Stage : MonoBehaviour
             false, false, false, false, false 
         };
         bossEnemy[nowStage - 1] = true;                //現在のステージのボスを"true(生存)"にする
-        gameStatus = "Play";                           //ゲームの状態を"Play"にする
+        status = "Play";                           //ゲームの状態を"Play"にする
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(gameStatus == "Play")
+        if(status == "Play")
         {
             Time.timeScale = 1;
         }
-        else if(gameStatus == "Pause")
+        else if(status == "Pause")
         {
             Time.timeScale = 0;
         }
 
-        if (PlayerController.remain <= 0 && gameStatus == "Death")
+        if (PlayerController.remain <= 0)
         {
             sceneLoader.GameOver();
         }
 
         if(bossEnemy[nowStage - 1] == false)
         {
-            gameStatus = "Clear";
+            status = "Clear";
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkEnemy : EnmeyBase
+public class WalkEnemy : EnemyBase
 {
     //処理
     private int nowAnimation;              //現在のアニメーション
@@ -15,7 +15,7 @@ public class WalkEnemy : EnmeyBase
         //ステータスを設定
         hp = EnemyList.WalkEnemy.hp;                   //体力
         speed = EnemyList.WalkEnemy.speed;             //移動速度
-        GetComponent();//関数"GetComponent"を実行
+        StartEnemy();//関数"StartEnemy"を実行する
         //
         Direction();
         //
@@ -54,9 +54,9 @@ public class WalkEnemy : EnmeyBase
         }
     }
 
-    public override void GetComponent()
+    public override void StartEnemy()
     {
-        base.GetComponent();
+        base.StartEnemy();
     }
 
     //関数"Direction"
@@ -208,14 +208,14 @@ public class WalkEnemy : EnmeyBase
         GameManager.score += EnemyList.WalkEnemy.score;  //スコアを足す
         PlayerController.exp += EnemyList.WalkEnemy.exp; //経験値を足す
         nowAnimation = EnemyList.HumanoidAnimation.death;//"nowAnimation = death(死亡)"にする
-        audioSource.PlayOneShot(scream);                 //"scream"を鳴らす
+        
         Animation();                                     //関数"Animation"を実行
     }
 
     //関数"Destroy"
     void Destroy()
     {
-        Destroy(this.gameObject);//このオブジェクトを消す
+        base.DestroyCharacte();
     }
 
     //当たり判定(OnTriggerEnter)

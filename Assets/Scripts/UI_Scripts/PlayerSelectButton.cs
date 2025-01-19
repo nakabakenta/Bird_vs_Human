@@ -6,11 +6,6 @@ using UnityEngine.EventSystems;
 
 public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
-    //処理
-    public static string selectButton;  //選択しているボタン
-    public static bool buttonClick;     //ボタンのクリック可否
-    private Vector2 buttonPosition;     //ボタンの位置
-    private bool setActive;             //オブジェクト表示の可否
     //このオブジェクトのコンポーネント
     public GameObject alpha;            //"GameObject(半透明)"
     public GameObject selectMark;       //"GameObject(選択マーク)"
@@ -20,13 +15,15 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
     private RectTransform rectTransform;//"RectTransform"
     private AudioSource audioSource;    //"AudioSource"
     private SceneLoader sceneLoader;    //"Script(SceneLoader)"
+    //処理
+    public static string selectButton;  //選択しているボタン
+    public static bool buttonClick;     //ボタンのクリック可否
+    private Vector2 buttonPosition;     //ボタンの位置
+    private bool setActive;             //オブジェクト表示の可否
 
     // Start is called before the first frame update
     void Start()
     {
-        //処理を初期化
-        buttonPosition = rectTransform.anchoredPosition;
-        buttonClick = false;
         //このオブジェクトのコンポーネントを取得する
         button = this.GetComponent<Button>();
         rectTransform = this.GetComponent<RectTransform>();
@@ -34,6 +31,9 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
         sceneLoader = this.GetComponent<SceneLoader>();
         //このオブジェクトのコンポーネントを初期化
         selectMark.SetActive(false);
+        //処理を初期化
+        buttonPosition = rectTransform.anchoredPosition;
+        buttonClick = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -101,22 +101,22 @@ public class StageUI : MonoBehaviour
             remain.text = "0" + PlayerController.remain;//
         }
 
-        if(Stage.gameStatus == "Pause")
+        if(Stage.status == "Pause")
         {
             pauseUI.SetActive(true);
         }
-        else if(Stage.gameStatus == "Play")
+        else if(Stage.status == "Play")
         {
             pauseUI.SetActive(false);
         }
 
 
-        if (Stage.gameStatus == "Clear")
+        if (Stage.status == "Clear")
         {
             stageClearUI.SetActive(true);
         }
 
-        if(PlayerController.remain > 0 && Stage.gameStatus == "Death")
+        if(PlayerController.hp <= 0 && PlayerController.remain > 0)
         {
             continueUI.SetActive(true);
         }
@@ -159,7 +159,7 @@ public class StageUI : MonoBehaviour
             gageLight.color = new Color32(255, 255, 255, 255);
         }
 
-        if (PlayerController.playerStatus == "Invincible")
+        if (PlayerController.status == "Invincible")
         {
             gage.value = 0;
         }

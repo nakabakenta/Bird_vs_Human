@@ -120,6 +120,9 @@ public class EnemyList : MonoBehaviour
     //ヒューマノイドアニメーション
     public static class HumanoidAnimation
     {
+        public static string[] animation 
+            = new string[5] { "walk", "run", "run", "run", "run" };
+
         public static int walk         = 0;
         public static int run          = 1;
         public static int mutantRun    = 2;

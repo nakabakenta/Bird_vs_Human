@@ -12,7 +12,7 @@ public class PlayerSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.gameStart = false;
+        GameManager.status = "Menu";
 
         meshPlayer[0].SetActive(false);
         meshPlayer[1].SetActive(false);

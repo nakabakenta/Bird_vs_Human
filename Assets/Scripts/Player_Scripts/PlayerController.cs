@@ -13,13 +13,10 @@ public class PlayerController : PlayerBase
         { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
         { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
     };
-    
     //このオブジェクトのコンポーネント
     public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
     public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
     public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
-    private GameObject nowPlayer;                    //"GameObject(現在のプレイヤー)"
-    private GameObject[] nowAlly = new GameObject[2];//"GameObject(現在の味方)"
     
     //コルーチン
     private Coroutine blinking;//
@@ -27,15 +24,7 @@ public class PlayerController : PlayerBase
     // Start is called before the first frame update
     void Start()
     {
-        //処理を初期化する
-        gageTimer = 0.0f;    
-        gageInterval = 20.0f;
-        ally = 0;
-        level = 1;
-        exp = 0;
-
-        GetComponent();//関数"GetComponent"を実行
-        SetPlayer();   //関数"SetPlayer"を実行する
+        StartPlayer();//関数"StartPlayer"を実行する
     }
 
     // Update is called once per frame
@@ -44,38 +33,25 @@ public class PlayerController : PlayerBase
         //体力が"0より上"の場合
         if (hp > 0)
         {
-            Action();//関数"Action"を実行する
+            UpdatePlayer();//関数"UpdatePlayer"を実行する
         }
     }
 
-    public override void GetComponent()
+    public override void StartPlayer()
     {
-        base.GetComponent();
-    }
-
-    //関数"SetPlayer"
-    void SetPlayer()
-    {
+        base.StartPlayer();
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
         nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-        //選択したプレイヤーのステータスを設定する
-        hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
-        attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];//攻撃タイマー[前方]
-        attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];//攻撃タイマー[下方]
-        status = "Normal";                                                          //プレイヤーの状態を"Normal"にする
-        //ゲームを"開始していない"場合
-        if (GameManager.gameStart == false)
-        {
-            remain = 3;                  //残機
-            GameManager.gameStart = true;//ゲームを"開始した"にする
-        }
+        //このオブジェクトのコンポーネントを取得
+        animator = nowPlayer.GetComponent<Animator>();
+        thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
     }
 
-    //関数"Action"
-    void Action()
+    //関数"UpdatePlayer"
+    public override void UpdatePlayer()
     {
         //ゲームの状態が"Play"の場合
-        if (Stage.gameStatus == "Play")
+        if (Stage.status == "Play")
         {
             //攻撃タイマーに経過時間を足す
             attackTimer[0] += Time.deltaTime;//攻撃タイマー[前方]
@@ -143,14 +119,14 @@ public class PlayerController : PlayerBase
             }
         }
         //Escキーが"押された"&&ゲームの状態が"Play"の場合
-        if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Play")
+        if (Input.GetKeyDown(KeyCode.Escape) && Stage.status == "Play")
         {
-            Stage.gameStatus = "Pause";//ゲームの状態を"Pause"にする
+            Stage.status = "Pause";//ゲームの状態を"Pause"にする
         }
         //Escキーが"押された"&&ゲームの状態が"Pause"の場合
-        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.gameStatus == "Pause")
+        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.status == "Pause")
         {
-            Stage.gameStatus = "Play";//ゲームの状態を"Play"にする
+            Stage.status = "Play";//ゲームの状態を"Play"にする
         }
         //プレイヤーの状態が"Invincible"の場合
         if (status == "Invincible")
@@ -165,6 +141,7 @@ public class PlayerController : PlayerBase
         for (int i = 0; i < thisRenderer.Length; i++)
         {
             thisRenderer[i].enabled = set;//RendererをthisRendererにセットする
+            Debug.Log("123");
         }
     }
 
@@ -181,15 +158,9 @@ public class PlayerController : PlayerBase
     }
 
     //関数"Damage"
-    public override void Damage()
+    public override void DamagePlayer()
     {
-        //ダメージが"受けている"場合
-        if (isDamage == true)
-        {
-            return;//返す
-        }
-
-        hp -= 1;//体力を"-1"する
+        base.DamagePlayer();
 
         //体力が"0より上"の場合
         if (hp > 0)
@@ -199,7 +170,7 @@ public class PlayerController : PlayerBase
         //体力が"0以下"だったら
         else if (hp <= 0)
         {
-            Death();//関数"Death"を実行する
+            DeathPlayer();//関数"DeathPlayer"を実行する
         }
     }
 
@@ -214,18 +185,20 @@ public class PlayerController : PlayerBase
         while (true)
         {
             //タイマーに経過時間を足す
-            rendererTotalTime += Time.deltaTime;
             rendererTimer += Time.deltaTime;
+            rendererTotalTime += Time.deltaTime;
             //Renderer切り替えの経過時間がRenderer切り替え時間以上の場合
-            if (rendererTimer >= rendererSwitch)
+            if (rendererSwitch <= rendererTimer)
             {
+                Debug.Log("aaa");
                 rendererTimer = 0.0f;          //Renderer切り替えの経過時間を初期化する
                 isObjRenderer = !isObjRenderer;//"objRenderer"を"true"の場合は"false"、"false"の場合は"true"にする
                 SetObjRenderer(isObjRenderer); //関数"SetObjRenderer"を実行する
             }
             //Renderer切り替えの合計経過時間が点滅持続時間以上の場合
-            if (rendererTotalTime >= blinkingTime)
+            if (blinkingTime <= rendererTotalTime)
             {
+                Debug.Log("bbb");
                 isDamage = false;    //ダメージを"受けていない"にする
                 isObjRenderer = true;//Rendererを有効化する
                 SetObjRenderer(true);//関数"SetObjRenderer"を実行する
@@ -248,14 +221,9 @@ public class PlayerController : PlayerBase
     }
 
     //関数"Death"
-    public override void Death()
+    public void Death()
     {
-        //アニメーターコンポーネントを取得する
-        Animator animator = nowPlayer.GetComponent<Animator>();
-        boxCollider.enabled = false;    //BoxColliderを"無効"にする
-        animator.SetBool("Death", true);//Animatorを"Death"にする
-        rigidBody.useGravity = true;    //RigidBodyの重力を有効にする
-        remain -= 1;                    //残機を"-1"する
+        base.DeathPlayer();
     }
 
     //衝突判定(OnTriggerEnter)
@@ -267,13 +235,13 @@ public class PlayerController : PlayerBase
             //味方数が"0より上"の場合
             if (ally > 0)
             {
-                Destroy(nowAlly[ally - 1]);//味方を消す
-                ally -= 1;                 //味方数を"-1"する
+                Destroy(playerAlly[ally - 1]);//味方を消す
+                ally -= 1;                    //味方数を"-1"する
             }
             //味方数が"0以下"の場合
             else if (ally <= 0)
             {
-                Damage();//関数"Damage"を実行する
+                DamagePlayer();//関数"Damage"を実行する
             }
         }
 
@@ -291,13 +259,13 @@ public class PlayerController : PlayerBase
         if (ally == 0)
         {
             //味方を生成する
-            nowAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            playerAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         }
         //味方数が"1と等しい"場合
         else if (ally == 1)
         {
             //味方を生成する
-            nowAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            playerAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         }
 
         ally += 1;//味方数を"+1"する
