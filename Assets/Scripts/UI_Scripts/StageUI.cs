@@ -125,11 +125,11 @@ public class StageUI : MonoBehaviour
         {
             forwardBullet_UI.fillAmount = 0;
         }
-        else if (PlayerController.attackTimer[0] < PlayerController.attackInterval[0])
+        else if (PlayerController.attackTimer[0] < PlayerController.attackTimeInterval[0])
         {
-            forwardBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[0] / PlayerController.attackInterval[0]);
+            forwardBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[0] / PlayerController.attackTimeInterval[0]);
         }
-        else if (PlayerController.attackTimer[0] > PlayerController.attackInterval[0])
+        else if (PlayerController.attackTimer[0] > PlayerController.attackTimeInterval[0])
         {
             forwardBullet_UI.fillAmount = 1;
         }
@@ -138,22 +138,22 @@ public class StageUI : MonoBehaviour
         {
             downBullet_UI.fillAmount = 0;
         }
-        else if (PlayerController.attackTimer[1] < PlayerController.attackInterval[1])
+        else if (PlayerController.attackTimer[1] < PlayerController.attackTimeInterval[1])
         {
-            downBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[1] / PlayerController.attackInterval[1]);
+            downBullet_UI.fillAmount = Mathf.Clamp01(PlayerController.attackTimer[1] / PlayerController.attackTimeInterval[1]);
         }
-        else if (PlayerController.attackTimer[1] > PlayerController.attackInterval[1])
+        else if (PlayerController.attackTimer[1] > PlayerController.attackTimeInterval[1])
         {
             downBullet_UI.fillAmount = 1;
         }
 
         
-        if (PlayerController.gageTimer < PlayerController.gageInterval)
+        if (PlayerController.gageTimer < PlayerController.gageTimeInterval)
         {
-            gage.value = Mathf.Clamp01(PlayerController.gageTimer / PlayerController.gageInterval);
+            gage.value = Mathf.Clamp01(PlayerController.gageTimer / PlayerController.gageTimeInterval);
             gageLight.color = new Color32(127, 127, 127, 255);
         }
-        else if (PlayerController.gageTimer > PlayerController.gageInterval)
+        else if (PlayerController.gageTimer > PlayerController.gageTimeInterval)
         {
             gage.value = 1;
             gageLight.color = new Color32(255, 255, 255, 255);

@@ -24,7 +24,13 @@ public class PlayerController : PlayerBase
     // Start is called before the first frame update
     void Start()
     {
-        StartPlayer();//関数"StartPlayer"を実行する
+        GetComponent();
+        StartPlayer();
+        //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
+        nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        //このオブジェクトのコンポーネントを取得
+        animator = nowPlayer.GetComponent<Animator>();
+        thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
     }
 
     // Update is called once per frame
@@ -35,16 +41,6 @@ public class PlayerController : PlayerBase
         {
             UpdatePlayer();//関数"UpdatePlayer"を実行する
         }
-    }
-
-    public override void StartPlayer()
-    {
-        base.StartPlayer();
-        //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
-        nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-        //このオブジェクトのコンポーネントを取得
-        animator = nowPlayer.GetComponent<Animator>();
-        thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
     }
 
     //関数"UpdatePlayer"
@@ -70,8 +66,8 @@ public class PlayerController : PlayerBase
             if (status == "Normal")
             {
                 //選択したプレイヤーの攻撃間隔を設定する
-                attackInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
-                attackInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
+                attackTimeInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
+                attackTimeInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
 
                 gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
             }
@@ -79,13 +75,13 @@ public class PlayerController : PlayerBase
             else if (status == "Invincible")
             {
                 //無敵時の攻撃間隔を設定する
-                attackInterval[0] = PlayerList.Invincible.attackInterval[0];
-                attackInterval[1] = PlayerList.Invincible.attackInterval[1];
+                attackTimeInterval[0] = PlayerList.Invincible.attackInterval[0];
+                attackTimeInterval[1] = PlayerList.Invincible.attackInterval[1];
             }
 
             //前方攻撃
             //マウスが"左クリックされた"&&"攻撃タイマー[前方]"が"攻撃間隔[前方]" - "レベルアップ時の攻撃間隔短縮"以上の場合
-            if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval[0] - levelAttackInterval)
+            if (Input.GetMouseButton(0) && attackTimer[0] >= attackTimeInterval[0] - levelAttackInterval)
             {
                 //このオブジェクトの位置に前方弾を生成する
                 Instantiate(forwardBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
@@ -94,7 +90,7 @@ public class PlayerController : PlayerBase
             }
             //下方攻撃
             //マウスが"右クリックされた"&&"攻撃タイマー[下方]"が"攻撃間隔[下方]" - "レベルアップ時の攻撃間隔短縮"以上の場合
-            if (Input.GetMouseButton(1) && attackTimer[1] >= attackInterval[1] - levelAttackInterval)
+            if (Input.GetMouseButton(1) && attackTimer[1] >= attackTimeInterval[1] - levelAttackInterval)
             {
                 //このオブジェクトの位置に下方弾を生成する
                 Instantiate(downBullet, this.transform.position, Quaternion.identity);
@@ -103,7 +99,7 @@ public class PlayerController : PlayerBase
             }
             //ゲージ解放
             //マウスホイールが"クリックされた"&&"ゲージタイマー"が"ゲージ蓄積時間"以上の場合
-            if (Input.GetMouseButtonDown(2) && gageTimer >= gageInterval)
+            if (Input.GetMouseButtonDown(2) && gageTimer >= gageTimeInterval)
             {
                 //プレイヤーの状態を"Invincible"にする
                 status = "Invincible";
@@ -141,7 +137,6 @@ public class PlayerController : PlayerBase
         for (int i = 0; i < thisRenderer.Length; i++)
         {
             thisRenderer[i].enabled = set;//RendererをthisRendererにセットする
-            Debug.Log("123");
         }
     }
 
@@ -170,7 +165,7 @@ public class PlayerController : PlayerBase
         //体力が"0以下"だったら
         else if (hp <= 0)
         {
-            DeathPlayer();//関数"DeathPlayer"を実行する
+           DeathPlayer();
         }
     }
 
@@ -190,7 +185,6 @@ public class PlayerController : PlayerBase
             //Renderer切り替えの経過時間がRenderer切り替え時間以上の場合
             if (rendererSwitch <= rendererTimer)
             {
-                Debug.Log("aaa");
                 rendererTimer = 0.0f;          //Renderer切り替えの経過時間を初期化する
                 isObjRenderer = !isObjRenderer;//"objRenderer"を"true"の場合は"false"、"false"の場合は"true"にする
                 SetObjRenderer(isObjRenderer); //関数"SetObjRenderer"を実行する
@@ -198,7 +192,6 @@ public class PlayerController : PlayerBase
             //Renderer切り替えの合計経過時間が点滅持続時間以上の場合
             if (blinkingTime <= rendererTotalTime)
             {
-                Debug.Log("bbb");
                 isDamage = false;    //ダメージを"受けていない"にする
                 isObjRenderer = true;//Rendererを有効化する
                 SetObjRenderer(true);//関数"SetObjRenderer"を実行する
@@ -218,12 +211,6 @@ public class PlayerController : PlayerBase
             invincibleTimer = 0.0f; //無敵タイマーを初期化する
             status = "Normal";//プレイヤーの状態を"Normal"にする
         }  
-    }
-
-    //関数"Death"
-    public void Death()
-    {
-        base.DeathPlayer();
     }
 
     //衝突判定(OnTriggerEnter)

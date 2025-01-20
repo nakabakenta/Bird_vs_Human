@@ -91,10 +91,9 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
         {
             buttonClick = true;            //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);//"クリック"を鳴らす
+            InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
             Invoke("SceneLoad", 2.0f);     //関数"SceneLoad"を"2.0f"後に実行
         }
-
-        InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
     }
 
     //関数"Flash"

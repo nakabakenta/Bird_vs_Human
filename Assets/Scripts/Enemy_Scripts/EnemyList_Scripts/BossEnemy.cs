@@ -131,7 +131,7 @@ public class BossEnemy : MonoBehaviour
             Animation();                                         //関数"Animation"を実行する
         }
         //現在のアニメーションが"走ると等しい"場合
-        else if (nowAnimation == EnemyList.HumanoidAnimation.mutantRun)
+        else if (nowAnimation == EnemyList.HumanoidAnimation.crazyRun)
         {
             isAnimation = true;                                   //アニメーションを"再生している"にする
             nowAnimation = EnemyList.HumanoidAnimation.jumpAttack;//現在のアニメーションを"ジャンプ攻撃"にする
@@ -229,7 +229,7 @@ public class BossEnemy : MonoBehaviour
             if (animationTimer >= 1.125f)
             {
                 animationTimer = 0.0f;                               //アニメーションタイマーを初期化する
-                nowAnimation = EnemyList.HumanoidAnimation.mutantRun;//現在のアニメーションを"走る"にする
+                nowAnimation = EnemyList.HumanoidAnimation.crazyRun;//現在のアニメーションを"走る"にする
                 speed *= 3.0f;                                       //移動速度を"*3"する
             }
         }

@@ -45,7 +45,7 @@ public class CharacteBase : MonoBehaviour
     }
 
     //関数"Destroy"
-    public void DestroyCharacte()
+    public void Destroy()
     {
         Destroy(this.gameObject);//このオブジェクトを消す
     }
@@ -55,43 +55,43 @@ public class PlayerBase : CharacteBase
 {
     //ステータス
     public static int hp;       //体力
-    public int attack;          //攻撃力
+    public static int attack;   //攻撃力
     public static int remain;   //残機
     public static string status;//状態
     //処理
-    public static float[] attackTimer = new float[2];   //攻撃タイマー([前方],[下方])
-    public static float[] attackInterval = new float[2];//攻撃間隔([前方],[下方])
-    public static float gageTimer;                      //ゲージタイマー
-    public static float gageInterval;                   //ゲージ蓄積時間
-    public static int level;                            //レベル
-    public static int exp;                              //経験値
-    public static int ally;                             //味方数
-    public float invincibleTimer = 0.0f;                //無敵タイマー
-    public float invincibleInterval = 10.0f;            //無敵持続時間
-    public float blinkingTime = 1.0f;                   //点滅持続時間
-    public float rendererSwitch = 0.05f;                //Renderer切り替え時間
-    public float rendererTimer;                         //Renderer切り替えの経過時間
-    public float rendererTotalTime;                     //Renderer切り替えの合計経過時間
-    public bool isObjRenderer;                          //objRendererの可否
-    public float levelAttackInterval = 0.0f;            //レベルアップ時の攻撃間隔短縮
+    public static float[] attackTimer = new float[2];       //攻撃タイマー([前方],[下方])
+    public static float[] attackTimeInterval = new float[2];//攻撃時間間隔([前方],[下方])
+    public static float gageTimer;                          //ゲージタイマー
+    public static float gageTimeInterval;                   //ゲージ時間間隔
+    public static int level;                                //レベル
+    public static int exp;                                  //経験値
+    public static int ally;                                 //味方数
+    public float invincibleTimer = 0.0f;                    //無敵タイマー
+    public float invincibleInterval = 10.0f;                //無敵持続時間
+    public float blinkingTime = 1.0f;                       //点滅持続時間
+    public float rendererSwitch = 0.05f;                    //Renderer切り替え時間
+    public float rendererTimer;                             //Renderer切り替えの経過時間
+    public float rendererTotalTime;                         //Renderer切り替えの合計経過時間
+    public bool isObjRenderer;                              //objRendererの可否
+    public float levelAttackInterval = 0.0f;                //レベルアップ時の攻撃間隔短縮
     public bool isAction = false;      //行動の可否
     public bool isAnimation = false;   //アニメーションの可否
     //このオブジェクトのコンポーネント
     public GameObject nowPlayer;                       //"GameObject(現在のプレイヤー)"
     public GameObject[] playerAlly = new GameObject[2];//"GameObject(プレイヤーの味方)"
 
-    //関数"PlayerGetComponent"
-    public virtual void StartPlayer()
+    //関数"StartPlayer"
+    public void StartPlayer()
     {
-        base.GetComponent();
         //処理を初期化する
         gageTimer = 0.0f;
-        gageInterval = 20.0f;
+        gageTimeInterval = 20.0f;
         ally = 0;
         level = 1;
         exp = 0;
         //選択したプレイヤーのステータスを設定する
         hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
+        attack = PlayerList.Player.power[GameManager.playerNumber];                    //攻撃力
         attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];//攻撃タイマー[前方]
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];//攻撃タイマー[下方]
         status = "Normal";                                                             //プレイヤーの状態を"Normal"にする
@@ -133,21 +133,26 @@ public class PlayerBase : CharacteBase
 
 public class EnemyBase : CharacteBase
 {
+    //このオブジェクトのコンポーネント
+    public AudioClip scream;                 //"AudioClip(叫び声)"
     //ステータス
     public int hp;       //体力
     public float jump;   //ジャンプ力
     public string status;//状態
     //処理
-    public bool isAction = false;      //行動の可否
-    public float animationTimer = 0.0f;//アニメーションタイマー
-    public bool isAnimation = false;   //アニメーションの可否
-    //このオブジェクトのコンポーネント
-    public AudioClip scream;//"AudioClip(叫び声)"
+    public int nowAnimationNumber;           //現在のアニメーションの番号
+    public string nowAnimationName;          //現在のアニメーションの名前
+    public float nowAnimationLength;         //現在のアニメーションの長さ
+    public bool isAction = false;            //行動の可否
+    public float animationTimer = 0.0f;      //アニメーションタイマー
+    public bool isAnimation = false;         //アニメーションの可否
+    public HumanoidAnimation humanoidAnimation;
+    public delegate void DirectionDelegate();//""
+    public DirectionDelegate nowDirection;
 
     //関数"StartEnmey"
     public virtual void StartEnemy()
     {
-        base.GetComponent();
         animator = this.GetComponent<Animator>();
         runtimeAnimatorController = animator.runtimeAnimatorController;
     }
@@ -155,19 +160,111 @@ public class EnemyBase : CharacteBase
     //関数"UpdateEnmey"
     public virtual void UpdateEnemy()
     {
+        //このオブジェクトのビューポート座標を取得
+        viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
 
+        //ビューポート座標が"0未満"の場合
+        if (viewPortPosition.x < 0)
+        {
+            Destroy();//関数"Destroy"を実行
+        }
+    }
+
+    //関数"Animation"
+    public void AnimationPlay()
+    {
+        animator.SetInteger("Motion", nowAnimationNumber);//"animator(Motion)"に"nowAnimation"を設定して再生
+    }
+
+    //関数"Wait"
+    public void Wait()
+    {
+        animationTimer += Time.deltaTime;//"animationTimer"に"Time.deltaTime(経過時間)"を足す
+
+        foreach (AnimationClip clip in runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == nowAnimationName)
+            {
+                nowAnimationLength = clip.length;
+            }
+        }
+
+        if (animationTimer >= nowAnimationLength)
+        {
+            animationTimer = 0.0f;
+            isAnimation = false;
+            nowAnimationNumber = (int)HumanoidAnimation.Walk;
+            nowAnimationName = HumanoidAnimation.Walk.ToString();
+            AnimationPlay();//関数"Animation"を実行
+        }
     }
 
     //関数"Enmey"
     public virtual void DamageEnemy()
     {
-        hp -= 1;//体力を"-1"する
+        hp -= PlayerBase.attack;
+
+        //"hp > 0"の場合
+        if (hp > 0)
+        {
+            isAnimation = true;                                    //"isAnimation = true"にする
+            nowAnimationNumber = (int)HumanoidAnimation.Damage;
+            nowAnimationName = HumanoidAnimation.Damage.ToString();
+            audioSource.PlayOneShot(damage);                       //"damage"を鳴らす
+            AnimationPlay();                                       //関数"Animation"を実行
+        }
+        //"hp <= 0"の場合
+        else if (hp <= 0)
+        {
+            Invoke("DeathEnemy", 0.01f);//関数"DeathEnemy"を"0.01f"後に実行する
+        }
     }
 
     //関数"Enmey"
     public virtual void DeathEnemy()
     {
-        hp = 0;//体力を"0"にする
+        this.tag = "Untagged";                                //このタグを"Untagged"にする
+        hp = 0;                                               //体力を"0"にする
         audioSource.PlayOneShot(scream);//"scream"を鳴らす
+        GameManager.score += EnemyList.WalkEnemy.score;       //スコアを足す
+        PlayerController.exp += EnemyList.WalkEnemy.exp;      //経験値を足す
+        nowAnimationNumber = (int)HumanoidAnimation.Death;
+        nowAnimationName = HumanoidAnimation.Death.ToString();    
+        AnimationPlay();                                      //関数"Animation"を実行
+    }
+
+    //当たり判定(OnTriggerEnter)
+    public virtual void OnTriggerEnter(Collider collision)
+    {
+        //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
+        if (collision.gameObject.tag == "Player" && isAnimation == false)
+        {
+            isAnimation = true;//"isAnimation = true"にする
+            //ランダム"10(パンチ)"～"12(キック)"
+            nowAnimationNumber = (int)Random.Range((int)HumanoidAnimation.Punch,
+                                                   (int)HumanoidAnimation.Kick + 1);
+            humanoidAnimation = (HumanoidAnimation)nowAnimationNumber;
+            nowAnimationName = humanoidAnimation.ToString();
+
+            AnimationPlay();//関数"AnimationPlay"を実行する
+        }
+        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        if (collision.gameObject.tag == "Bullet" && hp > 0)
+        {
+            DamageEnemy();//関数"DamageEnemy"を実行する
+        }
+    }
+
+    public enum HumanoidAnimation
+    {
+        Walk = 0,
+        Run = 1,
+        CrazyRun = 2,
+        HaveGunIdle = 3,
+        Punch = 10,
+        Kick = 11,
+        Dance  = 30,
+        Damage = 31,
+        Death  = 32
     }
 }

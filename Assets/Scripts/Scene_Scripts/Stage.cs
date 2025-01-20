@@ -21,7 +21,7 @@ public class Stage : MonoBehaviour
             false, false, false, false, false 
         };
         bossEnemy[nowStage - 1] = true;                //現在のステージのボスを"true(生存)"にする
-        status = "Play";                           //ゲームの状態を"Play"にする
+        status = "Play";                               //ゲームの状態を"Play"にする
     }
 
     // Update is called once per frame
