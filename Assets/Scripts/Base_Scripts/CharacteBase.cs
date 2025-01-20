@@ -21,7 +21,7 @@ public class CharacteBase : MonoBehaviour
     public RuntimeAnimatorController runtimeAnimatorController;//"RuntimeAnimatorController"
     public AudioSource audioSource;                            //"AudioSource"
     //他のオブジェクトのコンポーネント
-    public Transform playerTransform;                         //"Transform(プレイヤー)"
+    public Transform playerTransform;                          //"Transform(プレイヤー)"
 
     //関数"GetComponent"
     public void GetComponent()
@@ -83,12 +83,6 @@ public class PlayerBase : CharacteBase
     //関数"StartPlayer"
     public void StartPlayer()
     {
-        //処理を初期化する
-        gageTimer = 0.0f;
-        gageTimeInterval = 20.0f;
-        ally = 0;
-        level = 1;
-        exp = 0;
         //選択したプレイヤーのステータスを設定する
         hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
         attack = PlayerList.Player.power[GameManager.playerNumber];                    //攻撃力
@@ -147,8 +141,7 @@ public class EnemyBase : CharacteBase
     public float animationTimer = 0.0f;      //アニメーションタイマー
     public bool isAnimation = false;         //アニメーションの可否
     public HumanoidAnimation humanoidAnimation;
-    public delegate void DirectionDelegate();//""
-    public DirectionDelegate nowDirection;
+    public string nowDirection;
 
     //関数"StartEnmey"
     public virtual void StartEnemy()
@@ -168,6 +161,94 @@ public class EnemyBase : CharacteBase
         {
             Destroy();//関数"Destroy"を実行
         }
+
+        if (isAction == true)
+        {
+            Direction();
+        }
+        else if (isAction == false)
+        {
+            if (viewPortPosition.x < 1)
+            {
+                isAction = true;
+            }
+        }
+
+        //"hp > 0 && isAction == true"
+        if (hp > 0 && isAction == true)
+        {
+            nowDirection();
+        }
+    }
+
+    //関数"Direction"
+    public void Direction()
+    {
+        //
+        if (this.transform.position.z > playerTransform.position.z + 0.5f)
+        {
+            nowDirection = "Vertical";//
+        }
+        //
+        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+            this.transform.position.z <= playerTransform.position.z + 0.5f)
+        {
+            nowDirection = "Horizontal";//
+        }
+    }
+
+    //関数"Vertical"
+    public void Vertical()
+    {
+        //
+        if (isAnimation == true)
+        {
+            Wait();//関数"Wait"を実行
+        }
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerController.hp > 0)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+            }
+            else if (PlayerController.hp <= 0)
+            {
+                nowAnimationNumber = (int)HumanoidAnimation.Dance;
+                nowAnimationName = HumanoidAnimation.Dance.ToString();
+                AnimationPlay();//関数"AnimationPlay"を実行する
+            }
+        }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+    }
+
+    //関数"Horizontal"
+    public void Horizontal()
+    {
+        //
+        if (isAnimation == true)
+        {
+            Wait();//関数"Wait"を実行
+        }
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerController.hp > 0)
+            {
+                this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+            }
+            else if (PlayerController.hp <= 0)
+            {
+                nowAnimationNumber = (int)HumanoidAnimation.Dance;
+                nowAnimationName = HumanoidAnimation.Dance.ToString();
+                AnimationPlay();//関数"AnimationPlay"を実行する
+            }
+        }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
     }
 
     //関数"Animation"

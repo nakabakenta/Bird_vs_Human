@@ -26,6 +26,12 @@ public class PlayerController : PlayerBase
     {
         GetComponent();
         StartPlayer();
+        //処理を初期化する
+        gageTimer = 0.0f;
+        gageTimeInterval = 20.0f;
+        ally = 0;
+        level = 1;
+        exp = 0;
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
         nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得
