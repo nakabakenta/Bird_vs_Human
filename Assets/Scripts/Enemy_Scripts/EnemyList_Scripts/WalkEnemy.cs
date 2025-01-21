@@ -8,17 +8,14 @@ public class WalkEnemy : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent();
-        base.StartEnemy();
         //ステータスを設定
         hp = EnemyList.WalkEnemy.hp;      //体力
         speed = EnemyList.WalkEnemy.speed;//移動速度
-        //
-        Direction();
-        //
-        nowAnimationNumber = (int)HumanoidAnimation.Walk;
-        nowAnimationName = HumanoidAnimation.Walk.ToString();
-        AnimationPlay();                                     //関数"AnimationPlay"を実行する
+        //初期のアニメーション
+        defaultAnimationNumber = (int)HumanoidAnimation.Walk;
+        //関数を実行する
+        GetComponent();//コンポーネントを所得
+        StartEnemy();  //敵の設定をする
     }
 
     // Update is called once per frame

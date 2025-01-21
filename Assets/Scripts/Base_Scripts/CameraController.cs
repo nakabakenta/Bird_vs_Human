@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.hp > 0) 
+        if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.status != "Death") 
         {
             this.transform.position += speed[Stage.nowStage - 1] * transform.right * Time.deltaTime;//‰E•ûŒü‚ÉˆÚ“®‚·‚é
         }

@@ -78,7 +78,7 @@ public class BossEnemy : MonoBehaviour
         else if (isAnimation == false)
         {
             //プレイヤーの体力が"0より上"の場合
-            if (PlayerController.hp > 0)
+            if (PlayerController.status != "Death")
             {
                 if (this.transform.position.x + EnemyList.BossEnemy.range[Stage.nowStage - 1].x > playerTransform.position.x &&
                     this.transform.position.x - EnemyList.BossEnemy.range[Stage.nowStage - 1].x < playerTransform.position.x &&
@@ -112,7 +112,7 @@ public class BossEnemy : MonoBehaviour
                 }
             }
             //プレイヤーの体力が"0以下"の場合
-            else if (PlayerController.hp <= 0)
+            else if (PlayerController.status == "Death")
             {
                 nowAnimation = EnemyList.HumanoidAnimation.dance;//現在のアニメーションを"ダンス"にする
                 Animation();//関数"Animation"を実行

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacteBase : MonoBehaviour
 {
     //ステータス
+    public int hp;     //体力
     public float speed;//移動速度
     //処理
     public bool isDamage;//ダメージの可否
@@ -54,7 +55,6 @@ public class CharacteBase : MonoBehaviour
 public class PlayerBase : CharacteBase
 {
     //ステータス
-    public static int hp;       //体力
     public static int attack;   //攻撃力
     public static int remain;   //残機
     public static string status;//状態
@@ -122,6 +122,7 @@ public class PlayerBase : CharacteBase
         animator.SetBool("Death", true);//Animatorを"Death"にする
         hp = 0;                         //体力を"0"にする
         remain -= 1;                    //残機を"-1"する
+        status = "Death";
     }
 }
 
@@ -130,24 +131,28 @@ public class EnemyBase : CharacteBase
     //このオブジェクトのコンポーネント
     public AudioClip scream;                 //"AudioClip(叫び声)"
     //ステータス
-    public int hp;       //体力
     public float jump;   //ジャンプ力
     public string status;//状態
     //処理
-    public int nowAnimationNumber;           //現在のアニメーションの番号
-    public string nowAnimationName;          //現在のアニメーションの名前
-    public float nowAnimationLength;         //現在のアニメーションの長さ
-    public bool isAction = false;            //行動の可否
-    public float animationTimer = 0.0f;      //アニメーションタイマー
-    public bool isAnimation = false;         //アニメーションの可否
+    //標準のアニメーションの番号, 現在のアニメーションの番号
+    public int defaultAnimationNumber, nowAnimationNumber;         
+    public string nowAnimationName;                       //現在のアニメーションの名前
+    public float nowAnimationLength;                      //現在のアニメーションの長さ
+    public bool isAction = false;                         //行動の可否
+    public float animationTimer = 0.0f;                   //アニメーションタイマー
+    public bool isAnimation = false;                      //アニメーションの可否
     public HumanoidAnimation humanoidAnimation;
     public string nowDirection;
 
     //関数"StartEnmey"
-    public virtual void StartEnemy()
+    public void StartEnemy()
     {
+        //このオブジェクトのコンポーネントを取得
         animator = this.GetComponent<Animator>();
         runtimeAnimatorController = animator.runtimeAnimatorController;
+        //
+        nowAnimationNumber = defaultAnimationNumber;
+        AnimationPlay();                            //関数"AnimationPlay"を実行する
     }
 
     //関数"UpdateEnmey"
@@ -162,11 +167,7 @@ public class EnemyBase : CharacteBase
             Destroy();//関数"Destroy"を実行
         }
 
-        if (isAction == true)
-        {
-            Direction();
-        }
-        else if (isAction == false)
+        if (isAction == false)
         {
             if (viewPortPosition.x < 1)
             {
@@ -177,7 +178,7 @@ public class EnemyBase : CharacteBase
         //"hp > 0 && isAction == true"
         if (hp > 0 && isAction == true)
         {
-            nowDirection();
+            Direction();
         }
     }
 
@@ -195,66 +196,63 @@ public class EnemyBase : CharacteBase
         {
             nowDirection = "Horizontal";//
         }
-    }
 
-    //関数"Vertical"
-    public void Vertical()
-    {
-        //
-        if (isAnimation == true)
-        {
-            Wait();//関数"Wait"を実行
-        }
-        else if (isAnimation == false)
+        if(nowDirection == "Vertical")
         {
             //
-            if (PlayerController.hp > 0)
+            if (isAnimation == true)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+                Wait();//関数"Wait"を実行
             }
-            else if (PlayerController.hp <= 0)
+            else if (isAnimation == false)
             {
-                nowAnimationNumber = (int)HumanoidAnimation.Dance;
-                nowAnimationName = HumanoidAnimation.Dance.ToString();
-                AnimationPlay();//関数"AnimationPlay"を実行する
+                //
+                if (PlayerController.status != "Death")
+                {
+                    this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+                }
+                else if (PlayerController.status == "Death")
+                {
+                    nowAnimationNumber = (int)HumanoidAnimation.Dance;
+                    AnimationPlay();//関数"AnimationPlay"を実行する
+                }
             }
-        }
 
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
-    }
-
-    //関数"Horizontal"
-    public void Horizontal()
-    {
-        //
-        if (isAnimation == true)
-        {
-            Wait();//関数"Wait"を実行
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
         }
-        else if (isAnimation == false)
+        else if(nowDirection == "Horizontal")
         {
             //
-            if (PlayerController.hp > 0)
+            if (isAnimation == true)
             {
-                this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                Wait();//関数"Wait"を実行
             }
-            else if (PlayerController.hp <= 0)
+            else if (isAnimation == false)
             {
-                nowAnimationNumber = (int)HumanoidAnimation.Dance;
-                nowAnimationName = HumanoidAnimation.Dance.ToString();
-                AnimationPlay();//関数"AnimationPlay"を実行する
+                //
+                if (PlayerController.status != "Death")
+                {
+                    this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
+                }
+                else if (PlayerController.status == "Death")
+                {
+                    nowAnimationNumber = (int)HumanoidAnimation.Dance;
+                    AnimationPlay();//関数"AnimationPlay"を実行する
+                }
             }
-        }
 
-        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+        }
     }
 
     //関数"Animation"
     public void AnimationPlay()
     {
-        animator.SetInteger("Motion", nowAnimationNumber);//"animator(Motion)"に"nowAnimation"を設定して再生
+        humanoidAnimation = (HumanoidAnimation)nowAnimationNumber;
+        nowAnimationName = humanoidAnimation.ToString();
+        animator.SetInteger("Motion", nowAnimationNumber);        //"animator(Motion)"に"nowAnimation"を設定して再生
     }
 
     //関数"Wait"
@@ -274,8 +272,7 @@ public class EnemyBase : CharacteBase
         {
             animationTimer = 0.0f;
             isAnimation = false;
-            nowAnimationNumber = (int)HumanoidAnimation.Walk;
-            nowAnimationName = HumanoidAnimation.Walk.ToString();
+            nowAnimationNumber = defaultAnimationNumber;
             AnimationPlay();//関数"Animation"を実行
         }
     }
@@ -290,7 +287,6 @@ public class EnemyBase : CharacteBase
         {
             isAnimation = true;                                    //"isAnimation = true"にする
             nowAnimationNumber = (int)HumanoidAnimation.Damage;
-            nowAnimationName = HumanoidAnimation.Damage.ToString();
             audioSource.PlayOneShot(damage);                       //"damage"を鳴らす
             AnimationPlay();                                       //関数"Animation"を実行
         }
@@ -309,8 +305,7 @@ public class EnemyBase : CharacteBase
         audioSource.PlayOneShot(scream);//"scream"を鳴らす
         GameManager.score += EnemyList.WalkEnemy.score;       //スコアを足す
         PlayerController.exp += EnemyList.WalkEnemy.exp;      //経験値を足す
-        nowAnimationNumber = (int)HumanoidAnimation.Death;
-        nowAnimationName = HumanoidAnimation.Death.ToString();    
+        nowAnimationNumber = (int)HumanoidAnimation.Death;  
         AnimationPlay();                                      //関数"Animation"を実行
     }
 
@@ -324,9 +319,6 @@ public class EnemyBase : CharacteBase
             //ランダム"10(パンチ)"～"12(キック)"
             nowAnimationNumber = (int)Random.Range((int)HumanoidAnimation.Punch,
                                                    (int)HumanoidAnimation.Kick + 1);
-            humanoidAnimation = (HumanoidAnimation)nowAnimationNumber;
-            nowAnimationName = humanoidAnimation.ToString();
-
             AnimationPlay();//関数"AnimationPlay"を実行する
         }
         //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
