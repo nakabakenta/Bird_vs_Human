@@ -70,7 +70,7 @@ public class CarRideEnemy : MonoBehaviour
         else if (isAnimation == false)
         {
             //
-            if (PlayerController.hp > 0)
+            if (PlayerController.status != "Death")
             {
                 this.transform.position += speed * transform.forward * Time.deltaTime;//‘O•ûŒü‚ÉˆÚ“®‚·‚é 
 
@@ -95,7 +95,7 @@ public class CarRideEnemy : MonoBehaviour
                     this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
                 }
             }
-            else if (PlayerController.hp <= 0)
+            else if (PlayerController.status == "Death")
             {
                 nowAnimation = EnemyList.HumanoidAnimation.dance;
                 Animation();//ŠÖ”"Animation"‚ðŽÀs

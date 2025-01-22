@@ -66,7 +66,7 @@ public class CrouchEnemy : MonoBehaviour
         else if(isAnimation == false)
         {
             //
-            if (PlayerController.hp <= 0)
+            if (PlayerController.status == "Death")
             {
                 nowAnimation = EnemyList.HumanoidAnimation.dance;
                 Animation();//ŠÖ”"Animation"‚ðŽÀs

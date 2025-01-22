@@ -71,7 +71,7 @@ public class HaveGunEnemy : MonoBehaviour
     //ä÷êî"Horizontal"
     void Horizontal()
     {
-        if (PlayerController.hp <= 0)
+        if (PlayerController.status == "Death")
         {
             nowAnimation = EnemyList.HumanoidAnimation.dance;
             Animation();//ä÷êî"Animation"Çé¿çs

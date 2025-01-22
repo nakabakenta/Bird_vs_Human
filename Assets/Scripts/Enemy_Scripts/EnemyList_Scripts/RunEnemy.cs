@@ -106,12 +106,12 @@ public class RunEnemy : MonoBehaviour
         else if(isAnimation == false)
         {
             //
-            if (PlayerController.hp > 0)
+            if (PlayerController.status != "Death")
             {
                 this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
                 this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
             }
-            else if (PlayerController.hp <= 0)
+            else if (PlayerController.status == "Death")
             {
                 nowAnimation = EnemyList.HumanoidAnimation.dance;
                 Animation();//関数"Animation"を実行
@@ -132,7 +132,7 @@ public class RunEnemy : MonoBehaviour
         else if (isAnimation == false)
         {
             //
-            if (PlayerController.hp > 0)
+            if (PlayerController.status != "Death")
             {
                 this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する 
 
@@ -157,7 +157,7 @@ public class RunEnemy : MonoBehaviour
                     this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
                 }
             }
-            else if (PlayerController.hp <= 0)
+            else if (PlayerController.status == "Death")
             {
                 nowAnimation = EnemyList.HumanoidAnimation.dance;
                 Animation();//関数"Animation"を実行

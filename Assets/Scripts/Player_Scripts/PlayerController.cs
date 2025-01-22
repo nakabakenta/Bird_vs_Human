@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : PlayerBase
 {
+    public static int nowHp;
+
     //移動の限界位置
     private Vector2[,] limitPosition = new Vector2[5, 2]
     {
@@ -17,7 +19,6 @@ public class PlayerController : PlayerBase
     public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
     public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
     public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
-    
     //コルーチン
     private Coroutine blinking;//
 
@@ -26,12 +27,6 @@ public class PlayerController : PlayerBase
     {
         GetComponent();
         StartPlayer();
-        //処理を初期化する
-        gageTimer = 0.0f;
-        gageTimeInterval = 20.0f;
-        ally = 0;
-        level = 1;
-        exp = 0;
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
         nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得
@@ -192,14 +187,14 @@ public class PlayerController : PlayerBase
             if (rendererSwitch <= rendererTimer)
             {
                 rendererTimer = 0.0f;          //Renderer切り替えの経過時間を初期化する
-                isObjRenderer = !isObjRenderer;//"objRenderer"を"true"の場合は"false"、"false"の場合は"true"にする
-                SetObjRenderer(isObjRenderer); //関数"SetObjRenderer"を実行する
+                isRenderer = !isRenderer;//"objRenderer"を"true"の場合は"false"、"false"の場合は"true"にする
+                SetObjRenderer(isRenderer); //関数"SetObjRenderer"を実行する
             }
             //Renderer切り替えの合計経過時間が点滅持続時間以上の場合
             if (blinkingTime <= rendererTotalTime)
             {
                 isDamage = false;    //ダメージを"受けていない"にする
-                isObjRenderer = true;//Rendererを有効化する
+                isRenderer = true;//Rendererを有効化する
                 SetObjRenderer(true);//関数"SetObjRenderer"を実行する
                 yield break;         //コルーチンを停止する
             }

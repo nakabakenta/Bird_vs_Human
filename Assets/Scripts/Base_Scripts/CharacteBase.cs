@@ -72,7 +72,7 @@ public class PlayerBase : CharacteBase
     public float rendererSwitch = 0.05f;                    //Renderer切り替え時間
     public float rendererTimer;                             //Renderer切り替えの経過時間
     public float rendererTotalTime;                         //Renderer切り替えの合計経過時間
-    public bool isObjRenderer;                              //objRendererの可否
+    public bool isRenderer;                               　//Rendererの可否
     public float levelAttackInterval = 0.0f;                //レベルアップ時の攻撃間隔短縮
     public bool isAction = false;      //行動の可否
     public bool isAnimation = false;   //アニメーションの可否
@@ -89,6 +89,13 @@ public class PlayerBase : CharacteBase
         attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];//攻撃タイマー[前方]
         attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];//攻撃タイマー[下方]
         status = "Normal";                                                             //プレイヤーの状態を"Normal"にする
+        //処理を初期化する
+        gageTimer = 0.0f;
+        gageTimeInterval = 20.0f;
+        ally = 0;
+        level = 1;
+        exp = 0;
+
         //ゲームの状態が"Menu"の場合
         if (GameManager.status == "Menu")
         {
