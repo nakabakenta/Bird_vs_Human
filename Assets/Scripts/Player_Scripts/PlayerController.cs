@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController : PlayerBase
 {
-    public static int nowHp;
-
     //移動の限界位置
     private Vector2[,] limitPosition = new Vector2[5, 2]
     {
@@ -21,6 +19,11 @@ public class PlayerController : PlayerBase
     public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
     //コルーチン
     private Coroutine blinking;//
+
+    public int PlayerHp
+    {
+        get { return hp; }
+    }
 
     // Start is called before the first frame update
     void Start()

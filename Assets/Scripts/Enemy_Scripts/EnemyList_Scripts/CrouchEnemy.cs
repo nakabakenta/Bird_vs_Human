@@ -79,7 +79,7 @@ public class CrouchEnemy : MonoBehaviour
     //ŠÖ”"Animation"
     void Animation()
     {
-        animator.SetInteger("Motion", nowAnimation);//"animator(Motion)"‚É"nowAnimation"‚ğİ’è‚µ‚ÄÄ¶
+        animator.SetInteger("Animation", nowAnimation);//"animator(Motion)"‚É"nowAnimation"‚ğİ’è‚µ‚ÄÄ¶
     }
 
     //ŠÖ”"Wait"

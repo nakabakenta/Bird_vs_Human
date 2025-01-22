@@ -10,7 +10,7 @@ public class CharacteBase : MonoBehaviour
     //処理
     public bool isDamage;//ダメージの可否
     //座標
-    public Vector3 mousePosition, worldPosition, viewPortPosition;
+    public Vector3 worldPosition, viewPortPosition;
     //このオブジェクトのコンポーネント
     public Transform thisTransform;                            //"Transform"
     public Rigidbody rigidBody;                                //"Rigidbody"
@@ -58,6 +58,8 @@ public class PlayerBase : CharacteBase
     public static int attack;   //攻撃力
     public static int remain;   //残機
     public static string status;//状態
+    //座標
+    public Vector3 mousePosition;
     //処理
     public static float[] attackTimer = new float[2];       //攻撃タイマー([前方],[下方])
     public static float[] attackTimeInterval = new float[2];//攻撃時間間隔([前方],[下方])
@@ -136,20 +138,20 @@ public class PlayerBase : CharacteBase
 public class EnemyBase : CharacteBase
 {
     //このオブジェクトのコンポーネント
-    public AudioClip scream;                 //"AudioClip(叫び声)"
+    public AudioClip scream;//"AudioClip(叫び声)"
     //ステータス
-    public float jump;   //ジャンプ力
-    public string status;//状態
+    public string enemyName;//敵の名前
+    public float jump;      //ジャンプ力
     //処理
-    //標準のアニメーションの番号, 現在のアニメーションの番号
-    public int defaultAnimationNumber, nowAnimationNumber;         
+    public float rotation = 90.0f;
+    public int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号
     public string nowAnimationName;                       //現在のアニメーションの名前
     public float nowAnimationLength;                      //現在のアニメーションの長さ
     public bool isAction = false;                         //行動の可否
     public float animationTimer = 0.0f;                   //アニメーションタイマー
+    public float jumpTimer = 0.0f;
     public bool isAnimation = false;                      //アニメーションの可否
     public HumanoidAnimation humanoidAnimation;
-    public string nowDirection;
 
     //関数"StartEnmey"
     public void StartEnemy()
@@ -185,71 +187,80 @@ public class EnemyBase : CharacteBase
         //"hp > 0 && isAction == true"
         if (hp > 0 && isAction == true)
         {
-            Direction();
+            Action();
         }
     }
 
-    //関数"Direction"
-    public void Direction()
+    //関数"Action"
+    public void Action()
     {
         //
         if (this.transform.position.z > playerTransform.position.z + 0.5f)
         {
-            nowDirection = "Vertical";//
+            rotation = 180.0f;
         }
         //
         if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
             this.transform.position.z <= playerTransform.position.z + 0.5f)
         {
-            nowDirection = "Horizontal";//
+            rotation = 90.0f;//
         }
 
-        if(nowDirection == "Vertical")
+        if (isAnimation == false)
         {
             //
-            if (isAnimation == true)
+            if (PlayerController.status != "Death")
             {
-                Wait();//関数"Wait"を実行
-            }
-            else if (isAnimation == false)
-            {
-                //
-                if (PlayerController.status != "Death")
+                if (enemyName == EnemyName.WalkEnemy.ToString())
                 {
-                    this.transform.position += speed * transform.forward * Time.deltaTime;                                                 //前方向に移動する
-                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation * 2, this.transform.rotation.z);
+                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -rotation, this.transform.rotation.z);
                 }
-                else if (PlayerController.status == "Death")
+                else if (enemyName != EnemyName.WalkEnemy.ToString())
                 {
-                    nowAnimationNumber = (int)HumanoidAnimation.Dance;
-                    AnimationPlay();//関数"AnimationPlay"を実行する
+                    if(enemyName == EnemyName.RunEnemy.ToString())
+                    {
+                        if (this.transform.position.x + EnemyList.RunEnemy.range.x > playerTransform.position.x &&
+                        this.transform.position.x - EnemyList.RunEnemy.range.x < playerTransform.position.x &&
+                        this.transform.position.y + EnemyList.RunEnemy.range.y < playerTransform.position.y &&
+                        this.transform.position.y == 0.0f && nowAnimationNumber == defaultAnimationNumber)
+                        {
+                            isAnimation = true;
+                            nowAnimationNumber = (int)HumanoidAnimation.Jump;
+                            AnimationPlay();
+                        }
+                    }
+                    
+                    //
+                    if (this.transform.position.x > playerTransform.position.x)
+                    {
+                        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -rotation, this.transform.rotation.z);
+                    }
+                    //
+                    else if (this.transform.position.x < playerTransform.position.x)
+                    {
+                        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, rotation, this.transform.rotation.z);
+                    }
                 }
-            }
 
-            this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+                if(enemyName != EnemyName.HaveGunEnemy.ToString())
+                {
+                    this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+                }
+            }
+            else if (PlayerController.status == "Death")
+            {
+                nowAnimationNumber = (int)HumanoidAnimation.Dance;
+                AnimationPlay();                                  //関数"AnimationPlay"を実行する
+            }
         }
-        else if(nowDirection == "Horizontal")
+        //
+        else if (isAnimation == true)
         {
-            //
-            if (isAnimation == true)
-            {
-                Wait();//関数"Wait"を実行
-            }
-            else if (isAnimation == false)
-            {
-                //
-                if (PlayerController.status != "Death")
-                {
-                    this.transform.position += speed * transform.forward * Time.deltaTime;                                              //前方向に移動する
-                    this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-                }
-                else if (PlayerController.status == "Death")
-                {
-                    nowAnimationNumber = (int)HumanoidAnimation.Dance;
-                    AnimationPlay();//関数"AnimationPlay"を実行する
-                }
-            }
+            AnimationChange();//関数"Wait"を実行
+        }
 
+        if (nowAnimationNumber != (int)HumanoidAnimation.Jump)
+        {
             this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
         }
     }
@@ -259,11 +270,11 @@ public class EnemyBase : CharacteBase
     {
         humanoidAnimation = (HumanoidAnimation)nowAnimationNumber;
         nowAnimationName = humanoidAnimation.ToString();
-        animator.SetInteger("Motion", nowAnimationNumber);        //"animator(Motion)"に"nowAnimation"を設定して再生
+        animator.SetInteger("Animation", nowAnimationNumber);        //"animator(Motion)"に"nowAnimation"を設定して再生
     }
 
     //関数"Wait"
-    public void Wait()
+    public virtual void AnimationChange()
     {
         animationTimer += Time.deltaTime;//"animationTimer"に"Time.deltaTime(経過時間)"を足す
 
@@ -275,12 +286,46 @@ public class EnemyBase : CharacteBase
             }
         }
 
-        if (animationTimer >= nowAnimationLength)
+        //
+        if (nowAnimationNumber == (int)HumanoidAnimation.Jump)
+        {
+            jumpTimer += Time.deltaTime;//"jumpTimer"に"Time.deltaTime(経過時間)"を足す
+
+            if (animationTimer >= 0.8f && jumpTimer >= 0.1f)
+            {
+                jump -= 1.0f;
+                jumpTimer = 0.0f;
+            }
+
+            if (animationTimer >= 0.8f)
+            {
+                this.transform.position += jump * transform.up * Time.deltaTime;
+
+                if (animationTimer >= 2.7f)
+                {
+                    jump = EnemyList.RunEnemy.jump;
+                    animationTimer = 0.0f;
+                    jumpTimer = 0.0f;
+                    isAnimation = false;
+                    nowAnimationNumber = defaultAnimationNumber;//
+                    AnimationPlay();                            //関数"Animation"を実行
+                }
+                else if (animationTimer >= 2.3f)
+                {
+                    animator.SetFloat("MoveSpeed", 1.0f);//"animator(MoveSpeed)"を"1.0f(再生)"にする
+                }
+                else if (animationTimer >= 1.2f)
+                {
+                    animator.SetFloat("MoveSpeed", 0.0f);//"animator(MoveSpeed)"を"0.0f(停止)"にする
+                }
+            }
+        }
+        else if (enemyName != EnemyName.HaveGunEnemy.ToString() && animationTimer >= nowAnimationLength)
         {
             animationTimer = 0.0f;
             isAnimation = false;
             nowAnimationNumber = defaultAnimationNumber;
-            AnimationPlay();//関数"Animation"を実行
+            AnimationPlay();//関数"Animation"を実行する
         }
     }
 
@@ -288,9 +333,8 @@ public class EnemyBase : CharacteBase
     public virtual void DamageEnemy()
     {
         hp -= PlayerBase.attack;
-
-        //"hp > 0"の場合
-        if (hp > 0)
+        //体力が"0より上" && 現在のアニメーション番号が初期のアニメーション番号と等しい場合
+        if (hp > 0 && nowAnimationNumber == defaultAnimationNumber)
         {
             isAnimation = true;                                    //"isAnimation = true"にする
             nowAnimationNumber = (int)HumanoidAnimation.Damage;
@@ -307,13 +351,17 @@ public class EnemyBase : CharacteBase
     //関数"Enmey"
     public virtual void DeathEnemy()
     {
-        this.tag = "Untagged";                                //このタグを"Untagged"にする
-        hp = 0;                                               //体力を"0"にする
-        audioSource.PlayOneShot(scream);//"scream"を鳴らす
-        GameManager.score += EnemyList.WalkEnemy.score;       //スコアを足す
-        PlayerController.exp += EnemyList.WalkEnemy.exp;      //経験値を足す
-        nowAnimationNumber = (int)HumanoidAnimation.Death;  
-        AnimationPlay();                                      //関数"Animation"を実行
+        this.tag = "Untagged";                            //このタグを"Untagged"にする
+        hp = 0;                                           //体力を"0"にする
+        GameManager.score += EnemyList.WalkEnemy.score;   //スコアを足す
+        PlayerController.exp += 10;                       //経験値を足す
+
+        //位置(.Y)を"0.0f"にする
+        this.transform.position 
+            = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+        nowAnimationNumber = (int)HumanoidAnimation.Death;
+        audioSource.PlayOneShot(scream);                  //"scream"を鳴らす
+        AnimationPlay();                                  //関数"Animation"を実行
     }
 
     //当たり判定(OnTriggerEnter)
@@ -328,11 +376,18 @@ public class EnemyBase : CharacteBase
                                                    (int)HumanoidAnimation.Kick + 1);
             AnimationPlay();//関数"AnimationPlay"を実行する
         }
-        //衝突したオブジェクトのタグが"Bullet" && "hp > 0"の場合
+        //衝突したオブジェクトのタグが"Bullet" && 体力が"0より上"の場合
         if (collision.gameObject.tag == "Bullet" && hp > 0)
         {
             DamageEnemy();//関数"DamageEnemy"を実行する
         }
+    }
+
+    public enum EnemyName
+    {
+        WalkEnemy,
+        RunEnemy,
+        HaveGunEnemy,
     }
 
     public enum HumanoidAnimation
@@ -343,6 +398,9 @@ public class EnemyBase : CharacteBase
         HaveGunIdle = 3,
         Punch = 10,
         Kick = 11,
+        GunPlay = 13,
+        Jump   = 20,
+        Reload = 24,
         Dance  = 30,
         Damage = 31,
         Death  = 32

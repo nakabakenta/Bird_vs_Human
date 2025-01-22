@@ -21,9 +21,14 @@ public class StageUI : MonoBehaviour
     public Slider gage;//Slider(ÉQÅ[ÉW)
     public Slider level;
 
+    private GameObject player;
+    private PlayerController playerController;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
         forwardBullet_UI = GameObject.Find("ForwardBullet_Front_UI").GetComponent<Image>();
         downBullet_UI = GameObject.Find("DownBullet_Front_UI").GetComponent<Image>();
 
@@ -54,14 +59,14 @@ public class StageUI : MonoBehaviour
         level.value = PlayerController.exp;
 
         //
-        if (PlayerController.hp >= 10)
+        if (playerController.hp >= 10)
         {
-            hp.text = "" + PlayerController.hp;//
+            hp.text = "" + playerController.hp;//
         }
         //
-        else if(PlayerController.hp >= 0)
+        else if(playerController.hp >= 0)
         {
-            hp.text = "0" + PlayerController.hp;//
+            hp.text = "0" + playerController.hp;//
         }
 
         //
@@ -116,7 +121,7 @@ public class StageUI : MonoBehaviour
             stageClearUI.SetActive(true);
         }
 
-        if(PlayerController.hp <= 0 && PlayerController.remain > 0)
+        if(playerController.hp <= 0 && PlayerController.remain > 0)
         {
             continueUI.SetActive(true);
         }

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WalkEnemy : EnemyBase
 {
-
     // Start is called before the first frame update
     void Start()
     {
-        //ステータスを設定
-        hp = EnemyList.WalkEnemy.hp;      //体力
-        speed = EnemyList.WalkEnemy.speed;//移動速度
-        //初期のアニメーション
+        //ステータスを設定する
+        enemyName = EnemyName.WalkEnemy.ToString();//名前
+        hp = EnemyList.WalkEnemy.hp;               //体力
+        speed = EnemyList.WalkEnemy.speed;         //移動速度
+        //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Walk;
         //関数を実行する
-        GetComponent();//コンポーネントを所得
+        GetComponent();//コンポーネントを所得する
         StartEnemy();  //敵の設定をする
     }
 

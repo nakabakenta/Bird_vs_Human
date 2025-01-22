@@ -142,7 +142,7 @@ public class BossEnemy : MonoBehaviour
     //関数"Animation"
     void Animation()
     {
-        animator.SetInteger("Motion", nowAnimation);//"アニメーターに"現在のアニメーション"を設定して再生する
+        animator.SetInteger("Animation", nowAnimation);//"アニメーターに"現在のアニメーション"を設定して再生する
     }
 
     //関数"Wait"
