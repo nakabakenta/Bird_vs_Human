@@ -7,8 +7,8 @@ public class RunEnemy : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        //ステータスを設定
-        enemyName = EnemyName.RunEnemy.ToString();//名前
+        //ステータスを設定する
+        enemyType = EnemyType.RunEnemy.ToString();//型
         hp = EnemyList.RunEnemy.hp;               //体力
         speed = EnemyList.RunEnemy.speed;         //移動速度
         jump = EnemyList.RunEnemy.jump;           //ジャンプ力
@@ -25,6 +25,7 @@ public class RunEnemy : EnemyBase
         base.UpdateEnemy();
     }
 
+    //当たり判定(OnTriggerEnter)
     public override void OnTriggerEnter(Collider collision)
     {
         base.OnTriggerEnter(collision);

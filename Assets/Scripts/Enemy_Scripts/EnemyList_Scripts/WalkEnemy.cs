@@ -8,7 +8,7 @@ public class WalkEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyName = EnemyName.WalkEnemy.ToString();//名前
+        enemyType = EnemyType.WalkEnemy.ToString();//型
         hp = EnemyList.WalkEnemy.hp;               //体力
         speed = EnemyList.WalkEnemy.speed;         //移動速度
         //初期のアニメーション番号を設定する

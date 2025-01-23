@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HaveGunEnemy : EnemyBase
 {
-    public bool isReload = false;
+    public int nowMagazine;
+    public int maxMagazine = 1;
     //このオブジェクトのコンポーネント
     public GameObject gun;           //"GameObject(銃)"
     public GameObject bullet;        //"GameObject(弾)"
@@ -13,8 +14,9 @@ public class HaveGunEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定
-        enemyName = EnemyName.HaveGunEnemy.ToString();//名前
-        hp = EnemyList.HaveGunEnemy.hp;            //体力
+        enemyType = EnemyType.HaveGunEnemy.ToString();//型
+        hp = EnemyList.HaveGunEnemy.hp;               //体力
+        nowMagazine = maxMagazine;
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)HumanoidAnimation.HaveGunIdle;
         //関数を実行する
@@ -35,48 +37,34 @@ public class HaveGunEnemy : EnemyBase
 
     public override void AnimationChange()
     {
-        base.AnimationChange();
-
         if (nowAnimationNumber == (int)HumanoidAnimation.HaveGunIdle)
         {
             nowAnimationNumber = (int)HumanoidAnimation.GunPlay;
-            AnimationPlay();                                          //関数"AnimationPlay"を実行する
+            AnimationPlay();                                         //関数"AnimationPlay"を実行する
         }
-        else
+
+        base.AnimationChange();
+
+        if (animationTimer >= nowAnimationLength)
         {
-            if(isReload == true)
+            isAnimation = !isAnimation;
+            animationTimer = 0.0f;
+
+            if (nowMagazine > maxMagazine)
             {
-                Instantiate(bullet, gun.transform.position, Quaternion.identity);
-                isReload = true;
-            }
-            else if(isReload == false)
-            {
-                // 弾の方向を計算
-                if (animationTimer >= nowAnimationLength)
-                {
-                    isAnimation = !isAnimation;
-                    animationTimer = 0.0f;
-
-
-                    nowAnimationNumber = (int)HumanoidAnimation.Reload;
-
-                    AnimationPlay();                                   //関数"AnimationPlay"を実行する
-                }
-
-
-            }
-
-            if (animationTimer >= nowAnimationLength)
-            {
-                isReload = false;
-                animationTimer = 0.0f;
                 nowAnimationNumber = (int)HumanoidAnimation.GunPlay;
-                AnimationPlay();                                    //関数"AnimationPlay"を実行する
+                Instantiate(bullet, gun.transform.position, Quaternion.identity);
+                nowMagazine -= 1;
+            }
+            else if (nowMagazine <= maxMagazine)
+            {
+                nowAnimationNumber = (int)HumanoidAnimation.Reload;
+                nowMagazine = maxMagazine;
             }
 
+            AnimationPlay();                                       //関数"AnimationPlay"を実行する
         }
     }
-
 
     public override void OnTriggerEnter(Collider collision)
     {
