@@ -77,18 +77,6 @@ public class EnemyBase : CharacteBase
     public void Action()
     {
         //
-        if (this.transform.position.z > playerTransform.position.z + 0.5f)
-        {
-            rotation = 180.0f;
-        }
-        //
-        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
-            this.transform.position.z <= playerTransform.position.z + 0.5f)
-        {
-            rotation = -90.0f;//
-        }
-
-        //
         if (isAnimation == true)
         {
             AnimationFind();//関数"AnimationFind"を実行する
@@ -101,18 +89,16 @@ public class EnemyBase : CharacteBase
             {
                 animationChangeTimer += Time.deltaTime;
 
-                if (isPlayerFind == true)
+                //
+                if (this.transform.position.z > playerTransform.position.z + 0.5f)
                 {
-                    //
-                    if (this.transform.position.x > playerTransform.position.x)
-                    {
-                        rotation = -90.0f;//
-                    }
-                    //
-                    else if (this.transform.position.x < playerTransform.position.x)
-                    {
-                        rotation = 90.0f;//
-                    }
+                    rotation = 180.0f;
+                }
+                //
+                if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+                    this.transform.position.z <= playerTransform.position.z + 0.5f)
+                {
+                    rotation = -90.0f;//
                 }
 
                 if (enemyType != EnemyType.Normal.ToString())
@@ -154,6 +140,20 @@ public class EnemyBase : CharacteBase
                     }
 
                     AnimationPlay();//関数"AnimationPlay"を実行する
+                }
+
+                if (isPlayerFind == true)
+                {
+                    //
+                    if (this.transform.position.x > playerTransform.position.x)
+                    {
+                        rotation = -90.0f;//
+                    }
+                    //
+                    if (this.transform.position.x < playerTransform.position.x)
+                    {
+                        rotation = 90.0f;//
+                    }
                 }
             }
             else if (PlayerController.status == "Death")
@@ -265,6 +265,14 @@ public class EnemyBase : CharacteBase
                 speed *= 3.0f;                                       //移動速度を"*3"する
                 isAnimation = false;
                 AnimationPlay();
+            }
+        }
+        else if (nowAnimationNumber == (int)HumanoidAnimation.ExitCar)
+        {
+            if (animationTimer >= nowAnimationLength / 2)
+            {   //アニメーションタイマーを初期化する
+                defaultAnimationNumber = (int)HumanoidAnimation.Run;//現在のアニメーションを"走る"にする
+                AnimationChange();
             }
         }
         else if (animationTimer >= nowAnimationLength)
