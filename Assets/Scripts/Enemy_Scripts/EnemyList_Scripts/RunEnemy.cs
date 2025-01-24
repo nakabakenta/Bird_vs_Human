@@ -8,10 +8,13 @@ public class RunEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.RunEnemy.ToString();//型
-        hp = EnemyList.RunEnemy.hp;               //体力
-        speed = EnemyList.RunEnemy.speed;         //移動速度
-        jump = EnemyList.RunEnemy.jump;           //ジャンプ力
+        enemyType = EnemyType.Find.ToString();//敵の型
+        hp = EnemyList.RunEnemy.hp;           //体力
+        speed = EnemyList.RunEnemy.speed;     //移動速度
+        jump = EnemyList.RunEnemy.jump;       //ジャンプ力
+
+        isPlayerFind = true;
+
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Run;
         //関数を実行する
