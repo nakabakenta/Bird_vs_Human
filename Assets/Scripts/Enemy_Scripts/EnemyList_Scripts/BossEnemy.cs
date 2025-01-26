@@ -13,7 +13,7 @@ public class BossEnemy : EnemyBase
         speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];
         jump = EnemyList.BossEnemy.jump[Stage.nowStage - 1];
 
-        isPlayerFind = true;
+        playerFind = true;
 
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Walk;

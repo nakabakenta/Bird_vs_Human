@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gage_Back
+      name: Gage_Back_1
       rect:
         serializedVersion: 2
         x: 512
@@ -126,7 +126,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gage_Base
+      name: Gage_Base11
       rect:
         serializedVersion: 2
         x: 512
@@ -168,7 +168,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gage_Front
+      name: Gage_Front_1
       rect:
         serializedVersion: 2
         x: 512
@@ -281,7 +281,7 @@ TextureImporter:
         width: 64
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -289,6 +289,69 @@ TextureImporter:
       bones: []
       spriteID: 7860fe374745249428831581c8e25fb7
       internalID: -1486301215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gage_Base
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 512
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae27f0d74910bc74ba066820bdac2c7b
+      internalID: -1468722166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gage_Back
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 288
+        width: 512
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53a499aeaae2464f92b767545c36207
+      internalID: 196328981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gage_Front
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 512
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500d48b754a3f0244918ec162a832868
+      internalID: -1187803902
       vertices: []
       indices: 
       edges: []
@@ -306,9 +369,13 @@ TextureImporter:
     nameFileIdTable:
       DownBullet: 728133252
       ForwardBullet: 433435512
-      Gage_Back: 1054362850
-      Gage_Base: -749384880
-      Gage_Front: -392512870
+      Gage_Back: 196328981
+      Gage_Back_1: 1054362850
+      Gage_Base: -1468722166
+      Gage_Base11: -749384880
+      Gage_Base_01: -1708254769
+      Gage_Front: -1187803902
+      Gage_Front_1: -392512870
       Gage_Light: 23619407
       Level_Back: 1567737202
       Level_Base: 1455617132

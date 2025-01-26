@@ -1,38 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClickHandler
 {
-    //このオブジェクトのコンポーネント
-    public GameObject alpha;            //"GameObject(半透明)"
-    public GameObject selectMark;       //"GameObject(選択マーク)"
-    public AudioClip enter;             //"AudioClip(入場)"
-    public AudioClip click;             //"AudioClip(クリック)"
-    private Button button;              //"Button" 
-    private RectTransform rectTransform;//"RectTransform"
-    private AudioSource audioSource;    //"AudioSource"
-    private SceneLoader sceneLoader;    //"Script(SceneLoader)"
-    //処理
-    public static string selectButton;  //選択しているボタン
-    public static bool buttonClick;     //ボタンのクリック可否
-    private Vector2 buttonPosition;     //ボタンの位置
-    private bool setActive;             //オブジェクト表示の可否
+    public static string selectButton; //選択しているボタン
+    public static bool buttonClick;    //ボタンのクリック可否
 
     // Start is called before the first frame update
     void Start()
     {
-        //このオブジェクトのコンポーネントを取得する
-        button = this.GetComponent<Button>();
-        rectTransform = this.GetComponent<RectTransform>();
-        audioSource = this.GetComponent<AudioSource>();
-        sceneLoader = this.GetComponent<SceneLoader>();
-        //このオブジェクトのコンポーネントを初期化
-        selectMark.SetActive(false);
-        //処理を初期化
-        buttonPosition = rectTransform.anchoredPosition;
+        GetComponent();
         buttonClick = false;
     }
 
@@ -59,22 +38,22 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
             //スズメ
             if (selectButton == "Button_Sparrow")
             {
-                GameManager.playerNumber = PlayerList.Player.number[0];//"GameManager"の"playerNumber"を"スズメ(0)"にする
+                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Sparrow;//
             }
             //カラス
             else if (selectButton == "Button_Crow")
             {
-                GameManager.playerNumber = PlayerList.Player.number[1];//"GameManager"の"playerNumber"を"カラス(1)"にする
+                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Crow;//
             }
             //コガラ
             else if (selectButton == "Button_Chickadee")
             {
-                GameManager.playerNumber = PlayerList.Player.number[2];//"GameManager"の"playerNumber"を"コガラ(2)"にする
+                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Chickadee;//
             }
             //ペンギン
             else if (selectButton == "Button_Penguin")
             {
-                GameManager.playerNumber = PlayerList.Player.number[3];//"GameManager"の"playerNumber"を"ペンギン(3)"にする
+                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Penguin;//
             }
 
             rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
@@ -89,10 +68,10 @@ public class PlayerSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerC
         //ボタンを"クリックしていない"場合
         if (buttonClick == false)
         {
-            buttonClick = true;            //ボタンを"クリックした"にする
-            audioSource.PlayOneShot(click);//"クリック"を鳴らす
+            buttonClick = true;                   //ボタンを"クリックした"にする
+            audioSource.PlayOneShot(click);       //"クリック"を鳴らす
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            Invoke("SceneLoad", 2.0f);     //関数"SceneLoad"を"2.0f"後に実行
+            Invoke("SceneLoad", 2.0f);            //関数"SceneLoad"を"2.0f"後に実行
         }
     }
 

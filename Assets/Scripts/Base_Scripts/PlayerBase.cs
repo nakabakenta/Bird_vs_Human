@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerBase : CharacteBase
 {
     //ステータス
-    public static int attack;   //攻撃力
-    public static int remain;   //残機
-    public static string status;//状態
+    public static int attackPower;//攻撃力
+    public static int remain;     //残機
+    public static string status;  //状態
     //座標
     public Vector3 mousePosition;
     //処理
@@ -16,6 +16,7 @@ public class PlayerBase : CharacteBase
     public static float gageTimer;                          //ゲージタイマー
     public static float gageTimeInterval;                   //ゲージ時間間隔
     public static int level;                                //レベル
+    public static int maxExp;
     public static int exp;                                  //経験値
     public static int ally;                                 //味方数
     public float invincibleTimer = 0.0f;                    //無敵タイマー
@@ -36,11 +37,11 @@ public class PlayerBase : CharacteBase
     public void StartPlayer()
     {
         //選択したプレイヤーのステータスを設定する
-        hp = PlayerList.Player.hp[GameManager.playerNumber];                           //体力
-        attack = PlayerList.Player.power[GameManager.playerNumber];                    //攻撃力
-        attackTimer[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];//攻撃タイマー[前方]
-        attackTimer[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];//攻撃タイマー[下方]
-        status = "Normal";                                                             //プレイヤーの状態を"Normal"にする
+        hp = Player.hp[GameManager.selectPlayer];                     //体力
+        attackPower = Player.attackPower[GameManager.selectPlayer];   //攻撃力
+        attackTimer[0] = Player.attackSpeed[GameManager.selectPlayer];//攻撃タイマー[前方]
+        attackTimer[1] = Player.attackSpeed[GameManager.selectPlayer];//攻撃タイマー[下方]
+        status = "Normal";                                            //プレイヤーの状態を"Normal"にする
         //処理を初期化する
         gageTimer = 0.0f;
         gageTimeInterval = 20.0f;
@@ -82,5 +83,26 @@ public class PlayerBase : CharacteBase
         hp = 0;                         //体力を"0"にする
         remain -= 1;                    //残機を"-1"する
         status = "Death";
+    }
+
+    public static class Player
+    {
+        public enum PlayerName
+        {
+            Sparrow = 0,
+            Crow = 1,
+            Chickadee = 2,
+            Penguin = 3,
+        }
+
+        //体力
+        public static int[] hp = new int[] 
+        { 4, 4, 4, 4 };
+        //攻撃力
+        public static int[] attackPower = new int[]
+        { 3, 5, 1, 5 };
+        //攻撃速度
+        public static float[] attackSpeed = new float[]
+        { 1.0f, 2.0f, 0.5f, 0.5f };
     }
 }

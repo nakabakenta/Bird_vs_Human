@@ -12,7 +12,7 @@ public class CrouchEnemy : EnemyBase
         hp = EnemyList.CrouchEnemy.hp;        //体力
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Crouch;
-        isPlayerFind = false;
+        playerFind = false;
 
         //関数を実行する
         GetComponent();//コンポーネントを所得

@@ -9,10 +9,12 @@ public class EnemyBase : CharacteBase
     //ステータス
     public string enemyType;//敵の型
     public float jump;      //ジャンプ力
+    public int score;       //スコア
+    public int exp;         //経験値
     //処理
     public float rotation;
     public bool isAction = false;                         //行動の可否
-    public bool isPlayerFind;                             //プレイヤー探しの可否
+    public bool playerFind;                               //プレイヤー探しの可否
     public int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号
     public string nowAnimationName;                       //現在のアニメーションの名前
     public float nowAnimationLength;                      //現在のアニメーションの長さ
@@ -87,19 +89,9 @@ public class EnemyBase : CharacteBase
             //
             if (PlayerController.status != "Death")
             {
-                animationChangeTimer += Time.deltaTime;
+                Direction();//関数"Direction"を実行する
 
-                //
-                if (this.transform.position.z > playerTransform.position.z + 0.5f)
-                {
-                    rotation = 180.0f;
-                }
-                //
-                if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
-                    this.transform.position.z <= playerTransform.position.z + 0.5f)
-                {
-                    rotation = -90.0f;//
-                }
+                animationChangeTimer += Time.deltaTime;
 
                 if (enemyType != EnemyType.Normal.ToString())
                 {
@@ -141,20 +133,6 @@ public class EnemyBase : CharacteBase
 
                     AnimationPlay();//関数"AnimationPlay"を実行する
                 }
-
-                if (isPlayerFind == true)
-                {
-                    //
-                    if (this.transform.position.x > playerTransform.position.x)
-                    {
-                        rotation = -90.0f;//
-                    }
-                    //
-                    if (this.transform.position.x < playerTransform.position.x)
-                    {
-                        rotation = 90.0f;//
-                    }
-                }
             }
             else if (PlayerController.status == "Death")
             {
@@ -162,7 +140,7 @@ public class EnemyBase : CharacteBase
                 AnimationPlay();                                  //関数"AnimationPlay"を実行する
             }
 
-            AddAction();    //関数"AddAction"を実行する
+            AddAction();//関数"AddAction"を実行する
         }
 
         if (nowAnimationNumber != (int)HumanoidAnimation.Jump && 
@@ -172,6 +150,36 @@ public class EnemyBase : CharacteBase
         }
 
         this.transform.eulerAngles = new Vector3(this.transform.rotation.x, rotation, this.transform.rotation.z);
+    }
+
+    //関数"Direction"
+    public void Direction()
+    {
+        //
+        if (this.transform.position.z > playerTransform.position.z + 0.5f)
+        {
+            rotation = 180.0f;
+        }
+        //
+        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
+            this.transform.position.z <= playerTransform.position.z + 0.5f)
+        {
+            rotation = -90.0f;//
+        }
+
+        if (playerFind == true)
+        {
+            //
+            if (this.transform.position.x > playerTransform.position.x)
+            {
+                rotation = -90.0f;//
+            }
+            //
+            if (this.transform.position.x < playerTransform.position.x)
+            {
+                rotation = 90.0f;//
+            }
+        }
     }
 
     //関数"AddAction"
@@ -304,7 +312,7 @@ public class EnemyBase : CharacteBase
     //関数"Enmey"
     public virtual void DamageEnemy()
     {
-        hp -= PlayerBase.attack;
+        hp -= PlayerBase.attackPower;
 
         //体力が"0より上" && 現在のアニメーション番号が初期のアニメーション番号と等しい場合
         if (hp > 0 && nowAnimationNumber == defaultAnimationNumber)

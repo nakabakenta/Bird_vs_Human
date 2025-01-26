@@ -116,28 +116,6 @@ public class EnemyList : MonoBehaviour
             new Vector3 (0.25f, 2.0f, 0.0f)
         };
     }
-
-    //ヒューマノイドアニメーション
-    public static class HumanoidAnimation
-    {
-        public static int walk         = 0;
-        public static int run          = 1;
-        public static int crazyRun     = 2;
-        public static int haveGunIdle  = 3;
-        public static int haveGunWalk  = 4;
-        public static int punch        = 10;
-        public static int kick         = 11;
-        public static int jumpAttack   = 12;
-        public static int gunPlay      = 13;
-        public static int jump         = 20; 
-        public static int crouch       = 21;
-        public static int exitCar      = 22;
-        public static int battlecry    = 23;
-        public static int reload       = 24;
-        public static int dance        = 30;
-        public static int damage       = 31;
-        public static int death        = 32;
-    }
 }
 
 

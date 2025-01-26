@@ -18,7 +18,7 @@ public class HaveGunEnemy : EnemyBase
         hp = EnemyList.HaveGunEnemy.hp;       //体力
         nowMagazine = maxMagazine;
         //処理を初期化する
-        isPlayerFind = true;
+        playerFind = true;
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)HumanoidAnimation.HaveGunIdle;
         //関数を実行する
@@ -40,6 +40,7 @@ public class HaveGunEnemy : EnemyBase
             AnimationPlay();                                    //関数"AnimationPlay"を実行する
         }
 
+        Direction();    //関数"Direction"を実行する
         AnimationFind();//関数"AnimationFind"を実行する
     }
 

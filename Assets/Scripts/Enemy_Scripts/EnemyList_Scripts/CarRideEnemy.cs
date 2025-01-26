@@ -13,7 +13,7 @@ public class CarRideEnemy : EnemyBase
         speed = EnemyList.CarRideEnemy.speed; //移動速度
         jump = EnemyList.CarRideEnemy.jump;   //ジャンプ力
         //処理を初期化する
-        isPlayerFind = true;
+        playerFind = true;
         isAnimation = true;
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.ExitCar;
@@ -27,15 +27,6 @@ public class CarRideEnemy : EnemyBase
     {
         base.UpdateEnemy();
     }
-
-    ////関数"AddAnimationChange"
-    //public override void AddAnimationChange()
-    //{
-    //    if (nowAnimationNumber == (int)HumanoidAnimation.ExitCar)
-    //    {
-    //        defaultAnimationNumber = (int)HumanoidAnimation.Run;
-    //    }  
-    //}
 
     //当たり判定(OnTriggerEnter)
     public override void OnTriggerEnter(Collider collision)

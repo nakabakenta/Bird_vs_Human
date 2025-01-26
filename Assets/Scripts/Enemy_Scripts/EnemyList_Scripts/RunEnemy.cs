@@ -13,7 +13,7 @@ public class RunEnemy : EnemyBase
         speed = EnemyList.RunEnemy.speed;     //移動速度
         jump = EnemyList.RunEnemy.jump;       //ジャンプ力
         //処理を初期化する
-        isPlayerFind = true;
+        playerFind = true;
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Run;
         //関数を実行する

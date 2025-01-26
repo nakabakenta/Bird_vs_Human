@@ -78,7 +78,7 @@ public class FighterJetBossEnemy : MonoBehaviour
     //ŠÖ”"Damage"
     void Damage()
     {
-        hp -= PlayerList.Player.power[GameManager.playerNumber];//
+        hp -= PlayerBase.attackPower;
 
         //"hp > 0"‚Ìê‡
         if (hp > 0)

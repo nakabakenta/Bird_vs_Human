@@ -50,7 +50,7 @@ public class StageUI : MonoBehaviour
 
         level.value = 0;
         level.minValue = 0;
-        level.maxValue = PlayerList.Player.maxExp[GameManager.playerNumber];
+        level.maxValue = PlayerBase.maxExp;
     }
 
     // Update is called once per frame

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //プレイヤー番号
-    public static int playerNumber;
+    public static int selectPlayer;
     //ゲームシーン
     public static string status;  //状態
     public static int score;      //スコア

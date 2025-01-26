@@ -126,12 +126,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stage1
+      name: Park
       rect:
         serializedVersion: 2
         x: 0
-        y: 696
-        width: 704
+        y: 564
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -147,12 +147,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stage2
+      name: City
       rect:
         serializedVersion: 2
-        x: 0
-        y: 630
-        width: 704
+        x: 130
+        y: 564
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -168,12 +168,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stage3
+      name: Mountain
       rect:
         serializedVersion: 2
-        x: 0
+        x: 260
         y: 564
-        width: 704
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -189,12 +189,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stage4
+      name: Base
       rect:
         serializedVersion: 2
-        x: 0
-        y: 498
-        width: 704
+        x: 390
+        y: 564
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -210,12 +210,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stage5
+      name: Sky
       rect:
         serializedVersion: 2
-        x: 0
-        y: 432
-        width: 704
+        x: 520
+        y: 564
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -234,9 +234,9 @@ TextureImporter:
       name: Remain
       rect:
         serializedVersion: 2
-        x: 0
-        y: 366
-        width: 192
+        x: 582
+        y: 696
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -255,9 +255,9 @@ TextureImporter:
       name: Hp
       rect:
         serializedVersion: 2
-        x: 194
-        y: 366
-        width: 192
+        x: 0
+        y: 696
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -276,9 +276,9 @@ TextureImporter:
       name: Score
       rect:
         serializedVersion: 2
-        x: 388
-        y: 366
-        width: 256
+        x: 712
+        y: 696
+        width: 128
         height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -298,7 +298,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 828
+        y: 762
         width: 192
         height: 64
       alignment: 0
@@ -319,7 +319,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 194
-        y: 828
+        y: 762
         width: 192
         height: 64
       alignment: 0
@@ -340,7 +340,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 388
-        y: 828
+        y: 762
         width: 192
         height: 64
       alignment: 0
@@ -361,7 +361,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 762
+        y: 828
         width: 896
         height: 64
       alignment: 0
@@ -398,6 +398,279 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: AttackPower
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 696
+        width: 192
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 697075895ac480246a9456ab221a136e
+      internalID: -1878746457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackSpeed
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 696
+        width: 256
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de38e32b1f878e438565248c303f18f
+      internalID: -1103642406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HpHeal
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 498
+        width: 256
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06c2cca4f132ea84b813b602582761e5
+      internalID: -1598601955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stage
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 630
+        width: 256
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6f8b1c90f5f4f46b38823781463ec2
+      internalID: 474332698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c81717a1e719f2e4fac42b6d25c990db
+      internalID: -387598973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c749f5be90cae154388570db2d666b6a
+      internalID: -963846584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 816dd2e504893f540afd9c508b46c572
+      internalID: -909226016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 572ea1263c1ac884ea9f2cb2387711ab
+      internalID: 53207767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfde3b53d7107b940a81ab975fbb7982
+      internalID: -103564473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol_01
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 630
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bdf7d341f9fb6549a624453031ea4ae
+      internalID: 1475225532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Symbol_02
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 630
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a41ed3d0c0166804dbce1173bf65191f
+      internalID: 474282292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Count
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 696
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0ed1d82620f56d4fa18c6e16d7ac9d6
+      internalID: 1774845732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RemainHeal
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 498
+        width: 256
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e5a1b6377663704cb76833a6f090718
+      internalID: 1194755350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -409,19 +682,32 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      1: -387598973
+      2: -963846584
+      3: -909226016
+      4: 53207767
+      5: -103564473
+      AttackPower: -1878746457
+      AttackSpeed: -1103642406
+      Base: 1422330174
       Chickadee: 1402137104
+      City: 2023890730
+      Count: 1774845732
       Crow: 48211041
       Hp: -1178948720
+      HpHeal: -1598601955
+      Mountain: 699727854
+      Park: -545583569
       PlayerSelect: -2046439414
       Remain: -242355165
+      RemainHeal: 1194755350
       Score: 2072168659
+      Sky: 1776265682
       Sparrow: 275431217
-      Stage1: -545583569
-      Stage2: 2023890730
-      Stage3: 699727854
-      Stage4: 1422330174
-      Stage5: 1776265682
+      Stage: 474332698
       StageSelect: -283428661
+      Symbol_01: 1475225532
+      Symbol_02: 474282292
       Title: 1921832348
       UI_Text_1: -483647631
   spritePackingTag: 

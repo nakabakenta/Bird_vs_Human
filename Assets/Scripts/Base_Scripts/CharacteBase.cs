@@ -5,9 +5,8 @@ using UnityEngine;
 public class CharacteBase : MonoBehaviour
 {
     //ステータス
-    public string type;
-    public int hp;             //体力
-    public float speed;        //移動速度
+    public int hp;       //体力
+    public float speed;  //移動速度
     //処理
     public bool isDamage;//ダメージの可否
     //座標

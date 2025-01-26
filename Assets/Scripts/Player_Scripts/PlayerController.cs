@@ -31,7 +31,7 @@ public class PlayerController : PlayerBase
         GetComponent();
         StartPlayer();
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
-        nowPlayer = Instantiate(player[GameManager.playerNumber], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        nowPlayer = Instantiate(player[GameManager.selectPlayer], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得
         animator = nowPlayer.GetComponent<Animator>();
         thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
@@ -70,8 +70,8 @@ public class PlayerController : PlayerBase
             if (status == "Normal")
             {
                 //選択したプレイヤーの攻撃間隔を設定する
-                attackTimeInterval[0] = PlayerList.Player.attackInterval[0, GameManager.playerNumber];
-                attackTimeInterval[1] = PlayerList.Player.attackInterval[1, GameManager.playerNumber];
+                attackTimeInterval[0] = Player.attackSpeed[GameManager.selectPlayer];
+                attackTimeInterval[1] = Player.attackSpeed[GameManager.selectPlayer];
 
                 gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
             }
@@ -108,12 +108,12 @@ public class PlayerController : PlayerBase
                 //プレイヤーの状態を"Invincible"にする
                 status = "Invincible";
                 //このオブジェクトの位置に群れを生成する
-                Instantiate(group[GameManager.playerNumber], this.transform.position, Quaternion.identity);
+                Instantiate(group[GameManager.selectPlayer], this.transform.position, Quaternion.identity);
                 //ゲージタイマーを初期化する
                 gageTimer = 0.0f;
             }
             //経験値が最大経験値と等しい場合
-            if (exp == PlayerList.Player.maxExp[GameManager.playerNumber])
+            if (exp == maxExp)
             {
                 LevelUp();//関数"LevelUp"を実行する
             }
@@ -250,13 +250,13 @@ public class PlayerController : PlayerBase
         if (ally == 0)
         {
             //味方を生成する
-            playerAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            playerAlly[ally] = Instantiate(player[GameManager.selectPlayer], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         }
         //味方数が"1と等しい"場合
         else if (ally == 1)
         {
             //味方を生成する
-            playerAlly[ally] = Instantiate(player[GameManager.playerNumber], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+            playerAlly[ally] = Instantiate(player[GameManager.selectPlayer], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         }
 
         ally += 1;//味方数を"+1"する

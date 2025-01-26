@@ -21,7 +21,7 @@ public class PlayerAlly : MonoBehaviour
         playerTransform = GameObject.Find("Player").transform;    //ゲームオブジェクト"Player"を探して"Transform"を取得
         boxCollider = this.gameObject.GetComponent<BoxCollider>();//このオブジェクトの"BoxCollider"を取得
 
-        Instantiate(ally[GameManager.playerNumber], this.transform.position, this.transform.rotation, thisTransform);
+        Instantiate(ally[GameManager.selectPlayer], this.transform.position, this.transform.rotation, thisTransform);
     }
 
     // Update is called once per frame
