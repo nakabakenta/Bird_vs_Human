@@ -33,12 +33,12 @@ public class StageUI : MonoBehaviour
         downBullet_UI = GameObject.Find("DownBullet_Front_UI").GetComponent<Image>();
 
         pauseUI = GameObject.Find("Pause_UI");
-        stageClearUI = GameObject.Find("StageClear_UI");
+        stageClearUI = GameObject.Find("Clear_UI");
         continueUI = GameObject.Find("Continue_UI");
 
-        remain = GameObject.Find("Remain_Number").GetComponent<TMP_Text>();//
-        hp = GameObject.Find("Hp_Number").GetComponent<TMP_Text>();
-        score = GameObject.Find("Score_Number").GetComponent<TMP_Text>();  //
+        remain = GameObject.Find("Text_RemainNumber").GetComponent<TMP_Text>();//
+        hp = GameObject.Find("Text_HpNumber").GetComponent<TMP_Text>();
+        score = GameObject.Find("Text_ScoreNumber").GetComponent<TMP_Text>();  //
 
         pauseUI.SetActive(false);
         stageClearUI.SetActive(false);

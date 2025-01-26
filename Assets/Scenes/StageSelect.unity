@@ -1984,7 +1984,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540167609}
-  - component: {fileID: 540167608}
   - component: {fileID: 540167610}
   m_Layer: 0
   m_Name: Canvas
@@ -1993,18 +1992,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &540167608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540167606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0992ef88349ee2b41b873ae488caf61d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &540167609
 Transform:
   m_ObjectHideFlags: 0
@@ -2034,7 +2021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75d7878164b7e8478656746331901d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageSelect: {fileID: 1389935302}
+  stageSelectUI: {fileID: 1389935302}
 --- !u!1 &554719106
 GameObject:
   m_ObjectHideFlags: 0

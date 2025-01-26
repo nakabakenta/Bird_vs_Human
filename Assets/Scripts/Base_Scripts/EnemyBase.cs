@@ -10,7 +10,6 @@ public class EnemyBase : CharacteBase
     public string enemyType;//敵の型
     public float jump;      //ジャンプ力
     public int score;       //スコア
-    public int exp;         //経験値
     //処理
     public float rotation;
     public bool isAction = false;                         //行動の可否
@@ -332,10 +331,10 @@ public class EnemyBase : CharacteBase
     //関数"Enmey"
     public virtual void DeathEnemy()
     {
-        this.tag = "Untagged";                            //このタグを"Untagged"にする
-        hp = 0;                                           //体力を"0"にする
-        GameManager.score += EnemyList.WalkEnemy.score;   //スコアを足す
-        PlayerController.exp += 10;                       //経験値を足す
+        this.tag = "Untagged";    //このタグを"Untagged"にする
+        hp = 0;                   //体力を"0"にする
+        GameManager.score += 1;   //スコアを足す
+        PlayerController.exp += 1;//経験値を足す
 
         //位置(.Y)を"0.0f"にする
         this.transform.position

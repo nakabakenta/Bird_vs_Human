@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gage_Back_1
+      name: Slider_Base_02
       rect:
         serializedVersion: 2
         x: 512
-        y: 64
+        y: 32
         width: 512
-        height: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,13 +126,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gage_Base11
+      name: Slider_Base_01
       rect:
         serializedVersion: 2
-        x: 512
+        x: 511
         y: 0
         width: 512
-        height: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,48 +142,6 @@ TextureImporter:
       bones: []
       spriteID: f84049ab77e89104d93c9e875b8bed28
       internalID: -749384880
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gage_Light
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 192
-        width: 512
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b34347e5d72a2694a8a72888f1a018aa
-      internalID: 23619407
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gage_Front_1
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 128
-        width: 512
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6bdb81582cb7ca94aa27de5c4b0f7750
-      internalID: -392512870
       vertices: []
       indices: 
       edges: []
@@ -231,12 +189,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level_Base
+      name: KillSlider_Base
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -252,12 +210,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level_Back
+      name: KillSlider_Back
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
+        width: 32
         height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -273,12 +231,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Level_Front
+      name: KillSlider_Front
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 0
-        width: 64
+        width: 32
         height: 512
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -294,32 +252,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gage_Base
+      name: Slider_Back
       rect:
         serializedVersion: 2
         x: 512
-        y: 256
-        width: 512
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae27f0d74910bc74ba066820bdac2c7b
-      internalID: -1468722166
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gage_Back
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 288
+        y: 96
         width: 512
         height: 32
       alignment: 0
@@ -336,11 +273,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gage_Front
+      name: Slider_Front
       rect:
         serializedVersion: 2
         x: 512
-        y: 320
+        y: 128
         width: 512
         height: 32
       alignment: 0
@@ -352,6 +289,48 @@ TextureImporter:
       bones: []
       spriteID: 500d48b754a3f0244918ec162a832868
       internalID: -1187803902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slider_Base_Add
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 512
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa66d96d1239ea94c93d307e9d528c1c
+      internalID: 893318103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KillSlider_Add
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a248b8e206d8d844ba924d67fbb565c
+      internalID: 592733249
       vertices: []
       indices: 
       edges: []
@@ -369,17 +348,19 @@ TextureImporter:
     nameFileIdTable:
       DownBullet: 728133252
       ForwardBullet: 433435512
-      Gage_Back: 196328981
-      Gage_Back_1: 1054362850
       Gage_Base: -1468722166
-      Gage_Base11: -749384880
       Gage_Base_01: -1708254769
-      Gage_Front: -1187803902
       Gage_Front_1: -392512870
       Gage_Light: 23619407
-      Level_Back: 1567737202
-      Level_Base: 1455617132
-      Level_Front: -1486301215
+      KillSlider_Add: 592733249
+      KillSlider_Back: 1567737202
+      KillSlider_Base: 1455617132
+      KillSlider_Front: -1486301215
+      Slider_Back: 196328981
+      Slider_Base_01: -749384880
+      Slider_Base_02: 1054362850
+      Slider_Base_Add: 893318103
+      Slider_Front: -1187803902
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
