@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stage : MonoBehaviour
+public class Stage : UIBase
 {
     //処理
     public static int nowStage;                  //現在のステージ
     public static bool[] bossEnemy = new bool[5];//ボスの生存可否
     public static string status;                 //状態
 
-　  //このオブジェクトのコンポーネント
-　  private SceneLoader sceneLoader;//"Script(SceneLoader)"
-
     // Start is called before the first frame update
     void Start()
     {
-        sceneLoader = this.GetComponent<SceneLoader>();//この"Script(SceneLoader)"を取得する
         bossEnemy = new bool[5]                        //ボスの存在可否を"false(リセット)"する
         { 
             false, false, false, false, false 
@@ -38,7 +34,8 @@ public class Stage : MonoBehaviour
 
         if (PlayerController.remain <= 0)
         {
-            sceneLoader.GameOver();
+            GameManager.nowScene = "GameOver";
+            LoadScene();
         }
 
         if(bossEnemy[nowStage - 1] == false)

@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void LoadScene()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Time.timeScale = 1;                          //"Time.timeScale"‚ð"1"‚É‚·‚é
+        SceneManager.LoadScene(GameManager.nowScene);
     }
 }

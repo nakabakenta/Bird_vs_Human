@@ -294,7 +294,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slider_Base_Add
+      name: Slider_Base_Add_01
       rect:
         serializedVersion: 2
         x: 512
@@ -335,6 +335,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Slider_Base_Add_02
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 96
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b3a31543a34d0a439ae0ae0d6437516
+      internalID: -472220122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -359,7 +380,8 @@ TextureImporter:
       Slider_Back: 196328981
       Slider_Base_01: -749384880
       Slider_Base_02: 1054362850
-      Slider_Base_Add: 893318103
+      Slider_Base_Add_01: 893318103
+      Slider_Base_Add_02: -472220122
       Slider_Front: -1187803902
   spritePackingTag: 
   pSDRemoveMatte: 0

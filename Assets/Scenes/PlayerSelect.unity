@@ -390,7 +390,6 @@ GameObject:
   - component: {fileID: 83150620}
   - component: {fileID: 83150619}
   - component: {fileID: 83150618}
-  - component: {fileID: 83150617}
   - component: {fileID: 83150616}
   m_Layer: 5
   m_Name: Button_Sparrow
@@ -521,18 +520,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &83150617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83150614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cef7644b1a0bba4f81e7089e8a8f3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &83150618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3723,7 +3710,6 @@ GameObject:
   - component: {fileID: 1050946333}
   - component: {fileID: 1050946332}
   - component: {fileID: 1050946331}
-  - component: {fileID: 1050946330}
   - component: {fileID: 1050946329}
   m_Layer: 5
   m_Name: Button_Crow
@@ -3854,18 +3840,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1050946330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050946327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cef7644b1a0bba4f81e7089e8a8f3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1050946331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6448,7 +6422,6 @@ GameObject:
   - component: {fileID: 1801717183}
   - component: {fileID: 1801717182}
   - component: {fileID: 1801717181}
-  - component: {fileID: 1801717180}
   - component: {fileID: 1801717179}
   m_Layer: 5
   m_Name: Button_Chickadee
@@ -6579,18 +6552,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1801717180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801717177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cef7644b1a0bba4f81e7089e8a8f3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1801717181
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -444,7 +444,7 @@ TextureImporter:
       name: HpHeal
       rect:
         serializedVersion: 2
-        x: 0
+        x: 324
         y: 498
         width: 256
         height: 64
@@ -638,7 +638,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -654,12 +654,12 @@ TextureImporter:
       name: RemainHeal
       rect:
         serializedVersion: 2
-        x: 258
+        x: 582
         y: 498
         width: 256
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -667,6 +667,69 @@ TextureImporter:
       bones: []
       spriteID: 7e5a1b6377663704cb76833a6f090718
       internalID: 1194755350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ScoreValue
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304
+        width: 64
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db141808074d28a4fae56dc91d01a37e
+      internalID: -144497693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gage
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 498
+        width: 192
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f626b18fc708fda48b1a9b15911b4216
+      internalID: -1220428426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Release
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 498
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f77c78d1a17c5e45b3efd8fab2b7508
+      internalID: -1781380619
       vertices: []
       indices: 
       edges: []
@@ -694,14 +757,17 @@ TextureImporter:
       City: 2023890730
       Count: 1774845732
       Crow: 48211041
+      Gage: -1220428426
       Hp: -1178948720
       HpHeal: -1598601955
       Mountain: 699727854
       Park: -545583569
       PlayerSelect: -2046439414
+      Release: -1781380619
       Remain: -242355165
       RemainHeal: 1194755350
       Score: 2072168659
+      ScoreValue: -144497693
       Sky: 1776265682
       Sparrow: 275431217
       Stage: 474332698

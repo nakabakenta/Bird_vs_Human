@@ -15,8 +15,7 @@ public class PlayerBase : CharacteBase
     public static float[] attackTimeInterval = new float[2];//攻撃時間間隔([前方],[下方])
     public static float gageTimer;                          //ゲージタイマー
     public static float gageTimeInterval;                   //ゲージ時間間隔
-    public static int level;                                //レベル
-    public static int maxExp;
+    public static int maxExp = 10;                          //最大経験値
     public static int exp;                                  //経験値
     public static int ally;                                 //味方数
     public float invincibleTimer = 0.0f;                    //無敵タイマー
@@ -46,7 +45,6 @@ public class PlayerBase : CharacteBase
         gageTimer = 0.0f;
         gageTimeInterval = 20.0f;
         ally = 0;
-        level = 1;
         exp = 0;
 
         //ゲームの状態が"Menu"の場合
@@ -100,9 +98,15 @@ public class PlayerBase : CharacteBase
         { 4, 4, 4, 4 };
         //攻撃力
         public static int[] attackPower = new int[]
-        { 3, 5, 1, 5 };
+        { 3, 6, 1, 5 };
         //攻撃速度
         public static float[] attackSpeed = new float[]
-        { 1.0f, 2.0f, 0.5f, 0.5f };
+        { 4.0f, 2.0f, 6.0f, 6.0f };
+    }
+
+    public static class Invincible
+    {
+        public static int attackPower = 6;
+        public static float attackSpeed = 0.25f;
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClickHandler
 {
-    public static string selectButton; //選択しているボタン
-    public static bool buttonClick;    //ボタンのクリック可否
+    public static string selectButton;//選択しているボタン
+    public static bool buttonClick;   //ボタンのクリック可否
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +23,8 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
             if (selectButton != null)
             {
                 //選択しているボタンを探す
-                Transform findAlpha = GameObject.Find(selectButton).transform.Find("Alpha_UI_Base_02");
-                Transform findSelectMark = GameObject.Find(selectButton).transform.Find("UI_Base_03");
+                Transform findAlpha = GameObject.Find(selectButton).transform.Find("Alpha_UI_Base_64_03");
+                Transform findSelectMark = GameObject.Find(selectButton).transform.Find("UI_Base_64_04");
                 //選択しているボタンを探してコンポーネントを取得
                 RectTransform findRectTransform = GameObject.Find(selectButton).GetComponent<RectTransform>();
                 //選択しているボタンを初期化
@@ -68,10 +68,11 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
         //ボタンを"クリックしていない"場合
         if (buttonClick == false)
         {
+            GameManager.nowScene = "StageSelect";
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            Invoke("SceneLoad", 2.0f);            //関数"SceneLoad"を"2.0f"後に実行
+            Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
         }
     }
 
@@ -85,7 +86,7 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
         foreach (Transform child in transform)
         {
             //子オブジェクトの名前が"Alpha_UI_Base_02"の場合
-            if (child.name == "Alpha_UI_Base_02")
+            if (child.name == "Alpha_UI_Base_64_03")
             {
                 //子オブジェクトを非表示にする
                 child.gameObject.SetActive(false);
@@ -97,11 +98,5 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
                 child.gameObject.SetActive(setActive);
             }
         }
-    }
-
-    //関数"SceneLoad"
-    void SceneLoad()
-    {
-        sceneLoader.StageSelect();//"SceneLoader"の関数"StageSelect"を実行
     }
 }

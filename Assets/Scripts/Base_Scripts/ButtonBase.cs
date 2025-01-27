@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonBase : MonoBehaviour
+public class ButtonBase : UIBase
 {
     //このオブジェクトのコンポーネント
     public GameObject alpha;            //"GameObject(半透明)"
@@ -13,7 +13,6 @@ public class ButtonBase : MonoBehaviour
     public Button button;              //"Button" 
     public RectTransform rectTransform;//"RectTransform"
     public AudioSource audioSource;    //"AudioSource"
-    public SceneLoader sceneLoader;    //"Script(SceneLoader)"
     //処理
     public Vector2 buttonPosition;     //ボタンの位置
     public bool setActive;             //オブジェクト表示の可否
@@ -24,7 +23,6 @@ public class ButtonBase : MonoBehaviour
         button = this.GetComponent<Button>();
         rectTransform = this.GetComponent<RectTransform>();
         audioSource = this.GetComponent<AudioSource>();
-        sceneLoader = this.GetComponent<SceneLoader>();
         //このオブジェクトのコンポーネントを初期化
         selectMark.SetActive(false);
         //処理を初期化

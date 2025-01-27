@@ -79,8 +79,8 @@ public class PlayerController : PlayerBase
             else if (status == "Invincible")
             {
                 //無敵時の攻撃間隔を設定する
-                attackTimeInterval[0] = PlayerList.Invincible.attackInterval[0];
-                attackTimeInterval[1] = PlayerList.Invincible.attackInterval[1];
+                attackTimeInterval[0] = PlayerBase.Invincible.attackSpeed;
+                attackTimeInterval[1] = PlayerBase.Invincible.attackSpeed;
             }
 
             //前方攻撃
@@ -144,15 +144,10 @@ public class PlayerController : PlayerBase
         }
     }
 
-    ///関数"LevelUp"
+    //関数"LevelUp"
     void LevelUp()
     {
-        //レベルが"5以下"の場合
-        if(level >= 5)
-        {
-            levelAttackInterval += 0.1f;//レベルアップ時の攻撃間隔短縮に0.1f足す
-        }
-
+        hp += 1;
         exp = 0;//経験値を初期化する
     }
 

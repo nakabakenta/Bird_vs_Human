@@ -24,8 +24,8 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
             if (selectButton != null)
             {
                 //選択しているボタンを探す
-                Transform findAlpha = GameObject.Find(selectButton).transform.Find("Alpha_UI_Base_02");
-                Transform findSelectMark = GameObject.Find(selectButton).transform.Find("UI_Base_03");
+                Transform findAlpha = GameObject.Find(selectButton).transform.Find("Alpha_UI_Base_64_03");
+                Transform findSelectMark = GameObject.Find(selectButton).transform.Find("UI_Base_64_04");
                 //選択しているボタンを探してコンポーネントを取得
                 RectTransform findRectTransform = GameObject.Find(selectButton).GetComponent<RectTransform>();
                 //選択しているボタンを初期化
@@ -39,27 +39,32 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
             //ステージ1
             if (button.gameObject.name == "Button_Stage1")
             {
-                Stage.nowStage = 1;//"Stage"の"nowStage"を"1"にする
+                GameManager.nowScene = "Stage1";
+                Stage.nowStage = 1;
             }
             //ステージ2
             else if (button.gameObject.name == "Button_Stage2")
             {
-                Stage.nowStage = 2;//"Stage"の"nowStage"を"2"にする
+                GameManager.nowScene = "Stage2";
+                Stage.nowStage = 2;
             }
             //ステージ3
             else if (button.gameObject.name == "Button_Stage3")
             {
-                Stage.nowStage = 3;//"Stage"の"nowStage"を"3"にする
+                GameManager.nowScene = "Stage3";
+                Stage.nowStage = 3;
             }
             //ステージ4
             else if (button.gameObject.name == "Button_Stage4")
             {
-                Stage.nowStage = 4;//"Stage"の"nowStage"を"4"にする
+                GameManager.nowScene = "Stage4";
+                Stage.nowStage = 4;
             }
             //ステージ5
             else if (button.gameObject.name == "Button_Stage5")
             {
-                Stage.nowStage = 5;//"Stage"の"nowStage"を"5"にする
+                GameManager.nowScene = "Stage5";
+                Stage.nowStage = 5;
             }
 
             rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
@@ -77,7 +82,7 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            Invoke("SceneLoad", 2.0f);            //関数"SceneLoad"を"2.0f"後に実行する
+            Invoke("LoadScene", 2.0f);            //関数"SceneLoad"を"2.0f"後に実行する
         }
     }
 
@@ -91,7 +96,7 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
         foreach (Transform child in transform)
         {
             //子オブジェクトの名前が"Alpha"の場合
-            if (child.name == "Alpha_UI_Base_02")
+            if (child.name == "Alpha_UI_Base_64_03")
             {
                 //子オブジェクトを非表示にする
                 child.gameObject.SetActive(false);
@@ -103,11 +108,5 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
                 child.gameObject.SetActive(setActive);
             }
         }
-    }
-
-    //関数"SceneLoad"
-    void SceneLoad()
-    {
-        sceneLoader.StageScene();//"SceneLoader"の関数"StageScene"を実行する
     }
 }

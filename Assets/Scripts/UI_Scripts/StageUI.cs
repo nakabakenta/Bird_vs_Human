@@ -21,7 +21,6 @@ public class StageUI : MonoBehaviour
     public Slider gage;//Slider(ƒQ[ƒW)
     public Slider level;
 
-    private GameObject player;
     private PlayerController playerController;
 
     // Start is called before the first frame update
@@ -161,7 +160,7 @@ public class StageUI : MonoBehaviour
         else if (PlayerController.gageTimer > PlayerController.gageTimeInterval)
         {
             gage.value = 1;
-            gageLight.color = new Color32(255, 255, 255, 255);
+            gageLight.color = new Color32(255, 0, 0, 255);
         }
 
         if (PlayerController.status == "Invincible")
