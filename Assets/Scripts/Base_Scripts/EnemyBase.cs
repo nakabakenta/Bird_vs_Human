@@ -72,6 +72,11 @@ public class EnemyBase : CharacteBase
         {
             Action();//関数"Action"を実行する
         }
+
+        if(Stage.bossEnemy[Stage.nowStage - 1] == false)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
     }
 
     //関数"Action"
@@ -331,6 +336,11 @@ public class EnemyBase : CharacteBase
     //関数"Enmey"
     public virtual void DeathEnemy()
     {
+        if(enemyType == EnemyType.Boss.ToString())
+        {
+            Stage.bossEnemy[Stage.nowStage - 1] = false;
+        }
+
         this.tag = "Untagged";    //このタグを"Untagged"にする
         hp = 0;                   //体力を"0"にする
         GameManager.score += 1;   //スコアを足す

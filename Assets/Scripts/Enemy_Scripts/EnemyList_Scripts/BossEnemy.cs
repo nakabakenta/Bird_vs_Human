@@ -8,11 +8,10 @@ public class BossEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.Boss.ToString();           //敵の型
+        enemyType = EnemyType.Boss.ToString();                //敵の型
         hp = EnemyList.BossEnemy.hp[Stage.nowStage - 1];      
         speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];
         jump = EnemyList.BossEnemy.jump[Stage.nowStage - 1];
-
         playerFind = true;
 
         //初期のアニメーションを設定する

@@ -69,9 +69,21 @@ public class PlayerController : PlayerBase
             //プレイヤーの状態が"Normal"の場合
             if (status == "Normal")
             {
-                //選択したプレイヤーの攻撃間隔を設定する
-                attackTimeInterval[0] = Player.attackSpeed[GameManager.selectPlayer];
-                attackTimeInterval[1] = Player.attackSpeed[GameManager.selectPlayer];
+                if (GameManager.selectPlayer == 0)
+                {
+                    attackTimeInterval[0] = 2.0f;
+                    attackTimeInterval[1] = 2.0f;
+                }
+                else if (GameManager.selectPlayer == 1)
+                {
+                    attackTimeInterval[0] = 3.0f;
+                    attackTimeInterval[1] = 3.0f;
+                }
+                else if (GameManager.selectPlayer == 2)
+                {
+                    attackTimeInterval[0] = 1.0f;
+                    attackTimeInterval[1] = 1.0f;
+                }
 
                 gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
             }
@@ -79,8 +91,8 @@ public class PlayerController : PlayerBase
             else if (status == "Invincible")
             {
                 //無敵時の攻撃間隔を設定する
-                attackTimeInterval[0] = PlayerBase.Invincible.attackSpeed;
-                attackTimeInterval[1] = PlayerBase.Invincible.attackSpeed;
+                attackTimeInterval[0] = PlayerBase.InvincibleStatus.attackSpeed;
+                attackTimeInterval[1] = PlayerBase.InvincibleStatus.attackSpeed;
             }
 
             //前方攻撃

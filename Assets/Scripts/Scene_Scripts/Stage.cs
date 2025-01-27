@@ -12,10 +12,6 @@ public class Stage : UIBase
     // Start is called before the first frame update
     void Start()
     {
-        bossEnemy = new bool[5]                        //ボスの存在可否を"false(リセット)"する
-        { 
-            false, false, false, false, false 
-        };
         bossEnemy[nowStage - 1] = true;                //現在のステージのボスを"true(生存)"にする
         status = "Play";                               //ゲームの状態を"Play"にする
     }

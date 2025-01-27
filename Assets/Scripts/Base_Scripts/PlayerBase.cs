@@ -38,9 +38,25 @@ public class PlayerBase : CharacteBase
         //選択したプレイヤーのステータスを設定する
         hp = Player.hp[GameManager.selectPlayer];                     //体力
         attackPower = Player.attackPower[GameManager.selectPlayer];   //攻撃力
-        attackTimer[0] = Player.attackSpeed[GameManager.selectPlayer];//攻撃タイマー[前方]
-        attackTimer[1] = Player.attackSpeed[GameManager.selectPlayer];//攻撃タイマー[下方]
+
+        if(GameManager.selectPlayer == 0)
+        {
+            attackTimer[0] = 2.0f;
+            attackTimer[1] = 2.0f;
+        }
+        else if (GameManager.selectPlayer == 1)
+        {
+            attackTimer[0] = 3.0f;
+            attackTimer[1] = 3.0f;
+        }
+        else if (GameManager.selectPlayer == 2)
+        {
+            attackTimer[0] = 1.0f;
+            attackTimer[1] = 1.0f;
+        }
+
         status = "Normal";                                            //プレイヤーの状態を"Normal"にする
+
         //処理を初期化する
         gageTimer = 0.0f;
         gageTimeInterval = 20.0f;
@@ -104,9 +120,8 @@ public class PlayerBase : CharacteBase
         { 4.0f, 2.0f, 6.0f, 6.0f };
     }
 
-    public static class Invincible
+    public static class InvincibleStatus
     {
-        public static int attackPower = 6;
-        public static float attackSpeed = 0.25f;
+        public static float attackSpeed = 0.5f;
     }
 }

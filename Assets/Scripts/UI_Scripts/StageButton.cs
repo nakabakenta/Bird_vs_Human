@@ -67,6 +67,28 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
             //
             else if (selectButton == "Button_NextStage")
             {
+                
+            }
+            //
+            else if (selectButton == "Button_GameClear")
+            {
+                GameManager.nowScene = "GameClear";
+            }
+
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
+            alpha.SetActive(false);
+            selectMark.SetActive(true);
+            audioSource.PlayOneShot(enter);//"入場"を鳴らす
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //ボタンを"クリックしていない"場合
+        if (buttonClick == false)
+        {
+            if (selectButton == "Button_NextStage")
+            {
                 if (Stage.nowStage == 1)
                 {
                     GameManager.nowScene = "Stage2";
@@ -88,28 +110,13 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
                     Stage.nowStage = 5;
                 }
             }
-            //
-            else if (selectButton == "Button_GameClear")
-            {
-                GameManager.nowScene = "GameClear";
-            }
 
-            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
-            alpha.SetActive(false);
-            selectMark.SetActive(true);
-            audioSource.PlayOneShot(enter);//"入場"を鳴らす
-        }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        //ボタンを"クリックしていない"場合
-        if (buttonClick == false)
-        {
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
+            LoadScene();
+
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
+            //Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
         }
     }
 
