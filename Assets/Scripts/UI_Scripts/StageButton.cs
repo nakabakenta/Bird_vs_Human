@@ -35,46 +35,6 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
 
             selectButton = button.gameObject.name;//選択しているボタンの名前を入れる
 
-            //
-            if (selectButton == "Button_Restart")
-            {
-                if(Stage.nowStage == 1)
-                {
-                    GameManager.nowScene = "Stage1";
-                }
-                else if(Stage.nowStage == 2)
-                {
-                    GameManager.nowScene = "Stage2";
-                }
-                else if(Stage.nowStage == 3)
-                {
-                    GameManager.nowScene = "Stage3";
-                }
-                else if(Stage.nowStage == 4)
-                {
-                    GameManager.nowScene = "Stage4";
-                }
-                else if(Stage.nowStage == 5)
-                {
-                    GameManager.nowScene = "Stage5";
-                } 
-            }
-            //
-            else if (selectButton == "Button_BackToMenu")
-            {
-                GameManager.nowScene = "PlayerSelect";
-            }
-            //
-            else if (selectButton == "Button_NextStage")
-            {
-                
-            }
-            //
-            else if (selectButton == "Button_GameClear")
-            {
-                GameManager.nowScene = "GameClear";
-            }
-
             rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
             alpha.SetActive(false);
             selectMark.SetActive(true);
@@ -87,36 +47,12 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
         //ボタンを"クリックしていない"場合
         if (buttonClick == false)
         {
-            if (selectButton == "Button_NextStage")
-            {
-                if (Stage.nowStage == 1)
-                {
-                    GameManager.nowScene = "Stage2";
-                    Stage.nowStage = 2;
-                }
-                else if (Stage.nowStage == 2)
-                {
-                    GameManager.nowScene = "Stage3";
-                    Stage.nowStage = 3;
-                }
-                else if (Stage.nowStage == 3)
-                {
-                    GameManager.nowScene = "Stage4";
-                    Stage.nowStage = 4;
-                }
-                else if (Stage.nowStage == 4)
-                {
-                    GameManager.nowScene = "Stage5";
-                    Stage.nowStage = 5;
-                }
-            }
-
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
             LoadScene();
 
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            //Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
+            Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
         }
     }
 

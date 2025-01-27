@@ -14,3 +14,8 @@ public class GameManager : MonoBehaviour
     //共通
     public static bool[] stageClear = new bool[5] { false, false, false, false, false };//ステージクリアフラグ
 }
+
+//バグ
+//ステージボタン
+//ボスの動き
+//ステージ5のUI

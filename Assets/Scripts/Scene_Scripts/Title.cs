@@ -7,7 +7,7 @@ public class Title : UIBase
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.nowScene = "Title";
     }
 
     // Update is called once per frame
@@ -16,7 +16,6 @@ public class Title : UIBase
         //マウスを(左 || 右)クリックをしたら
         if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
-            GameManager.nowScene = "PlayerSelect";
             LoadScene();
         }
     }
