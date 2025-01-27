@@ -734,6 +734,153 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: StageClear
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 432
+        width: 448
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1832d9a0d9f8cf7478d204eb50ad9ba4
+      internalID: 1275121006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameClear
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 368
+        width: 384
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e38ad4b058a0b8445bcbe1951ac198ee
+      internalID: 1278865003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Continue
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 304
+        width: 768
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ac6868f3faefe5499a8079e61f58daa
+      internalID: -392677819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOver
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 368
+        width: 448
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8602b4a95c6b9bf4783a492865079973
+      internalID: 105555200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NextStage
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 238
+        width: 256
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fca3f565b41ca9499dedd973d5043ec
+      internalID: -2002922453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Restart
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 238
+        width: 320
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92c4d154f83b29241948546576eb8573
+      internalID: -338596864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackToMenu
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 238
+        width: 448
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1678fb0d21c2f8742b354fbc678b0633
+      internalID: -1101987141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -752,30 +899,36 @@ TextureImporter:
       5: -103564473
       AttackPower: -1878746457
       AttackSpeed: -1103642406
+      BackToMenu: -1101987141
       Base: 1422330174
       Chickadee: 1402137104
       City: 2023890730
+      Continue: -483647631
       Count: 1774845732
       Crow: 48211041
       Gage: -1220428426
+      GameClear: 1278865003
+      GameOver: 105555200
       Hp: -1178948720
       HpHeal: -1598601955
       Mountain: 699727854
+      NextStage: -2002922453
       Park: -545583569
       PlayerSelect: -2046439414
       Release: -1781380619
       Remain: -242355165
       RemainHeal: 1194755350
+      Restart: -338596864
       Score: 2072168659
       ScoreValue: -144497693
       Sky: 1776265682
       Sparrow: 275431217
       Stage: 474332698
+      StageClear: 1275121006
       StageSelect: -283428661
       Symbol_01: 1475225532
       Symbol_02: 474282292
       Title: 1921832348
-      UI_Text_1: -483647631
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -35,10 +35,42 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
 
             selectButton = button.gameObject.name;//選択しているボタンの名前を入れる
 
-            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
+            if(selectButton == "Button_Restart")
+            {
+                GameManager.nextScene = GameManager.nowScene;
+            }
+            else if (selectButton == "Button_BackToMenu")
+            {
+                GameManager.nextScene = "PlayerSelect";
+            }
+            else if (selectButton == "Button_NextStage")
+            {
+                if(GameManager.nowScene == "Stage1")
+                {
+                    GameManager.nextScene = "Stage2";
+                }
+                else if (GameManager.nowScene == "Stage2")
+                {
+                    GameManager.nextScene = "Stage3";
+                }
+                else if (GameManager.nowScene == "Stage3")
+                {
+                    GameManager.nextScene = "Stage4";
+                }
+                else if (GameManager.nowScene == "Stage4")
+                {
+                    GameManager.nextScene = "Stage5";
+                }
+            }
+            else if(selectButton == "Button_GameClear")
+            {
+                GameManager.nextScene = "GameClear";
+            }
+
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
             alpha.SetActive(false);
             selectMark.SetActive(true);
-            audioSource.PlayOneShot(enter);//"入場"を鳴らす
+            audioSource.PlayOneShot(enter);       //"入場"を鳴らす
         }
     }
 
@@ -49,8 +81,6 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
         {
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
-            LoadScene();
-
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
             Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
         }

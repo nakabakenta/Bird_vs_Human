@@ -17,7 +17,7 @@ public class PlayerSelect : MonoBehaviour
     void Start()
     {
         GameManager.selectPlayer = -1;
-        GameManager.status = "Menu";
+        GameManager.playBegin = false;
         playerUI.SetActive(false);
         playerInformationUI.SetActive(false);
     }

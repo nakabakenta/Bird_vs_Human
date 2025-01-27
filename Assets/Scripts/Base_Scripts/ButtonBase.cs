@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class ButtonBase : UIBase
 {
     //このオブジェクトのコンポーネント
-    public GameObject alpha;            //"GameObject(半透明)"
-    public GameObject selectMark;       //"GameObject(選択マーク)"
-    public AudioClip enter;             //"AudioClip(入場)"
-    public AudioClip click;             //"AudioClip(クリック)"
+    public GameObject alpha;           //"GameObject(半透明)"
+    public GameObject selectMark;      //"GameObject(選択マーク)"
+    public AudioClip enter;            //"AudioClip(入場)"
+    public AudioClip click;            //"AudioClip(クリック)"
     public Button button;              //"Button" 
     public RectTransform rectTransform;//"RectTransform"
     public AudioSource audioSource;    //"AudioSource"

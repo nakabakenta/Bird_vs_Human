@@ -73,7 +73,7 @@ public class EnemyBase : CharacteBase
             Action();//ŠÖ”"Action"‚ğÀs‚·‚é
         }
 
-        if(Stage.bossEnemy[Stage.nowStage - 1] == false)
+        if(enemyType == EnemyType.Find.ToString() && Stage.bossEnemy[Stage.nowStage - 1] == false)
         {
             Destroy();//ŠÖ”"Destroy"‚ğÀs‚·‚é
         }

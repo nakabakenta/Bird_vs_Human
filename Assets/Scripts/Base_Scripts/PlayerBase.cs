@@ -64,10 +64,10 @@ public class PlayerBase : CharacteBase
         exp = 0;
 
         //ゲームの状態が"Menu"の場合
-        if (GameManager.status == "Menu")
+        if (GameManager.playBegin == false)
         {
-            remain = 3;                 //残機
-            GameManager.status = "Play";//ゲームの状態を"Play"にする
+            remain = 3;                  //残機
+            GameManager.playBegin = true;//ゲームの状態を"Play"にする
         }
     }
 

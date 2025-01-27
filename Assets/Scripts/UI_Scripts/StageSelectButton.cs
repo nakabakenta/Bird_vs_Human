@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClickHandler
 {
-    public static string selectButton; //選択しているボタン
-    public static bool buttonClick;    //ボタンのクリック可否
+    public static string selectButton;//選択しているボタン
+    public static bool buttonClick;   //ボタンのクリック可否
 
     // Start is called before the first frame update
     void Start()
@@ -39,35 +39,30 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
             //ステージ1
             if (button.gameObject.name == "Button_Stage1")
             {
-                GameManager.nowScene = "Stage1";
-                Stage.nowStage = 1;
+                GameManager.nextScene = "Stage1";
             }
             //ステージ2
             else if (button.gameObject.name == "Button_Stage2")
             {
-                GameManager.nowScene = "Stage2";
-                Stage.nowStage = 2;
+                GameManager.nextScene = "Stage2";
             }
             //ステージ3
             else if (button.gameObject.name == "Button_Stage3")
             {
-                GameManager.nowScene = "Stage3";
-                Stage.nowStage = 3;
+                GameManager.nextScene = "Stage3";
             }
             //ステージ4
             else if (button.gameObject.name == "Button_Stage4")
             {
-                GameManager.nowScene = "Stage4";
-                Stage.nowStage = 4;
+                GameManager.nextScene = "Stage4";
             }
             //ステージ5
             else if (button.gameObject.name == "Button_Stage5")
             {
-                GameManager.nowScene = "Stage5";
-                Stage.nowStage = 5;
+                GameManager.nextScene = "Stage5";
             }
 
-            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
             alpha.SetActive(false);
             selectMark.SetActive(true);
             audioSource.PlayOneShot(enter);//"入場"を鳴らす

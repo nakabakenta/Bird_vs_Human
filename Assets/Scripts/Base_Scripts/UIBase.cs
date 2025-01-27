@@ -7,44 +7,30 @@ public class UIBase : MonoBehaviour
 {
     public void LoadScene()
     {
-        if(GameManager.nowScene == "Title")
+        Time.timeScale = 1;
+
+        if (GameManager.nextScene == "Stage1")
         {
-            GameManager.nowScene = "PlayerSelect";
+            Stage.nowStage = 1;
         }
-        else if(GameManager.nowScene == "PlayerSelect")
+        else if (GameManager.nextScene == "Stage2")
         {
-            GameManager.nowScene = "StageSelect";
-        }
-        else if (GameManager.nowScene == "StageSelect")
-        {
-            
-
-
-        }
-
-
-
-        if (Stage.nowStage == 1)
-        {
-            GameManager.nowScene = "Stage2";
             Stage.nowStage = 2;
         }
-        else if (Stage.nowStage == 2)
+        else if (GameManager.nextScene == "Stage3")
         {
-            GameManager.nowScene = "Stage3";
             Stage.nowStage = 3;
         }
-        else if (Stage.nowStage == 3)
+        else if (GameManager.nextScene == "Stage4")
         {
-            GameManager.nowScene = "Stage4";
             Stage.nowStage = 4;
         }
-        else if (Stage.nowStage == 4)
+        else if (GameManager.nextScene == "Stage5")
         {
-            GameManager.nowScene = "Stage5";
             Stage.nowStage = 5;
         }
 
-        SceneManager.LoadScene(GameManager.nowScene);
+        SceneManager.LoadScene(GameManager.nextScene);
+        GameManager.nowScene = GameManager.nextScene;
     }
 }

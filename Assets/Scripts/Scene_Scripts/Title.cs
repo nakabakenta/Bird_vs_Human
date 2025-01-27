@@ -16,6 +16,7 @@ public class Title : UIBase
         //マウスを(左 || 右)クリックをしたら
         if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
+            GameManager.nextScene = "PlayerSelect";
             LoadScene();
         }
     }

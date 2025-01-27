@@ -56,7 +56,7 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
                 GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Penguin;//
             }
 
-            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 200, rectTransform.anchoredPosition.y);
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
             alpha.SetActive(false);
             selectMark.SetActive(true);
             audioSource.PlayOneShot(enter);//"入場"を鳴らす
@@ -68,7 +68,7 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
         //ボタンを"クリックしていない"場合
         if (buttonClick == false)
         {
-            GameManager.nowScene = "StageSelect";
+            GameManager.nextScene = "StageSelect";
             buttonClick = true;                   //ボタンを"クリックした"にする
             audioSource.PlayOneShot(click);       //"クリック"を鳴らす
             InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
