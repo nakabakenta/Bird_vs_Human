@@ -51,7 +51,7 @@ public class PlayerController : PlayerBase
     public override void UpdatePlayer()
     {
         //ゲームの状態が"Play"の場合
-        if (Stage.status == "Play")
+        if (GameManager.status == "Play")
         {
             //攻撃タイマーに経過時間を足す
             attackTimer[0] += Time.deltaTime;//攻撃タイマー[前方]
@@ -131,14 +131,14 @@ public class PlayerController : PlayerBase
             }
         }
         //Escキーが"押された"&&ゲームの状態が"Play"の場合
-        if (Input.GetKeyDown(KeyCode.Escape) && Stage.status == "Play")
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.status == "Play")
         {
-            Stage.status = "Pause";//ゲームの状態を"Pause"にする
+            GameManager.status = "Pause";//ゲームの状態を"Pause"にする
         }
         //Escキーが"押された"&&ゲームの状態が"Pause"の場合
-        else if (Input.GetKeyDown(KeyCode.Escape) && Stage.status == "Pause")
+        else if (Input.GetKeyDown(KeyCode.Escape) && GameManager.status == "Pause")
         {
-            Stage.status = "Play";//ゲームの状態を"Play"にする
+            GameManager.status = "Play";//ゲームの状態を"Play"にする
         }
         //プレイヤーの状態が"Invincible"の場合
         if (status == "Invincible")
@@ -219,8 +219,8 @@ public class PlayerController : PlayerBase
         //無敵タイマーが無敵持続時間以上の場合
         if (invincibleTimer >= invincibleInterval)
         {
-            invincibleTimer = 0.0f; //無敵タイマーを初期化する
-            status = "Normal";//プレイヤーの状態を"Normal"にする
+            invincibleTimer = 0.0f;//無敵タイマーを初期化する
+            status = "Normal";     //プレイヤーの状態を"Normal"にする
         }  
     }
 

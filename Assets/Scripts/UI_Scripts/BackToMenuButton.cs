@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class BackToMenuButton : ButtonBase, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public static string selectButton;//選択しているボタン
-    public static bool buttonClick;   //ボタンのクリック可否
+    public static string selectButton = null;//選択しているボタン
+    public static bool buttonClick;          //ボタンのクリック可否
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,10 @@ public class BackToMenuButton : ButtonBase, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ExitButton();
+        if (buttonClick == false)
+        {
+            ExitButton();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -45,5 +48,10 @@ public class BackToMenuButton : ButtonBase, IPointerEnterHandler, IPointerExitHa
             buttonClick = true;//ボタンを"クリックした"にする
             ClickButton();     //関数"ClickButton"を実行する
         }
+    }
+
+    public override void ResetButton()
+    {
+        selectButton = null;
     }
 }

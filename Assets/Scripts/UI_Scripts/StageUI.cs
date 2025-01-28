@@ -7,7 +7,7 @@ using TMPro;
 public class StageUI : MonoBehaviour
 {
     //コンポーネント(private)
-    private GameObject pauseUI;
+    
     private GameObject stageClearUI;
     private GameObject continueUI;
     private Image forwardBullet_UI;
@@ -31,7 +31,6 @@ public class StageUI : MonoBehaviour
         forwardBullet_UI = GameObject.Find("ForwardBullet_Front_UI").GetComponent<Image>();
         downBullet_UI = GameObject.Find("DownBullet_Front_UI").GetComponent<Image>();
 
-        pauseUI = GameObject.Find("Pause_UI");
         stageClearUI = GameObject.Find("Clear_UI");
         continueUI = GameObject.Find("Continue_UI");
 
@@ -39,7 +38,6 @@ public class StageUI : MonoBehaviour
         hp = GameObject.Find("Text_HpNumber").GetComponent<TMP_Text>();
         score = GameObject.Find("Text_ScoreNumber").GetComponent<TMP_Text>();  //
 
-        pauseUI.SetActive(false);
         stageClearUI.SetActive(false);
         continueUI.SetActive(false);
 
@@ -105,17 +103,7 @@ public class StageUI : MonoBehaviour
             remain.text = "0" + PlayerController.remain;//
         }
 
-        if(Stage.status == "Pause")
-        {
-            pauseUI.SetActive(true);
-        }
-        else if(Stage.status == "Play")
-        {
-            pauseUI.SetActive(false);
-        }
-
-
-        if (Stage.status == "Clear")
+        if (GameManager.status == "Clear")
         {
             stageClearUI.SetActive(true);
         }
@@ -173,4 +161,6 @@ public class StageUI : MonoBehaviour
             level.value = 0;
         }
     }
+
+    
 }

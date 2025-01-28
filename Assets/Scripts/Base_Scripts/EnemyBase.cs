@@ -91,7 +91,7 @@ public class EnemyBase : CharacteBase
         else if (isAnimation == false)
         {
             //
-            if (PlayerController.status != "Death")
+            if (PlayerBase.status != "Death")
             {
                 Direction();//関数"Direction"を実行する
 
@@ -138,7 +138,7 @@ public class EnemyBase : CharacteBase
                     AnimationPlay();//関数"AnimationPlay"を実行する
                 }
             }
-            else if (PlayerController.status == "Death")
+            else if (PlayerBase.status == "Death")
             {
                 nowAnimationNumber = (int)HumanoidAnimation.Dance;
                 AnimationPlay();                                  //関数"AnimationPlay"を実行する
@@ -344,7 +344,7 @@ public class EnemyBase : CharacteBase
         this.tag = "Untagged";    //このタグを"Untagged"にする
         hp = 0;                   //体力を"0"にする
         GameManager.score += 1;   //スコアを足す
-        PlayerController.exp += 1;//経験値を足す
+        PlayerBase.exp += 1;//経験値を足す
 
         //位置(.Y)を"0.0f"にする
         this.transform.position

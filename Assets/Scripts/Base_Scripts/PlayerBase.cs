@@ -55,7 +55,7 @@ public class PlayerBase : CharacteBase
             attackTimer[1] = 1.0f;
         }
 
-        status = "Normal";                                            //プレイヤーの状態を"Normal"にする
+        status = "Normal";//プレイヤーの状態を"Normal"にする
 
         //処理を初期化する
         gageTimer = 0.0f;

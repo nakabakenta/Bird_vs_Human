@@ -30,11 +30,6 @@ public class ButtonBase : UIBase
         buttonPosition = rectTransform.anchoredPosition;
     }
 
-    public void ResetButton()
-    {
-
-    }
-
     public void EnterButton()
     {
         if(moveButton == true)
@@ -56,14 +51,20 @@ public class ButtonBase : UIBase
     {
         audioSource.PlayOneShot(click);       //"クリック"を鳴らす
 
-        if(Stage.status == "Pause")
+        if(GameManager.status == "Pause")
         {
-            Stage.status = null;
+            GameManager.status = null;
             LoadScene();
         }
 
         InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
         Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
+        Invoke("ResetButton", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
+    }
+
+    public virtual void ResetButton()
+    {
+
     }
 
     //関数"Flash"
