@@ -97,7 +97,7 @@ public class FighterJetEnemy : MonoBehaviour
     {
         this.tag = "Untagged";                         //‚±‚Ì"this.tag == Untagged"‚É‚·‚é
         hp = 0;                                        //"hp"‚ð"0"‚É‚·‚é
-        GameManager.score += EnemyList.FighterJetEnemy.score;//"score"‚ð‘«‚·
+        GameManager.score += 1;//"score"‚ð‘«‚·
 
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);

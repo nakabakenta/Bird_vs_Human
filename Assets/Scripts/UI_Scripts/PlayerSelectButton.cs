@@ -12,6 +12,7 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
     void Start()
     {
         GetComponent();
+        moveButton = true;
         buttonClick = false;
     }
 

@@ -98,7 +98,7 @@ public class FighterJetBossEnemy : MonoBehaviour
         Stage.bossEnemy[Stage.nowStage - 1] = false;   //
         this.tag = "Untagged";                         //‚±‚Ì"this.tag == Untagged"‚É‚·‚é
         hp = 0;                                        //"hp"‚ð"0"‚É‚·‚é
-        GameManager.score += EnemyList.BossEnemy.score[Stage.nowStage - 1];//"score"‚ð‘«‚·
+        GameManager.score += 1;//"score"‚ð‘«‚·
 
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);

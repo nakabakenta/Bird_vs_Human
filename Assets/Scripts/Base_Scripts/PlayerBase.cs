@@ -96,7 +96,15 @@ public class PlayerBase : CharacteBase
         animator.SetBool("Death", true);//Animator‚ğ"Death"‚É‚·‚é
         hp = 0;                         //‘Ì—Í‚ğ"0"‚É‚·‚é
         remain -= 1;                    //c‹@‚ğ"-1"‚·‚é
-        status = "Death";
+
+        if(remain > 0)
+        {
+            status = "Death";
+        }
+        else if(remain <= 0)
+        {
+            status = "GameOver";
+        }
     }
 
     //Õ“Ë”»’è(OnTriggerEnter)

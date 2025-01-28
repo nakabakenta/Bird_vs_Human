@@ -28,9 +28,9 @@ public class Stage : UIBase
             Time.timeScale = 0;
         }
 
-        if (PlayerController.remain <= 0)
+        if (PlayerBase.status == "GameOver")
         {
-            GameManager.nowScene = "GameOver";
+            GameManager.nextScene = "GameOver";
             LoadScene();
         }
 

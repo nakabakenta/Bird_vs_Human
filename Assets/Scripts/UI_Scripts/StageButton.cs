@@ -12,6 +12,7 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
     void Start()
     {
         GetComponent();
+        moveButton = true;
         buttonClick = false;
     }
 

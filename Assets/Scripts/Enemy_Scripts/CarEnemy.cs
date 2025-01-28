@@ -134,7 +134,7 @@ public class CarEnemy : MonoBehaviour
     {
         this.tag = "Untagged";                         //このタグを"Untagged"にする
         hp = 0;                                        //体力を"0"にする
-        GameManager.score += EnemyList.CarEnemy.score; //スコアを足す
+        GameManager.score += 1; //スコアを足す
         PlayerController.exp += EnemyList.CarEnemy.exp;//経験値を足す
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);

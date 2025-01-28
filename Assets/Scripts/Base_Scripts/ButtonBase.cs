@@ -16,6 +16,7 @@ public class ButtonBase : UIBase
     //処理
     public Vector2 buttonPosition;     //ボタンの位置
     public bool setActive;             //オブジェクト表示の可否
+    public bool moveButton;
 
     public void GetComponent()
     {
@@ -36,11 +37,20 @@ public class ButtonBase : UIBase
 
     public void EnterButton()
     {
-        rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
+        if(moveButton == true)
+        {
+            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
+        }
         alpha.SetActive(false);
         selectMark.SetActive(true);
         audioSource.PlayOneShot(enter);//"入場"を鳴らす
     }
+
+    public void ExitButton()
+    {
+        alpha.SetActive(true);
+    }
+
 
     public void ClickButton()
     {
