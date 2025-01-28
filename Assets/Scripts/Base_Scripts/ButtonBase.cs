@@ -59,7 +59,6 @@ public class ButtonBase : UIBase
 
         InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
         Invoke("LoadScene", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
-        Invoke("ResetButton", 2.0f);            //関数"LoadScene"を"2.0f"後に実行
     }
 
     public virtual void ResetButton()
@@ -76,7 +75,7 @@ public class ButtonBase : UIBase
         //子オブジェクトを取得
         foreach (Transform child in transform)
         {
-            //子オブジェクトの名前が"Alpha"の場合
+            //子オブジェクトの名前が"Alpha"の場合s
             if (child.name == "Alpha_UI_Base_64_03")
             {
                 //子オブジェクトを非表示にする

@@ -13,18 +13,25 @@ public class BossEnemy : EnemyBase
         speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];
         jump = EnemyList.BossEnemy.jump[Stage.nowStage - 1];
         playerFind = true;
+        bossEnemy = true;
 
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.Walk;
         //関数を実行する
-        GetComponent();//コンポーネントを所得
-        StartEnemy();  //敵の設定をする
+        GetComponent();  //コンポーネントを所得する
+        StartAnimation();//開始時のアニメーションを設定する
     }
 
     // Update is called once per frame
     void Update()
     {
-        base.UpdateEnemy();
+        UpdateEnemy();
+    }
+
+    public override void DeathEnemy()
+    {
+        bossEnemy = false;
+        base.DeathEnemy();
     }
 
     //当たり判定(OnTriggerEnter)

@@ -22,8 +22,8 @@ public class HaveGunEnemy : EnemyBase
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)HumanoidAnimation.HaveGunIdle;
         //関数を実行する
-        GetComponent();//コンポーネントを所得する
-        StartEnemy();  //敵の設定をする
+        GetComponent();  //コンポーネントを所得する
+        StartAnimation();//開始時のアニメーションを設定する
     }
 
     // Update is called once per frame

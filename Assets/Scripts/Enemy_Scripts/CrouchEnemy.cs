@@ -15,8 +15,8 @@ public class CrouchEnemy : EnemyBase
         playerFind = false;
 
         //関数を実行する
-        GetComponent();//コンポーネントを所得
-        StartEnemy();  //敵の設定をする
+        GetComponent();  //コンポーネントを所得
+        StartAnimation();//開始時のアニメーションを設定する
     }
 
     // Update is called once per frame

@@ -8,26 +8,32 @@ public class PlayerBase : CharacteBase
     public static int attackPower;//攻撃力
     public static int remain;     //残機
     public static string status;  //状態
+    public float attackSpeed;     //攻撃速度
     //座標
     public Vector3 mousePosition;
+    //移動制限
+    private Vector2[,] limitPosition = new Vector2[5, 2]
+    {
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+        { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
+    };
     //処理
-    public static float[] attackTimer = new float[2];       //攻撃タイマー([前方],[下方])
-    public static float[] attackTimeInterval = new float[2];//攻撃時間間隔([前方],[下方])
-    public static float gageTimer;                          //ゲージタイマー
-    public static float gageTimeInterval;                   //ゲージ時間間隔
-    public static int maxExp = 10;                          //最大経験値
-    public static int exp;                                  //経験値
-    public static int ally;                                 //味方数
-    public float invincibleTimer = 0.0f;                    //無敵タイマー
-    public float invincibleInterval = 10.0f;                //無敵持続時間
-    public float blinkingTime = 1.0f;                       //点滅持続時間
-    public float rendererSwitch = 0.05f;                    //Renderer切り替え時間
-    public float rendererTimer;                             //Renderer切り替えの経過時間
-    public float rendererTotalTime;                         //Renderer切り替えの合計経過時間
-    public bool isRenderer;                               　//Rendererの可否
-    public float levelAttackInterval = 0.0f;                //レベルアップ時の攻撃間隔短縮
-    public bool isAction = false;      //行動の可否
-    public bool isAnimation = false;   //アニメーションの可否
+    public static float[] attackTimer = new float[2];//攻撃タイマー([前方],[下方])
+    public static float attackInterval;              //攻撃間隔
+    public static float gageTimer;                   //ゲージタイマー
+    public static float gageInterval = 20.0f;        //ゲージ間隔
+    public static int exp;                           //経験値
+    public static int ally;                          //味方数
+    public float invincibleTimer = 0.0f;             //無敵タイマー
+    public float invincibleInterval = 10.0f;         //無敵間隔
+    public float blinkingInterval = 1.0f;            //点滅間隔
+    public float rendererTimer;                      //Renderer切り替えの経過時間
+    public float rendererInterval = 0.05f;           //Renderer切り替え時間
+    public float rendererTotalTime;                  //Renderer切り替えの合計経過時間
+    public bool isRenderer;                          //Rendererの可否
     //このオブジェクトのコンポーネント
     public GameObject nowPlayer;                       //"GameObject(現在のプレイヤー)"
     public GameObject[] playerAlly = new GameObject[2];//"GameObject(プレイヤーの味方)"
@@ -38,46 +44,97 @@ public class PlayerBase : CharacteBase
         //選択したプレイヤーのステータスを設定する
         hp = Player.hp[GameManager.selectPlayer];                     //体力
         attackPower = Player.attackPower[GameManager.selectPlayer];   //攻撃力
-
-        if(GameManager.selectPlayer == 0)
-        {
-            attackTimer[0] = 2.0f;
-            attackTimer[1] = 2.0f;
-        }
-        else if (GameManager.selectPlayer == 1)
-        {
-            attackTimer[0] = 3.0f;
-            attackTimer[1] = 3.0f;
-        }
-        else if (GameManager.selectPlayer == 2)
-        {
-            attackTimer[0] = 1.0f;
-            attackTimer[1] = 1.0f;
-        }
-
+        attackSpeed = (Player.maxStatus - Player.attackSpeed[GameManager.selectPlayer]) / 2.0f;
+        attackTimer[0] = attackSpeed;
+        attackTimer[1] = attackSpeed;
         status = "Normal";//プレイヤーの状態を"Normal"にする
-
         //処理を初期化する
         gageTimer = 0.0f;
-        gageTimeInterval = 20.0f;
         ally = 0;
         exp = 0;
 
         //ゲームの状態が"Menu"の場合
         if (GameManager.playBegin == false)
         {
-            remain = 3;                  //残機
-            GameManager.playBegin = true;//ゲームの状態を"Play"にする
+            remain = 3;                  //
+            GameManager.playBegin = true;//
         }
     }
 
-    public virtual void UpdatePlayer()
+    public void UpdatePlayer()
     {
+        //ゲームの状態が"Play"の場合
+        if (GameManager.status == "Play")
+        {
+            //攻撃タイマーに経過時間を足す
+            attackTimer[0] += Time.deltaTime;//攻撃タイマー[前方]
+            attackTimer[1] += Time.deltaTime;//攻撃タイマー[下方]
+            //マウスの位置を取得する
+            mousePosition = Input.mousePosition;
+            //マウスの位置(スクリーン座標)をビューポイント座標に変換する
+            viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
+            //移動の限界位置を設定する
+            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, limitPosition[Stage.nowStage - 1, 0].x, limitPosition[Stage.nowStage - 1, 1].x);
+            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, limitPosition[Stage.nowStage - 1, 0].y, limitPosition[Stage.nowStage - 1, 1].y);
+            //ビューポイント座標をワールド座標に変換する
+            this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 
+            //プレイヤーの状態が"Normal"の場合
+            if (status == "Normal")
+            {
+                attackInterval = attackSpeed;
+
+                gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
+            }
+            //プレイヤーの状態が"Invincible"の場合
+            else if (status == "Invincible")
+            {
+                //無敵時の攻撃間隔を設定する
+                attackInterval = PlayerBase.InvincibleStatus.attackSpeed;
+            }
+
+            InputButton();
+        }
+
+        //プレイヤーの状態が"Invincible"の場合
+        if (status == "Invincible")
+        {
+            Invincible();//関数"Invincible"を実行する
+        }
+
+        //経験値が最大経験値と等しい場合
+        if (exp == Player.maxExp)
+        {
+            Heal();//関数"Heal"を実行する
+        }
     }
 
-    //関数"DamagePlayer"
-    public virtual void DamagePlayer()
+    public virtual void InputButton()
+    {
+        
+    }
+
+    //関数"Heal"
+    public void Heal()
+    {
+        hp += 1;
+        exp = 0;//経験値を初期化する
+    }
+
+    //関数"Invincible"
+    void Invincible()
+    {
+        invincibleTimer += Time.deltaTime;       //無敵タイマーに経過時間を足す
+        //無敵タイマーが無敵持続時間以上の場合
+        if (invincibleTimer >= invincibleInterval)
+        {
+            invincibleTimer = 0.0f;//無敵タイマーを初期化する
+            status = "Normal";     //プレイヤーの状態を"Normal"にする
+        }
+    }
+
+    //関数"Damage"
+    public void Damage()
     {
         //ダメージを"受けている"場合
         if (isDamage == true)
@@ -86,25 +143,69 @@ public class PlayerBase : CharacteBase
         }
 
         hp -= 1;//体力を"-1"する
+
+        //体力が"0より上"の場合
+        if (hp > 0)
+        {
+            StartCoroutine("Blinking");//コルーチン"Blinking"を実行する
+        }
+        //体力が"0以下"だったら
+        else if (hp <= 0)
+        {
+            Death();
+        }
+    }
+
+    //関数"SetObjRenderer"
+    void SetObjRenderer(bool set)
+    {
+        for (int i = 0; i < thisRenderer.Length; i++)
+        {
+            thisRenderer[i].enabled = set;//RendererをthisRendererにセットする
+        }
+    }
+
+    //コルーチン"Blinking"
+    IEnumerator Blinking()
+    {
+        isDamage = true;         //ダメージを"受けている"にする
+        //タイマーを初期化
+        rendererTimer = 0.0f;
+        rendererTotalTime = 0.0f;
+
+        while (true)
+        {
+            //タイマーに経過時間を足す
+            rendererTimer += Time.deltaTime;
+            rendererTotalTime += Time.deltaTime;
+            //Renderer切り替えの経過時間がRenderer切り替え時間以上の場合
+            if (rendererInterval <= rendererTimer)
+            {
+                rendererTimer = 0.0f;          //Renderer切り替えの経過時間を初期化する
+                isRenderer = !isRenderer;//"objRenderer"を"true"の場合は"false"、"false"の場合は"true"にする
+                SetObjRenderer(isRenderer); //関数"SetObjRenderer"を実行する
+            }
+            //Renderer切り替えの合計経過時間が点滅持続時間以上の場合
+            if (blinkingInterval <= rendererTotalTime)
+            {
+                isDamage = false;    //ダメージを"受けていない"にする
+                isRenderer = true;//Rendererを有効化する
+                SetObjRenderer(true);//関数"SetObjRenderer"を実行する
+                yield break;         //コルーチンを停止する
+            }
+            yield return null;
+        }
     }
 
     //関数"Death"
     public void Death()
     {
-        boxCollider.enabled = false;    //BoxColliderを"無効"にする
-        rigidBody.useGravity = true;    //RigidBodyの重力を"有効"にする
-        animator.SetBool("Death", true);//Animatorを"Death"にする
-        hp = 0;                         //体力を"0"にする
-        remain -= 1;                    //残機を"-1"する
-
-        if(remain > 0)
-        {
-            status = "Death";
-        }
-        else if(remain <= 0)
-        {
-            status = "GameOver";
-        }
+        boxCollider.enabled = false;        //BoxColliderを"無効"にする
+        rigidBody.useGravity = true;        //RigidBodyの重力を"有効"にする
+        animator.SetInteger("Animation", 1);
+        hp = 0;                             //体力を"0"にする
+        remain -= 1;                        //残機を"-1"する
+        status = "Death";
     }
 
     //衝突判定(OnTriggerEnter)
@@ -125,7 +226,7 @@ public class PlayerBase : CharacteBase
             //味方数が"0以下"の場合
             else if (ally <= 0)
             {
-                DamagePlayer();//関数"Damage"を実行する
+                Damage();//関数"Damage"を実行する
             }
         }
 
@@ -136,7 +237,6 @@ public class PlayerBase : CharacteBase
         }
     }
 
-
     public static class Player
     {
         public enum PlayerName
@@ -146,16 +246,19 @@ public class PlayerBase : CharacteBase
             Chickadee = 2,
             Penguin = 3,
         }
+        
+        public static int maxStatus = 8;//最大ステータス値
+        public static int maxExp = 10;  //最大経験値
 
         //体力
         public static int[] hp = new int[] 
-        { 4, 4, 4, 4 };
+        { 3, 3, 3, 0 };
         //攻撃力
         public static int[] attackPower = new int[]
-        { 3, 6, 1, 5 };
+        { 4, 6, 2, 0 };
         //攻撃速度
         public static float[] attackSpeed = new float[]
-        { 4.0f, 2.0f, 6.0f, 6.0f };
+        { 5.0f, 3.0f, 7.0f, 0.0f };
     }
 
     public static class InvincibleStatus

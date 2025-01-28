@@ -18,8 +18,8 @@ public class CarRideEnemy : EnemyBase
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)HumanoidAnimation.ExitCar;
         //関数を実行する
-        GetComponent();//コンポーネントを所得する
-        StartEnemy();  //敵の設定をする
+        GetComponent();  //コンポーネントを所得する
+        StartAnimation();//開始時のアニメーションを設定する
     }
 
     // Update is called once per frame

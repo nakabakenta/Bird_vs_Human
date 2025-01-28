@@ -28,7 +28,7 @@ public class CharacteBase : MonoBehaviour
     public void GetComponent()
     {
         //このオブジェクトのコンポーネントを取得
-        thisTransform = this.GetComponent<Transform>();
+        thisTransform = this.gameObject.GetComponent<Transform>();
         rigidBody = this.gameObject.GetComponent<Rigidbody>();
         //"BoxCollider"が存在している場合
         if (TryGetComponent<BoxCollider>(out boxCollider))
@@ -40,7 +40,7 @@ public class CharacteBase : MonoBehaviour
         {
             capsuleCollider = this.gameObject.GetComponent<CapsuleCollider>();
         }
-        audioSource = this.GetComponent<AudioSource>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
         //他のオブジェクトのコンポーネントを取得
         playerTransform = GameObject.Find("Player").transform;
     }

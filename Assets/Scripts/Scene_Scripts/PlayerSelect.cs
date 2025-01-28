@@ -12,6 +12,7 @@ public class PlayerSelect : MonoBehaviour
     public GameObject playerSelectUI;              //UIプレイヤーセレクト
     public GameObject playerInformationUI;
     public Slider[] statusUI = new Slider[3];
+    private float sliderSpeed = 5.0f;             //スライダーの速度
 
     // Start is called before the first frame update
     void Start()
@@ -29,30 +30,60 @@ public class PlayerSelect : MonoBehaviour
         {
             playerSelectUI.SetActive(false);
         }
-        else if (PlayerSelectButton.buttonClick == false)
+
+        if (GameManager.selectPlayer != -1)
         {
-            if (GameManager.selectPlayer != -1)
+            playerUI.SetActive(true);
+            playerInformationUI.SetActive(true);
+
+            for (int i = 0; i < 3; i++)
             {
-                playerUI.SetActive(true);
-                playerInformationUI.SetActive(true);
-
-                for (int i = 0; i < 3; i++)
+                if (i == GameManager.selectPlayer)
                 {
-                    if (i == GameManager.selectPlayer)
-                    {
-                        player[i].SetActive(true);
-                        nameUI[i].SetActive(true);
-                    }
-                    else
-                    {
-                        player[i].SetActive(false);
-                        nameUI[i].SetActive(false);
-                    }
+                    player[i].SetActive(true);
+                    nameUI[i].SetActive(true);
                 }
+                else
+                {
+                    player[i].SetActive(false);
+                    nameUI[i].SetActive(false);
+                }
+            }
 
-                statusUI[0].value = PlayerBase.Player.hp[GameManager.selectPlayer];
-                statusUI[1].value = PlayerBase.Player.attackPower[GameManager.selectPlayer];
-                statusUI[2].value = PlayerBase.Player.attackSpeed[GameManager.selectPlayer];
+            if (statusUI[0].value != PlayerBase.Player.hp[GameManager.selectPlayer])
+            {
+                if (statusUI[0].value < PlayerBase.Player.hp[GameManager.selectPlayer])
+                {
+                    statusUI[0].value += sliderSpeed * Time.deltaTime;
+                }
+                if (statusUI[0].value > PlayerBase.Player.hp[GameManager.selectPlayer])
+                {
+                    statusUI[0].value -= sliderSpeed * Time.deltaTime;
+                }
+            }
+
+            if (statusUI[1].value != PlayerBase.Player.attackPower[GameManager.selectPlayer])
+            {
+                if (statusUI[1].value < PlayerBase.Player.attackPower[GameManager.selectPlayer])
+                {
+                    statusUI[1].value += sliderSpeed * Time.deltaTime;
+                }
+                if (statusUI[1].value > PlayerBase.Player.attackPower[GameManager.selectPlayer])
+                {
+                    statusUI[1].value -= sliderSpeed * Time.deltaTime;
+                }
+            }
+
+            if (statusUI[2].value != PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+            {
+                if (statusUI[2].value < PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+                {
+                    statusUI[2].value += sliderSpeed * Time.deltaTime;
+                }
+                if (statusUI[2].value > PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+                {
+                    statusUI[2].value -= sliderSpeed * Time.deltaTime;
+                }
             }
         }
     }
