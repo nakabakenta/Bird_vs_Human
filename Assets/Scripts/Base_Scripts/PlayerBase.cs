@@ -64,7 +64,7 @@ public class PlayerBase : CharacteBase
     public void UpdatePlayer()
     {
         //ゲームの状態が"Play"の場合
-        if (GameManager.status == "Play")
+        if (hp > 0 && GameManager.status == "Play")
         {
             //攻撃タイマーに経過時間を足す
             attackTimer[0] += Time.deltaTime;//攻撃タイマー[前方]
@@ -106,6 +106,14 @@ public class PlayerBase : CharacteBase
         if (exp == Player.maxExp)
         {
             Heal();//関数"Heal"を実行する
+        }
+
+        if (status == "Death")
+        {
+            if (this.transform.position.y <= 0.0f)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+            }
         }
     }
 
@@ -220,8 +228,13 @@ public class PlayerBase : CharacteBase
             //味方数が"0より上"の場合
             if (ally > 0)
             {
+                //Animator allyAnimator = playerAlly[ally - 1].GetComponent<Animator>();
+                //allyAnimator.SetInteger("Animation", 1);
+
+
+
                 Destroy(playerAlly[ally - 1]);//味方を消す
-                ally -= 1;                    //味方数を"-1"する
+                ally -= 1;                      //味方数を"-1"する
             }
             //味方数が"0以下"の場合
             else if (ally <= 0)

@@ -29,11 +29,7 @@ public class PlayerController : PlayerBase
     // Update is called once per frame
     void Update()
     {
-        //‘Ì—Í‚ª"0‚æ‚èã"‚Ìê‡
-        if (hp > 0)
-        {
-            UpdatePlayer();//ŠÖ”"UpdatePlayer"‚ğÀs‚·‚é
-        }
+        UpdatePlayer();//ŠÖ”"UpdatePlayer"‚ğÀs‚·‚é
     }
 
     public override void InputButton()
