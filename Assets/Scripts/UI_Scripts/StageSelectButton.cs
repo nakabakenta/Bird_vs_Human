@@ -62,10 +62,7 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
                 GameManager.nextScene = "Stage5";
             }
 
-            rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
-            alpha.SetActive(false);
-            selectMark.SetActive(true);
-            audioSource.PlayOneShot(enter);//"入場"を鳴らす
+            EnterButton();//関数"EnterButton"を実行する
         }
     }
 
@@ -74,34 +71,8 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
         //ボタンを"クリックしていない"場合
         if (buttonClick == false)
         {
-            buttonClick = true;                   //ボタンを"クリックした"にする
-            audioSource.PlayOneShot(click);       //"クリック"を鳴らす
-            InvokeRepeating("Flash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-            Invoke("LoadScene", 2.0f);            //関数"SceneLoad"を"2.0f"後に実行する
-        }
-    }
-
-    //関数"Flash"
-    void Flash()
-    {
-        //"setActive"を"true"の場合は"false"、"false"の場合は"true"にする
-        setActive = !setActive;
-
-        //子オブジェクトを取得
-        foreach (Transform child in transform)
-        {
-            //子オブジェクトの名前が"Alpha"の場合
-            if (child.name == "Alpha_UI_Base_64_03")
-            {
-                //子オブジェクトを非表示にする
-                child.gameObject.SetActive(false);
-            }
-            //それ以外の場合
-            else
-            {
-                //子オブジェクトを"setActive"にする
-                child.gameObject.SetActive(setActive);
-            }
+            buttonClick = true;//ボタンを"クリックした"にする
+            ClickButton();     //関数"ClickButton"を実行する
         }
     }
 }

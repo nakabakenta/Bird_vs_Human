@@ -88,8 +88,8 @@ public class PlayerBase : CharacteBase
         hp -= 1;//体力を"-1"する
     }
 
-    //関数"DeathPlayer"
-    public void DeathPlayer()
+    //関数"Death"
+    public void Death()
     {
         boxCollider.enabled = false;    //BoxColliderを"無効"にする
         rigidBody.useGravity = true;    //RigidBodyの重力を"有効"にする
@@ -98,6 +98,36 @@ public class PlayerBase : CharacteBase
         remain -= 1;                    //残機を"-1"する
         status = "Death";
     }
+
+    //衝突判定(OnTriggerEnter)
+    public virtual void OnTriggerEnter(Collider collision)
+    {
+        //(衝突したオブジェクトのタグが"Enemy" || "BossEnemy" || "EnemyBullet" ) && プレイヤーの状態が"Normal"の場合
+        if ((collision.gameObject.tag == "Enemy" || 
+             collision.gameObject.tag == "BossEnemy" || 
+             collision.gameObject.tag == "EnemyBullet") && 
+             status == "Normal")
+        {
+            //味方数が"0より上"の場合
+            if (ally > 0)
+            {
+                Destroy(playerAlly[ally - 1]);//味方を消す
+                ally -= 1;                    //味方数を"-1"する
+            }
+            //味方数が"0以下"の場合
+            else if (ally <= 0)
+            {
+                DamagePlayer();//関数"Damage"を実行する
+            }
+        }
+
+        //衝突したオブジェクトのタグが"PlayerAlly"の場合
+        if (collision.gameObject.tag == "PlayerAlly" && ally < 2)
+        {
+            Invoke("Ally", 0.01f);//関数"Ally"を"0.01f"後に実行する
+        }
+    }
+
 
     public static class Player
     {
