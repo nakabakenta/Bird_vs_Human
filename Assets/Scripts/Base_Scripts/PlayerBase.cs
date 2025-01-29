@@ -228,13 +228,17 @@ public class PlayerBase : CharacteBase
             //–¡•û”‚ª"0‚æ‚èã"‚Ìê‡
             if (ally > 0)
             {
-                //Animator allyAnimator = playerAlly[ally - 1].GetComponent<Animator>();
-                //allyAnimator.SetInteger("Animation", 1);
+                playerAlly[ally - 1].AddComponent<Rigidbody>();
+                playerAlly[ally - 1].AddComponent<Test>();
+                Animator allyAnimator = playerAlly[ally - 1].GetComponent<Animator>();
+                allyAnimator.SetInteger("Animation", 1);
+                playerAlly[ally - 1].transform.SetParent(null);//e‚©‚çŠO‚·
+                playerAlly[ally - 1] = null;
+                ally -= 1;                                     //–¡•û”‚ğ"-1"‚·‚é
 
 
+                //Destroy(playerAlly[ally - 1]);//–¡•û‚ğÁ‚·
 
-                Destroy(playerAlly[ally - 1]);//–¡•û‚ğÁ‚·
-                ally -= 1;                      //–¡•û”‚ğ"-1"‚·‚é
             }
             //–¡•û”‚ª"0ˆÈ‰º"‚Ìê‡
             else if (ally <= 0)
