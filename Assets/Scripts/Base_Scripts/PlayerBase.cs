@@ -10,7 +10,7 @@ public class PlayerBase : CharacteBase
     public static string status;  //状態
     public float attackSpeed;     //攻撃速度
     //座標
-    public Vector3 mousePosition;
+    private Vector3 mousePosition;
     //移動制限
     private Vector2[,] limitPosition = new Vector2[5, 2]
     {
@@ -26,21 +26,21 @@ public class PlayerBase : CharacteBase
     public static float gageTimer;                   //ゲージタイマー
     public static float gageInterval = 20.0f;        //ゲージ間隔
     public static int exp;                           //経験値
-    public static int ally;                          //味方数
-    public float invincibleTimer = 0.0f;             //無敵タイマー
-    public float invincibleInterval = 10.0f;         //無敵間隔
-    public float blinkingInterval = 1.0f;            //点滅間隔
-    public float rendererTimer;                      //Renderer切り替えの経過時間
-    public float rendererInterval = 0.05f;           //Renderer切り替え時間
-    public float rendererTotalTime;                  //Renderer切り替えの合計経過時間
-    public bool isRenderer;                          //Rendererの可否
+    public static int nowAlly;                       //現在の味方数
+    private float invincibleTimer = 0.0f;            //無敵タイマー
+    private float invincibleInterval = 10.0f;        //無敵間隔
+    private float blinkingInterval = 1.0f;           //点滅間隔
+    private float rendererTimer;                     //Renderer切り替えの経過時間
+    private float rendererInterval = 0.05f;          //Renderer切り替え時間
+    private float rendererTotalTime;                 //Renderer切り替えの合計経過時間
+    private bool isRenderer;                         //Rendererの可否
     //このオブジェクトのコンポーネント
-    public GameObject nowPlayer;                       //"GameObject(現在のプレイヤー)"
-    public GameObject[] playerAlly = new GameObject[2];//"GameObject(プレイヤーの味方)"
+    public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
 
     //関数"StartPlayer"
     public void StartPlayer()
     {
+        GetComponent();
         //選択したプレイヤーのステータスを設定する
         hp = Player.hp[GameManager.selectPlayer];                     //体力
         attackPower = Player.attackPower[GameManager.selectPlayer];   //攻撃力
@@ -50,7 +50,7 @@ public class PlayerBase : CharacteBase
         status = "Normal";//プレイヤーの状態を"Normal"にする
         //処理を初期化する
         gageTimer = 0.0f;
-        ally = 0;
+        nowAlly = 0;
         exp = 0;
 
         //ゲームの状態が"Menu"の場合
@@ -206,14 +206,10 @@ public class PlayerBase : CharacteBase
     }
 
     //関数"Death"
-    public void Death()
+    public virtual void Death()
     {
-        boxCollider.enabled = false;        //BoxColliderを"無効"にする
         rigidBody.useGravity = true;        //RigidBodyの重力を"有効"にする
         animator.SetInteger("Animation", 1);
-        hp = 0;                             //体力を"0"にする
-        remain -= 1;                        //残機を"-1"する
-        status = "Death";
     }
 
     //衝突判定(OnTriggerEnter)
@@ -226,31 +222,15 @@ public class PlayerBase : CharacteBase
              status == "Normal")
         {
             //味方数が"0より上"の場合
-            if (ally > 0)
+            if (nowAlly > 0)
             {
-                playerAlly[ally - 1].AddComponent<Rigidbody>();
-                playerAlly[ally - 1].AddComponent<Test>();
-                Animator allyAnimator = playerAlly[ally - 1].GetComponent<Animator>();
-                allyAnimator.SetInteger("Animation", 1);
-                playerAlly[ally - 1].transform.SetParent(null);//親から外す
-                playerAlly[ally - 1] = null;
-                ally -= 1;                                     //味方数を"-1"する
-
-
-                //Destroy(playerAlly[ally - 1]);//味方を消す
-
+                nowAlly -= 1;//味方数を"-1"する
             }
             //味方数が"0以下"の場合
-            else if (ally <= 0)
+            else if (nowAlly <= 0)
             {
                 Damage();//関数"Damage"を実行する
             }
-        }
-
-        //衝突したオブジェクトのタグが"PlayerAlly"の場合
-        if (collision.gameObject.tag == "PlayerAlly" && ally < 2)
-        {
-            Invoke("Ally", 0.01f);//関数"Ally"を"0.01f"後に実行する
         }
     }
 
@@ -264,8 +244,9 @@ public class PlayerBase : CharacteBase
             Penguin = 3,
         }
         
-        public static int maxStatus = 8;//最大ステータス値
+        public static int maxStatus = 8;//最大ステータス
         public static int maxExp = 10;  //最大経験値
+        public static int maxAlly = 2;  //最大味方数
 
         //体力
         public static int[] hp = new int[] 

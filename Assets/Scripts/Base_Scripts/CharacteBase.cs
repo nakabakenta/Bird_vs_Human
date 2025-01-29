@@ -8,6 +8,7 @@ public class CharacteBase : MonoBehaviour
     public int hp;       //体力
     public float speed;  //移動速度
     //処理
+    public float rotation;
     public bool isDamage;//ダメージの可否
     //座標
     public Vector3 worldPosition, viewPortPosition;
@@ -42,7 +43,7 @@ public class CharacteBase : MonoBehaviour
         }
         audioSource = this.gameObject.GetComponent<AudioSource>();
         //他のオブジェクトのコンポーネントを取得
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     //関数"Destroy"

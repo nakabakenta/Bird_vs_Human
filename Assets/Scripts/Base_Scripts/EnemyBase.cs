@@ -11,7 +11,6 @@ public class EnemyBase : CharacteBase
     public float jump;           //ジャンプ力
     public static bool bossEnemy;//
     //処理
-    public float rotation;
     public bool action = false;                           //行動の可否
     public bool playerFind;                               //プレイヤー探しの可否
     public int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号

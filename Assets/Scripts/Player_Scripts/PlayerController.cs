@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerController : PlayerBase
 {
     //このオブジェクトのコンポーネント
-    public GameObject[] player = new GameObject[3];  //"GameObject(プレイヤー)"
-    public GameObject forwardBullet, downBullet;     //"GameObject(弾)"
-    public GameObject[] group = new GameObject[3];   //"GameObject(群れ)"
+    public GameObject forwardBullet, downBullet;  //"GameObject(弾)"
+    public GameObject[] group = new GameObject[3];//"GameObject(群れ)"
+    private GameObject playerObject;              //"GameObject(プレイヤー)"
 
     public int PlayerHp
     {
@@ -17,12 +17,11 @@ public class PlayerController : PlayerBase
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent();
         StartPlayer();
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
-        nowPlayer = Instantiate(player[GameManager.selectPlayer], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        playerObject = Instantiate(player[GameManager.selectPlayer], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得
-        animator = nowPlayer.GetComponent<Animator>();
+        animator = playerObject.GetComponent<Animator>();
         thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
     }
 
@@ -65,29 +64,19 @@ public class PlayerController : PlayerBase
         }
     }
 
+    public override void Death()
+    {
+        base.Death();
+        boxCollider.enabled = false;//BoxColliderを"無効"にする
+        hp = 0;                     //体力を"0"にする
+        remain -= 1;                //残機を"-1"する
+        status = "Death";
+    }
+
     //衝突判定(OnTriggerEnter)
     public override void OnTriggerEnter(Collider collision)
     {
         base.OnTriggerEnter(collision);
-    }
-
-    //関数"Ally"
-    void Ally()
-    {
-        //味方数が"0と等しい"場合
-        if (ally == 0)
-        {
-            //味方を生成する
-            playerAlly[ally] = Instantiate(player[GameManager.selectPlayer], new Vector3(this.transform.position.x - 1.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-        }
-        //味方数が"1と等しい"場合
-        else if (ally == 1)
-        {
-            //味方を生成する
-            playerAlly[ally] = Instantiate(player[GameManager.selectPlayer], new Vector3(this.transform.position.x - 2.0f, this.transform.position.y, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
-        }
-
-        ally += 1;//味方数を"+1"する
     }
 }
 

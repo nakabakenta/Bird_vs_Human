@@ -881,6 +881,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Ally
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 498
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94103b6d5175e7f4293314130f942199
+      internalID: -1514866822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -897,6 +918,7 @@ TextureImporter:
       3: -909226016
       4: 53207767
       5: -103564473
+      Ally: -1514866822
       AttackPower: -1878746457
       AttackSpeed: -1103642406
       BackToMenu: -1101987141
