@@ -17,7 +17,7 @@ public class CharacteGenerate : MonoBehaviour
 
         for (int i = 0; i < maxPlayerAlly; i++)
         {
-            position.x = (float)Random.Range(10.0f, 100.0f + 1);
+            position.x = (float)Random.Range(10.0f, 100.0f);
             position.y = (float)Random.Range(3.0f, 5.0f);
 
             Instantiate(playerAlly, new Vector3(position.x, position.y, this.transform.position.z), this.transform.rotation, thisTransform);

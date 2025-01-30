@@ -8,6 +8,7 @@ public class PlayerAlly : PlayerBase
     private int allyNumber;        //味方番号
     private bool sacrifice = false;
     //このオブジェクトのコンポーネント
+    public GameObject text;       //"GameObject(テキスト)"
     private GameObject allyObject;//"GameObject(味方)"
 
     // Start is called before the first frame update
@@ -57,8 +58,9 @@ public class PlayerAlly : PlayerBase
         //衝突したオブジェクトのタグが"Player"の場合
         if (collision.gameObject.tag == "Player" && nowAlly < Player.maxAlly)
         {
-            boxCollider.enabled = false;   //BoxColliderを"無効"にする
-            nowAlly += 1;//味方数を"+1"する
+            boxCollider.enabled = false;//BoxColliderを"無効"にする
+            text.SetActive(false);      //テキストを非表示にする
+            nowAlly += 1;               //味方数を"+1"する
             allyNumber = nowAlly;
             
             this.transform.eulerAngles = new Vector3(this.transform.rotation.x, rotation, this.transform.rotation.z);

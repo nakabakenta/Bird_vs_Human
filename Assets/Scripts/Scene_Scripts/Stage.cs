@@ -226,6 +226,7 @@ public class Stage : UIBase
             forwardBullet_UI.fillAmount = 1;
         }
 
+        //
         if (PlayerController.attackTimer[1] == 0.0f)
         {
             downBullet_UI.fillAmount = 0;

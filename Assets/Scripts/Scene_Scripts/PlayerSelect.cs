@@ -52,11 +52,16 @@ public class PlayerSelect : MonoBehaviour
 
             if (statusUI[0].value != PlayerBase.Player.hp[GameManager.selectPlayer])
             {
-                if (statusUI[0].value < PlayerBase.Player.hp[GameManager.selectPlayer])
+                if(statusUI[0].value - 0.1f < PlayerBase.Player.hp[GameManager.selectPlayer] &&
+                   statusUI[0].value + 0.1f > PlayerBase.Player.hp[GameManager.selectPlayer])
+                {
+                    statusUI[0].value = PlayerBase.Player.hp[GameManager.selectPlayer];
+                }
+                else if (statusUI[0].value < PlayerBase.Player.hp[GameManager.selectPlayer])
                 {
                     statusUI[0].value += sliderSpeed * Time.deltaTime;
                 }
-                if (statusUI[0].value > PlayerBase.Player.hp[GameManager.selectPlayer])
+                else if (statusUI[0].value > PlayerBase.Player.hp[GameManager.selectPlayer])
                 {
                     statusUI[0].value -= sliderSpeed * Time.deltaTime;
                 }
@@ -64,11 +69,16 @@ public class PlayerSelect : MonoBehaviour
 
             if (statusUI[1].value != PlayerBase.Player.attackPower[GameManager.selectPlayer])
             {
-                if (statusUI[1].value < PlayerBase.Player.attackPower[GameManager.selectPlayer])
+                if (statusUI[1].value - 0.1f < PlayerBase.Player.attackPower[GameManager.selectPlayer] &&
+                    statusUI[1].value + 0.1f > PlayerBase.Player.attackPower[GameManager.selectPlayer])
+                {
+                    statusUI[1].value = PlayerBase.Player.attackPower[GameManager.selectPlayer];
+                }
+                else if (statusUI[1].value < PlayerBase.Player.attackPower[GameManager.selectPlayer])
                 {
                     statusUI[1].value += sliderSpeed * Time.deltaTime;
                 }
-                if (statusUI[1].value > PlayerBase.Player.attackPower[GameManager.selectPlayer])
+                else if (statusUI[1].value > PlayerBase.Player.attackPower[GameManager.selectPlayer])
                 {
                     statusUI[1].value -= sliderSpeed * Time.deltaTime;
                 }
@@ -76,11 +86,16 @@ public class PlayerSelect : MonoBehaviour
 
             if (statusUI[2].value != PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
             {
-                if (statusUI[2].value < PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+                if(statusUI[2].value - 0.1f < PlayerBase.Player.attackSpeed[GameManager.selectPlayer] &&
+                   statusUI[2].value + 0.1f > PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+                {
+                    statusUI[2].value = PlayerBase.Player.attackSpeed[GameManager.selectPlayer];
+                }
+                else if (statusUI[2].value < PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
                 {
                     statusUI[2].value += sliderSpeed * Time.deltaTime;
                 }
-                if (statusUI[2].value > PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
+                else if (statusUI[2].value > PlayerBase.Player.attackSpeed[GameManager.selectPlayer])
                 {
                     statusUI[2].value -= sliderSpeed * Time.deltaTime;
                 }

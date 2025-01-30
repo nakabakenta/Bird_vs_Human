@@ -256,7 +256,7 @@ public class PlayerBase : CharacteBase
         { 4, 6, 2, 0 };
         //UŒ‚‘¬“x
         public static float[] attackSpeed = new float[]
-        { 5.0f, 3.0f, 7.0f, 0.0f };
+        { 5.0f, 2.0f, 7.0f, 0.0f };
     }
 
     public static class InvincibleStatus

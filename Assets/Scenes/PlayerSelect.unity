@@ -541,6 +541,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   buttonPosition: {x: 0, y: 0}
   setActive: 0
+  moveButton: 0
 --- !u!114 &83150619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3860,6 +3861,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   buttonPosition: {x: 0, y: 0}
   setActive: 0
+  moveButton: 0
 --- !u!114 &1050946332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6571,6 +6573,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   buttonPosition: {x: 0, y: 0}
   setActive: 0
+  moveButton: 0
 --- !u!114 &1801717182
 MonoBehaviour:
   m_ObjectHideFlags: 0
