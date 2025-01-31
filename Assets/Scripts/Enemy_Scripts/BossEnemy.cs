@@ -8,7 +8,8 @@ public class BossEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.Boss.ToString();                //敵の型
+        enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
+        enemyOption = Enemy.EnemyOption.Boss.ToString();//
         hp = EnemyList.BossEnemy.hp[Stage.nowStage - 1];      
         speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];
         jump = EnemyList.BossEnemy.jump[Stage.nowStage - 1];
@@ -16,7 +17,7 @@ public class BossEnemy : EnemyBase
         bossEnemy = true;
 
         //初期のアニメーションを設定する
-        defaultAnimationNumber = (int)HumanoidAnimation.Walk;
+        defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する
         GetComponent();  //コンポーネントを所得する
         StartAnimation();//開始時のアニメーションを設定する

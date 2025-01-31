@@ -14,13 +14,14 @@ public class HaveGunEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定
-        enemyType = EnemyType.Wait.ToString();//敵の型
-        hp = EnemyList.HaveGunEnemy.hp;       //体力
+        enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
+        enemyOption = Enemy.EnemyOption.Wait.ToString();//
+        hp = EnemyList.HaveGunEnemy.hp;                 //体力
         nowMagazine = maxMagazine;
         //処理を初期化する
         playerFind = true;
         //初期のアニメーション番号を設定する
-        defaultAnimationNumber = (int)HumanoidAnimation.HaveGunIdle;
+        defaultAnimationNumber = (int)Enemy.HumanoidAnimation.HaveGunIdle;
         //関数を実行する
         GetComponent();  //コンポーネントを所得する
         StartAnimation();//開始時のアニメーションを設定する
@@ -34,9 +35,9 @@ public class HaveGunEnemy : EnemyBase
 
     public override void AddAction()
     {
-        if (nowAnimationNumber == (int)HumanoidAnimation.HaveGunIdle)
+        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.HaveGunIdle)
         {
-            nowAnimationNumber = (int)HumanoidAnimation.GunPlay;
+            nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
             AnimationPlay();                                    //関数"AnimationPlay"を実行する
         }
 
@@ -49,12 +50,12 @@ public class HaveGunEnemy : EnemyBase
     {
         if (nowMagazine <= 0)
         {
-            nowAnimationNumber = (int)HumanoidAnimation.Reload;
+            nowAnimationNumber = (int)Enemy.HumanoidAnimation.Reload;
             nowMagazine = maxMagazine;
         }
         else if (nowMagazine <= maxMagazine)
         {
-            nowAnimationNumber = (int)HumanoidAnimation.GunPlay;
+            nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
             Instantiate(bullet, gun.transform.position, Quaternion.identity);
             nowMagazine -= 1;
         }

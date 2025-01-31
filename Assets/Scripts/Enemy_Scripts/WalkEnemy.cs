@@ -8,14 +8,15 @@ public class WalkEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.Normal.ToString();//敵の型
-        hp = EnemyList.WalkEnemy.hp;            //体力
-        speed = EnemyList.WalkEnemy.speed;      //移動速度
+        enemyType = Enemy.EnemyType.Human.ToString();     //敵の型
+        enemyOption = Enemy.EnemyOption.Normal.ToString();//
+        hp = EnemyList.WalkEnemy.hp;                      //体力
+        speed = EnemyList.WalkEnemy.speed;                //移動速度
 
         playerFind = false;
 
         //初期のアニメーション番号を設定する
-        defaultAnimationNumber = (int)HumanoidAnimation.Walk;
+        defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する
         GetComponent();  //コンポーネントを所得する
         StartAnimation();//開始時のアニメーションを設定する

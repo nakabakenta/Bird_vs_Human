@@ -484,13 +484,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3226749737923364249}
   - component: {fileID: 8473689563998296699}
+  - component: {fileID: 6688740941870695813}
   - component: {fileID: 6837886691892672255}
   - component: {fileID: 375356945202681272}
   - component: {fileID: 5815884774472346948}
-  - component: {fileID: 6688740941870695813}
   m_Layer: 0
   m_Name: Enemy_ATV_N1_Color_4_Prefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -541,6 +541,53 @@ LODGroup:
     - renderer: {fileID: 1807017291553605136}
     - renderer: {fileID: 8336137229258521794}
   m_Enabled: 1
+--- !u!114 &6688740941870695813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068800662383793319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  speed: 0
+  rotation: 0
+  isDamage: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  viewPortPosition: {x: 0, y: 0, z: 0}
+  thisTransform: {fileID: 0}
+  rigidBody: {fileID: 0}
+  boxCollider: {fileID: 0}
+  capsuleCollider: {fileID: 0}
+  thisRenderer: []
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  animator: {fileID: 0}
+  runtimeAnimatorController: {fileID: 0}
+  audioSource: {fileID: 0}
+  playerTransform: {fileID: 0}
+  death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
+  enemyType: 
+  enemyOption: 
+  jump: 0
+  action: 0
+  playerFind: 0
+  defaultAnimationNumber: 0
+  nowAnimationNumber: 0
+  nowAnimationName: 
+  nowAnimationLength: 0
+  animationTimer: 0
+  animationChangeTimer: 0
+  jumpTimer: 0
+  isAnimation: 0
+  humanoidAnimation: 0
+  enemy: {fileID: 7702886973443865384, guid: 91f2412f4fa82174ea82ddd32f8711f2, type: 3}
+  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}
+  horn: {fileID: 8300000, guid: 3d876fa0688ebc248b1bea3114023730, type: 3}
 --- !u!54 &6837886691892672255
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -666,24 +713,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6688740941870695813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6068800662383793319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 7702886973443865384, guid: 91f2412f4fa82174ea82ddd32f8711f2, type: 3}
-  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}
-  horn: {fileID: 8300000, guid: 3d876fa0688ebc248b1bea3114023730, type: 3}
-  explosion: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!1 &6585515585647069549
 GameObject:
   m_ObjectHideFlags: 0

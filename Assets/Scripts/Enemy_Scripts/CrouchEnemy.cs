@@ -8,10 +8,11 @@ public class CrouchEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.Wait.ToString();//敵の型
-        hp = EnemyList.CrouchEnemy.hp;        //体力
+        enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
+        enemyOption = Enemy.EnemyOption.Wait.ToString();//
+        hp = EnemyList.CrouchEnemy.hp;                  //体力
         //初期のアニメーションを設定する
-        defaultAnimationNumber = (int)HumanoidAnimation.Crouch;
+        defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Crouch;
         playerFind = false;
 
         //関数を実行する

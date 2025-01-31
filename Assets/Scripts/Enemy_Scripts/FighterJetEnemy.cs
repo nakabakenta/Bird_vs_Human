@@ -11,15 +11,15 @@ public class FighterJetEnemy : EnemyBase
     //このオブジェクトのコンポーネント
     public GameObject bullet;       //"GameObject(弾)"
     public GameObject effect;       //"GameObject(エフェクト)"
-    public AudioClip explosion;     //"AudioClip(爆発)"
 
     // Start is called before the first frame update
     void Start()
     {
         //ステータスを設定
-        enemyType = EnemyType.Vehicle.ToString();//敵の型
-        hp = EnemyList.FighterJetEnemy.hp;      //体力
-        speed = EnemyList.FighterJetEnemy.speed;//移動速度
+        enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
+        enemyOption = Enemy.EnemyOption.Find.ToString();//
+        hp = EnemyList.FighterJetEnemy.hp;              //体力
+        speed = EnemyList.FighterJetEnemy.speed;        //移動速度
 
         //関数を実行する
         GetComponent();//コンポーネントを所得する
@@ -63,7 +63,6 @@ public class FighterJetEnemy : EnemyBase
         base.DeathEnemy();
         //
         Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
-        audioSource.PlayOneShot(explosion);                                                  //"explosion"を鳴らす
         Invoke("Destroy", 1.0f);                                                             //関数"Destroy"を"5.0f"後に実行
     }
 

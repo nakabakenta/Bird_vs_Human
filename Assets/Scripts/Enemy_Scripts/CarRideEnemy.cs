@@ -8,15 +8,16 @@ public class CarRideEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = EnemyType.Find.ToString();//敵の型
-        hp = EnemyList.CarRideEnemy.hp;       //体力
-        speed = EnemyList.CarRideEnemy.speed; //移動速度
-        jump = EnemyList.CarRideEnemy.jump;   //ジャンプ力
+        enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
+        enemyOption = Enemy.EnemyOption.Find.ToString();//
+        hp = EnemyList.CarRideEnemy.hp;                 //体力
+        speed = EnemyList.CarRideEnemy.speed;           //移動速度
+        jump = EnemyList.CarRideEnemy.jump;             //ジャンプ力
         //処理を初期化する
         playerFind = true;
         isAnimation = true;
         //初期のアニメーションを設定する
-        defaultAnimationNumber = (int)HumanoidAnimation.ExitCar;
+        defaultAnimationNumber = (int)Enemy.HumanoidAnimation.ExitCar;
         //関数を実行する
         GetComponent();  //コンポーネントを所得する
         StartAnimation();//開始時のアニメーションを設定する
