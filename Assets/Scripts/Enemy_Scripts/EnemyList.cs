@@ -32,15 +32,7 @@ public class EnemyList : MonoBehaviour
         public static Vector3 range =
             new Vector3(0.25f, 2.0f, 0.0f);
     }
-    //敵(しゃがむ)
-    public static class CrouchEnemy
-    {
-        //ステータス
-        public static int hp = 10;    //体力
-        public static int power = 1;  //攻撃力
-        public static int score = 300;//倒した時のスコア
-        public static int exp = 10;   //倒した時の経験値
-    }
+    
     //敵(車)
     public static class CarEnemy
     {

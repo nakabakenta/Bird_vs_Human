@@ -21,7 +21,6 @@ public class CarEnemy : EnemyBase
         //ステータスを設定
         hp = EnemyList.CarEnemy.hp;      //体力                       
         speed = EnemyList.CarEnemy.speed;//移動速度
-
         //関数を実行する
         GetComponent();//コンポーネントを所得する
         Direction();
@@ -35,7 +34,7 @@ public class CarEnemy : EnemyBase
 
     public override void Action()
     {
-        if(rotation == 180.0f)
+        if(rotation == (int)Characte.Direction.Vertical)
         {
             if (this.transform.position.z <= playerTransform.position.z && carExit == false)
             {
@@ -44,12 +43,12 @@ public class CarEnemy : EnemyBase
                 audioSource.PlayOneShot(brake);
                 carExit = true;
             }
-            else if (this.transform.position.z > playerTransform.position.z && carExit == false)
+            else if (this.transform.position.z > playerTransform.position.z)
             {
                 Move();
             }
         }
-        else if(rotation == -90.0f)
+        else if(rotation == -(int)Characte.Direction.Horizontal)
         {
             Move();
         }

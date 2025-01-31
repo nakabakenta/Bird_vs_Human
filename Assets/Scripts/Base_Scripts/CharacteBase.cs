@@ -9,7 +9,8 @@ public class CharacteBase : MonoBehaviour
     public float speed;  //移動速度
     //処理
     public float rotation;
-    public bool isDamage;//ダメージの可否
+    public bool isDamage; //ダメージの可否
+    public bool direction;//方向
     //座標
     public Vector3 worldPosition, viewPortPosition;
     //このオブジェクトのコンポーネント
@@ -50,5 +51,14 @@ public class CharacteBase : MonoBehaviour
     public void Destroy()
     {
         Destroy(this.gameObject);//このオブジェクトを消す
+    }
+
+    public static class Characte
+    {
+        public enum Direction
+        {
+            Horizontal = 90,
+            Vertical = 180,
+        }
     }
 }

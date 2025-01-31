@@ -2770,10 +2770,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a78ad08212cd9478903ae02ec59e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 20
   speed: 0
   rotation: 0
   isDamage: 0
+  direction: 0
   worldPosition: {x: 0, y: 0, z: 0}
   viewPortPosition: {x: 0, y: 0, z: 0}
   thisTransform: {fileID: 0}

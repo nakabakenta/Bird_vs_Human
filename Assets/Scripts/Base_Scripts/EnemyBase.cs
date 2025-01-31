@@ -80,9 +80,19 @@ public class EnemyBase : CharacteBase
             {
                 if (action == false)
                 {
-                    if (viewPortPosition.x < 1)
+                    if (rotation == (int)Characte.Direction.Vertical)
                     {
-                        action = true;
+                        if (this.thisTransform.position.x < playerTransform.position.x + 5.0f)
+                        {
+                            action = true;
+                        }
+                    }
+                    else if(rotation == -(int)Characte.Direction.Horizontal)
+                    {
+                        if (viewPortPosition.x < 1.25)
+                        {
+                            action = true;
+                        }
                     }
                 }
 
@@ -197,15 +207,15 @@ public class EnemyBase : CharacteBase
     public void Direction()
     {
         //
-        if (this.transform.position.z > playerTransform.position.z + 0.5f)
+        if (this.transform.position.z > playerTransform.position.z + 0.1f)
         {
-            rotation = 180.0f;
+            rotation = (int)Characte.Direction.Vertical;
         }
         //
-        if (this.transform.position.z >= playerTransform.position.z - 0.5f &&
-            this.transform.position.z <= playerTransform.position.z + 0.5f)
+        if (this.transform.position.z >= playerTransform.position.z - 0.1f &&
+            this.transform.position.z <= playerTransform.position.z + 0.1f)
         {
-            rotation = -90.0f;//
+            rotation = -(int)Characte.Direction.Horizontal;
         }
 
         if (playerFind == true)
@@ -213,12 +223,12 @@ public class EnemyBase : CharacteBase
             //
             if (this.transform.position.x > playerTransform.position.x)
             {
-                rotation = -90.0f;//
+                rotation = -(int)Characte.Direction.Horizontal;
             }
             //
             if (this.transform.position.x < playerTransform.position.x)
             {
-                rotation = 90.0f;//
+                rotation = (int)Characte.Direction.Horizontal;
             }
         }
 
