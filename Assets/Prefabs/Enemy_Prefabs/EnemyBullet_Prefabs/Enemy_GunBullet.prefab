@@ -111,3 +111,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f11af18d96e734f9e810eab5af7285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 15
+  viewPortPosition: {x: 0, y: 0, z: 0}

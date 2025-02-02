@@ -10,9 +10,6 @@ public class CarRideEnemy : EnemyBase
         //ステータスを設定する
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Find.ToString();//
-        hp = EnemyList.CarRideEnemy.hp;                 //体力
-        speed = EnemyList.CarRideEnemy.speed;           //移動速度
-        jump = EnemyList.CarRideEnemy.jump;             //ジャンプ力
         //処理を初期化する
         playerFind = true;
         isAnimation = true;

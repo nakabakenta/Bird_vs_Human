@@ -18,9 +18,6 @@ public class CarEnemy : EnemyBase
         enemyType = Enemy.EnemyType.Vehicle.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Normal.ToString();//
         carExit = false;
-        //ステータスを設定
-        hp = EnemyList.CarEnemy.hp;      //体力                       
-        speed = EnemyList.CarEnemy.speed;//移動速度
         //関数を実行する
         GetComponent();//コンポーネントを所得する
         Direction();

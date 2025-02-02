@@ -76,7 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c112de1a2666e44abb98a1aae83ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  moveSpeed: 15
+  viewPortPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &8464041742405796272
 PrefabInstance:
   m_ObjectHideFlags: 0

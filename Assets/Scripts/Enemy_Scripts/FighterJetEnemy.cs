@@ -18,9 +18,6 @@ public class FighterJetEnemy : EnemyBase
         //ステータスを設定
         enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
         enemyOption = Enemy.EnemyOption.Find.ToString();//
-        hp = EnemyList.FighterJetEnemy.hp;              //体力
-        speed = EnemyList.FighterJetEnemy.speed;        //移動速度
-
         //関数を実行する
         GetComponent();//コンポーネントを所得する
     }
@@ -39,17 +36,17 @@ public class FighterJetEnemy : EnemyBase
         if (viewPortPosition.x < -0.5)
         {
             this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, EnemyList.rotation, this.transform.rotation.z);
-            bulletRotation = EnemyList.rotation;
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, (int)Characte.Direction.Horizontal, this.transform.rotation.z);
+            bulletRotation = (int)Characte.Direction.Horizontal;
         }
         else if (viewPortPosition.x > 1.5)
         {
             this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -EnemyList.rotation, this.transform.rotation.z);
-            bulletRotation = -EnemyList.rotation;
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -(int)Characte.Direction.Horizontal, this.transform.rotation.z);
+            bulletRotation = -(int)Characte.Direction.Horizontal;
         }
 
-        this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+        this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//前方向に移動する
 
         if (attackTimer > attackInterval)
         {

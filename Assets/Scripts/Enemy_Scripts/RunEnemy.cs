@@ -11,7 +11,7 @@ public class RunEnemy : EnemyBase
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Find.ToString();//
         hp = EnemyList.RunEnemy.hp;                     //体力
-        speed = EnemyList.RunEnemy.speed;               //移動速度
+        moveSpeed = EnemyList.RunEnemy.speed;               //移動速度
         jump = EnemyList.RunEnemy.jump;                 //ジャンプ力
         //処理を初期化する
         playerFind = true;

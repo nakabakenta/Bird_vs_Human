@@ -7,22 +7,21 @@ public class EnemyBase : CharacteBase
     //このオブジェクトのコンポーネント
     public AudioClip death;//"AudioClip(死亡)"
     //ステータス
-    public string enemyType;  //敵の型
-    public string enemyOption;//敵の設定
-
+    public string enemyType;     //敵の型
+    public string enemyOption;   //敵の設定
     public float jump;           //ジャンプ力
     public static bool bossEnemy;//
     //処理
     public bool action = false;                           //行動の可否
     public bool playerFind;                               //プレイヤー探しの可否
     public int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号
-    public string nowAnimationName;                       //現在のアニメーションの名前
-    public float nowAnimationLength;                      //現在のアニメーションの長さ
-    public float animationTimer = 0.0f;                   //アニメーションタイマー
-    public float animationChangeTimer = 0.0f;             //アニメーション切り替えタイマー
-    public float jumpTimer = 0.0f;                        //ジャンプタイマー
     public bool isAnimation = false;                      //アニメーションの可否
-    public Enemy.HumanoidAnimation humanoidAnimation;     //"enum(HumanoidAnimation)"
+    private string nowAnimationName;                      //現在のアニメーションの名前
+    private float nowAnimationLength;                     //現在のアニメーションの長さ
+    private float animationTimer = 0.0f;                  //アニメーションタイマー
+    private float animationChangeTimer = 0.0f;            //アニメーション切り替えタイマー
+    private float jumpTimer = 0.0f;                       //ジャンプタイマー
+    private Enemy.HumanoidAnimation humanoidAnimation;    //"enum(HumanoidAnimation)"
 
     //関数"StartAnimation"
     public void StartAnimation()
@@ -200,7 +199,7 @@ public class EnemyBase : CharacteBase
     //関数"Move"
     public void Move()
     {
-        this.transform.position += speed * transform.forward * Time.deltaTime;//前方向に移動する
+        this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//前方向に移動する
     }
 
     //関数"Direction"
@@ -310,7 +309,7 @@ public class EnemyBase : CharacteBase
             {
                 animationTimer = 0.0f;                                //アニメーションタイマーを初期化する
                 nowAnimationNumber = defaultAnimationNumber;          //現在のアニメーションを"歩く"にする
-                speed = EnemyList.BossEnemy.speed[Stage.nowStage - 1];
+                moveSpeed /= 3.0f;
                 isAnimation = false;
                 AnimationPlay();
             }
@@ -323,7 +322,7 @@ public class EnemyBase : CharacteBase
             {
                 animationTimer = 0.0f;                               //アニメーションタイマーを初期化する
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.CrazyRun;//現在のアニメーションを"走る"にする
-                speed *= 3.0f;                                       //移動速度を"*3"する
+                moveSpeed *= 3.0f;                                       //移動速度を"*3"する
                 isAnimation = false;
                 AnimationPlay();
             }

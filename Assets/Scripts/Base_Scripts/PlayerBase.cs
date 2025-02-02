@@ -11,15 +11,6 @@ public class PlayerBase : CharacteBase
     public float attackSpeed;     //攻撃速度
     //座標
     private Vector3 mousePosition;
-    //移動制限
-    private Vector2[,] limitPosition = new Vector2[5, 2]
-    {
-        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
-        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
-        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
-        { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
-        { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
-    };
     //処理
     public static float[] attackTimer = new float[2];//攻撃タイマー([前方],[下方])
     public static float attackInterval;              //攻撃間隔
@@ -74,8 +65,8 @@ public class PlayerBase : CharacteBase
             //マウスの位置(スクリーン座標)をビューポイント座標に変換する
             viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
             //移動の限界位置を設定する
-            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, limitPosition[Stage.nowStage - 1, 0].x, limitPosition[Stage.nowStage - 1, 1].x);
-            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, limitPosition[Stage.nowStage - 1, 0].y, limitPosition[Stage.nowStage - 1, 1].y);
+            viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, Player.limitPosition[Stage.nowStage - 1, 0].x, Player.limitPosition[Stage.nowStage - 1, 1].x);
+            viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, Player.limitPosition[Stage.nowStage - 1, 0].y, Player.limitPosition[Stage.nowStage - 1, 1].y);
             //ビューポイント座標をワールド座標に変換する
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
 
@@ -257,6 +248,15 @@ public class PlayerBase : CharacteBase
         //攻撃速度
         public static float[] attackSpeed = new float[]
         { 5.0f, 2.0f, 7.0f, 0.0f };
+
+        public static Vector2[,] limitPosition = new Vector2[5, 2]
+        {
+            { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+            { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+            { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+            { new Vector2(0.0f, 0.2f), new Vector2(1.0f, 0.8f),},
+            { new Vector2(0.0f, 0.0f), new Vector2(1.0f, 0.8f),},
+        };
     }
 
     public static class InvincibleStatus

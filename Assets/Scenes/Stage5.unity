@@ -7181,65 +7181,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144888153}
   m_CullTransparentMesh: 1
---- !u!1001 &5177014202453022397
+--- !u!4 &5177014202453022398 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+  m_PrefabInstance: {fileID: 7880198743731692001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7880198743731692001
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 313706816}
     m_Modifications:
-    - target: {fileID: 5187573231538392203, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
-      propertyPath: m_Name
-      value: Enemy_FA_N26_Color_3_Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalPosition.x
       value: -500
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+    - target: {fileID: 3063685785594509151, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8222788181188659710, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
+      propertyPath: m_Name
+      value: BossEnemy_FA_N26_Color_3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
---- !u!4 &5177014202453022398 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5527648413914207793, guid: 4c7eb8e831a2716428a42b0b73b89803, type: 3}
-  m_PrefabInstance: {fileID: 5177014202453022397}
-  m_PrefabAsset: {fileID: 0}

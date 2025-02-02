@@ -194,10 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee72fab449585a347b5c96824ce14649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  speed: 0
+  hp: 20
+  moveSpeed: 8
   rotation: 0
   isDamage: 0
+  direction: 0
   worldPosition: {x: 0, y: 0, z: 0}
   viewPortPosition: {x: 0, y: 0, z: 0}
   thisTransform: {fileID: 0}
@@ -218,13 +219,7 @@ MonoBehaviour:
   playerFind: 0
   defaultAnimationNumber: 0
   nowAnimationNumber: 0
-  nowAnimationName: 
-  nowAnimationLength: 0
-  animationTimer: 0
-  animationChangeTimer: 0
-  jumpTimer: 0
   isAnimation: 0
-  humanoidAnimation: 0
   enemy: {fileID: 7702886973443865384, guid: 91f2412f4fa82174ea82ddd32f8711f2, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}

@@ -16,7 +16,6 @@ public class HaveGunEnemy : EnemyBase
         //ステータスを設定
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Wait.ToString();//
-        hp = EnemyList.HaveGunEnemy.hp;                 //体力
         nowMagazine = maxMagazine;
         //処理を初期化する
         playerFind = true;

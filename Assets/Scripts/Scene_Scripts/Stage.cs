@@ -7,7 +7,7 @@ using TMPro;
 public class Stage : UIBase
 {
     //処理
-    public static int nowStage;        //現在のステージ
+    public static int nowStage;       //現在のステージ
     public GameObject baseUI;
     public GameObject pauseUI;
     public GameObject clearUI;
