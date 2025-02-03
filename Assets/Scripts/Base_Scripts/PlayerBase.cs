@@ -28,13 +28,14 @@ public class PlayerBase : CharacteBase
     //このオブジェクトのコンポーネント
     public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
 
-    //関数"StartPlayer"
-    public void StartPlayer()
+    //関数"BaseStart"
+    public void BaseStart()
     {
         GetComponent();
+
         //選択したプレイヤーのステータスを設定する
-        hp = Player.hp[GameManager.selectPlayer];                     //体力
-        attackPower = Player.attackPower[GameManager.selectPlayer];   //攻撃力
+        hp = Player.hp[GameManager.selectPlayer];                                              //体力
+        attackPower = Player.attackPower[GameManager.selectPlayer];                            //攻撃力
         attackSpeed = (Player.maxStatus - Player.attackSpeed[GameManager.selectPlayer]) / 2.0f;
         attackTimer[0] = attackSpeed;
         attackTimer[1] = attackSpeed;

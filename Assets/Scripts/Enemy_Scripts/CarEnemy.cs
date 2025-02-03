@@ -8,7 +8,6 @@ public class CarEnemy : EnemyBase
     private bool carExit = false;//
     //このオブジェクトのコンポーネント
     public GameObject enemy;     //"GameObject(敵)"
-    public GameObject effect;    //"GameObject(エフェクト)"
     public AudioClip brake;      //"AudioClip(ブレーキ)"
     public AudioClip horn;       //"AudioClip(クラクション)"
 
@@ -26,12 +25,12 @@ public class CarEnemy : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        UpdateEnemy();
+        BaseUpdate();
     }
 
     public override void Action()
     {
-        if(rotation == (int)Characte.Direction.Vertical)
+        if(direction.y == (int)Characte.Direction.Vertical)
         {
             if (this.transform.position.z <= playerTransform.position.z && carExit == false)
             {
@@ -45,7 +44,7 @@ public class CarEnemy : EnemyBase
                 Move();
             }
         }
-        else if(rotation == -(int)Characte.Direction.Horizontal)
+        else if(direction.y == -(int)Characte.Direction.Horizontal)
         {
             Move();
         }

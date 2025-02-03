@@ -18,19 +18,13 @@ public class RunEnemy : EnemyBase
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Run;
         //関数を実行する
-        GetComponent();  //コンポーネントを所得する
-        StartAnimation();//開始時のアニメーションを設定する
+        GetComponent();//コンポーネントを所得する
+        BaseStart();   //関数"BaseStart"を実行する
     }
 
     // Update is called once per frame
     void Update()
     {
-        base.UpdateEnemy();
-    }
-
-    //当たり判定(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
+        BaseUpdate();
     }
 }

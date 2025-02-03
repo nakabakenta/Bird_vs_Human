@@ -5,26 +5,26 @@ using UnityEngine;
 public class CharacteBase : MonoBehaviour
 {
     //ステータス
-    public int hp;         //体力
-    public float moveSpeed;//移動速度
+    public int hp;             //体力
+    public float moveSpeed;    //移動速度
+    public Vector3 rotateSpeed;//回転速度
     //処理
-    public float rotation;
-    public bool isDamage; //ダメージの可否
-    public bool direction;//方向
+    protected Vector3 direction;//オブジェクトの方向
+    protected bool isDamage;    //ダメージの可否
     //座標
-    public Vector3 worldPosition, viewPortPosition;
+    protected Vector3 worldPosition, viewPortPosition;
     //このオブジェクトのコンポーネント
-    public Transform thisTransform;                            //"Transform"
-    public Rigidbody rigidBody;                                //"Rigidbody"
-    public BoxCollider boxCollider;                            //"BoxCollider"
-    public CapsuleCollider capsuleCollider;                    //"CapsuleCollider"
-    public Renderer[] thisRenderer;                            //"Renderer"
-    public AudioClip damage;                                   //"AudioClip(ダメージ)"
-    public Animator animator = null;                           //"Animator"
-    public RuntimeAnimatorController runtimeAnimatorController;//"RuntimeAnimatorController"
-    public AudioSource audioSource;                            //"AudioSource"
+    public AudioClip damage;                                      //"AudioClip(ダメージ)"
+    protected Transform thisTransform;                            //"Transform"
+    protected Rigidbody rigidBody;                                //"Rigidbody"
+    protected BoxCollider boxCollider;                            //"BoxCollider"
+    protected CapsuleCollider capsuleCollider;                    //"CapsuleCollider"
+    protected Renderer[] thisRenderer;                            //"Renderer"
+    protected Animator animator = null;                           //"Animator"
+    protected RuntimeAnimatorController runtimeAnimatorController;//"RuntimeAnimatorController"
+    protected AudioSource audioSource;                            //"AudioSource"
     //他のオブジェクトのコンポーネント
-    public Transform playerTransform;                          //"Transform(プレイヤー)"
+    protected Transform playerTransform;                          //"Transform(プレイヤー)"
 
     //関数"GetComponent"
     public void GetComponent()

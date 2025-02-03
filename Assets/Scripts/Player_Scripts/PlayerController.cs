@@ -17,7 +17,7 @@ public class PlayerController : PlayerBase
     // Start is called before the first frame update
     void Start()
     {
-        StartPlayer();
+        BaseStart();
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
         playerObject = Instantiate(player[GameManager.selectPlayer], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得

@@ -15,14 +15,14 @@ public class CrouchEnemy : EnemyBase
         playerFind = false;
 
         //関数を実行する
-        GetComponent();  //コンポーネントを所得
-        StartAnimation();//開始時のアニメーションを設定する
+        GetComponent();//コンポーネントを所得
+        BaseStart();   //関数"BaseStart"を実行する
     }
 
     // Update is called once per frame
     void Update()
     {
-        base.UpdateEnemy();
+        BaseUpdate();
     }
 
     //当たり判定(OnTriggerEnter)

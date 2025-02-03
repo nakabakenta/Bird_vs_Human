@@ -5,12 +5,9 @@ using UnityEngine;
 public class FighterJetBossEnemy : EnemyBase
 {
     //処理
-    private float attackTimer = 0.5f;   //攻撃間隔タイマー
-    private float attackInterval = 0.5f;//攻撃間隔
     private float bulletRotation;       //弾の回転
     //このオブジェクトのコンポーネント
     public GameObject bullet;       //"GameObject(弾)"
-    public GameObject effect;       //"GameObject(エフェクト)"
 
     // Start is called before the first frame update
     void Start()
@@ -19,15 +16,15 @@ public class FighterJetBossEnemy : EnemyBase
         enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
         enemyOption = Enemy.EnemyOption.Boss.ToString();//
         bossEnemy = true;
-
         //関数を実行する
         GetComponent();//コンポーネントを所得する
+        BaseStart();   //関数"BaseStart"を実行する
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateEnemy();
+        BaseUpdate();
     }
 
     //関数"Action"

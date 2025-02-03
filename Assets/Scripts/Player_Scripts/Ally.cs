@@ -15,7 +15,7 @@ public class Ally : PlayerBase
     void Start()
     {
         GetComponent();
-        rotation = 90.0f;
+        direction.y = 90.0f;
         allyObject = Instantiate(player[GameManager.selectPlayer], this.transform.position, this.transform.rotation, thisTransform);
         animator = allyObject.GetComponent<Animator>();
     }
@@ -63,7 +63,7 @@ public class Ally : PlayerBase
             nowAlly += 1;               //ñ°ï˚êîÇ"+1"Ç∑ÇÈ
             allyNumber = nowAlly;
             
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, rotation, this.transform.rotation.z);
+            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, direction.y, this.transform.rotation.z);
             this.gameObject.transform.SetParent(playerTransform);
             this.transform.position = new Vector3(playerTransform.position.x - (1.0f * allyNumber), playerTransform.position.y, playerTransform.position.z);
         }

@@ -16,14 +16,14 @@ public class BossEnemy : EnemyBase
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する
-        GetComponent();  //コンポーネントを所得する
-        StartAnimation();//開始時のアニメーションを設定する
+        GetComponent();//コンポーネントを所得する
+        BaseStart();   //関数"BaseStart"を実行する
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateEnemy();
+        BaseUpdate();
     }
 
     public override void DeathEnemy()

@@ -7,7 +7,7 @@ public class BulletBase : MonoBehaviour
     //ステータス
     public float moveSpeed;//弾の移動速度
     //座標
-    public Vector3 viewPortPosition;
+    protected Vector3 viewPortPosition;
 
      public void BaseUpdate()
     {

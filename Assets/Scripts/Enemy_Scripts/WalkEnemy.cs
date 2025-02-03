@@ -17,18 +17,13 @@ public class WalkEnemy : EnemyBase
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する
-        GetComponent();  //コンポーネントを所得する
-        StartAnimation();//開始時のアニメーションを設定する
+        GetComponent();//コンポーネントを所得する
+        BaseStart();   //関数"BaseStart"を実行する
     }
 
     // Update is called once per frame
     void Update()
     {
-        base.UpdateEnemy();
-    }
-
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
+        BaseUpdate();
     }
 }

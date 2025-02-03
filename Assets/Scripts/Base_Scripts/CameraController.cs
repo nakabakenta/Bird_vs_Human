@@ -5,8 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     //カメラの移動速度
-    public static float[] speed = new float[5]
-    { 2.0f, 2.0f, 2.0f, 2.0f, 0.0f };
+    public float moveSpeed;
     //カメラの移動限界値
     private Vector2[] limitPosition = new Vector2[5]
     {
@@ -28,7 +27,7 @@ public class CameraController : MonoBehaviour
     {
         if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.status != "Death") 
         {
-            this.transform.position += speed[Stage.nowStage - 1] * transform.right * Time.deltaTime;//右方向に移動する
+            this.transform.position += moveSpeed * transform.right * Time.deltaTime;//右方向に移動する
         }
     }
 }
