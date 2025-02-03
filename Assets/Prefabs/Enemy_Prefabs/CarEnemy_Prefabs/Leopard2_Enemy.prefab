@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289074457054498965}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.3297148e-16, y: -0.000015563965, z: 2.7617025}
+  m_LocalPosition: {x: 0, y: 0, z: 2.7617025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1420,6 +1420,7 @@ GameObject:
   - component: {fileID: 6482697016710822201}
   - component: {fileID: 4587953421030683760}
   - component: {fileID: 2735890844372910915}
+  - component: {fileID: 3075590388430720454}
   m_Layer: 0
   m_Name: Leopard2_Enemy
   m_TagString: Enemy
@@ -1489,7 +1490,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5489952145432832569}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.75, y: 2.5, z: 9.75}
@@ -1508,16 +1509,113 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 30
   moveSpeed: 1
-  rotateSpeed: {x: 0, y: 50, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
   jump: 0
   attackInterval: 3
+  turretMoveSeppd: 30
+  muzzleMoveSeppd: 15
   turret: {fileID: 9014478282808503438}
   muzzle: {fileID: 289074457054498965}
-  bullet: {fileID: 1306594059243497752, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
+  bullet: {fileID: 5407085079677237740, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
   shotPosition: {fileID: 2935186390172836444}
+--- !u!82 &3075590388430720454
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5489952145432832569}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5649557577541482470
 GameObject:
   m_ObjectHideFlags: 0

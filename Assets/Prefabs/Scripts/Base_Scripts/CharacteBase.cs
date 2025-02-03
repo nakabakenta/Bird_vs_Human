@@ -7,7 +7,6 @@ public class CharacteBase : MonoBehaviour
     //ステータス
     public int hp;             //体力
     public float moveSpeed;    //移動速度
-    public Vector3 rotateSpeed;//回転速度
     //処理
     protected Vector3 direction;//オブジェクトの方向
     protected bool isDamage;    //ダメージの可否

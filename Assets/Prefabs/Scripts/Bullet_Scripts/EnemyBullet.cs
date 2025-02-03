@@ -6,7 +6,6 @@ public class EnemyBullet : BulletBase
 {
     //処理
     private Vector3 direction;//オブジェクトの方向
-
     //他のオブジェクトのコンポーネント
     private Transform playerTransform;//"Transform(プレイヤー)"
 
