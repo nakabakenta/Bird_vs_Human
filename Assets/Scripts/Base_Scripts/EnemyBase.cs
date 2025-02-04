@@ -5,32 +5,35 @@ using UnityEngine;
 public class EnemyBase : CharacteBase
 {
     //このオブジェクトのコンポーネント
-    public GameObject effect;//"GameObject(エフェクト)"
-    public AudioClip death;  //"AudioClip(死亡)"
+    public GameObject effect;      //"GameObject(エフェクト)"
+    public GameObject bullet;      //"GameObject(弾)"
+    public GameObject shotPosition;//"GameObject(発射位置)"
+    public AudioClip death;        //"AudioClip(死亡)"      
     //ステータス
-    public float jump;                  //ジャンプ力
-    public float attackInterval;        //攻撃間隔
-    public float rotationSpeed = 360.0f;//回転速度
+    public float jump;                                //ジャンプ力
+    public float actionChangeInterval, attackInterval;//行動変更間隔, 攻撃間隔
+    public float rotationSpeed;                       //回転速度
+    public Vector3 actionRange;
     public static bool bossEnemy;//
-    protected string enemyType;  //敵の型
-    protected string enemyOption;//敵の設定
-    //処理
-    protected int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号
-    protected float attackTimer;                             //攻撃間隔タイマー
-    protected bool action = false;                           //行動の可否
-    protected bool isAnimation = false;                      //アニメーションの可否
-    private string nowAnimationName;                         //現在のアニメーションの名前
-    private float nowAnimationLength;                        //現在のアニメーションの長さ
-    private float animationTimer = 0.0f;                     //アニメーションタイマー
-    private float animationChangeTimer = 0.0f;               //アニメーション切り替えタイマー
-    private float jumpTimer = 0.0f;                          //ジャンプタイマー
-    private Enemy.HumanoidAnimation humanoidAnimation;       //"enum(HumanoidAnimation)"
+    //敵の型
+    protected string enemyType;
+    /*【処理】*/
+    //標準のアニメーション番号, 現在のアニメーション番号
+    protected int defaultAnimationNumber, nowAnimationNumber;
+    //行動変更タイマー, 攻撃タイマー
+    protected float actionChangeTimer = 0.0f, attackTimer = 0.0f;
+    //行動の可否, アニメーションの可否
+    protected bool action = false, isAnimation = false;
+    protected string nowAnimationName;       //現在のアニメーションの名前
+    protected float nowAnimationLength;      //現在のアニメーションの長さ
+    protected float animationTimer = 0.0f;   //アニメーションタイマー
+    private float jumpTimer = 0.0f;          //ジャンプタイマー
+    private float gravity = 0.0f;            //重力          
+    private Enemy.HumanoidAnimation humanoidAnimation;//"enum(HumanoidAnimation)"
 
     //関数"BaseStart"
     public void BaseStart()
     {
-        attackTimer = attackInterval;
-
         if(enemyType == Enemy.EnemyType.Human.ToString())
         {
             //このオブジェクトのコンポーネントを取得
@@ -42,82 +45,16 @@ public class EnemyBase : CharacteBase
         }
     }
 
-    //関数"UpdateEnmey"
-    public void BaseUpdate()
+    //関数"BaseUpdate"
+    public virtual void BaseUpdate()
     {
         //このオブジェクトのワールド座標をビューポート座標に変換して取得する
         viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
 
-        if(enemyType == Enemy.EnemyType.Human.ToString())
+        //体力が"0より上" && 行動"する"の場合
+        if (hp > 0 && action == true)
         {
-            if (action == false)
-            {
-                if (viewPortPosition.x < 1)
-                {
-                    action = true;
-                }
-            }
-            //体力が"0より上" && 行動"する"の場合
-            if (hp > 0 && action == true)
-            {
-                Action();//関数"Action"を実行する
-            }
-
-            //ビューポート座標が"0未満"の場合
-            if (viewPortPosition.x < 0)
-            {
-                if (enemyOption == Enemy.EnemyOption.Normal.ToString() ||
-                    enemyOption == Enemy.EnemyOption.Wait.ToString())
-                {
-                    Destroy();//関数"Destroy"を実行する
-                }
-                else if (enemyOption == Enemy.EnemyOption.Find.ToString() ||
-                         enemyOption == Enemy.EnemyOption.Boss.ToString())
-                {
-                    if (hp <= 0)
-                    {
-                        Destroy();//関数"Destroy"を実行する
-                    }
-                }
-            }
-        }
-        else if(enemyType == Enemy.EnemyType.Vehicle.ToString())
-        {
-            if (enemyOption == Enemy.EnemyOption.Normal.ToString())
-            {
-                if (action == false)
-                {
-                    if (direction.y == (int)Characte.Direction.Vertical)
-                    {
-                        if (this.thisTransform.position.x < playerTransform.position.x + 5.0f)
-                        {
-                            action = true;
-                        }
-                    }
-                    else if(direction.y == -(int)Characte.Direction.Horizontal)
-                    {
-                        if (viewPortPosition.x < 1.25)
-                        {
-                            action = true;
-                        }
-                    }
-                }
-
-                //体力が"0より上" && 行動"する"の場合
-                if (hp > 0 && action == true)
-                {
-                    Action();//関数"Action"を実行する
-                }
-            }
-            else if(enemyOption == Enemy.EnemyOption.Find.ToString() ||
-                    enemyOption == Enemy.EnemyOption.Boss.ToString())
-            {
-                //体力が"0より上" && 行動"する"の場合
-                if (hp > 0)
-                {
-                    Action();//関数"Action"を実行する
-                }
-            }
+            Action();//関数"Action"を実行する
         }
 
         if (bossEnemy == false)
@@ -129,79 +66,7 @@ public class EnemyBase : CharacteBase
     //関数"Action"
     public virtual void Action()
     {
-        if (enemyType == Enemy.EnemyType.Human.ToString())
-        {
-            //
-            if (isAnimation == true)
-            {
-                AnimationFind();//関数"AnimationFind"を実行する
-            }
-            //
-            else if (isAnimation == false)
-            {
-                //
-                if (PlayerBase.status != "Death")
-                {
-                    Direction();//関数"Direction"を実行する
-
-                    animationChangeTimer += Time.deltaTime;
-
-                    if (enemyOption != Enemy.EnemyOption.Normal.ToString())
-                    {
-                        if (enemyOption == Enemy.EnemyOption.Find.ToString() || enemyOption == Enemy.EnemyOption.Boss.ToString())
-                        {
-                            if (this.transform.position.x + EnemyList.RunEnemy.range.x > playerTransform.position.x &&
-                            this.transform.position.x - EnemyList.RunEnemy.range.x < playerTransform.position.x &&
-                            this.transform.position.y + EnemyList.RunEnemy.range.y < playerTransform.position.y &&
-                            this.transform.position.y == 0.0f && nowAnimationNumber == defaultAnimationNumber)
-                            {
-                                isAnimation = true;
-                                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
-                                AnimationPlay();
-                            }
-                        }
-                    }
-
-                    if (enemyOption != Enemy.EnemyOption.Wait.ToString())
-                    {
-                        Move();
-                    }
-
-                    //アニメーション切り替えタイマーが"5.0f以上"の場合
-                    if (animationChangeTimer >= 5.0f && enemyOption == Enemy.EnemyOption.Boss.ToString())
-                    {
-                        isAnimation = true;
-                        animationChangeTimer = 0.0f;//アニメーション切り替えタイマーを初期化する
-
-                        //
-                        if (nowAnimationNumber == defaultAnimationNumber)
-                        {
-                            nowAnimationNumber = (int)Enemy.HumanoidAnimation.Battlecry;//現在のアニメーションを"雄叫び"にする
-                        }
-                        //
-                        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
-                        {
-                            nowAnimationNumber = (int)Enemy.HumanoidAnimation.JumpAttack;//現在のアニメーションを"ジャンプ攻撃"にする
-                        }
-
-                        AnimationPlay();//関数"AnimationPlay"を実行する
-                    }
-                }
-                else if (PlayerBase.status == "Death")
-                {
-                    nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
-                    AnimationPlay();                                  //関数"AnimationPlay"を実行する
-                }
-
-                AddAction();//関数"AddAction"を実行する
-            }
-
-            if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
-                nowAnimationNumber != (int)Enemy.HumanoidAnimation.JumpAttack)
-            {
-                this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
-            }
-        }
+        
     }
 
     //関数"Move"
@@ -224,30 +89,18 @@ public class EnemyBase : CharacteBase
         {
             direction.y = -(int)Characte.Direction.Horizontal;
         }
+    }
 
-        if (enemyOption == Enemy.EnemyOption.Find.ToString() || enemyOption == Enemy.EnemyOption.Wait.ToString())
+    public void PlayerFind()
+    {
+        direction = playerTransform.position - this.transform.position;
+        direction.y = 0.0f;
+
+        if (direction != Vector3.zero)
         {
-            direction = playerTransform.position - this.transform.position;
-            direction.y = 0.0f;
-
-            if (direction != Vector3.zero)
-            {
-                Quaternion quaternion = Quaternion.LookRotation(direction);
-                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, quaternion, rotationSpeed * Time.deltaTime);
-            }
+            Quaternion quaternion = Quaternion.LookRotation(direction);
+            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, quaternion, rotationSpeed * Time.deltaTime);
         }
-    }
-
-    //関数"AddAction"
-    public virtual void AddAction()
-    {
-        
-    }
-
-    //関数"Attack"
-    public virtual void Attack()
-    {
-        attackTimer += Time.deltaTime;//攻撃間隔に"Time.deltaTime(経過時間)"を足す
     }
 
     //関数"Animation"
@@ -261,8 +114,6 @@ public class EnemyBase : CharacteBase
     //関数"AnimationFind"
     public void AnimationFind()
     {
-        animationTimer += Time.deltaTime;//"animationTimer"に"Time.deltaTime(経過時間)"を足す
-
         foreach (AnimationClip clip in runtimeAnimatorController.animationClips)
         {
             if (clip.name == nowAnimationName)
@@ -271,11 +122,12 @@ public class EnemyBase : CharacteBase
             }
         }
 
-        AnimationWait();//関数"AnimationWait"を実行する
+        animationTimer += Time.deltaTime;//"animationTimer"に"Time.deltaTime(経過時間)"を足す
+        ActionWait();                    //関数"ActionWait"を実行する
     }
 
-    //関数"AnimationWait"
-    public void AnimationWait()
+    //関数"ActionWait"
+    public virtual void ActionWait()
     {
         //
         if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Jump)
@@ -284,22 +136,19 @@ public class EnemyBase : CharacteBase
 
             if (animationTimer >= 0.8f && jumpTimer >= 0.1f)
             {
-                jump -= 1.0f;
+                gravity += 1.0f;
                 jumpTimer = 0.0f;
             }
 
             if (animationTimer >= 0.8f)
             {
-                this.transform.position += jump * transform.up * Time.deltaTime;
+                this.transform.position += (jump - gravity) * transform.up * Time.deltaTime;
 
                 if (animationTimer >= 2.7f)
                 {
-                    jump = EnemyList.RunEnemy.jump;
-                    animationTimer = 0.0f;
+                    gravity = 0.0f;
                     jumpTimer = 0.0f;
-                    isAnimation = false;
-                    nowAnimationNumber = defaultAnimationNumber;//
-                    AnimationPlay();                            //関数"Animation"を実行
+                    ActionReset();
                 }
                 else if (animationTimer >= 2.3f)
                 {
@@ -317,11 +166,8 @@ public class EnemyBase : CharacteBase
             //
             if (animationTimer >= nowAnimationLength / 2)
             {
-                animationTimer = 0.0f;                                //アニメーションタイマーを初期化する
-                nowAnimationNumber = defaultAnimationNumber;          //現在のアニメーションを"歩く"にする
                 moveSpeed /= 3.0f;
-                isAnimation = false;
-                AnimationPlay();
+                ActionReset();
             }
         }
         //現在のアニメーションが"雄叫び"の場合
@@ -342,22 +188,21 @@ public class EnemyBase : CharacteBase
             if (animationTimer >= nowAnimationLength / 2)
             {   //アニメーションタイマーを初期化する
                 defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Run;//現在のアニメーションを"走る"にする
-                AnimationChange();
+                ActionReset();
             }
         }
         else if (animationTimer >= nowAnimationLength)
         {
-            AddAnimationChange();
-            AnimationChange();
+            ActionReset();
         }
     }
 
-    public virtual void AddAnimationChange()
+    public virtual void ActionChange()
     {
 
     }
 
-    public void AnimationChange()
+    public void ActionReset()
     {
         animationTimer = 0.0f;
 
@@ -440,14 +285,6 @@ public class EnemyBase : CharacteBase
             Vehicle,
         }
 
-        public enum EnemyOption
-        {
-            Normal,
-            Find,
-            Wait,
-            Boss,
-        }
-
         public enum HumanoidAnimation
         {
             Walk = 0,
@@ -458,6 +295,7 @@ public class EnemyBase : CharacteBase
             Kick = 11,
             JumpAttack = 12,
             GunPlay = 13,
+            Throw = 14,
             Jump = 20,
             Crouch = 21,
             ExitCar = 22,

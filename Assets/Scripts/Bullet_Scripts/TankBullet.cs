@@ -16,6 +16,12 @@ public class TankBullet : BulletBase
         BaseUpdate();
 
         this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//‘O•ûŒü‚ÉˆÚ“®‚·‚é
+
+        if(this.transform.position.x + 0.25f > playerTransform.position.x &&
+           this.transform.position.x - 0.25f < playerTransform.position.x)
+        {
+            Destroy();
+        }
     }
 
     public override void Destroy()

@@ -9,7 +9,6 @@ public class CarRideEnemy : EnemyBase
     {
         //ステータスを設定する
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
-        enemyOption = Enemy.EnemyOption.Find.ToString();//
         //処理を初期化する
         isAnimation = true;
         //初期のアニメーションを設定する
@@ -25,9 +24,57 @@ public class CarRideEnemy : EnemyBase
         BaseUpdate();
     }
 
-    //当たり判定(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
+    public override void BaseUpdate()
     {
-        base.OnTriggerEnter(collision);
+        base.BaseUpdate();
+
+        if (viewPortPosition.x < 1)
+        {
+            action = true;
+        }
+
+        if (viewPortPosition.x < 0 && hp <= 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
+    }
+
+    public override void Action()
+    {
+        if (isAnimation == true)
+        {
+            AnimationFind();//関数"AnimationFind"を実行する
+        }
+        //
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerBase.status != "Death")
+            {
+                PlayerFind();//関数"PlayerFind"を実行する
+                Move();
+
+                if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                    this.transform.position.y + actionRange.y < playerTransform.position.y &&
+                    nowAnimationNumber == defaultAnimationNumber)
+                {
+                    isAnimation = true;
+                    nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
+                    AnimationPlay();
+                }
+            }
+            else if (PlayerBase.status == "Death")
+            {
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
+                AnimationPlay();                                        //関数"AnimationPlay"を実行する
+            }
+        }
+
+        if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
+            nowAnimationNumber != (int)Enemy.HumanoidAnimation.JumpAttack)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+        }
     }
 }

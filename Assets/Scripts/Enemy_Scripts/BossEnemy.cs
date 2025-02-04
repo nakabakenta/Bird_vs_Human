@@ -9,9 +9,7 @@ public class BossEnemy : EnemyBase
     {
         //ステータスを設定する
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
-        enemyOption = Enemy.EnemyOption.Boss.ToString();//
         bossEnemy = true;
-
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する
@@ -25,15 +23,96 @@ public class BossEnemy : EnemyBase
         BaseUpdate();
     }
 
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        if (viewPortPosition.x < 1)
+        {
+            action = true;
+        }
+    }
+
+    public override void Action()
+    {
+        if (isAnimation == true)
+        {
+            AnimationFind();//関数"AnimationFind"を実行する
+        }
+        //
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerBase.status != "Death")
+            {
+                PlayerFind();//関数"PlayerFind"を実行する
+                Move();
+
+                actionChangeTimer += Time.deltaTime;
+
+                if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                    this.transform.position.y + actionRange.y < playerTransform.position.y &&
+                    nowAnimationNumber == defaultAnimationNumber)
+                {
+                    isAnimation = true;
+                    nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
+                    AnimationPlay();
+                }
+
+                if (actionChangeTimer >= actionChangeInterval)
+                {
+                    isAnimation = true;
+                    actionChangeTimer = 0.0f;
+                    ActionChange();
+                }
+            }
+            else if (PlayerBase.status == "Death")
+            {
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
+                AnimationPlay();                                        //関数"AnimationPlay"を実行する
+            }
+        }
+
+        if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
+            nowAnimationNumber != (int)Enemy.HumanoidAnimation.JumpAttack)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+        }
+    }
+
+    public override void ActionChange()
+    {
+        //
+        if (nowAnimationNumber == defaultAnimationNumber)
+        {
+            int[] randomAnimation = { 14, 23 };
+            nowAnimationNumber = randomAnimation[Random.Range(0, randomAnimation.Length)];
+        }
+        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
+        {
+            nowAnimationNumber = (int)Enemy.HumanoidAnimation.JumpAttack;//現在のアニメーションを"ジャンプ攻撃"にする
+        }
+
+        AnimationPlay();//関数"AnimationPlay"を実行する
+    }
+
+    public override void ActionWait()
+    {
+        if (animationTimer >= nowAnimationLength)
+        {
+            if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
+            {
+                Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
+            }
+        } 
+
+        base.ActionWait();
+    }
+
     public override void DeathEnemy()
     {
         bossEnemy = false;
         base.DeathEnemy();
-    }
-
-    //当たり判定(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
     }
 }

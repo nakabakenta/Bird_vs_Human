@@ -13,8 +13,7 @@ public class FighterJetEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定
-        enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
-        enemyOption = Enemy.EnemyOption.Find.ToString();//
+        enemyType = Enemy.EnemyType.Vehicle.ToString();//敵の型
         //関数を実行する
         GetComponent();//コンポーネントを所得する
         BaseStart();   //関数"BaseStart"を実行する
@@ -24,6 +23,13 @@ public class FighterJetEnemy : EnemyBase
     void Update()
     {
         BaseUpdate();
+    }
+
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        action = true;
     }
 
     //関数"Action"
@@ -57,7 +63,7 @@ public class FighterJetEnemy : EnemyBase
     {
         base.DeathEnemy();
         //
-        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
-        Invoke("Destroy", 1.0f);                                                             //関数"Destroy"を"5.0f"後に実行
+        Instantiate(effect, this.transform.position, this.transform.rotation);
+        Invoke("Destroy", 1.0f);
     }
 }

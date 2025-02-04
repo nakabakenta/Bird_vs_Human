@@ -14,8 +14,7 @@ public class CarEnemy : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        enemyType = Enemy.EnemyType.Vehicle.ToString();   //敵の型
-        enemyOption = Enemy.EnemyOption.Normal.ToString();//
+        enemyType = Enemy.EnemyType.Vehicle.ToString();//敵の型
         carExit = false;
         //関数を実行する
         GetComponent();//コンポーネントを所得する
@@ -26,6 +25,31 @@ public class CarEnemy : EnemyBase
     void Update()
     {
         BaseUpdate();
+    }
+
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        if (direction.y == (int)Characte.Direction.Vertical)
+        {
+            if (this.thisTransform.position.x < playerTransform.position.x + 5.0f)
+            {
+                action = true;
+            }
+        }
+        else if (direction.y == -(int)Characte.Direction.Horizontal)
+        {
+            if (viewPortPosition.x < 1.25)
+            {
+                action = true;
+            }
+        }
+
+        if (viewPortPosition.x < 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
     }
 
     public override void Action()

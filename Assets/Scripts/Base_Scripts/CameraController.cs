@@ -6,15 +6,8 @@ public class CameraController : MonoBehaviour
 {
     //カメラの移動速度
     public float moveSpeed;
-    //カメラの移動限界値
-    private Vector2[] limitPosition = new Vector2[5]
-    {
-        new Vector2(100.0f, 0.0f),
-        new Vector2(245.0f, 0.0f),
-        new Vector2(245.0f, 0.0f),
-        new Vector2(200.0f, 0.0f),
-        new Vector2(10000.0f, 0.0f),
-    };
+    //カメラの可動域
+    public Vector3 moveRange;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +18,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x < limitPosition[Stage.nowStage - 1].x && PlayerController.status != "Death") 
+        if (this.transform.position.x < moveRange.x && PlayerController.status != "Death") 
         {
             this.transform.position += moveSpeed * transform.right * Time.deltaTime;//右方向に移動する
         }

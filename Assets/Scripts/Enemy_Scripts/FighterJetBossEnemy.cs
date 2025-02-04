@@ -13,8 +13,7 @@ public class FighterJetBossEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定
-        enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
-        enemyOption = Enemy.EnemyOption.Boss.ToString();//
+        enemyType = Enemy.EnemyType.Vehicle.ToString();//敵の型
         bossEnemy = true;
         //関数を実行する
         GetComponent();//コンポーネントを所得する
@@ -25,6 +24,13 @@ public class FighterJetBossEnemy : EnemyBase
     void Update()
     {
         BaseUpdate();
+    }
+
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        action = true;
     }
 
     //関数"Action"
@@ -59,7 +65,7 @@ public class FighterJetBossEnemy : EnemyBase
         bossEnemy = false;
         base.DeathEnemy();
         //
-        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
+        Instantiate(effect, this.transform.position, this.transform.rotation);
         Invoke("Destroy", 1.0f);//関数"Destroy"を"5.0f"後に実行
     }
 

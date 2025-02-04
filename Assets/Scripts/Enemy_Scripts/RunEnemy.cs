@@ -9,10 +9,6 @@ public class RunEnemy : EnemyBase
     {
         //ステータスを設定する
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
-        enemyOption = Enemy.EnemyOption.Find.ToString();//
-        hp = EnemyList.RunEnemy.hp;                     //体力
-        moveSpeed = EnemyList.RunEnemy.speed;               //移動速度
-        jump = EnemyList.RunEnemy.jump;                 //ジャンプ力
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Run;
         //関数を実行する
@@ -24,5 +20,59 @@ public class RunEnemy : EnemyBase
     void Update()
     {
         BaseUpdate();
+    }
+
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        if (viewPortPosition.x < 1)
+        {
+            action = true;
+        }
+
+        if (viewPortPosition.x < 0 && hp <= 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
+    }
+
+    public override void Action()
+    {
+        if (isAnimation == true)
+        {
+            AnimationFind();//関数"AnimationFind"を実行する
+        }
+        //
+        else if (isAnimation == false)
+        {
+            //
+            if (PlayerBase.status != "Death")
+            {
+                PlayerFind();//関数"PlayerFind"を実行する
+                Move();
+
+                if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                    this.transform.position.y + actionRange.y < playerTransform.position.y &&
+                    nowAnimationNumber == defaultAnimationNumber)
+                {
+                    isAnimation = true;
+                    nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
+                    AnimationPlay();
+                }
+            }
+            else if (PlayerBase.status == "Death")
+            {
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
+                AnimationPlay();                                        //関数"AnimationPlay"を実行する
+            }
+        }
+
+        if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
+            nowAnimationNumber != (int)Enemy.HumanoidAnimation.JumpAttack)
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
+        }
     }
 }

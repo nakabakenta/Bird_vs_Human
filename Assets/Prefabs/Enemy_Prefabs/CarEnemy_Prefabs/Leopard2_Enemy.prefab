@@ -1508,13 +1508,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 30
-  moveSpeed: 2
+  moveSpeed: 3
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
   jump: 0
-  attackInterval: 3
+  actionChangeInterval: 0
+  attackInterval: 5
   rotationSpeed: 90
+  range: {x: 0, y: 0, z: 0}
   shotPosition: {fileID: 2935186390172836444}
   bullet: {fileID: 5407085079677237740, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
 --- !u!82 &3075590388430720454

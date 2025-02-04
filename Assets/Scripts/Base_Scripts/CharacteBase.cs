@@ -5,11 +5,12 @@ using UnityEngine;
 public class CharacteBase : MonoBehaviour
 {
     //ステータス
-    public int hp;             //体力
-    public float moveSpeed;    //移動速度
+    public int hp;         //体力
+    public float moveSpeed;//移動速度
     //処理
-    protected Vector3 direction;//オブジェクトの方向
-    protected bool isDamage;    //ダメージの可否
+    public ClassMoveRange[] moveRange;
+    protected Vector3 direction;      //オブジェクトの方向
+    protected bool isDamage;          //ダメージの可否
     //座標
     protected Vector3 worldPosition, viewPortPosition;
     //このオブジェクトのコンポーネント
@@ -24,6 +25,12 @@ public class CharacteBase : MonoBehaviour
     protected AudioSource audioSource;                            //"AudioSource"
     //他のオブジェクトのコンポーネント
     protected Transform playerTransform;                          //"Transform(プレイヤー)"
+
+    [System.Serializable]
+    public class ClassMoveRange
+    {
+        public Vector3[] range;
+    }
 
     //関数"GetComponent"
     public void GetComponent()

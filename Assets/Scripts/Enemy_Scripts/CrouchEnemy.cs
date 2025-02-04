@@ -8,8 +8,7 @@ public class CrouchEnemy : EnemyBase
     void Start()
     {
         //ステータスを設定する
-        enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
-        enemyOption = Enemy.EnemyOption.Wait.ToString();//
+        enemyType = Enemy.EnemyType.Human.ToString();//敵の型
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Crouch;
         //関数を実行する
@@ -23,9 +22,37 @@ public class CrouchEnemy : EnemyBase
         BaseUpdate();
     }
 
-    //当たり判定(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
+    public override void BaseUpdate()
     {
-        base.OnTriggerEnter(collision);
+        base.BaseUpdate();
+
+        if (viewPortPosition.x < 1)
+        {
+            action = true;
+        }
+
+        if (viewPortPosition.x < 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
+    }
+
+    public override void Action()
+    {
+        if (isAnimation == true)
+        {
+            AnimationFind();//関数"AnimationFind"を実行する
+        }
+        //
+        else if (isAnimation == false)
+        {
+            if (PlayerBase.status == "Death")
+            {
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
+                AnimationPlay();                                        //関数"AnimationPlay"を実行する
+            }
+        }
+
+        this.transform.position = new Vector3(this.transform.position.x, 0.0f, playerTransform.position.z);
     }
 }

@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class TankEnemy : EnemyBase
 {
-    //このオブジェクトのコンポーネント
-    public GameObject shotPosition, bullet;
-
     // Start is called before the first frame update
     void Start()
     {
         enemyType = Enemy.EnemyType.Vehicle.ToString(); //敵の型
-        enemyOption = Enemy.EnemyOption.Find.ToString();//
         //関数を実行する
         GetComponent();//コンポーネントを所得する
         BaseStart();   //関数"BaseStart"を実行する
@@ -23,22 +19,47 @@ public class TankEnemy : EnemyBase
         BaseUpdate();
     }
 
+    public override void BaseUpdate()
+    {
+        base.BaseUpdate();
+
+        if (viewPortPosition.x < 1)
+        {
+            action = true;
+        }
+
+        if (viewPortPosition.x < 0 && hp <= 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
+    }
+
     //関数"Action"
     public override void Action()
     {
-        Attack();
-        Move();
-        Direction();//関数"Direction"を実行する
-    }
-
-    public override void Attack()
-    {
-        base.Attack();
-
-        if (attackTimer > attackInterval)
+        if (PlayerBase.status != "Death")
         {
-            Instantiate(bullet, shotPosition.transform.position, this.transform.rotation);
-            attackTimer = 0.0f;
+            Move();
+
+            if(viewPortPosition.x < 0 || viewPortPosition.x > 1)
+            {
+                direction = playerTransform.position - this.transform.position;
+                direction.y = 0.0f;
+
+                this.transform.rotation = Quaternion.LookRotation(direction);
+            }
+
+            attackTimer += Time.deltaTime;
+
+            if (this.transform.position.x + 3.0f > playerTransform.position.x &&
+                this.transform.position.x - 3.0f < playerTransform.position.x)
+            {
+                if (attackTimer > attackInterval)
+                {
+                    Instantiate(bullet, shotPosition.transform.position, this.transform.rotation);
+                    attackTimer = 0.0f;
+                }
+            }
         }
     }
 
