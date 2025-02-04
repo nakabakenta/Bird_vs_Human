@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class EnemyBullet : BulletBase
 {
-    //処理
-    private Vector3 direction;//オブジェクトの方向
-    //他のオブジェクトのコンポーネント
-    private Transform playerTransform;//"Transform(プレイヤー)"
-
     // Start is called before the first frame update
     void Start()
     {
-        //他のオブジェクトのコンポーネントを取得
-        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
-
+        BaseStart();
         direction = (playerTransform.position - this.transform.position).normalized;
         this.transform.rotation = Quaternion.LookRotation(direction);
     }

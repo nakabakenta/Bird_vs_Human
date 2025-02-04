@@ -13,8 +13,6 @@ public class RunEnemy : EnemyBase
         hp = EnemyList.RunEnemy.hp;                     //体力
         moveSpeed = EnemyList.RunEnemy.speed;               //移動速度
         jump = EnemyList.RunEnemy.jump;                 //ジャンプ力
-        //処理を初期化する
-        playerFind = true;
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Run;
         //関数を実行する

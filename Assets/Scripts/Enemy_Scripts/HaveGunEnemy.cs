@@ -17,8 +17,6 @@ public class HaveGunEnemy : EnemyBase
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Wait.ToString();//
         nowMagazine = maxMagazine;
-        //処理を初期化する
-        playerFind = true;
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.HaveGunIdle;
         //関数を実行する

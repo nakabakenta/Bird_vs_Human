@@ -12,8 +12,6 @@ public class WalkEnemy : EnemyBase
         enemyOption = Enemy.EnemyOption.Normal.ToString();//
         hp = EnemyList.WalkEnemy.hp;                      //体力
         moveSpeed = EnemyList.WalkEnemy.speed;            //移動速度
-        playerFind = false;
-
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Walk;
         //関数を実行する

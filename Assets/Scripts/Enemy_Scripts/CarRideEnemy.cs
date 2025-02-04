@@ -11,7 +11,6 @@ public class CarRideEnemy : EnemyBase
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Find.ToString();//
         //処理を初期化する
-        playerFind = true;
         isAnimation = true;
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.ExitCar;

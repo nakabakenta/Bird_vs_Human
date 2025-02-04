@@ -12,8 +12,6 @@ public class CrouchEnemy : EnemyBase
         enemyOption = Enemy.EnemyOption.Wait.ToString();//
         //初期のアニメーションを設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Crouch;
-        playerFind = false;
-
         //関数を実行する
         GetComponent();//コンポーネントを所得
         BaseStart();   //関数"BaseStart"を実行する

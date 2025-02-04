@@ -8,8 +8,9 @@ public class EnemyBase : CharacteBase
     public GameObject effect;//"GameObject(エフェクト)"
     public AudioClip death;  //"AudioClip(死亡)"
     //ステータス
-    public float jump;           //ジャンプ力
-    public float attackInterval ;//攻撃間隔
+    public float jump;                  //ジャンプ力
+    public float attackInterval;        //攻撃間隔
+    public float rotationSpeed = 360.0f;//回転速度
     public static bool bossEnemy;//
     protected string enemyType;  //敵の型
     protected string enemyOption;//敵の設定
@@ -17,7 +18,6 @@ public class EnemyBase : CharacteBase
     protected int defaultAnimationNumber, nowAnimationNumber;//標準のアニメーション番号, 現在のアニメーション番号
     protected float attackTimer;                             //攻撃間隔タイマー
     protected bool action = false;                           //行動の可否
-    protected bool playerFind;                               //プレイヤー探しの可否
     protected bool isAnimation = false;                      //アニメーションの可否
     private string nowAnimationName;                         //現在のアニメーションの名前
     private float nowAnimationLength;                        //現在のアニメーションの長さ
@@ -225,21 +225,17 @@ public class EnemyBase : CharacteBase
             direction.y = -(int)Characte.Direction.Horizontal;
         }
 
-        if (playerFind == true)
+        if (enemyOption == Enemy.EnemyOption.Find.ToString() || enemyOption == Enemy.EnemyOption.Wait.ToString())
         {
-            //
-            if (this.transform.position.x > playerTransform.position.x)
+            direction = playerTransform.position - this.transform.position;
+            direction.y = 0.0f;
+
+            if (direction != Vector3.zero)
             {
-                direction.y = -(int)Characte.Direction.Horizontal;
-            }
-            //
-            if (this.transform.position.x < playerTransform.position.x)
-            {
-                direction.y = (int)Characte.Direction.Horizontal;
+                Quaternion quaternion = Quaternion.LookRotation(direction);
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, quaternion, rotationSpeed * Time.deltaTime);
             }
         }
-
-        this.transform.eulerAngles = new Vector3(this.transform.rotation.x, direction.y, this.transform.rotation.z);
     }
 
     //関数"AddAction"
@@ -259,7 +255,7 @@ public class EnemyBase : CharacteBase
     {
         humanoidAnimation = (Enemy.HumanoidAnimation)nowAnimationNumber;
         nowAnimationName = humanoidAnimation.ToString();
-        animator.SetInteger("Animation", nowAnimationNumber);        //"animator(Motion)"に"nowAnimation"を設定して再生
+        animator.SetInteger("Animation", nowAnimationNumber);           //"animator(Motion)"に"nowAnimation"を設定して再生
     }
 
     //関数"AnimationFind"
@@ -334,9 +330,9 @@ public class EnemyBase : CharacteBase
             //
             if (animationTimer >= nowAnimationLength / 2)
             {
-                animationTimer = 0.0f;                               //アニメーションタイマーを初期化する
+                animationTimer = 0.0f;                                     //アニメーションタイマーを初期化する
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.CrazyRun;//現在のアニメーションを"走る"にする
-                moveSpeed *= 3.0f;                                       //移動速度を"*3"する
+                moveSpeed *= 3.0f;                                         //移動速度を"*3"する
                 isAnimation = false;
                 AnimationPlay();
             }

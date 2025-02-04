@@ -10,7 +10,6 @@ public class BossEnemy : EnemyBase
         //ステータスを設定する
         enemyType = Enemy.EnemyType.Human.ToString();   //敵の型
         enemyOption = Enemy.EnemyOption.Boss.ToString();//
-        playerFind = true;
         bossEnemy = true;
 
         //初期のアニメーションを設定する

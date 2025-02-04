@@ -4,19 +4,10 @@ using UnityEngine;
 
 public class TankBullet : BulletBase
 {
-    //処理
-    private Vector3 direction;//オブジェクトの方向
-    //他のオブジェクトのコンポーネント
-    private Transform playerTransform;//"Transform(プレイヤー)"
-
     // Start is called before the first frame update
     void Start()
     {
-        //他のオブジェクトのコンポーネントを取得
-        playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
-
-        direction = (playerTransform.position - this.transform.position).normalized;
-        this.transform.rotation = Quaternion.LookRotation(direction);
+        BaseStart();
     }
 
     // Update is called once per frame
@@ -25,6 +16,12 @@ public class TankBullet : BulletBase
         BaseUpdate();
 
         this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//前方向に移動する
+    }
+
+    public override void Destroy()
+    {
+        Instantiate(effect, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), this.transform.rotation);
+        base.Destroy();
     }
 
     //衝突判定(OnTriggerEnter)

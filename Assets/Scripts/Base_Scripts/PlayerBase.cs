@@ -210,7 +210,8 @@ public class PlayerBase : CharacteBase
         //(衝突したオブジェクトのタグが"Enemy" || "BossEnemy" || "EnemyBullet" ) && プレイヤーの状態が"Normal"の場合
         if ((collision.gameObject.tag == "Enemy" || 
              collision.gameObject.tag == "BossEnemy" || 
-             collision.gameObject.tag == "EnemyBullet") && 
+             collision.gameObject.tag == "EnemyBullet" ||
+             collision.gameObject.tag == "Damage") && 
              status == "Normal")
         {
             //味方数が"0より上"の場合

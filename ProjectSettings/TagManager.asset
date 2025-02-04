@@ -13,6 +13,8 @@ TagManager:
   - BossEnemy
   - EnemyBullet
   - PlayerAlly
+  - FxTemporaire
+  - Damage
   layers:
   - Default
   - TransparentFX

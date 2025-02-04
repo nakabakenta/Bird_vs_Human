@@ -8,8 +8,23 @@ public class BulletBase : MonoBehaviour
     public float moveSpeed;//弾の移動速度
     //座標
     protected Vector3 viewPortPosition;
+    //処理
+    protected Vector3 direction;//オブジェクトの方向
+    //このオブジェクトのコンポーネント
+    public GameObject effect;//"GameObject(エフェクト)"
+    //他のオブジェクトのコンポーネント
+    protected Transform playerTransform;//"Transform(プレイヤー)"
 
-     public void BaseUpdate()
+    public void BaseStart()
+    {
+        if(this.tag == "EnemyBullet")
+        {
+            //他のオブジェクトのコンポーネントを取得
+            playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
+        }
+    }
+
+    public void BaseUpdate()
     {
         //このオブジェクトのワールド座標をビューポート座標に変換して取得する
         viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
@@ -23,7 +38,7 @@ public class BulletBase : MonoBehaviour
     }
 
     //関数"Destroy"
-    public void Destroy()
+    virtual public void Destroy()
     {
         Destroy(this.gameObject);//このオブジェクトを消す
     }
