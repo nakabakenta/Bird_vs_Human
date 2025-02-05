@@ -29,10 +29,4 @@ public class TankBullet : BulletBase
         Instantiate(effect, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z), this.transform.rotation);
         base.Destroy();
     }
-
-    //è’ìÀîªíË(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
-    }
 }

@@ -11,10 +11,4 @@ public class EnemyFighterJetBullet : BulletBase
 
         this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//‘O•ûŒü‚ÉˆÚ“®‚·‚é
     }
-
-    //Õ“Ë”»’è(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
-    }
 }

@@ -26,12 +26,12 @@ public class WalkEnemy : EnemyBase
     {
         base.BaseUpdate();
 
-        if (viewPortPosition.x < 1)
+        if (viewPortPosition.x < moveRange[0].range[1].x)
         {
             action = true;
         }
 
-        if (viewPortPosition.x < 0)
+        if (viewPortPosition.x < moveRange[0].range[0].x)
         {
             Destroy();//ŠÖ”"Destroy"‚ðŽÀs‚·‚é
         }

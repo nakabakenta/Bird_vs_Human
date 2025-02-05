@@ -8,11 +8,14 @@ public class EnemyBase : CharacteBase
     public GameObject effect;      //"GameObject(エフェクト)"
     public GameObject bullet;      //"GameObject(弾)"
     public GameObject shotPosition;//"GameObject(発射位置)"
-    public AudioClip death;        //"AudioClip(死亡)"      
+    public GameObject audioMove;
+    public AudioClip shot;
+    public AudioClip death;        //"AudioClip(死亡)"
     //ステータス
     public float jump;                                //ジャンプ力
     public float actionChangeInterval, attackInterval;//行動変更間隔, 攻撃間隔
     public float rotationSpeed;                       //回転速度
+    public int maxBullet;
     public Vector3 actionRange;
     public static bool bossEnemy;//
     //敵の型
@@ -23,10 +26,11 @@ public class EnemyBase : CharacteBase
     //行動変更タイマー, 攻撃タイマー
     protected float actionChangeTimer = 0.0f, attackTimer = 0.0f;
     //行動の可否, アニメーションの可否
-    protected bool action = false, isAnimation = false;
+    protected int nowBullet;
     protected string nowAnimationName;       //現在のアニメーションの名前
     protected float nowAnimationLength;      //現在のアニメーションの長さ
     protected float animationTimer = 0.0f;   //アニメーションタイマー
+    protected bool action = false, isAnimation = false;
     private float jumpTimer = 0.0f;          //ジャンプタイマー
     private float gravity = 0.0f;            //重力          
     private Enemy.HumanoidAnimation humanoidAnimation;//"enum(HumanoidAnimation)"
@@ -34,7 +38,9 @@ public class EnemyBase : CharacteBase
     //関数"BaseStart"
     public void BaseStart()
     {
-        if(enemyType == Enemy.EnemyType.Human.ToString())
+        nowBullet = maxBullet;
+
+        if (enemyType == Enemy.EnemyType.Human.ToString())
         {
             //このオブジェクトのコンポーネントを取得
             animator = this.GetComponent<Animator>();
@@ -55,6 +61,18 @@ public class EnemyBase : CharacteBase
         if (hp > 0 && action == true)
         {
             Action();//関数"Action"を実行する
+        }
+
+        if (audioMove != null)
+        {
+            if(viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
+            {
+                audioMove.SetActive(true);
+            }
+            if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+            {
+                audioMove.SetActive(false);
+            }
         }
 
         if (bossEnemy == false)
@@ -91,7 +109,7 @@ public class EnemyBase : CharacteBase
         }
     }
 
-    public void PlayerFind()
+    public void PlayerDirection()
     {
         direction = playerTransform.position - this.transform.position;
         direction.y = 0.0f;
@@ -109,6 +127,11 @@ public class EnemyBase : CharacteBase
         humanoidAnimation = (Enemy.HumanoidAnimation)nowAnimationNumber;
         nowAnimationName = humanoidAnimation.ToString();
         animator.SetInteger("Animation", nowAnimationNumber);           //"animator(Motion)"に"nowAnimation"を設定して再生
+    }
+
+    public virtual void ActionChange()
+    {
+
     }
 
     //関数"AnimationFind"
@@ -197,11 +220,6 @@ public class EnemyBase : CharacteBase
         }
     }
 
-    public virtual void ActionChange()
-    {
-
-    }
-
     public void ActionReset()
     {
         animationTimer = 0.0f;
@@ -222,12 +240,16 @@ public class EnemyBase : CharacteBase
         hp -= PlayerBase.attackPower;
 
         //体力が"0より上" && 現在のアニメーション番号が初期のアニメーション番号と等しい場合
-        if (hp > 0 && enemyType == Enemy.EnemyType.Human.ToString() && nowAnimationNumber == defaultAnimationNumber)
+        if (hp > 0)
         {
-            isAnimation = true;                                      //"isAnimation = true"にする
-            nowAnimationNumber = (int)Enemy.HumanoidAnimation.Damage;
-            audioSource.PlayOneShot(damage);                         //"damage"を鳴らす
-            AnimationPlay();                                         //関数"Animation"を実行
+            audioSource.PlayOneShot(damage);//"damage"を鳴らす
+
+            if (enemyType == Enemy.EnemyType.Human.ToString() && nowAnimationNumber == defaultAnimationNumber)
+            {
+                isAnimation = true;                                      //"isAnimation = true"にする
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Damage;
+                AnimationPlay();                                         //関数"Animation"を実行
+            }
         }
         //"hp <= 0"の場合
         else if (hp <= 0)
@@ -251,7 +273,7 @@ public class EnemyBase : CharacteBase
             this.transform.position
                 = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
             nowAnimationNumber = (int)Enemy.HumanoidAnimation.Death;
-            AnimationPlay();                                 //関数"Animation"を実行
+            AnimationPlay();                                        //関数"Animation"を実行
         }
     }
 
@@ -270,8 +292,8 @@ public class EnemyBase : CharacteBase
                 AnimationPlay();//関数"AnimationPlay"を実行する
             }
         }
-        //衝突したオブジェクトのタグが"Bullet" && 体力が"0より上"の場合
-        if (collision.gameObject.tag == "Bullet" && hp > 0)
+        //衝突したオブジェクトのタグが"PlayerBullet" && 体力が"0より上"の場合
+        if (collision.gameObject.tag == "PlayerBullet" && hp > 0)
         {
             DamageEnemy();//関数"DamageEnemy"を実行する
         }

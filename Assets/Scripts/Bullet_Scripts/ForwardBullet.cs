@@ -11,10 +11,4 @@ public class ForwardBullet : BulletBase
 
         this.transform.position += moveSpeed * transform.right * Time.deltaTime;//
     }
-
-    //è’ìÀîªíË(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
-    }
 }

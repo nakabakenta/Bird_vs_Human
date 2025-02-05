@@ -11,13 +11,17 @@ public class BulletBase : MonoBehaviour
     //処理
     protected Vector3 direction;//オブジェクトの方向
     //このオブジェクトのコンポーネント
-    public GameObject effect;//"GameObject(エフェクト)"
+    public GameObject effect;       //"GameObject(エフェクト)"
+    public AudioClip audioClip;     //"audioClip"
+    protected AudioSource audioSource;//"AudioSource"
     //他のオブジェクトのコンポーネント
     protected Transform playerTransform;//"Transform(プレイヤー)"
 
     public void BaseStart()
     {
-        if(this.tag == "EnemyBullet")
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+
+        if (this.tag == "EnemyBullet")
         {
             //他のオブジェクトのコンポーネントを取得
             playerTransform = GameObject.Find("Player").transform;//"Transform(プレイヤー)"
@@ -46,7 +50,7 @@ public class BulletBase : MonoBehaviour
     //衝突判定(OnTriggerEnter)
     virtual public void OnTriggerEnter(Collider collision)
     {
-        if (this.tag == "Bullet" && (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy"))
+        if (this.tag == "PlayerBullet" && (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "BossEnemy"))
         {
             Destroy();
         }

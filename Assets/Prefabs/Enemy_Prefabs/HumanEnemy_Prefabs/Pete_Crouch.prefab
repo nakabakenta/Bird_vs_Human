@@ -2771,31 +2771,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 15
-  speed: 0
-  rotation: 0
-  isDamage: 0
-  direction: 0
-  worldPosition: {x: 0, y: 0, z: 0}
-  viewPortPosition: {x: 0, y: 0, z: 0}
-  thisTransform: {fileID: 0}
-  rigidBody: {fileID: 0}
-  boxCollider: {fileID: 0}
-  capsuleCollider: {fileID: 0}
-  thisRenderer: []
+  moveSpeed: 0
+  moveRange:
+  - range:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  animator: {fileID: 0}
-  runtimeAnimatorController: {fileID: 0}
-  audioSource: {fileID: 0}
-  playerTransform: {fileID: 0}
+  effect: {fileID: 0}
+  bullet: {fileID: 0}
+  shotPosition: {fileID: 0}
   death: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
-  enemyType: 
-  enemyOption: 
   jump: 0
-  action: 0
-  playerFind: 0
-  defaultAnimationNumber: 0
-  nowAnimationNumber: 0
-  isAnimation: 0
+  actionChangeInterval: 0
+  attackInterval: 0
+  rotationSpeed: 0
+  actionRange: {x: 0, y: 0, z: 0}
 --- !u!82 &-5990206726910379791
 AudioSource:
   m_ObjectHideFlags: 0

@@ -2397,12 +2397,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 3
   moveSpeed: 2
+  moveRange:
+  - range:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 0}
+  bullet: {fileID: 0}
+  shotPosition: {fileID: 0}
   death: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
   jump: 0
+  actionChangeInterval: 0
   attackInterval: 0
   rotationSpeed: 360
+  actionRange: {x: 0, y: 0, z: 0}
 --- !u!82 &583406653019562496
 AudioSource:
   m_ObjectHideFlags: 0

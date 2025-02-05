@@ -40,13 +40,13 @@ public class CarEnemy : EnemyBase
         }
         else if (direction.y == -(int)Characte.Direction.Horizontal)
         {
-            if (viewPortPosition.x < 1.25)
+            if (viewPortPosition.x < moveRange[0].range[1].x)
             {
                 action = true;
             }
         }
 
-        if (viewPortPosition.x < 0)
+        if (viewPortPosition.x < moveRange[0].range[0].x)
         {
             Destroy();//ŠÖ”"Destroy"‚ðŽÀs‚·‚é
         }

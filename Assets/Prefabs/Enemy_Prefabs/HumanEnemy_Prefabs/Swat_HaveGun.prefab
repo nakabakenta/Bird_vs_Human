@@ -2244,18 +2244,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 15
   moveSpeed: 0
-  moveRange: []
+  moveRange:
+  - range:
+    - {x: 0, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 0}
   bullet: {fileID: 6783866362517778785, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
   shotPosition: {fileID: 2936595066548630347}
+  audioMove: {fileID: 0}
+  shot: {fileID: 0}
   death: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
   jump: 0
   actionChangeInterval: 0
   attackInterval: 0
   rotationSpeed: 360
+  maxBullet: 3
   actionRange: {x: 0, y: 0, z: 0}
-  maxMagazine: 3
 --- !u!82 &7773158454734530012
 AudioSource:
   m_ObjectHideFlags: 0

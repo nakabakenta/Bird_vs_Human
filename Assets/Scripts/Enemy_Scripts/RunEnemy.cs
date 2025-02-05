@@ -26,12 +26,12 @@ public class RunEnemy : EnemyBase
     {
         base.BaseUpdate();
 
-        if (viewPortPosition.x < 1)
+        if (viewPortPosition.x < moveRange[0].range[1].x)
         {
             action = true;
         }
 
-        if (viewPortPosition.x < 0 && hp <= 0)
+        if (viewPortPosition.x < moveRange[0].range[0].x && hp <= 0)
         {
             Destroy();//ŠÖ”"Destroy"‚ðŽÀs‚·‚é
         }
@@ -49,7 +49,7 @@ public class RunEnemy : EnemyBase
             //
             if (PlayerBase.status != "Death")
             {
-                PlayerFind();//ŠÖ”"PlayerFind"‚ðŽÀs‚·‚é
+                PlayerDirection();//ŠÖ”"PlayerDirection"‚ðŽÀs‚·‚é
                 Move();
 
                 if (this.transform.position.x + actionRange.x > playerTransform.position.x &&

@@ -5,9 +5,7 @@ using UnityEngine;
 public class FighterJetBossEnemy : EnemyBase
 {
     //処理
-    private float bulletRotation;       //弾の回転
-    //このオブジェクトのコンポーネント
-    public GameObject bullet;       //"GameObject(弾)"
+    private float bulletRotation;//弾の回転
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +36,13 @@ public class FighterJetBossEnemy : EnemyBase
     {
         attackTimer += Time.deltaTime;//攻撃間隔に"Time.deltaTime(経過時間)"を足す
 
-        if (viewPortPosition.x < -0.5)
+        if (viewPortPosition.x < moveRange[0].range[0].x)
         {
             this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
             this.transform.eulerAngles = new Vector3(this.transform.rotation.x, (int)Characte.Direction.Horizontal, this.transform.rotation.z);
             bulletRotation = (int)Characte.Direction.Horizontal;
         }
-        else if (viewPortPosition.x > 1.5)
+        else if (viewPortPosition.x > moveRange[0].range[1].x)
         {
             this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
             this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -(int)Characte.Direction.Horizontal, this.transform.rotation.z);

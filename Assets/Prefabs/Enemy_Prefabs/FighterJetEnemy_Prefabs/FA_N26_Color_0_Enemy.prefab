@@ -273,8 +273,8 @@ GameObject:
   - component: {fileID: 3869003692021146948}
   - component: {fileID: 172537900049688716}
   - component: {fileID: 4957846938622607865}
-  - component: {fileID: -4498956966397538262}
   - component: {fileID: 1368777600782297130}
+  - component: {fileID: -4498956966397538262}
   m_Layer: 0
   m_Name: FA_N26_Color_0_Enemy
   m_TagString: Enemy
@@ -335,46 +335,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 14, y: 2.5, z: 21}
   m_Center: {x: 0, y: 1.25, z: 1.125}
---- !u!114 &-4498956966397538262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376080108868839016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe9cbcdb3975a3748b912e84ca5ce2b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 20
-  moveSpeed: 10
-  rotation: 0
-  isDamage: 0
-  direction: 0
-  worldPosition: {x: 0, y: 0, z: 0}
-  viewPortPosition: {x: 0, y: 0, z: 0}
-  thisTransform: {fileID: 0}
-  rigidBody: {fileID: 0}
-  boxCollider: {fileID: 0}
-  capsuleCollider: {fileID: 0}
-  thisRenderer: []
-  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  animator: {fileID: 0}
-  runtimeAnimatorController: {fileID: 0}
-  audioSource: {fileID: 0}
-  playerTransform: {fileID: 0}
-  death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
-  enemyType: 
-  enemyOption: 
-  jump: 0
-  action: 0
-  playerFind: 0
-  defaultAnimationNumber: 0
-  nowAnimationNumber: 0
-  isAnimation: 0
-  bullet: {fileID: 1306594059243497752, guid: 0c2b566fbb252a74995ec5d45f5460d7, type: 3}
-  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
 --- !u!82 &1368777600782297130
 AudioSource:
   m_ObjectHideFlags: 0
@@ -471,6 +431,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4498956966397538262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376080108868839016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9cbcdb3975a3748b912e84ca5ce2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 20
+  moveSpeed: 10
+  moveRange:
+  - range:
+    - {x: -0.5, y: 0, z: 0}
+    - {x: 1.5, y: 0, z: 0}
+  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  bullet: {fileID: 6783866362517778785, guid: b8574c683b306784eb4cd2b6d7079b24, type: 3}
+  shotPosition: {fileID: 0}
+  audioMove: {fileID: 0}
+  shot: {fileID: 0}
+  death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
+  jump: 0
+  actionChangeInterval: 0
+  attackInterval: 0.5
+  rotationSpeed: 0
+  maxBullet: 0
+  actionRange: {x: 0, y: 0, z: 0}
 --- !u!1 &5967796465537801755
 GameObject:
   m_ObjectHideFlags: 0

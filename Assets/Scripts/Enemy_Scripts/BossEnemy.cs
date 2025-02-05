@@ -27,7 +27,7 @@ public class BossEnemy : EnemyBase
     {
         base.BaseUpdate();
 
-        if (viewPortPosition.x < 1)
+        if (viewPortPosition.x < moveRange[0].range[1].x)
         {
             action = true;
         }
@@ -45,7 +45,7 @@ public class BossEnemy : EnemyBase
             //
             if (PlayerBase.status != "Death")
             {
-                PlayerFind();//ŠÖ”"PlayerFind"‚ðŽÀs‚·‚é
+                PlayerDirection();//ŠÖ”"PlayerDirection"‚ðŽÀs‚·‚é
                 Move();
 
                 actionChangeTimer += Time.deltaTime;
@@ -74,6 +74,11 @@ public class BossEnemy : EnemyBase
             }
         }
 
+        if(nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
+        {
+            PlayerDirection();
+        }
+
         if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
             nowAnimationNumber != (int)Enemy.HumanoidAnimation.JumpAttack)
         {
@@ -99,13 +104,25 @@ public class BossEnemy : EnemyBase
 
     public override void ActionWait()
     {
-        if (animationTimer >= nowAnimationLength)
+        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
         {
-            if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
+            if (animationTimer >= 2.25f)
             {
-                Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
+                if (nowBullet > 0)
+                {
+                    Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
+                    nowBullet -= 1;
+                }
             }
-        } 
+
+            if (animationTimer >= nowAnimationLength)
+            {
+                if(nowBullet <= 0)
+                {
+                    nowBullet = maxBullet;
+                }
+            }
+        }
 
         base.ActionWait();
     }

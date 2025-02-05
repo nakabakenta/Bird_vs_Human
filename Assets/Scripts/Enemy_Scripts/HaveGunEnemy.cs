@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class HaveGunEnemy : EnemyBase
 {
-    public int maxMagazine;
-    private int nowMagazine;
-
     // Start is called before the first frame update
     void Start()
     {
         //ステータスを設定
         enemyType = Enemy.EnemyType.Human.ToString();//敵の型
-        nowMagazine = maxMagazine;
         //初期のアニメーション番号を設定する
         defaultAnimationNumber = (int)Enemy.HumanoidAnimation.HaveGunIdle;
         //関数を実行する
@@ -30,12 +26,12 @@ public class HaveGunEnemy : EnemyBase
     {
         base.BaseUpdate();
 
-        if (viewPortPosition.x < 1)
+        if (viewPortPosition.x < moveRange[0].range[1].x)
         {
             action = true;
         }
 
-        if (viewPortPosition.x < 0)
+        if (viewPortPosition.x < moveRange[0].range[0].x)
         {
             Destroy();//関数"Destroy"を実行する
         }
@@ -45,9 +41,9 @@ public class HaveGunEnemy : EnemyBase
     {
         if (PlayerBase.status != "Death")
         {
-            PlayerFind();   //関数"PlayerFind"を実行する
+            PlayerDirection();//関数"PlayerDirection"を実行する
             ActionChange();
-            AnimationFind();//関数"AnimationFind"を実行する
+            AnimationFind(); //関数"AnimationFind"を実行する
         }
         else if (PlayerBase.status == "Death")
         {
@@ -71,16 +67,16 @@ public class HaveGunEnemy : EnemyBase
     {
         if(animationTimer >= nowAnimationLength)
         {
-            if (nowMagazine <= 0)
+            if (nowBullet <= 0)
             {
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.Reload;
-                nowMagazine = maxMagazine;
+                nowBullet = maxBullet;
             }
-            else if (nowMagazine <= maxMagazine)
+            else if (nowBullet > 0)
             {
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
                 Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
-                nowMagazine -= 1;
+                nowBullet -= 1;
             }
         }
 

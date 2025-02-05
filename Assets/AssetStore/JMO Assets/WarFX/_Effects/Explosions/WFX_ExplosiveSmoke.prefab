@@ -19257,6 +19257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 0
+  audioClip: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0

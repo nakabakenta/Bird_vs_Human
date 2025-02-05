@@ -23,12 +23,13 @@ public class TankEnemy : EnemyBase
     {
         base.BaseUpdate();
 
-        if (viewPortPosition.x < 1)
+        if (viewPortPosition.x < moveRange[0].range[1].x)
         {
+            audioMove.SetActive(true);
             action = true;
         }
 
-        if (viewPortPosition.x < 0 && hp <= 0)
+        if (viewPortPosition.x < moveRange[0].range[0].x && hp <= 0)
         {
             Destroy();//ä÷êî"Destroy"Çé¿çsÇ∑ÇÈ
         }
@@ -41,7 +42,7 @@ public class TankEnemy : EnemyBase
         {
             Move();
 
-            if(viewPortPosition.x < 0 || viewPortPosition.x > 1)
+            if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
             {
                 direction = playerTransform.position - this.transform.position;
                 direction.y = 0.0f;
@@ -51,11 +52,12 @@ public class TankEnemy : EnemyBase
 
             attackTimer += Time.deltaTime;
 
-            if (this.transform.position.x + 3.0f > playerTransform.position.x &&
-                this.transform.position.x - 3.0f < playerTransform.position.x)
+            if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                this.transform.position.x - actionRange.x < playerTransform.position.x)
             {
                 if (attackTimer > attackInterval)
                 {
+                    audioSource.PlayOneShot(shot);
                     Instantiate(bullet, shotPosition.transform.position, this.transform.rotation);
                     attackTimer = 0.0f;
                 }
@@ -67,7 +69,7 @@ public class TankEnemy : EnemyBase
     {
         base.DeathEnemy();
         //
-        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
-        Invoke("Destroy", 1.0f);                                                             //ä÷êî"Destroy"Ç"5.0f"å„Ç…é¿çs
+        Instantiate(effect, this.transform.position, this.transform.rotation);
+        Invoke("Destroy", 1.0f);                                              //ä÷êî"Destroy"Ç"5.0f"å„Ç…é¿çs
     }
 }
