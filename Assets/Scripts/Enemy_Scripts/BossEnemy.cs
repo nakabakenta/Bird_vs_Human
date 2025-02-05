@@ -45,19 +45,38 @@ public class BossEnemy : EnemyBase
             //
             if (PlayerBase.status != "Death")
             {
-                PlayerDirection();//ŠÖ”"PlayerDirection"‚ðŽÀs‚·‚é
                 Move();
 
                 actionChangeTimer += Time.deltaTime;
 
-                if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
-                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
-                    this.transform.position.y + actionRange.y < playerTransform.position.y &&
-                    nowAnimationNumber == defaultAnimationNumber)
+                if(nowAnimationNumber == defaultAnimationNumber)
                 {
-                    isAnimation = true;
-                    nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
-                    AnimationPlay();
+                    if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                    this.transform.position.y + actionRange.y < playerTransform.position.y)
+                    {
+                        isAnimation = true;
+                        nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
+                        AnimationPlay();
+                    }
+
+                    SmoothPlayerDirection();//ŠÖ”"SmoothPlayerDirection"‚ðŽÀs‚·‚é
+                    putBulletTimer = 0.0f;
+                }
+                else if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
+                {
+                    putBulletTimer += Time.deltaTime;
+
+                    if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+                    {
+                        SmoothPlayerDirection();//ŠÖ”"SmoothPlayerDirection"‚ðŽÀs‚·‚é
+                    }
+
+                    if (putBulletTimer >= putBulletInterval)
+                    {
+                        Instantiate(putBullet, this.transform.position, Quaternion.identity);
+                        putBulletTimer = 0.0f;
+                    }
                 }
 
                 if (actionChangeTimer >= actionChangeInterval)
@@ -76,7 +95,7 @@ public class BossEnemy : EnemyBase
 
         if(nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
         {
-            PlayerDirection();
+            SmoothPlayerDirection();
         }
 
         if (nowAnimationNumber != (int)Enemy.HumanoidAnimation.Jump &&
@@ -106,11 +125,11 @@ public class BossEnemy : EnemyBase
     {
         if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Throw)
         {
-            if (animationTimer >= 2.25f)
+            if (animationTimer >= 2.5f)
             {
                 if (nowBullet > 0)
                 {
-                    Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
+                    Instantiate(shotBullet, shotPosition.transform.position, Quaternion.identity);
                     nowBullet -= 1;
                 }
             }

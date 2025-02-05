@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5772546307390983113}
   - component: {fileID: -4613066656031082010}
   m_Layer: 0
-  m_Name: EnemyBullet_Spanner
+  m_Name: EnamyBullet_ShotSpanner
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

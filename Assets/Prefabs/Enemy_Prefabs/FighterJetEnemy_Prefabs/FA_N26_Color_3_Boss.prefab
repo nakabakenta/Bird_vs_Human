@@ -248,6 +248,37 @@ Transform:
   m_Father: {fileID: 860008151640837842}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4752050556425877151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 223579724732363875}
+  m_Layer: 0
+  m_Name: ShotPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &223579724732363875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4752050556425877151}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: 8}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3063685785594509151}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5720941317597805234
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +406,7 @@ Transform:
   m_Children:
   - {fileID: 7690489191325749271}
   - {fileID: 6314813161064650386}
+  - {fileID: 223579724732363875}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,14 +562,16 @@ MonoBehaviour:
     - {x: 1.5, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  bullet: {fileID: 6783866362517778785, guid: b8574c683b306784eb4cd2b6d7079b24, type: 3}
-  shotPosition: {fileID: 0}
+  shotBullet: {fileID: 6783866362517778785, guid: b8574c683b306784eb4cd2b6d7079b24, type: 3}
+  putBullet: {fileID: 0}
+  shotPosition: {fileID: 4752050556425877151}
   audioMove: {fileID: 0}
   shot: {fileID: 0}
   death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
   jump: 0
   actionChangeInterval: 0
-  attackInterval: 0.5
+  shotBulletInterval: 0.5
+  putBulletInterval: 0
   rotationSpeed: 0
   maxBullet: 0
   actionRange: {x: 0, y: 0, z: 0}

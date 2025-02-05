@@ -2250,14 +2250,16 @@ MonoBehaviour:
     - {x: 1, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 0}
-  bullet: {fileID: 6783866362517778785, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
+  shotBullet: {fileID: 6783866362517778785, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
+  putBullet: {fileID: 0}
   shotPosition: {fileID: 2936595066548630347}
   audioMove: {fileID: 0}
-  shot: {fileID: 0}
+  shot: {fileID: 8300000, guid: 41e40c4c57c28e24c8f57bcb17dab056, type: 3}
   death: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
   jump: 0
   actionChangeInterval: 0
-  attackInterval: 0
+  shotBulletInterval: 0
+  putBulletInterval: 0
   rotationSpeed: 360
   maxBullet: 3
   actionRange: {x: 0, y: 0, z: 0}

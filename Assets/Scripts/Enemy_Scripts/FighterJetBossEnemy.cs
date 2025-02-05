@@ -12,6 +12,7 @@ public class FighterJetBossEnemy : EnemyBase
     {
         //ステータスを設定
         enemyType = Enemy.EnemyType.Vehicle.ToString();//敵の型
+        action = true;
         bossEnemy = true;
         //関数を実行する
         GetComponent();//コンポーネントを所得する
@@ -27,33 +28,23 @@ public class FighterJetBossEnemy : EnemyBase
     public override void BaseUpdate()
     {
         base.BaseUpdate();
-
-        action = true;
     }
 
     //関数"Action"
     public override void Action()
     {
+        Move();
+
         attackTimer += Time.deltaTime;//攻撃間隔に"Time.deltaTime(経過時間)"を足す
 
-        if (viewPortPosition.x < moveRange[0].range[0].x)
+        if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
         {
-            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, (int)Characte.Direction.Horizontal, this.transform.rotation.z);
-            bulletRotation = (int)Characte.Direction.Horizontal;
-        }
-        else if (viewPortPosition.x > moveRange[0].range[1].x)
-        {
-            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
-            this.transform.eulerAngles = new Vector3(this.transform.rotation.x, -(int)Characte.Direction.Horizontal, this.transform.rotation.z);
-            bulletRotation = -(int)Characte.Direction.Horizontal;
+            CoarsePlayerDirection();
         }
 
-        this.transform.position += moveSpeed * transform.forward * Time.deltaTime;//前方向に移動する
-
-        if (attackTimer > attackInterval)
+        if (attackTimer >= shotBulletInterval)
         {
-            Instantiate(bullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, bulletRotation, this.transform.rotation.z));
+            Instantiate(shotBullet, shotPosition.transform.position, this.transform.rotation);
             attackTimer = 0.0f;
         }
     }

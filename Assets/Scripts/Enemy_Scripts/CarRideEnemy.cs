@@ -51,7 +51,7 @@ public class CarRideEnemy : EnemyBase
             //
             if (PlayerBase.status != "Death")
             {
-                PlayerDirection();//ŠÖ”"PlayerDirection"‚ðŽÀs‚·‚é
+                SmoothPlayerDirection();//ŠÖ”"SmoothPlayerDirection"‚ðŽÀs‚·‚é
                 Move();
 
                 if (this.transform.position.x + actionRange.x > playerTransform.position.x &&

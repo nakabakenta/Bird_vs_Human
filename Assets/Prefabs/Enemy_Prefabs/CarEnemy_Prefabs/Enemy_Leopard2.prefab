@@ -1550,7 +1550,7 @@ GameObject:
   - component: {fileID: 2735890844372910915}
   - component: {fileID: 3075590388430720454}
   m_Layer: 0
-  m_Name: Leopard2_Enemy
+  m_Name: Enemy_Leopard2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1565,7 +1565,7 @@ Transform:
   m_GameObject: {fileID: 5489952145432832569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5018705012617864903}
@@ -1644,15 +1644,18 @@ MonoBehaviour:
     - {x: 1.5, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
   effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  bullet: {fileID: 5407085079677237740, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
+  shotBullet: {fileID: 5407085079677237740, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
+  putBullet: {fileID: 0}
   shotPosition: {fileID: 2935186390172836444}
   audioMove: {fileID: 2901475710041876506}
   shot: {fileID: 8300000, guid: 889c02484cb02b54cbbdf809a5f2a24a, type: 3}
   death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
   jump: 0
   actionChangeInterval: 0
-  attackInterval: 5
+  shotBulletInterval: 3
+  putBulletInterval: 0
   rotationSpeed: 90
+  maxBullet: 0
   actionRange: {x: 15, y: 0, z: 0}
 --- !u!82 &3075590388430720454
 AudioSource:

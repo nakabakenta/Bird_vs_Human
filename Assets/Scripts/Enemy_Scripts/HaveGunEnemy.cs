@@ -41,7 +41,7 @@ public class HaveGunEnemy : EnemyBase
     {
         if (PlayerBase.status != "Death")
         {
-            PlayerDirection();//ŠÖ”"PlayerDirection"‚ðŽÀs‚·‚é
+            SmoothPlayerDirection();//ŠÖ”"SmoothPlayerDirection"‚ðŽÀs‚·‚é
             ActionChange();
             AnimationFind(); //ŠÖ”"AnimationFind"‚ðŽÀs‚·‚é
         }
@@ -75,8 +75,10 @@ public class HaveGunEnemy : EnemyBase
             else if (nowBullet > 0)
             {
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
-                Instantiate(bullet, shotPosition.transform.position, Quaternion.identity);
+                Instantiate(shotBullet, shotPosition.transform.position, Quaternion.identity);
                 nowBullet -= 1;
+
+                audioSource.PlayOneShot(shot);
             }
         }
 

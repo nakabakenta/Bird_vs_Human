@@ -6,15 +6,16 @@ public class EnemyBase : CharacteBase
 {
     //このオブジェクトのコンポーネント
     public GameObject effect;      //"GameObject(エフェクト)"
-    public GameObject bullet;      //"GameObject(弾)"
+    public GameObject shotBullet;  //"GameObject(弾)"
+    public GameObject putBullet;
     public GameObject shotPosition;//"GameObject(発射位置)"
     public GameObject audioMove;
     public AudioClip shot;
     public AudioClip death;        //"AudioClip(死亡)"
     //ステータス
-    public float jump;                                //ジャンプ力
-    public float actionChangeInterval, attackInterval;//行動変更間隔, 攻撃間隔
-    public float rotationSpeed;                       //回転速度
+    public float jump;         //ジャンプ力
+    public float actionChangeInterval, shotBulletInterval, putBulletInterval;//行動変更間隔, 攻撃間隔
+    public float rotationSpeed;//回転速度
     public int maxBullet;
     public Vector3 actionRange;
     public static bool bossEnemy;//
@@ -24,7 +25,7 @@ public class EnemyBase : CharacteBase
     //標準のアニメーション番号, 現在のアニメーション番号
     protected int defaultAnimationNumber, nowAnimationNumber;
     //行動変更タイマー, 攻撃タイマー
-    protected float actionChangeTimer = 0.0f, attackTimer = 0.0f;
+    protected float actionChangeTimer = 0.0f, attackTimer = 0.0f, putBulletTimer = 0.0f;
     //行動の可否, アニメーションの可否
     protected int nowBullet;
     protected string nowAnimationName;       //現在のアニメーションの名前
@@ -109,7 +110,15 @@ public class EnemyBase : CharacteBase
         }
     }
 
-    public void PlayerDirection()
+    public void CoarsePlayerDirection()
+    {
+        direction = playerTransform.position - this.transform.position;
+        direction.y = 0.0f;
+
+        this.transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    public void SmoothPlayerDirection()
     {
         direction = playerTransform.position - this.transform.position;
         direction.y = 0.0f;

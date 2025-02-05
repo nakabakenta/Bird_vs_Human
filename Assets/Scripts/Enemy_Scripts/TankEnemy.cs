@@ -25,7 +25,6 @@ public class TankEnemy : EnemyBase
 
         if (viewPortPosition.x < moveRange[0].range[1].x)
         {
-            audioMove.SetActive(true);
             action = true;
         }
 
@@ -44,22 +43,23 @@ public class TankEnemy : EnemyBase
 
             if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
             {
-                direction = playerTransform.position - this.transform.position;
-                direction.y = 0.0f;
-
-                this.transform.rotation = Quaternion.LookRotation(direction);
+                audioMove.SetActive(false);
+                CoarsePlayerDirection();
             }
-
-            attackTimer += Time.deltaTime;
-
-            if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
-                this.transform.position.x - actionRange.x < playerTransform.position.x)
+            if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                if (attackTimer > attackInterval)
+                audioMove.SetActive(true);
+                attackTimer += Time.deltaTime;
+
+                if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                    this.transform.position.x - actionRange.x < playerTransform.position.x)
                 {
-                    audioSource.PlayOneShot(shot);
-                    Instantiate(bullet, shotPosition.transform.position, this.transform.rotation);
-                    attackTimer = 0.0f;
+                    if (attackTimer >= shotBulletInterval)
+                    {
+                        audioSource.PlayOneShot(shot);
+                        Instantiate(shotBullet, shotPosition.transform.position, this.transform.rotation);
+                        attackTimer = 0.0f;
+                    }
                 }
             }
         }
