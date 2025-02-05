@@ -1590,17 +1590,18 @@ MonoBehaviour:
   bulletShot: {fileID: 3869126728737763413, guid: 80a25ec87089a4a49a9bf75b43c923f4, type: 3}
   bulletPut: {fileID: 7778038528812658513, guid: 0b943f947b4a3b749bc3e1bbfc9cc45e, type: 3}
   effectDeath: {fileID: 0}
-  shotPosition: {fileID: 0}
+  positionShot: {fileID: 0}
   sEMove: {fileID: 0}
   sEShot: {fileID: 0}
   sEDeath: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
   jump: 10
   actionChangeInterval: 5
-  shotBulletInterval: 0
-  putBulletInterval: 1
+  attackInterval: 0
+  bulletShotInterval: 0
+  bulletPutInterval: 0
   rotationSpeed: 360
   maxBullet: 0
-  actionRange: {x: 0.25, y: 2, z: 0}
+  actionRange: {x: 0.25, y: 5, z: 0}
 --- !u!82 &9166265665527851916
 AudioSource:
   m_ObjectHideFlags: 0

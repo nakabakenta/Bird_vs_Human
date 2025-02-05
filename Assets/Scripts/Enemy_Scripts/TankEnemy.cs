@@ -43,16 +43,16 @@ public class TankEnemy : EnemyBase
 
             if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                attackTimer += Time.deltaTime;
+                bulletShotTimer += Time.deltaTime;
 
                 if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
                     this.transform.position.x - actionRange.x < playerTransform.position.x)
                 {
-                    if (attackTimer >= shotBulletInterval)
+                    if (bulletShotTimer >= bulletShotInterval)
                     {
                         audioSource.PlayOneShot(sEShot);
-                        Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
-                        attackTimer = 0.0f;
+                        Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
+                        bulletShotTimer = 0.0f;
                     }
                 }
             }

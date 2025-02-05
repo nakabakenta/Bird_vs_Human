@@ -27,6 +27,9 @@ public class PlayerBase : CharacteBase
     private bool isRenderer;                         //Rendererの可否
     //このオブジェクトのコンポーネント
     public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
+    protected GameObject playerObject;             //"GameObject(プレイヤー)"
+    protected GameObject groupObject;
+    
 
     //関数"BaseStart"
     public void BaseStart()
@@ -64,12 +67,12 @@ public class PlayerBase : CharacteBase
             //マウスの位置を取得する
             mousePosition = Input.mousePosition;
             //マウスの位置(スクリーン座標)をビューポイント座標に変換する
-            viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 9.0f));
+            viewPortPosition = Camera.main.ScreenToViewportPoint(new Vector3(mousePosition.x, mousePosition.y, 13.0f));
             //移動の限界位置を設定する
             viewPortPosition.x = Mathf.Clamp(viewPortPosition.x, moveRange[0].range[0].x, moveRange[0].range[1].x);
             viewPortPosition.y = Mathf.Clamp(viewPortPosition.y, moveRange[0].range[0].y, moveRange[0].range[1].y);
             //ビューポイント座標をワールド座標に変換する
-            this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 9.0f));
+            this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 13.0f));
 
             //プレイヤーの状態が"Normal"の場合
             if (status == "Normal")
@@ -102,9 +105,9 @@ public class PlayerBase : CharacteBase
 
         if (status == "Death")
         {
-            if (this.transform.position.y <= 0.0f)
+            if (this.transform.position.y <= 0.5f)
             {
-                this.transform.position = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
+                this.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
             }
         }
     }
@@ -124,12 +127,13 @@ public class PlayerBase : CharacteBase
     //関数"Invincible"
     void Invincible()
     {
-        invincibleTimer += Time.deltaTime;       //無敵タイマーに経過時間を足す
+        invincibleTimer += Time.deltaTime;        //無敵タイマーに経過時間を足す
         //無敵タイマーが無敵持続時間以上の場合
         if (invincibleTimer >= invincibleInterval)
         {
             invincibleTimer = 0.0f;//無敵タイマーを初期化する
             status = "Normal";     //プレイヤーの状態を"Normal"にする
+            Destroy(groupObject);  //このオブジェクトを消す
         }
     }
 

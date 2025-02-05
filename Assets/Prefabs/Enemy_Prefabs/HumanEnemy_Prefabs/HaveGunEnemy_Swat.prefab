@@ -2252,7 +2252,7 @@ MonoBehaviour:
   bulletShot: {fileID: 6783866362517778785, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
   bulletPut: {fileID: 0}
   effectDeath: {fileID: 0}
-  shotPosition: {fileID: 2936595066548630347}
+  positionShot: {fileID: 2936595066548630347}
   sEMove: {fileID: 0}
   sEShot: {fileID: 8300000, guid: 41e40c4c57c28e24c8f57bcb17dab056, type: 3}
   sEDeath: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}

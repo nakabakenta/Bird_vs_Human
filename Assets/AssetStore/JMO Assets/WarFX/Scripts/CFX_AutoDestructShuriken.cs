@@ -6,7 +6,8 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 {
 	public bool OnlyDeactivate;
 
-	private float timer = 0.0f;
+	public float colliderInterval;
+	private float colliderTimer = 0.0f;
 
 	public AudioClip audioClip;           //"audioClip"
 	private SphereCollider sphereCollider;
@@ -28,9 +29,9 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		timer += Time.deltaTime;
+		colliderTimer += Time.deltaTime;
 
-		if (timer >= 0.5f)
+		if (colliderTimer >= colliderInterval)
         {
 			sphereCollider.enabled = false;
 		}

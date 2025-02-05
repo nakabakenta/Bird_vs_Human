@@ -7,12 +7,12 @@ public class EnemyBase : CharacteBase
     //このオブジェクトのコンポーネント
     public GameObject bulletShot, bulletPut;//"GameObject(弾)"
     public GameObject effectDeath;          //"GameObject(エフェクト)"
-    public GameObject shotPosition;         //"GameObject(発射位置)"
+    public GameObject positionShot;         //"GameObject(発射位置)"
     public GameObject sEMove;
     public AudioClip sEShot, sEDeath;
     //ステータス
     public float jump;         //ジャンプ力
-    public float actionChangeInterval, shotBulletInterval, putBulletInterval;//行動変更間隔, 攻撃間隔
+    public float actionChangeInterval, attackInterval, bulletShotInterval, bulletPutInterval;//行動変更間隔, 攻撃間隔
     public float rotationSpeed;//回転速度
     public int maxBullet;
     public Vector3 actionRange;
@@ -23,7 +23,7 @@ public class EnemyBase : CharacteBase
     //標準のアニメーション番号, 現在のアニメーション番号
     protected int defaultAnimationNumber, nowAnimationNumber;
     //行動変更タイマー, 攻撃タイマー
-    protected float actionChangeTimer = 0.0f, attackTimer = 0.0f, putBulletTimer = 0.0f;
+    protected float actionChangeTimer = 0.0f, attackTimer = 0.0f, bulletShotTimer = 0.0f, bulletPutTimer = 0.0f;
     //行動の可否, アニメーションの可否
     protected int nowBullet;
     protected string nowAnimationName;       //現在のアニメーションの名前

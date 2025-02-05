@@ -52,8 +52,8 @@ public class BossEnemy : EnemyBase
                 if(nowAnimationNumber == defaultAnimationNumber)
                 {
                     if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
-                    this.transform.position.x - actionRange.x < playerTransform.position.x &&
-                    this.transform.position.y + actionRange.y < playerTransform.position.y)
+                        this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                        this.transform.position.y + actionRange.y > playerTransform.position.y)
                     {
                         isAnimation = true;
                         nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
@@ -61,21 +61,21 @@ public class BossEnemy : EnemyBase
                     }
 
                     SmoothPlayerDirection();//ä÷êî"SmoothPlayerDirection"Çé¿çsÇ∑ÇÈ
-                    putBulletTimer = 0.0f;
+                    bulletPutTimer = 0.0f;
                 }
                 else if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
                 {
-                    putBulletTimer += Time.deltaTime;
+                    bulletPutTimer += Time.deltaTime;
 
                     if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
                     {
                         SmoothPlayerDirection();//ä÷êî"SmoothPlayerDirection"Çé¿çsÇ∑ÇÈ
                     }
 
-                    if (putBulletTimer >= putBulletInterval)
+                    if (bulletPutTimer >= bulletPutInterval)
                     {
                         Instantiate(bulletPut, this.transform.position, Quaternion.identity);
-                        putBulletTimer = 0.0f;
+                        bulletPutTimer = 0.0f;
                     }
                 }
 
@@ -129,7 +129,8 @@ public class BossEnemy : EnemyBase
             {
                 if (nowBullet > 0)
                 {
-                    Instantiate(bulletShot, shotPosition.transform.position, Quaternion.identity);
+                    Vector3 bulletDirection = (playerTransform.position - this.transform.position).normalized;
+                    Instantiate(bulletShot, positionShot.transform.position, Quaternion.LookRotation(bulletDirection));
                     nowBullet -= 1;
                 }
             }

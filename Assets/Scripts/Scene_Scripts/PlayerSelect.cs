@@ -9,10 +9,10 @@ public class PlayerSelect : MonoBehaviour
     public GameObject playerUI;                    //プレイヤー
     public GameObject[] player = new GameObject[3];//プレイヤー
     public GameObject[] nameUI = new GameObject[3];//プレイヤー
+    public GameObject uIPlayerInformation;
     public GameObject playerSelectUI;              //UIプレイヤーセレクト
-    public GameObject playerInformationUI;
     public Slider[] statusUI = new Slider[3];
-    private float sliderSpeed = 5.0f;             //スライダーの速度
+    private float sliderSpeed = 5.0f;              //スライダーの速度
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class PlayerSelect : MonoBehaviour
         GameManager.selectPlayer = -1;
         GameManager.playBegin = false;
         playerUI.SetActive(false);
-        playerInformationUI.SetActive(false);
+        uIPlayerInformation.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class PlayerSelect : MonoBehaviour
         if (GameManager.selectPlayer != -1)
         {
             playerUI.SetActive(true);
-            playerInformationUI.SetActive(true);
+            uIPlayerInformation.SetActive(true);
 
             for (int i = 0; i < 3; i++)
             {

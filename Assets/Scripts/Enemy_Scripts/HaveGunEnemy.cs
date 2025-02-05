@@ -75,7 +75,9 @@ public class HaveGunEnemy : EnemyBase
             else if (nowBullet > 0)
             {
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
-                Instantiate(bulletShot, shotPosition.transform.position, Quaternion.identity);
+
+                Vector3 bulletDirection = (playerTransform.position - this.transform.position).normalized;
+                Instantiate(bulletShot, positionShot.transform.position, Quaternion.LookRotation(bulletDirection));
                 nowBullet -= 1;
 
                 audioSource.PlayOneShot(sEShot);

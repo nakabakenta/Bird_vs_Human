@@ -32,17 +32,17 @@ public class FighterJetBossEnemy : EnemyBase
     {
         Move();
 
-        attackTimer += Time.deltaTime;//UŒ‚ŠÔŠu‚É"Time.deltaTime(Œo‰ßŠÔ)"‚ğ‘«‚·
+        bulletShotTimer += Time.deltaTime;//UŒ‚ŠÔŠu‚É"Time.deltaTime(Œo‰ßŠÔ)"‚ğ‘«‚·
 
         if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
         {
             CoarsePlayerDirection();
         }
 
-        if (attackTimer >= shotBulletInterval)
+        if (bulletShotTimer >= bulletShotInterval)
         {
-            Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
-            attackTimer = 0.0f;
+            Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
+            bulletShotTimer = 0.0f;
         }
     }
 

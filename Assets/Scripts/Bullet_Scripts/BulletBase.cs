@@ -11,15 +11,28 @@ public class BulletBase : MonoBehaviour
     //処理
     protected Vector3 direction;//オブジェクトの方向
     //このオブジェクトのコンポーネント
-    public GameObject effect;       //"GameObject(エフェクト)"
-    public AudioClip audioClip;     //"audioClip"
-    protected AudioSource audioSource;//"AudioSource"
+    public GameObject effect;               //"GameObject(エフェクト)"
+    public AudioClip audioClip;             //"audioClip"
+    protected AudioSource audioSource;      //"AudioSource"
+    private BoxCollider boxCollider;        //"BoxCollider"
+    private CapsuleCollider capsuleCollider;//"CapsuleCollider"
     //他のオブジェクトのコンポーネント
     protected Transform playerTransform;//"Transform(プレイヤー)"
 
     public void BaseStart()
     {
         audioSource = this.gameObject.GetComponent<AudioSource>();
+
+        //"BoxCollider"が存在している場合
+        if (TryGetComponent<BoxCollider>(out boxCollider))
+        {
+            boxCollider = this.gameObject.GetComponent<BoxCollider>();
+        }
+        //"CapsuleCollider"が存在している場合
+        if (TryGetComponent<CapsuleCollider>(out capsuleCollider))
+        {
+            capsuleCollider = this.gameObject.GetComponent<CapsuleCollider>();
+        }
 
         if (this.tag == "EnemyBullet")
         {

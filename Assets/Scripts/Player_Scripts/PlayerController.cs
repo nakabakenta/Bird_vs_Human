@@ -7,7 +7,6 @@ public class PlayerController : PlayerBase
     //このオブジェクトのコンポーネント
     public GameObject forwardBullet, downBullet;  //"GameObject(弾)"
     public GameObject[] group = new GameObject[3];//"GameObject(群れ)"
-    private GameObject playerObject;              //"GameObject(プレイヤー)"
 
     public int PlayerHp
     {
@@ -19,7 +18,7 @@ public class PlayerController : PlayerBase
     {
         BaseStart();
         //選択したプレイヤーをこのオブジェクトの子オブジェクトとして生成する
-        playerObject = Instantiate(player[GameManager.selectPlayer], this.transform.position, Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
+        playerObject = Instantiate(player[GameManager.selectPlayer], new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, this.transform.position.z), Quaternion.Euler(this.transform.rotation.x, 90, this.transform.rotation.z), thisTransform);
         //このオブジェクトのコンポーネントを取得
         animator = playerObject.GetComponent<Animator>();
         thisRenderer = this.gameObject.GetComponentsInChildren<Renderer>();
@@ -58,7 +57,8 @@ public class PlayerController : PlayerBase
             //プレイヤーの状態を"Invincible"にする
             status = "Invincible";
             //このオブジェクトの位置に群れを生成する
-            Instantiate(group[GameManager.selectPlayer], this.transform.position, Quaternion.identity);
+            groupObject = Instantiate(group[GameManager.selectPlayer], new Vector3(this.transform.position.x, this.transform.position.y - 0.5f, this.transform.position.z), Quaternion.identity);
+            groupObject.transform.SetParent(playerTransform);
             //ゲージタイマーを初期化する
             gageTimer = 0.0f;
         }

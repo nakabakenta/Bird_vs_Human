@@ -451,17 +451,18 @@ MonoBehaviour:
     - {x: -0.5, y: 0, z: 0}
     - {x: 1.5, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   bulletShot: {fileID: 6783866362517778785, guid: b8574c683b306784eb4cd2b6d7079b24, type: 3}
   bulletPut: {fileID: 0}
-  shotPosition: {fileID: 5126478524168042272}
+  effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  positionShot: {fileID: 5126478524168042272}
   sEMove: {fileID: 0}
-  shot: {fileID: 0}
-  death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
+  sEShot: {fileID: 0}
+  sEDeath: {fileID: 0}
   jump: 0
   actionChangeInterval: 0
-  shotBulletInterval: 0.5
-  putBulletInterval: 0
+  attackInterval: 0
+  bulletShotInterval: 1
+  bulletPutInterval: 0
   rotationSpeed: 0
   maxBullet: 0
   actionRange: {x: 0, y: 0, z: 0}
@@ -475,7 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2912542962879514725}
   m_Layer: 0
-  m_Name: ShotPosition
+  m_Name: PositionShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

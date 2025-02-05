@@ -40,7 +40,7 @@ public class HelicopterEnemy : EnemyBase
     public override void Action()
     {
         propeller[0].transform.Rotate(transform.right, rotationSpeed * Time.deltaTime);
-        propeller[1].transform.Rotate(transform.up, rotationSpeed * Time.deltaTime);
+        propeller[1].transform.Rotate(transform.forward, rotationSpeed * Time.deltaTime);
 
         if (PlayerBase.status != "Death")
         {
@@ -48,13 +48,17 @@ public class HelicopterEnemy : EnemyBase
 
             if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                attackTimer += Time.deltaTime;
+                bulletShotTimer += Time.deltaTime;
 
-                if (attackTimer >= shotBulletInterval)
+                if (this.transform.position.y + actionRange.y > playerTransform.position.y &&
+                    this.transform.position.y - actionRange.y < playerTransform.position.y)
                 {
-                    audioSource.PlayOneShot(sEShot);
-                    Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
-                    attackTimer = 0.0f;
+                    if (bulletShotTimer >= bulletShotInterval)
+                    {
+                        audioSource.PlayOneShot(sEShot);
+                        Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
+                        bulletShotTimer = 0.0f;
+                    }
                 }
             }
             else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)

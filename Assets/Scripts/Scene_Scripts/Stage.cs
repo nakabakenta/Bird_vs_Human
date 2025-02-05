@@ -8,14 +8,18 @@ public class Stage : UIBase
 {
     //処理
     public static int nowStage;       //現在のステージ
-    public GameObject baseUI;
-    public GameObject pauseUI;
-    public GameObject clearUI;
-    public GameObject continueUI;
-    public GameObject buttonNextStage;
-    public GameObject buttonGameClear;
-    public GameObject buttonRestart;
-    public GameObject BackToMenu;
+
+    public GameObject[] uIMenu = new GameObject[5];
+    public GameObject[] uIButton = new GameObject[4];
+
+    private bool[] uIMenuSetActive = new bool[5]
+        {false, false, false, false, false};
+
+    private bool[] uIButtonSetActive = new bool[4]
+        {false, false, false, false};
+
+    private bool openMenu = false;
+
     public Slider killSlider;
     public Slider gageSlider;
     public Image gageLight;
@@ -26,31 +30,37 @@ public class Stage : UIBase
     public TMP_Text remain;       //TMP_Text(残り)
     public TMP_Text hp;           //TMP_Text(体力)
 
+    public TMP_Text resultScore; //TMP_Text(スコア)
+    public TMP_Text resultRemain;//TMP_Text(残り)
+
     private PlayerController playerController;
     private StageButton stageButton;
     private bool loadScene;
+   
 
     // Start is called before the first frame update
     void Start()
     {
         GameManager.status = "Play";//ゲームの状態を"Play"にする
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        baseUI.SetActive(false);
-        pauseUI.SetActive(false);
-        clearUI.SetActive(false);
-        continueUI.SetActive(false);
 
-        if(buttonNextStage != null)
         {
-            buttonNextStage.SetActive(false);
-        }
-        else if(buttonGameClear != null)
-        {
-            buttonGameClear.SetActive(false);
+            for (int i = 0; i < uIMenu.Length; i++)
+            {
+                uIMenu[i].SetActive(uIMenuSetActive[i]);
+            }
         }
 
-        buttonRestart.SetActive(false);
-        BackToMenu.SetActive(false);
+        {
+            for (int i = 0; i < uIButton.Length; i++)
+            {
+                if (uIButton[i] != null)
+                {
+                    uIButton[i].SetActive(uIMenuSetActive[i]);
+                }
+            }
+        }
+
         loadScene = false;
 
         gageSlider.minValue = 0;
@@ -69,35 +79,12 @@ public class Stage : UIBase
         {
             if (playerController.hp > 0)
             {
-                if (EnemyBase.bossEnemy == false)
-                {
-                    GameManager.status = "Clear";
-                    baseUI.SetActive(true);
-                    clearUI.SetActive(true);
-
-                    if (buttonNextStage != null)
-                    {
-                        buttonNextStage.SetActive(true);
-                    }
-                    else if (buttonGameClear != null)
-                    {
-                        buttonGameClear.SetActive(true);
-                    }
-
-                    buttonRestart.SetActive(true);
-                    BackToMenu.SetActive(true);
-                }
-
                 //Escキーが"押された"&&ゲームの状態が"Play"の場合
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     if (GameManager.status == "Play")
                     {
                         GameManager.status = "Pause";//ゲームの状態を"Pause"にする
-                        baseUI.SetActive(true);
-                        pauseUI.SetActive(true);
-                        buttonRestart.SetActive(true);
-                        BackToMenu.SetActive(true);
                         Time.timeScale = 0;
                     }
                     //Escキーが"押された"&&ゲームの状態が"Pause"の場合
@@ -120,22 +107,26 @@ public class Stage : UIBase
                             StageButton.selectButton = null;
                         }
 
-                        baseUI.SetActive(false);
-                        pauseUI.SetActive(false);
-                        buttonRestart.SetActive(false);
-                        BackToMenu.SetActive(false);
                         Time.timeScale = 1;
                     }
 
+                    openMenu = true;
                 }
             }
-            else if (playerController.hp <= 0)
+
+            if (GameManager.status == "Play")
             {
-                baseUI.SetActive(true);
-                continueUI.SetActive(true);
-                buttonRestart.SetActive(true);
-                BackToMenu.SetActive(true);
-            } 
+                if (EnemyBase.bossEnemy == false)
+                {
+                    GameManager.status = "Clear";
+                    openMenu = true;
+                }
+                if (playerController.hp <= 0)
+                {
+                    GameManager.status = "Continue";
+                    openMenu = true;
+                }
+            }
         }
         else if (PlayerBase.remain <= 0 && loadScene == false)
         {
@@ -180,37 +171,44 @@ public class Stage : UIBase
         if (GameManager.score >= 10000)
         {
             score.text = "" + GameManager.score;
+            resultScore.text = "" + GameManager.score;
         }
         //
         else if (GameManager.score >= 1000)
         {
             score.text = "0" + GameManager.score;
+            resultScore.text = "0" + GameManager.score;
         }
         //
         else if (GameManager.score >= 100)
         {
             score.text = "00" + GameManager.score;
+            resultScore.text = "00" + GameManager.score;
         }
         //
         else if (GameManager.score >= 10)
         {
             score.text = "000" + GameManager.score;
+            resultScore.text = "000" + GameManager.score;
         }
         //
         else if (GameManager.score >= 0)
         {
             score.text = "0000" + GameManager.score;
+            resultScore.text = "0000" + GameManager.score;
         }
 
         //
         if (PlayerController.remain >= 10)
         {
             remain.text = "" + PlayerController.remain;//
+            resultRemain.text = "" + PlayerController.remain;//
         }
         //
         else if (PlayerController.remain >= 0)
         {
             remain.text = "0" + PlayerController.remain;//
+            resultRemain.text = "0" + PlayerController.remain;//
         }
 
         if (PlayerController.attackTimer[0] == 0.0f)
@@ -238,6 +236,45 @@ public class Stage : UIBase
         else if (PlayerController.attackTimer[1] > PlayerController.attackInterval)
         {
             downBullet_UI.fillAmount = 1;
+        }
+
+        if(openMenu == true)
+        {
+            openMenu = false;
+            UISetActive();
+        }
+
+    }
+
+    void UISetActive()
+    {
+        uIMenu[0].SetActive(uIMenuSetActive[0] = !uIMenuSetActive[0]);
+        uIMenu[4].SetActive(uIMenuSetActive[4] = !uIMenuSetActive[4]);
+        uIButton[2].SetActive(uIButtonSetActive[2] = !uIButtonSetActive[2]);
+        uIButton[3].SetActive(uIButtonSetActive[3] = !uIButtonSetActive[3]);
+
+        if (playerController.hp <= 0)
+        {
+            uIMenu[3].SetActive(true);
+        }
+
+        if(GameManager.status == "Clear")
+        {
+            uIMenu[2].SetActive(true);
+
+            if (uIButton[0] != null)
+            {
+                uIButton[0].SetActive(true);
+            }
+            else if (uIButton[1] != null)
+            {
+                uIButton[1].SetActive(true);
+            }
+        }
+
+        if (GameManager.status == "Pause")
+        {
+            uIMenu[1].SetActive(true);  
         }
     }
 }
