@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HelicopterEnemy : EnemyBase
 {
-    public GameObject aaa;
+    public GameObject[] propeller;
 
     // Start is called before the first frame update
     void Start()
@@ -39,28 +39,27 @@ public class HelicopterEnemy : EnemyBase
     //ä÷êî"Action"
     public override void Action()
     {
-        aaa.transform.Rotate(transform.right, rotationSpeed * Time.deltaTime);
+        propeller[0].transform.Rotate(transform.right, rotationSpeed * Time.deltaTime);
+        propeller[1].transform.Rotate(transform.up, rotationSpeed * Time.deltaTime);
 
         if (PlayerBase.status != "Death")
         {
             Move();
 
-            if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
-            {
-                audioMove.SetActive(false);
-                CoarsePlayerDirection();
-            }
             if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                audioMove.SetActive(true);
                 attackTimer += Time.deltaTime;
 
                 if (attackTimer >= shotBulletInterval)
                 {
-                    audioSource.PlayOneShot(shot);
-                    //Instantiate(shotBullet, shotPosition.transform.position, this.transform.rotation);
+                    audioSource.PlayOneShot(sEShot);
+                    Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
                     attackTimer = 0.0f;
                 }
+            }
+            else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+            {
+                CoarsePlayerDirection();
             }
         }
     }
@@ -68,8 +67,5 @@ public class HelicopterEnemy : EnemyBase
     public override void DeathEnemy()
     {
         base.DeathEnemy();
-        //
-        Instantiate(effect, this.transform.position, this.transform.rotation);
-        Invoke("Destroy", 1.0f);                                              //ä÷êî"Destroy"Ç"1.0f"å„Ç…é¿çs
     }
 }

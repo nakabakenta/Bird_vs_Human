@@ -75,10 +75,10 @@ public class HaveGunEnemy : EnemyBase
             else if (nowBullet > 0)
             {
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.GunPlay;
-                Instantiate(shotBullet, shotPosition.transform.position, Quaternion.identity);
+                Instantiate(bulletShot, shotPosition.transform.position, Quaternion.identity);
                 nowBullet -= 1;
 
-                audioSource.PlayOneShot(shot);
+                audioSource.PlayOneShot(sEShot);
             }
         }
 

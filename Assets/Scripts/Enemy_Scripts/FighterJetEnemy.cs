@@ -40,16 +40,8 @@ public class FighterJetEnemy : EnemyBase
 
         if (attackTimer >= shotBulletInterval)
         {
-            Instantiate(shotBullet, shotPosition.transform.position, this.transform.rotation);
+            Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
             attackTimer = 0.0f;
         }
-    }
-
-    public override void DeathEnemy()
-    {
-        base.DeathEnemy();
-        //
-        Instantiate(effect, this.transform.position, this.transform.rotation);
-        Invoke("Destroy", 1.0f);
     }
 }

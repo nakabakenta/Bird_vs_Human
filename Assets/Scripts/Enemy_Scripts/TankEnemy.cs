@@ -41,14 +41,8 @@ public class TankEnemy : EnemyBase
         {
             Move();
 
-            if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
-            {
-                audioMove.SetActive(false);
-                CoarsePlayerDirection();
-            }
             if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                audioMove.SetActive(true);
                 attackTimer += Time.deltaTime;
 
                 if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
@@ -56,20 +50,16 @@ public class TankEnemy : EnemyBase
                 {
                     if (attackTimer >= shotBulletInterval)
                     {
-                        audioSource.PlayOneShot(shot);
-                        Instantiate(shotBullet, shotPosition.transform.position, this.transform.rotation);
+                        audioSource.PlayOneShot(sEShot);
+                        Instantiate(bulletShot, shotPosition.transform.position, this.transform.rotation);
                         attackTimer = 0.0f;
                     }
                 }
             }
+            else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+            {
+                CoarsePlayerDirection();
+            }
         }
-    }
-
-    public override void DeathEnemy()
-    {
-        base.DeathEnemy();
-        //
-        Instantiate(effect, this.transform.position, this.transform.rotation);
-        Invoke("Destroy", 1.0f);                                              //ä÷êî"Destroy"Ç"5.0f"å„Ç…é¿çs
     }
 }

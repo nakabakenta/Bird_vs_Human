@@ -74,7 +74,7 @@ public class BossEnemy : EnemyBase
 
                     if (putBulletTimer >= putBulletInterval)
                     {
-                        Instantiate(putBullet, this.transform.position, Quaternion.identity);
+                        Instantiate(bulletPut, this.transform.position, Quaternion.identity);
                         putBulletTimer = 0.0f;
                     }
                 }
@@ -129,7 +129,7 @@ public class BossEnemy : EnemyBase
             {
                 if (nowBullet > 0)
                 {
-                    Instantiate(shotBullet, shotPosition.transform.position, Quaternion.identity);
+                    Instantiate(bulletShot, shotPosition.transform.position, Quaternion.identity);
                     nowBullet -= 1;
                 }
             }

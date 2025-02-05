@@ -73,12 +73,4 @@ public class CarEnemy : EnemyBase
             Move();
         }
     }
-
-    //ä÷êî"Death"
-    public override void DeathEnemy()
-    {
-        base.DeathEnemy();
-
-        Instantiate(effect, this.transform.position, this.transform.rotation, thisTransform);
-    }
 }

@@ -201,14 +201,19 @@ MonoBehaviour:
     - {x: -0.25, y: 0, z: 0}
     - {x: 1.25, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
-  effect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  bullet: {fileID: 0}
+  effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  shotBullet: {fileID: 0}
+  putBullet: {fileID: 0}
   shotPosition: {fileID: 0}
+  sEMove: {fileID: 0}
+  shot: {fileID: 0}
   death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
   jump: 0
   actionChangeInterval: 0
-  attackInterval: 0
+  shotBulletInterval: 0
+  putBulletInterval: 0
   rotationSpeed: 0
+  maxBullet: 0
   actionRange: {x: 0, y: 0, z: 0}
   enemy: {fileID: 7702886973443865384, guid: 91f2412f4fa82174ea82ddd32f8711f2, type: 3}
   brake: {fileID: 8300000, guid: 04db1921bf6c9ba4490db1c7b88164e3, type: 3}

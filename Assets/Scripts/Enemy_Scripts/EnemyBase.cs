@@ -5,13 +5,11 @@ using UnityEngine;
 public class EnemyBase : CharacteBase
 {
     //このオブジェクトのコンポーネント
-    public GameObject effect;      //"GameObject(エフェクト)"
-    public GameObject shotBullet;  //"GameObject(弾)"
-    public GameObject putBullet;
-    public GameObject shotPosition;//"GameObject(発射位置)"
-    public GameObject audioMove;
-    public AudioClip shot;
-    public AudioClip death;        //"AudioClip(死亡)"
+    public GameObject bulletShot, bulletPut;//"GameObject(弾)"
+    public GameObject effectDeath;          //"GameObject(エフェクト)"
+    public GameObject shotPosition;         //"GameObject(発射位置)"
+    public GameObject sEMove;
+    public AudioClip sEShot, sEDeath;
     //ステータス
     public float jump;         //ジャンプ力
     public float actionChangeInterval, shotBulletInterval, putBulletInterval;//行動変更間隔, 攻撃間隔
@@ -64,15 +62,15 @@ public class EnemyBase : CharacteBase
             Action();//関数"Action"を実行する
         }
 
-        if (audioMove != null)
+        if (sEMove != null)
         {
             if(viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                audioMove.SetActive(true);
+                sEMove.SetActive(true);
             }
-            if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+            else if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
             {
-                audioMove.SetActive(false);
+                sEMove.SetActive(false);
             }
         }
 
@@ -274,15 +272,21 @@ public class EnemyBase : CharacteBase
         hp = 0;                        //体力を"0"にする
         GameManager.score += 1;        //スコアを足す
         PlayerBase.exp += 1;           //経験値を足す
-        audioSource.PlayOneShot(death);//"death"を鳴らす
 
         if (enemyType == Enemy.EnemyType.Human.ToString())
         {
+            audioSource.PlayOneShot(sEDeath);//"death"を鳴らす
+
             //位置(.Y)を"0.0f"にする
             this.transform.position
                 = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
             nowAnimationNumber = (int)Enemy.HumanoidAnimation.Death;
             AnimationPlay();                                        //関数"Animation"を実行
+        }
+        else if(enemyType == Enemy.EnemyType.Vehicle.ToString())
+        {
+            Instantiate(effectDeath, this.transform.position, this.transform.rotation);
+            Invoke("Destroy", 1.0f);//関数"Destroy"を"5.0f"後に実行
         }
     }
 
