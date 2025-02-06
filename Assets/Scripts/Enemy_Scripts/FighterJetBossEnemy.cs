@@ -32,17 +32,20 @@ public class FighterJetBossEnemy : EnemyBase
     {
         Move();
 
-        bulletShotTimer += Time.deltaTime;//çUåÇä‘äuÇ…"Time.deltaTime(åoâﬂéûä‘)"Çë´Ç∑
+        if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
+        {
+            bulletShotTimer += Time.deltaTime;//çUåÇä‘äuÇ…"Time.deltaTime(åoâﬂéûä‘)"Çë´Ç∑
 
-        if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+            if (bulletShotTimer >= bulletShotInterval)
+            {
+                audioSource.PlayOneShot(sEShot);
+                Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
+                bulletShotTimer = 0.0f;
+            }
+        }
+        else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
         {
             CoarsePlayerDirection();
-        }
-
-        if (bulletShotTimer >= bulletShotInterval)
-        {
-            Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
-            bulletShotTimer = 0.0f;
         }
     }
 
@@ -52,6 +55,5 @@ public class FighterJetBossEnemy : EnemyBase
         base.DeathEnemy();
         rigidBody.useGravity = true;//RigidBodyÇÃèdóÕÇ"óLå¯"Ç…Ç∑ÇÈ
         boxCollider.isTrigger = false;
-
     }
 }

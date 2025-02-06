@@ -972,7 +972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b247f99d11b7b81428dace07dfae69b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateCount: 20
+  generateCount: 30
   generatePosition:
   - {x: 20, y: 0}
   - {x: 200, y: 0}
