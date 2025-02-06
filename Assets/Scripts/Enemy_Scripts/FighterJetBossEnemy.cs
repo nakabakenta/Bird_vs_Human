@@ -50,10 +50,8 @@ public class FighterJetBossEnemy : EnemyBase
     {
         bossEnemy = false;
         base.DeathEnemy();
-    }
+        rigidBody.useGravity = true;//RigidBody‚Ìd—Í‚ğ"—LŒø"‚É‚·‚é
+        boxCollider.isTrigger = false;
 
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
     }
 }

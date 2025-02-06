@@ -972,13 +972,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b247f99d11b7b81428dace07dfae69b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateCount: 15
+  generateCount: 20
   generatePosition:
   - {x: 20, y: 0}
   - {x: 200, y: 0}
   generate:
   - {fileID: 7702886973443865384, guid: 421a2f13e202eff419c695d1e33f541f, type: 3}
   - {fileID: 7702886973443865384, guid: b5155a73ee5cfea45aa12411670be9fe, type: 3}
+  - {fileID: 8221593721495400921, guid: 0b25f3668799fe3408b8dd44d52e6c97, type: 3}
+  - {fileID: 8221593721495400921, guid: 7455b9f735c47ee45902f528fe669a55, type: 3}
+  - {fileID: 6504192588859680695, guid: da5469115820f5e41b69c99a86c5c83a, type: 3}
 --- !u!4 &156808318
 Transform:
   m_ObjectHideFlags: 0
@@ -1198,7 +1201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7465515210998880911, guid: c150ae557516706449400d4ef2593fd3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -50
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 7465515210998880911, guid: c150ae557516706449400d4ef2593fd3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3754,7 +3757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86f26f54cfdd9440b9879c8ee85fcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateCount: 8
+  generateCount: 15
   generatePosition:
   - {x: 10, y: 3}
   - {x: 200, y: 8}

@@ -44,4 +44,12 @@ public class FighterJetEnemy : EnemyBase
             bulletShotTimer = 0.0f;
         }
     }
+
+    public override void DeathEnemy()
+    {
+        base.DeathEnemy();
+
+        rigidBody.useGravity = true;//RigidBody‚Ìd—Í‚ğ"—LŒø"‚É‚·‚é
+        boxCollider.isTrigger = false;
+    }
 }
