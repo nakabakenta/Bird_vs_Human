@@ -1195,14 +1195,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba775148b2f9eb44b55733a1060e9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUI: {fileID: 1921880000}
-  pauseUI: {fileID: 1979063606}
-  clearUI: {fileID: 1742887938}
-  continueUI: {fileID: 799853574}
-  buttonNextStage: {fileID: 1324953784}
-  buttonGameClear: {fileID: 0}
-  buttonRestart: {fileID: 1679741699}
-  BackToMenu: {fileID: 1686488857}
+  uIMenu:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  uIButton:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   killSlider: {fileID: 1959697507}
   gageSlider: {fileID: 2035527156}
   gageLight: {fileID: 523229942}
@@ -1211,6 +1214,8 @@ MonoBehaviour:
   score: {fileID: 1356078356}
   remain: {fileID: 2000828555}
   hp: {fileID: 2085158145}
+  resultScore: {fileID: 0}
+  resultRemain: {fileID: 0}
 --- !u!114 &293610862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5888,7 +5893,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 76e9c58e8ff7aa04c9063f12c0c6e5b8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.375
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
