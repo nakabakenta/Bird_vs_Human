@@ -98,7 +98,7 @@ public class PlayerBase : CharacteBase
         }
 
         //経験値が最大経験値と等しい場合
-        if (exp == Player.maxExp)
+        if (exp >= Player.maxExp)
         {
             Heal();//関数"Heal"を実行する
         }
@@ -244,7 +244,7 @@ public class PlayerBase : CharacteBase
         }
         
         public static int maxStatus = 8;//最大ステータス
-        public static int maxExp = 10;  //最大経験値
+        public static int maxExp = 8;   //最大経験値
         public static int maxAlly = 2;  //最大味方数
 
         //体力
