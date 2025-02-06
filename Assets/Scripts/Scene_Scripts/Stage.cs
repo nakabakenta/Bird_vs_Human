@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Stage : UIBase
+public class Stage : CustomBase
 {
     //処理
     public static int nowStage;       //現在のステージ
@@ -35,12 +35,16 @@ public class Stage : UIBase
 
     private PlayerController playerController;
     private StageButton stageButton;
-    private bool loadScene;
-   
 
     // Start is called before the first frame update
     void Start()
     {
+        blackout = false;
+
+        BaseStart();
+
+        PlayBGM(bgm[0]);
+
         GameManager.status = "Play";//ゲームの状態を"Play"にする
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
@@ -73,6 +77,15 @@ public class Stage : UIBase
     // Update is called once per frame
     void Update()
     {
+        if (imageBlackout.color.a > 0)
+        {
+            Blackout();
+        }
+        else if(imageBlackout.color.a <= 0)
+        {
+            gameObjectBlackout.SetActive(false);
+        }
+
         killSlider.value = PlayerBase.exp;
 
         if (PlayerBase.remain > 0)
@@ -118,11 +131,15 @@ public class Stage : UIBase
             {
                 if (EnemyBase.bossEnemy == false)
                 {
+                    PlayBGM(bgm[1]);
+                    audioSource.loop = false;
+
                     GameManager.status = "Clear";
                     openMenu = true;
                 }
                 if (playerController.hp <= 0)
                 {
+                    PlayBGM(bgm[2]);
                     GameManager.status = "Continue";
                     openMenu = true;
                 }

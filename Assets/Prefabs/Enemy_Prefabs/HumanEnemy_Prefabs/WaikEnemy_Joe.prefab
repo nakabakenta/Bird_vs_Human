@@ -3070,18 +3070,21 @@ MonoBehaviour:
   - range:
     - {x: 0, y: 0, z: 0}
     - {x: 1, y: 0, z: 0}
-  damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  damage: {fileID: 8300000, guid: a1ca0e3c066838445bbf7aba5b594a1e, type: 3}
+  sEShot: {fileID: 0}
+  sEDeath: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
   bulletShot: {fileID: 0}
   bulletPut: {fileID: 0}
   effectDeath: {fileID: 0}
-  shotPosition: {fileID: 0}
+  effectUn: {fileID: 0}
+  positionShot: {fileID: 0}
   sEMove: {fileID: 0}
-  sEShot: {fileID: 0}
-  sEDeath: {fileID: 8300000, guid: fee2df24642b3174aaba22554b8316b6, type: 3}
+  sEAttack: {fileID: 8300000, guid: c1fe1ed0d579cf54c853d5cc201e5576, type: 3}
   jump: 0
   actionChangeInterval: 0
-  shotBulletInterval: 0
-  putBulletInterval: 0
+  attackInterval: 0
+  bulletShotInterval: 0
+  bulletPutInterval: 0
   rotationSpeed: 360
   maxBullet: 0
   actionRange: {x: 0, y: 0, z: 0}

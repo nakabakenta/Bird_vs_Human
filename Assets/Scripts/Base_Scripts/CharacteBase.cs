@@ -14,7 +14,7 @@ public class CharacteBase : MonoBehaviour
     //座標
     protected Vector3 worldPosition, viewPortPosition;
     //このオブジェクトのコンポーネント
-    public AudioClip damage;                                      //"AudioClip(ダメージ)"
+    public AudioClip sEAction, damage, sEShot, sEDeath;                     //"AudioClip(ダメージ)"
     protected Transform thisTransform;                            //"Transform"
     protected Rigidbody rigidBody;                                //"Rigidbody"
     protected BoxCollider boxCollider;                            //"BoxCollider"

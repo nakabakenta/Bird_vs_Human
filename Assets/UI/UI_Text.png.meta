@@ -676,7 +676,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 304
+        y: 238
         width: 64
         height: 192
       alignment: 0
@@ -739,7 +739,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 66
-        y: 432
+        y: 366
         width: 448
         height: 64
       alignment: 0
@@ -760,7 +760,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 66
-        y: 368
+        y: 302
         width: 384
         height: 64
       alignment: 0
@@ -781,7 +781,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 66
-        y: 304
+        y: 238
         width: 768
         height: 64
       alignment: 0
@@ -802,7 +802,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 452
-        y: 368
+        y: 302
         width: 448
         height: 64
       alignment: 0
@@ -823,7 +823,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 238
+        y: 172
         width: 256
         height: 64
       alignment: 0
@@ -844,7 +844,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 238
+        y: 172
         width: 320
         height: 64
       alignment: 0
@@ -865,7 +865,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 238
+        y: 172
         width: 448
         height: 64
       alignment: 0
@@ -885,8 +885,29 @@ TextureImporter:
       name: Ally
       rect:
         serializedVersion: 2
-        x: 840
-        y: 498
+        x: 0
+        y: 432
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94103b6d5175e7f4293314130f942199
+      internalID: -1514866822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 432
         width: 128
         height: 64
       alignment: 0
@@ -896,8 +917,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94103b6d5175e7f4293314130f942199
-      internalID: -1514866822
+      spriteID: 1edb796d798c628479c22f56750ef15d
+      internalID: -71216714
       vertices: []
       indices: 
       edges: []
@@ -923,6 +944,7 @@ TextureImporter:
       AttackSpeed: -1103642406
       BackToMenu: -1101987141
       Base: 1422330174
+      Boss: -71216714
       Chickadee: 1402137104
       City: 2023890730
       Continue: -483647631

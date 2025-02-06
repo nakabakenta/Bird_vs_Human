@@ -687,17 +687,19 @@ MonoBehaviour:
     - {x: -0.25, y: 0, z: 0}
     - {x: 1.25, y: 0, z: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}
+  bulletShot: {fileID: 0}
+  bulletPut: {fileID: 0}
   effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  shotBullet: {fileID: 0}
-  putBullet: {fileID: 0}
-  shotPosition: {fileID: 0}
+  effectUn: {fileID: 100000, guid: 46db5b1dc2de2384da9a75fc063273be, type: 3}
+  positionShot: {fileID: 0}
   sEMove: {fileID: 0}
-  shot: {fileID: 0}
-  death: {fileID: 8300000, guid: 01b694f186109884db3d07d5b8b887ac, type: 3}
+  sEShot: {fileID: 0}
+  sEDeath: {fileID: 0}
   jump: 0
   actionChangeInterval: 0
-  shotBulletInterval: 0
-  putBulletInterval: 0
+  attackInterval: 0
+  bulletShotInterval: 0
+  bulletPutInterval: 0
   rotationSpeed: 0
   maxBullet: 0
   actionRange: {x: 0, y: 0, z: 0}

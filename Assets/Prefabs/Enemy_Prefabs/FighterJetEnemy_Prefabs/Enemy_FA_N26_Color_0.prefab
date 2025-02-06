@@ -454,6 +454,7 @@ MonoBehaviour:
   bulletShot: {fileID: 6783866362517778785, guid: b8574c683b306784eb4cd2b6d7079b24, type: 3}
   bulletPut: {fileID: 0}
   effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  effectUn: {fileID: 100000, guid: 46db5b1dc2de2384da9a75fc063273be, type: 3}
   positionShot: {fileID: 5126478524168042272}
   sEMove: {fileID: 0}
   sEShot: {fileID: 0}

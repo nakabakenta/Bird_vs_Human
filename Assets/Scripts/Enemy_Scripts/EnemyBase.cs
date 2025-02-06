@@ -6,10 +6,10 @@ public class EnemyBase : CharacteBase
 {
     //このオブジェクトのコンポーネント
     public GameObject bulletShot, bulletPut;//"GameObject(弾)"
-    public GameObject effectDeath;          //"GameObject(エフェクト)"
+    public GameObject effectDeath, effectUn;//"GameObject(エフェクト)"
     public GameObject positionShot;         //"GameObject(発射位置)"
     public GameObject sEMove;
-    public AudioClip sEShot, sEDeath;
+    public AudioClip sEAttack;
     //ステータス
     public float jump;         //ジャンプ力
     public float actionChangeInterval, attackInterval, bulletShotInterval, bulletPutInterval;//行動変更間隔, 攻撃間隔
@@ -286,29 +286,37 @@ public class EnemyBase : CharacteBase
         else if(enemyType == Enemy.EnemyType.Vehicle.ToString())
         {
             Instantiate(effectDeath, this.transform.position, this.transform.rotation);
-            Invoke("Destroy", 1.0f);//関数"Destroy"を"5.0f"後に実行
+            Instantiate(effectUn, this.transform.position, this.transform.rotation, thisTransform);
         }
     }
 
     //当たり判定(OnTriggerEnter)
     public virtual void OnTriggerEnter(Collider collision)
     {
-        if(enemyType == Enemy.EnemyType.Human.ToString())
+        if (hp > 0)
         {
-            //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
-            if (collision.gameObject.tag == "Player" && isAnimation == false)
+            if (enemyType == Enemy.EnemyType.Human.ToString())
             {
-                isAnimation = true;//"isAnimation = true"にする
-                                   //ランダム"10(パンチ)"～"12(キック)"
-                nowAnimationNumber = (int)Random.Range((int)Enemy.HumanoidAnimation.Punch,
-                                                       (int)Enemy.HumanoidAnimation.Kick + 1);
-                AnimationPlay();//関数"AnimationPlay"を実行する
+                if (collision.gameObject.tag == "Player")
+                {
+                    audioSource.PlayOneShot(sEAttack);
+
+                    //衝突したオブジェクトの"tag == Player" && "isAnimation == false"の場合
+                    if (isAnimation == false)
+                    {
+                        isAnimation = true;//"isAnimation = true"にする
+                                           //ランダム"10(パンチ)"～"12(キック)"
+                        nowAnimationNumber = (int)Random.Range((int)Enemy.HumanoidAnimation.Punch,
+                                                               (int)Enemy.HumanoidAnimation.Kick + 1);
+                        AnimationPlay();//関数"AnimationPlay"を実行する
+                    }
+                }
             }
-        }
-        //衝突したオブジェクトのタグが"PlayerBullet" && 体力が"0より上"の場合
-        if (collision.gameObject.tag == "PlayerBullet" && hp > 0)
-        {
-            DamageEnemy();//関数"DamageEnemy"を実行する
+            //衝突したオブジェクトのタグが"PlayerBullet"の場合
+            if (collision.gameObject.tag == "PlayerBullet")
+            {
+                DamageEnemy();//関数"DamageEnemy"を実行する
+            }
         }
     }
 

@@ -48,16 +48,30 @@ public class HelicopterEnemy : EnemyBase
 
             if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
             {
-                bulletShotTimer += Time.deltaTime;
-
-                if (this.transform.position.y + actionRange.y > playerTransform.position.y &&
-                    this.transform.position.y - actionRange.y < playerTransform.position.y)
+                if(nowBullet > 0)
                 {
-                    if (bulletShotTimer >= bulletShotInterval)
+                    bulletShotTimer += Time.deltaTime;
+
+                    if (this.transform.position.y + actionRange.y > playerTransform.position.y &&
+                        this.transform.position.y - actionRange.y < playerTransform.position.y)
                     {
-                        audioSource.PlayOneShot(sEShot);
-                        Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
-                        bulletShotTimer = 0.0f;
+                        if (bulletShotTimer >= bulletShotInterval)
+                        {
+                            audioSource.PlayOneShot(sEShot);
+                            Instantiate(bulletShot, positionShot.transform.position, this.transform.rotation);
+                            nowBullet -= 1;
+                            bulletShotTimer = 0.0f;
+                        }
+                    }
+                }
+                else if(nowBullet <= 0)
+                {
+                    attackTimer += Time.deltaTime;
+
+                    if(attackTimer >= attackInterval)
+                    {
+                        nowBullet = maxBullet;
+                        attackTimer = 0;
                     }
                 }
             }
@@ -71,5 +85,8 @@ public class HelicopterEnemy : EnemyBase
     public override void DeathEnemy()
     {
         base.DeathEnemy();
+
+        rigidBody.useGravity = true;//RigidBodyÇÃèdóÕÇ"óLå¯"Ç…Ç∑ÇÈ
+        boxCollider.isTrigger = false;
     }
 }

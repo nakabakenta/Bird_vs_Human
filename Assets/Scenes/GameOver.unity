@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -287,26 +287,13 @@ GameObject:
   - component: {fileID: 508437257}
   - component: {fileID: 508437256}
   - component: {fileID: 508437255}
-  - component: {fileID: 508437254}
   m_Layer: 5
-  m_Name: Canvas_UI
+  m_Name: UI_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &508437254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508437253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34782704d5b9f0f489474bf5e3595f89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &508437255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1375,15 +1362,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e207f60b6196c54ca75d7d9acd9432c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashInterval: 0
+  blackoutSpeed: 0
+  gameObjectBlackout: {fileID: 0}
+  imageFlash: []
+  tMPTextFlash: []
+  bgm: []
   alpha: {fileID: 1565291087}
   selectMark: {fileID: 716593984}
   enter: {fileID: 8300000, guid: 415d1ab6e38c424408587153043ca329, type: 3}
   click: {fileID: 8300000, guid: 11494d62f2729c04e944083cbd5c0816, type: 3}
   button: {fileID: 0}
   rectTransform: {fileID: 0}
-  audioSource: {fileID: 0}
   buttonPosition: {x: 0, y: 0}
-  setActive: 0
   moveButton: 0
 --- !u!114 &1859256046
 MonoBehaviour:

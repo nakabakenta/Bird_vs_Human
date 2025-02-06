@@ -466,7 +466,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0ae49bbf527dafb41a7200cabf5c9cc7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1332,6 +1332,7 @@ MonoBehaviour:
   bulletShot: {fileID: 6783866362517778785, guid: 2b7a46c4aaf215e41bb34156e5b8d4b8, type: 3}
   bulletPut: {fileID: 0}
   effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  effectUn: {fileID: 100000, guid: 46db5b1dc2de2384da9a75fc063273be, type: 3}
   positionShot: {fileID: 1816399617476811764}
   sEMove: {fileID: 2330145947690779686}
   sEShot: {fileID: 8300000, guid: 41e40c4c57c28e24c8f57bcb17dab056, type: 3}
@@ -1342,7 +1343,7 @@ MonoBehaviour:
   bulletShotInterval: 0.25
   bulletPutInterval: 0
   rotationSpeed: 1080
-  maxBullet: 3
+  maxBullet: 5
   actionRange: {x: 0, y: 2, z: 0}
   propeller:
   - {fileID: 8560467375525737527}

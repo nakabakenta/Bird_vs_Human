@@ -58,6 +58,7 @@ public class PlayerAlly : PlayerBase
         //衝突したオブジェクトのタグが"Player"の場合
         if (collision.gameObject.tag == "Player" && nowAlly < Player.maxAlly)
         {
+            audioSource.PlayOneShot(sEAction);
             boxCollider.enabled = false;//BoxColliderを"無効"にする
             text.SetActive(false);      //テキストを非表示にする
             nowAlly += 1;               //味方数を"+1"する

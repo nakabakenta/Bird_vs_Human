@@ -36,6 +36,7 @@ public class PlayerController : PlayerBase
         //マウスが"左クリックされた"&&"攻撃タイマー[前方]"が"攻撃間隔[前方]" - "レベルアップ時の攻撃間隔短縮"以上の場合
         if (Input.GetMouseButton(0) && attackTimer[0] >= attackInterval)
         {
+            audioSource.PlayOneShot(sEShot);
             //このオブジェクトの位置に前方弾を生成する
             Instantiate(forwardBullet, this.transform.position, Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z));
             //攻撃タイマー[前方]を初期化する
@@ -45,6 +46,7 @@ public class PlayerController : PlayerBase
         //マウスが"右クリックされた"&&"攻撃タイマー[下方]"が"攻撃間隔[下方]" - "レベルアップ時の攻撃間隔短縮"以上の場合
         if (Input.GetMouseButton(1) && attackTimer[1] >= attackInterval)
         {
+            audioSource.PlayOneShot(sEShot);
             //このオブジェクトの位置に下方弾を生成する
             Instantiate(downBullet, this.transform.position, Quaternion.identity);
             //攻撃タイマー[下方]を初期化する
@@ -54,6 +56,7 @@ public class PlayerController : PlayerBase
         //マウスホイールが"クリックされた"&&"ゲージタイマー"が"ゲージ蓄積時間"以上の場合
         if (Input.GetMouseButtonDown(2) && gageTimer >= gageInterval)
         {
+            audioSource.PlayOneShot(sEAction);
             //プレイヤーの状態を"Invincible"にする
             status = "Invincible";
             //このオブジェクトの位置に群れを生成する
@@ -71,12 +74,6 @@ public class PlayerController : PlayerBase
         hp = 0;                     //体力を"0"にする
         remain -= 1;                //残機を"-1"する
         status = "Death";
-    }
-
-    //衝突判定(OnTriggerEnter)
-    public override void OnTriggerEnter(Collider collision)
-    {
-        base.OnTriggerEnter(collision);
     }
 }
 

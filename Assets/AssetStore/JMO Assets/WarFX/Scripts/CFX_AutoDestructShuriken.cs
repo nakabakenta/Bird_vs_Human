@@ -29,11 +29,14 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		colliderTimer += Time.deltaTime;
-
-		if (colliderTimer >= colliderInterval)
+		if(sphereCollider != null)
         {
-			sphereCollider.enabled = false;
+			colliderTimer += Time.deltaTime;
+
+			if (colliderTimer >= colliderInterval)
+			{
+				sphereCollider.enabled = false;
+			}
 		}
 	}
 

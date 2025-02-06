@@ -944,7 +944,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f0e4d15c1311f9c4e83718211f124efa, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1646,6 +1646,7 @@ MonoBehaviour:
   bulletShot: {fileID: 5407085079677237740, guid: 07bd2e467eccfcd4eb998292465f84c1, type: 3}
   bulletPut: {fileID: 0}
   effectDeath: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
+  effectUn: {fileID: 100000, guid: 46db5b1dc2de2384da9a75fc063273be, type: 3}
   positionShot: {fileID: 2935186390172836444}
   sEMove: {fileID: 2901475710041876506}
   sEShot: {fileID: 8300000, guid: 889c02484cb02b54cbbdf809a5f2a24a, type: 3}

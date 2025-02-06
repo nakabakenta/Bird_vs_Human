@@ -147,6 +147,7 @@ public class PlayerBase : CharacteBase
         }
 
         hp -= 1;//‘Ì—Í‚ğ"-1"‚·‚é
+        audioSource.PlayOneShot(damage);
 
         //‘Ì—Í‚ª"0‚æ‚èã"‚Ìê‡
         if (hp > 0)
@@ -206,6 +207,7 @@ public class PlayerBase : CharacteBase
     {
         rigidBody.useGravity = true;        //RigidBody‚Ìd—Í‚ğ"—LŒø"‚É‚·‚é
         animator.SetInteger("Animation", 1);
+        audioSource.PlayOneShot(sEDeath);
     }
 
     //Õ“Ë”»’è(OnTriggerEnter)
