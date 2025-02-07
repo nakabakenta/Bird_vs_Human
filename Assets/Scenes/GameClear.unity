@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,43 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &29522957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29522958}
+  m_Layer: 5
+  m_Name: UI_Result
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &29522958
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29522957}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 866871269}
+  m_Father: {fileID: 1991133555}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -100, y: -75}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &54024936
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +266,7 @@ GameObject:
   - component: {fileID: 423154781}
   - component: {fileID: 423154780}
   m_Layer: 5
-  m_Name: Text_ScoreNumber
+  m_Name: TextMeshPro_ScoreNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +629,7 @@ GameObject:
   - component: {fileID: 743052772}
   - component: {fileID: 743052771}
   m_Layer: 5
-  m_Name: Symbol_01
+  m_Name: UI_Custom_Symbol_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,12 +725,12 @@ RectTransform:
   - {fileID: 743052770}
   - {fileID: 423154779}
   - {fileID: 1829769868}
-  m_Father: {fileID: 1991133555}
-  m_RootOrder: 1
+  m_Father: {fileID: 29522958}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -300}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &930652237
@@ -966,7 +1003,7 @@ GameObject:
   - component: {fileID: 1581429488}
   - component: {fileID: 1581429487}
   m_Layer: 5
-  m_Name: Score
+  m_Name: UI_Custom_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1235,15 +1272,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e207f60b6196c54ca75d7d9acd9432c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashInterval: 0
+  fadeSpeed: []
+  gameObjectFade: []
+  imageFlash: []
+  textFlash: []
+  tMPTextFlash: []
+  bgm: []
+  score: {fileID: 0}
+  remain: {fileID: 0}
+  hp: {fileID: 0}
+  resultScore: {fileID: 0}
+  resultRemain: {fileID: 0}
   alpha: {fileID: 640049191}
   selectMark: {fileID: 1309898356}
   enter: {fileID: 8300000, guid: 415d1ab6e38c424408587153043ca329, type: 3}
   click: {fileID: 8300000, guid: 11494d62f2729c04e944083cbd5c0816, type: 3}
   button: {fileID: 0}
   rectTransform: {fileID: 0}
-  audioSource: {fileID: 0}
   buttonPosition: {x: 0, y: 0}
-  setActive: 0
   moveButton: 0
 --- !u!1 &1806421401
 GameObject:
@@ -1333,7 +1380,7 @@ GameObject:
   - component: {fileID: 1829769870}
   - component: {fileID: 1829769869}
   m_Layer: 5
-  m_Name: Count
+  m_Name: UI_Custom_Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1571,7 +1618,7 @@ GameObject:
   - component: {fileID: 1991133552}
   - component: {fileID: 1991133556}
   m_Layer: 5
-  m_Name: Canvas_UI
+  m_Name: UI_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1651,7 +1698,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 930652238}
-  - {fileID: 866871269}
+  - {fileID: 29522958}
   - {fileID: 1632071360}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1670,6 +1717,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991133551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34782704d5b9f0f489474bf5e3595f89, type: 3}
+  m_Script: {fileID: 11500000, guid: bbc76d7c44bd4e649a8ae9ece52bf069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashInterval: 0
+  fadeSpeed: []
+  gameObjectFade: []
+  imageFlash: []
+  textFlash: []
+  tMPTextFlash: []
+  bgm: []
+  score: {fileID: 0}
+  remain: {fileID: 0}
+  hp: {fileID: 0}
+  resultScore: {fileID: 423154780}
+  resultRemain: {fileID: 0}

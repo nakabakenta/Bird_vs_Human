@@ -46,10 +46,11 @@ public class BossEnemy : EnemyBase
             if (PlayerBase.status != "Death")
             {
                 Move();
+                SmoothPlayerDirection();//関数"SmoothPlayerDirection"を実行する
 
                 actionChangeTimer += Time.deltaTime;
 
-                if(nowAnimationNumber == defaultAnimationNumber)
+                if(nowAnimationNumber == (int)Enemy.HumanoidAnimation.Walk)
                 {
                     if (this.transform.position.x + actionRange.x > playerTransform.position.x &&
                         this.transform.position.x - actionRange.x < playerTransform.position.x &&
@@ -59,18 +60,18 @@ public class BossEnemy : EnemyBase
                         nowAnimationNumber = (int)Enemy.HumanoidAnimation.Jump;
                         AnimationPlay();
                     }
-
-                    SmoothPlayerDirection();//関数"SmoothPlayerDirection"を実行する
-                    bulletPutTimer = 0.0f;
+                    else if(this.transform.position.x + actionRange.x > playerTransform.position.x &&
+                            this.transform.position.x - actionRange.x < playerTransform.position.x &&
+                            this.transform.position.y + actionRange.y < playerTransform.position.y)
+                    {
+                        isAnimation = true;
+                        nowAnimationNumber = (int)Enemy.HumanoidAnimation.Throw;
+                        AnimationPlay();
+                    }
                 }
                 else if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
                 {
                     bulletPutTimer += Time.deltaTime;
-
-                    if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
-                    {
-                        SmoothPlayerDirection();//関数"SmoothPlayerDirection"を実行する
-                    }
 
                     if (bulletPutTimer >= bulletPutInterval)
                     {
@@ -108,12 +109,11 @@ public class BossEnemy : EnemyBase
     public override void ActionChange()
     {
         //
-        if (nowAnimationNumber == defaultAnimationNumber)
+        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.Walk)
         {
-            int[] randomAnimation = { 14, 23 };
-            nowAnimationNumber = randomAnimation[Random.Range(0, randomAnimation.Length)];
+            nowAnimationNumber = (int)Enemy.HumanoidAnimation.Battlecry;
         }
-        if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
+        else if (nowAnimationNumber == (int)Enemy.HumanoidAnimation.CrazyRun)
         {
             nowAnimationNumber = (int)Enemy.HumanoidAnimation.JumpAttack;//現在のアニメーションを"ジャンプ攻撃"にする
         }

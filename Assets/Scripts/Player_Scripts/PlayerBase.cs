@@ -29,7 +29,6 @@ public class PlayerBase : CharacteBase
     public GameObject[] player = new GameObject[3];//"GameObject(プレイヤー)"
     protected GameObject playerObject;             //"GameObject(プレイヤー)"
     protected GameObject groupObject;
-    
 
     //関数"BaseStart"
     public void BaseStart()
@@ -42,7 +41,7 @@ public class PlayerBase : CharacteBase
         attackSpeed = (Player.maxStatus - Player.attackSpeed[GameManager.selectPlayer]) / 2.0f;
         attackTimer[0] = attackSpeed;
         attackTimer[1] = attackSpeed;
-        status = "Normal";//プレイヤーの状態を"Normal"にする
+        status = Player.Status.Normal.ToString();//プレイヤーの状態を"Normal"にする
         //処理を初期化する
         gageTimer = 0.0f;
         nowAlly = 0;
@@ -75,14 +74,14 @@ public class PlayerBase : CharacteBase
             this.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(viewPortPosition.x, viewPortPosition.y, 13.0f));
 
             //プレイヤーの状態が"Normal"の場合
-            if (status == "Normal")
+            if (status == Player.Status.Normal.ToString())
             {
                 attackInterval = attackSpeed;
 
                 gageTimer += Time.deltaTime;//ゲージタイマーに経過時間を足す
             }
             //プレイヤーの状態が"Invincible"の場合
-            else if (status == "Invincible")
+            else if (status == Player.Status.Invincible.ToString())
             {
                 //無敵時の攻撃間隔を設定する
                 attackInterval = PlayerBase.InvincibleStatus.attackSpeed;
@@ -92,7 +91,7 @@ public class PlayerBase : CharacteBase
         }
 
         //プレイヤーの状態が"Invincible"の場合
-        if (status == "Invincible")
+        if (status == Player.Status.Invincible.ToString())
         {
             Invincible();//関数"Invincible"を実行する
         }
@@ -103,9 +102,9 @@ public class PlayerBase : CharacteBase
             Heal();//関数"Heal"を実行する
         }
 
-        if (status == "Death")
+        if (status == Player.Status.Death.ToString())
         {
-            if (this.transform.position.y <= 0.5f)
+            if (this.transform.position.y <= 0.5f && Stage.nowStage != 5)
             {
                 this.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
             }
@@ -131,9 +130,9 @@ public class PlayerBase : CharacteBase
         //無敵タイマーが無敵持続時間以上の場合
         if (invincibleTimer >= invincibleInterval)
         {
-            invincibleTimer = 0.0f;//無敵タイマーを初期化する
-            status = "Normal";     //プレイヤーの状態を"Normal"にする
-            Destroy(groupObject);  //このオブジェクトを消す
+            invincibleTimer = 0.0f;                  //無敵タイマーを初期化する
+            status = Player.Status.Normal.ToString();//プレイヤーの状態を"Normal"にする
+            Destroy(groupObject);                    //このオブジェクトを消す
         }
     }
 
@@ -146,8 +145,17 @@ public class PlayerBase : CharacteBase
             return;//返す
         }
 
-        hp -= 1;//体力を"-1"する
-        audioSource.PlayOneShot(damage);
+        //味方数が"0より上"の場合
+        if (nowAlly > 0)
+        {
+            nowAlly -= 1;//味方数を"-1"する
+        }
+        //味方数が"0以下"の場合
+        else if (nowAlly <= 0)
+        {
+            hp -= 1;//体力を"-1"する
+            audioSource.PlayOneShot(damage);
+        }
 
         //体力が"0より上"の場合
         if (hp > 0)
@@ -218,31 +226,29 @@ public class PlayerBase : CharacteBase
              collision.gameObject.tag == "BossEnemy" || 
              collision.gameObject.tag == "EnemyBullet" ||
              collision.gameObject.tag == "Damage") && 
-             status == "Normal")
+             status == Player.Status.Normal.ToString())
         {
-            //味方数が"0より上"の場合
-            if (nowAlly > 0)
-            {
-                nowAlly -= 1;//味方数を"-1"する
-            }
-            //味方数が"0以下"の場合
-            else if (nowAlly <= 0)
-            {
-                Damage();//関数"Damage"を実行する
-            }
+            Damage();//関数"Damage"を実行する
         }
     }
 
     public static class Player
     {
-        public enum PlayerName
+        public enum Name
         {
             Sparrow = 0,
             Crow = 1,
             Chickadee = 2,
             Penguin = 3,
         }
-        
+
+        public enum Status
+        {
+            Normal,
+            Invincible,
+            Death,
+        }
+
         public static int maxStatus = 8;//最大ステータス
         public static int maxExp = 8;   //最大経験値
         public static int maxAlly = 2;  //最大味方数

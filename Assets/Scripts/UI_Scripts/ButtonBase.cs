@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonBase : CustomBase
+public class ButtonBase : AddBase
 {
     //このオブジェクトのコンポーネント
     public GameObject alpha;           //"GameObject(半透明)"

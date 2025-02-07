@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FighterJetBossEnemy : EnemyBase
 {
+    private Stage stage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +21,20 @@ public class FighterJetBossEnemy : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        BaseUpdate();
+        if (Stage.nowStage == 5 && Stage.killCount >= 8)
+        {
+            BaseUpdate();
+        }
     }
 
     public override void BaseUpdate()
     {
         base.BaseUpdate();
+
+        if (viewPortPosition.y < moveRange[0].range[0].y && hp <= 0)
+        {
+            Destroy();//ŠÖ”"Destroy"‚ðŽÀs‚·‚é
+        }
     }
 
     //ŠÖ”"Action"
@@ -45,6 +55,7 @@ public class FighterJetBossEnemy : EnemyBase
         }
         else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
         {
+            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
             CoarsePlayerDirection();
         }
     }

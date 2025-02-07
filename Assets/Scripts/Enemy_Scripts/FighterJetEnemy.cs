@@ -24,6 +24,11 @@ public class FighterJetEnemy : EnemyBase
     public override void BaseUpdate()
     {
         base.BaseUpdate();
+
+        if (viewPortPosition.y < moveRange[0].range[0].y && hp <= 0)
+        {
+            Destroy();//関数"Destroy"を実行する
+        }
     }
 
     //関数"Action"
@@ -44,6 +49,7 @@ public class FighterJetEnemy : EnemyBase
         }
         else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
         {
+            this.transform.position = new Vector3(this.transform.position.x, playerTransform.position.y, this.transform.position.z);
             CoarsePlayerDirection();
         }  
     }
@@ -52,7 +58,12 @@ public class FighterJetEnemy : EnemyBase
     {
         base.DeathEnemy();
 
-        rigidBody.useGravity = true;//RigidBodyの重力を"有効"にする
+        rigidBody.useGravity = true;  //RigidBodyの重力を"有効"にする
         boxCollider.isTrigger = false;
+
+        if(Stage.nowStage == 5)
+        {
+            Stage.killCount += 1;
+        }
     }
 }

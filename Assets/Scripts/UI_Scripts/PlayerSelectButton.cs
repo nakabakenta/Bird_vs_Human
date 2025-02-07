@@ -40,22 +40,22 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
             //スズメ
             if (selectButton == "Button_Sparrow")
             {
-                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Sparrow;//
+                GameManager.selectPlayer = (int)PlayerBase.Player.Name.Sparrow;//
             }
             //カラス
             else if (selectButton == "Button_Crow")
             {
-                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Crow;//
+                GameManager.selectPlayer = (int)PlayerBase.Player.Name.Crow;//
             }
             //コガラ
             else if (selectButton == "Button_Chickadee")
             {
-                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Chickadee;//
+                GameManager.selectPlayer = (int)PlayerBase.Player.Name.Chickadee;//
             }
             //ペンギン
             else if (selectButton == "Button_Penguin")
             {
-                GameManager.selectPlayer = (int)PlayerBase.Player.PlayerName.Penguin;//
+                GameManager.selectPlayer = (int)PlayerBase.Player.Name.Penguin;//
             }
 
             EnterButton();//関数"EnterButton"を実行する

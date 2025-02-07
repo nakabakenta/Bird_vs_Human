@@ -445,11 +445,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9cbcdb3975a3748b912e84ca5ce2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
-  moveSpeed: 10
+  hp: 15
+  moveSpeed: 15
   moveRange:
   - range:
-    - {x: -0.5, y: 0, z: 0}
+    - {x: -0.5, y: -0.5, z: 0}
     - {x: 1.5, y: 0, z: 0}
   sEAction: {fileID: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}

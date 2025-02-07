@@ -5,16 +5,22 @@ using UnityEngine;
 public class GenerateBase : MonoBehaviour
 {
     public int generateCount;
+    public float generateInterval;
+    public bool infiniteGenerate;
     public Vector2[] generatePosition = new Vector2[2];
     public GameObject[] generate;
+    protected float generateTimer = 0.0f;
     private int generateNumber = 0;
     private Transform thisTransform;                   //"Transform"
     private Vector3 position;
 
-    public void Generate()
+    public void GetComponent()
     {
         thisTransform = this.gameObject.GetComponent<Transform>();
+    }
 
+    public void Generate()
+    {
         for (int i = 0; i < generateCount; i++)
         {
             if (generate.Length > 1)

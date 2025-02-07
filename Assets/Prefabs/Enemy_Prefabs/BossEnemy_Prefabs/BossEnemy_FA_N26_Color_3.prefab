@@ -771,10 +771,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 50
-  moveSpeed: 15
+  moveSpeed: 20
   moveRange:
   - range:
-    - {x: -0.5, y: 0, z: 0}
+    - {x: -0.5, y: -0.5, z: 0}
     - {x: 1.5, y: 0, z: 0}
   sEAction: {fileID: 0}
   damage: {fileID: 8300000, guid: 8243860aab3e57341a9e0057452ca011, type: 3}

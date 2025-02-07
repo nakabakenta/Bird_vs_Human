@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9ade3580bd57b41850dec206b583ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 25
   effect: {fileID: 0}
   audioClip: {fileID: 0}
 --- !u!82 &-5497113592243806431

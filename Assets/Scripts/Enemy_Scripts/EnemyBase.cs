@@ -55,6 +55,7 @@ public class EnemyBase : CharacteBase
     {
         //このオブジェクトのワールド座標をビューポート座標に変換して取得する
         viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
+        viewPortPosition.y = Camera.main.WorldToViewportPoint(this.transform.position).y;
 
         //体力が"0より上" && 行動"する"の場合
         if (hp > 0 && action == true)
@@ -74,9 +75,9 @@ public class EnemyBase : CharacteBase
             }
         }
 
-        if (bossEnemy == false)
+        if (hp > 0 && bossEnemy == false)
         {
-            Destroy();//関数"Destroy"を実行する
+            DeathEnemy();
         }
     }
 
@@ -217,7 +218,7 @@ public class EnemyBase : CharacteBase
         {
             if (animationTimer >= nowAnimationLength / 2)
             {   //アニメーションタイマーを初期化する
-                defaultAnimationNumber = (int)Enemy.HumanoidAnimation.Run;//現在のアニメーションを"走る"にする
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Run;//現在のアニメーションを"走る"にする
                 ActionReset();
             }
         }
@@ -251,7 +252,7 @@ public class EnemyBase : CharacteBase
         {
             audioSource.PlayOneShot(damage);//"damage"を鳴らす
 
-            if (enemyType == Enemy.EnemyType.Human.ToString() && nowAnimationNumber == defaultAnimationNumber)
+            if (enemyType == Enemy.EnemyType.Human.ToString() && nowAnimationNumber == defaultAnimationNumber && this.tag == "Enemy")
             {
                 isAnimation = true;                                      //"isAnimation = true"にする
                 nowAnimationNumber = (int)Enemy.HumanoidAnimation.Damage;
@@ -261,6 +262,8 @@ public class EnemyBase : CharacteBase
         //"hp <= 0"の場合
         else if (hp <= 0)
         {
+            GameManager.score += 1;     //スコアを足す
+            PlayerBase.exp += 1;        //経験値を足す
             Invoke("DeathEnemy", 0.01f);//関数"DeathEnemy"を"0.01f"後に実行する
         }
     }
@@ -270,8 +273,6 @@ public class EnemyBase : CharacteBase
     {
         this.tag = "Untagged";         //このタグを"Untagged"にする
         hp = 0;                        //体力を"0"にする
-        GameManager.score += 1;        //スコアを足す
-        PlayerBase.exp += 1;           //経験値を足す
 
         if (enemyType == Enemy.EnemyType.Human.ToString())
         {

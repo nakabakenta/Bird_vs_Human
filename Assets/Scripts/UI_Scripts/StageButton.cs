@@ -69,10 +69,6 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
                     GameManager.nextScene = "Stage5";
                 }
             }
-            else if(selectButton == "Button_GameClear")
-            {
-                GameManager.nextScene = "GameClear";
-            }
 
             EnterButton();//ŠÖ”"EnterButton"‚ğÀs‚·‚é
         }
