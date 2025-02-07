@@ -12,6 +12,7 @@ public class PlayerSelectButton : ButtonBase, IPointerEnterHandler, IPointerClic
     void Start()
     {
         GetComponent();
+        GameManager.score = 0;
         moveButton = true;
         selectButton = null;
         buttonClick = false;

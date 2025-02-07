@@ -23,7 +23,10 @@ public class ButtonBase : AddBase
         rectTransform = this.GetComponent<RectTransform>();
         audioSource = this.GetComponent<AudioSource>();
         //このオブジェクトのコンポーネントを初期化
-        selectMark.SetActive(false);
+        if(selectMark != null)
+        {
+            selectMark.SetActive(false);
+        }
         //処理を初期化
         buttonPosition = rectTransform.anchoredPosition;
     }
@@ -35,7 +38,12 @@ public class ButtonBase : AddBase
             rectTransform.anchoredPosition = new Vector2(buttonPosition.x + 150, rectTransform.anchoredPosition.y);
         }
         alpha.SetActive(false);
-        selectMark.SetActive(true);
+
+        if (selectMark != null)
+        {
+            selectMark.SetActive(true);
+        }
+        
         audioSource.PlayOneShot(enter);//"入場"を鳴らす
     }
 
@@ -49,9 +57,9 @@ public class ButtonBase : AddBase
     {
         audioSource.PlayOneShot(click);       //"クリック"を鳴らす
 
-        if(GameManager.status == "Pause")
+        if(Stage.gameStatus == "Pause")
         {
-            GameManager.status = null;
+            Stage.gameStatus = null;
             LoadScene();
         }
 

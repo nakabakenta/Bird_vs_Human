@@ -683,6 +683,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 76e9c58e8ff7aa04c9063f12c0c6e5b8, type: 3}
   - {fileID: 8300000, guid: 10949c1964bf4fe49815e2b6c384b57a, type: 3}
   - {fileID: 8300000, guid: f35010ecc9f19bc438e2884e9df2de96, type: 3}
+  score: {fileID: 87012161}
+  remain: {fileID: 473546885}
+  hp: {fileID: 1624389601}
+  resultScore: {fileID: 1325502755}
+  resultRemain: {fileID: 826353023}
   uISetActiveInterval: 2
   uIMenu:
   - {fileID: 1071233447}
@@ -699,11 +704,6 @@ MonoBehaviour:
   gageLight: {fileID: 737936636}
   forwardBullet_UI: {fileID: 37094672}
   downBullet_UI: {fileID: 1039812908}
-  score: {fileID: 87012161}
-  remain: {fileID: 473546885}
-  hp: {fileID: 1624389601}
-  resultScore: {fileID: 1325502755}
-  resultRemain: {fileID: 826353023}
 --- !u!114 &118759861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b247f99d11b7b81428dace07dfae69b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateCount: 30
+  generateCount: 40
   generateInterval: 0
   infiniteGenerate: 0
   generatePosition:
@@ -1898,6 +1898,11 @@ MonoBehaviour:
   textFlash: []
   tMPTextFlash: []
   bgm: []
+  score: {fileID: 0}
+  remain: {fileID: 0}
+  hp: {fileID: 0}
+  resultScore: {fileID: 0}
+  resultRemain: {fileID: 0}
   alpha: {fileID: 612760649}
   selectMark: {fileID: 570603140}
   enter: {fileID: 8300000, guid: 415d1ab6e38c424408587153043ca329, type: 3}
@@ -4756,6 +4761,11 @@ MonoBehaviour:
   textFlash: []
   tMPTextFlash: []
   bgm: []
+  score: {fileID: 0}
+  remain: {fileID: 0}
+  hp: {fileID: 0}
+  resultScore: {fileID: 0}
+  resultRemain: {fileID: 0}
   alpha: {fileID: 2113914683}
   selectMark: {fileID: 298084246}
   enter: {fileID: 8300000, guid: 415d1ab6e38c424408587153043ca329, type: 3}
@@ -6421,6 +6431,11 @@ MonoBehaviour:
   textFlash: []
   tMPTextFlash: []
   bgm: []
+  score: {fileID: 0}
+  remain: {fileID: 0}
+  hp: {fileID: 0}
+  resultScore: {fileID: 0}
+  resultRemain: {fileID: 0}
   alpha: {fileID: 1522594960}
   selectMark: {fileID: 360045319}
   enter: {fileID: 8300000, guid: 415d1ab6e38c424408587153043ca329, type: 3}

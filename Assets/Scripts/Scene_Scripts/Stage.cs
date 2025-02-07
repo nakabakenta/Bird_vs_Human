@@ -9,6 +9,7 @@ public class Stage : AddBase
     public float uISetActiveInterval;
 
     //処理
+    public static string gameStatus;
     public static int nowStage;                      //現在のステージ
 
     public GameObject[] uIMenu = new GameObject[5];
@@ -20,7 +21,7 @@ public class Stage : AddBase
     private bool[] uIButtonSetActive = new bool[3]
         {false, false, false};
 
-    private bool openMenu = false;
+    private bool menu = false;
     private bool pause = false;
 
     public Slider killSlider;
@@ -38,18 +39,19 @@ public class Stage : AddBase
     void Start()
     {
         BaseStart();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        gameStatus = Status.Play.ToString();//ゲームの状態を"Play"にする
+        PlayBGM(bgm[0]);
 
         killCount = 0;
         fade[0] = false;
-        fade[1] = true;
 
-
-        gameObjectFade[1].SetActive(false);
-
-        PlayBGM(bgm[0]);
-
-        GameManager.status = "Play";//ゲームの状態を"Play"にする
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        if(nowStage == 5)
+        {
+            fade[1] = true;
+            gameObjectFade[1].SetActive(false);
+        }
 
         {
             for (int i = 0; i < uIMenu.Length; i++)
@@ -96,13 +98,13 @@ public class Stage : AddBase
                 //Escキーが"押された"&&ゲームの状態が"Play"の場合
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    if (GameManager.status == "Play")
+                    if (gameStatus == Status.Play.ToString())
                     {
-                        GameManager.status = "Pause";//ゲームの状態を"Pause"にする
+                        gameStatus = Status.Pause.ToString();//ゲームの状態を"Pause"にする
                         pause = true;
                     }
                     //Escキーが"押された"&&ゲームの状態が"Pause"の場合
-                    else if (GameManager.status == "Pause")
+                    else if (gameStatus == "Pause")
                     {
                         pause = false;
 
@@ -121,7 +123,7 @@ public class Stage : AddBase
                             StageButton.selectButton = null;
                         }
                     }
-                    openMenu = true;
+                    menu = true;
                 }
             }
         }
@@ -131,11 +133,11 @@ public class Stage : AddBase
             killSlider.value = PlayerBase.exp;
         }
 
-        if (GameManager.status == "Play")
+        if (gameStatus == "Play")
         {
             if (EnemyBase.bossEnemy == false)
             {
-                GameManager.status = "GameClear";
+                gameStatus = "GameClear";
 
                 if(nowStage == 5)
                 {
@@ -144,13 +146,13 @@ public class Stage : AddBase
                 }
                 else
                 {
-                    openMenu = true;
+                    menu = true;
                 }  
             }
             else if (playerController.hp <= 0)
             {
-                GameManager.status = "GameOver";
-                openMenu = true;
+                gameStatus = "GameOver";
+                menu = true;
             }
         }
 
@@ -198,6 +200,32 @@ public class Stage : AddBase
             resultRemain.text = "0" + PlayerController.remain;//
         }
 
+        //
+        if (GameManager.score >= 10000)
+        {
+            score.text = "" + GameManager.score;
+        }
+        //
+        else if (GameManager.score >= 1000)
+        {
+            score.text = "0" + GameManager.score;
+        }
+        //
+        else if (GameManager.score >= 100)
+        {
+            score.text = "00" + GameManager.score;
+        }
+        //
+        else if (GameManager.score >= 10)
+        {
+            score.text = "000" + GameManager.score;
+        }
+        //
+        else if (GameManager.score >= 0)
+        {
+            score.text = "0000" + GameManager.score;
+        }
+
         if (PlayerController.attackTimer[0] == 0.0f)
         {
             forwardBullet_UI.fillAmount = 0;
@@ -225,13 +253,13 @@ public class Stage : AddBase
             downBullet_UI.fillAmount = 1;
         }
 
-        if(openMenu == true)
+        if(menu == true)
         {
-            openMenu = false;
+            menu = false;
 
             ResultScore();
 
-            if (GameManager.status == "Pause")
+            if (gameStatus == "Pause")
             {
                 UISetActive();
             }
@@ -249,7 +277,7 @@ public class Stage : AddBase
             }
             else if (imageFade[1].color.a >= 1)
             {
-                GameManager.status = "GameClear";
+                gameStatus = "GameClear";
                 GameManager.nextScene = "GameClear";
                 LoadScene();
             }
@@ -258,22 +286,25 @@ public class Stage : AddBase
 
     void UISetActive()
     {
-        uIMenu[0].SetActive(uIMenuSetActive[0] = !uIMenuSetActive[0]);
-        uIMenu[4].SetActive(uIMenuSetActive[4] = !uIMenuSetActive[4]);
-        uIButton[1].SetActive(uIButtonSetActive[1] = !uIButtonSetActive[1]);
-        uIButton[2].SetActive(uIButtonSetActive[2] = !uIButtonSetActive[2]);
+        if (PlayerController.remain <= 0)
+        {
+            uIMenu[0].SetActive(uIMenuSetActive[0] = !uIMenuSetActive[0]);
+            uIMenu[4].SetActive(uIMenuSetActive[4] = !uIMenuSetActive[4]);
+            uIButton[1].SetActive(uIButtonSetActive[1] = !uIButtonSetActive[1]);
+            uIButton[2].SetActive(uIButtonSetActive[2] = !uIButtonSetActive[2]);
+        }
 
-        if (GameManager.status == "Pause")
+        if (gameStatus == "Pause")
         {
             Pause();
         }
 
-        if (GameManager.status == "GameClear")
+        if (gameStatus == "GameClear")
         {
             GameClear();
         }
 
-        if (GameManager.status == "GameOver")
+        if (gameStatus == "GameOver")
         {
             GameOver();
         }
@@ -294,7 +325,7 @@ public class Stage : AddBase
 
         if(pause == false)
         {
-            GameManager.status = "Play";//ゲームの状態を"Pause"にする
+            gameStatus = "Play";//ゲームの状態を"Pause"にする
         }
     }
 
@@ -320,5 +351,13 @@ public class Stage : AddBase
             PlayBGM(bgm[2]);
             uIMenu[3].SetActive(true);
         }
+    }
+
+    public enum Status
+    {
+        Play,
+        Pause,
+        GameClear,
+        GameOver,
     }
 }

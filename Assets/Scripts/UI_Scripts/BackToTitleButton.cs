@@ -23,7 +23,7 @@ public class BackToTitleButton : ButtonBase, IPointerEnterHandler, IPointerExitH
         {
             selectButton = button.gameObject.name;//選択しているボタンの名前を入れる
 
-            if (selectButton == "Button_BackToMenu")
+            if (selectButton == "Button_BackToTitle")
             {
                 GameManager.nextScene = "Title";
             }

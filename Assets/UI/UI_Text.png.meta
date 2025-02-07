@@ -911,7 +911,7 @@ TextureImporter:
         width: 128
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -919,6 +919,27 @@ TextureImporter:
       bones: []
       spriteID: 1edb796d798c628479c22f56750ef15d
       internalID: -71216714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackToTitle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 107
+        width: 448
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5ce65c3d6434754885568f68cc08df7
+      internalID: 1258586910
       vertices: []
       indices: 
       edges: []
@@ -943,6 +964,7 @@ TextureImporter:
       AttackPower: -1878746457
       AttackSpeed: -1103642406
       BackToMenu: -1101987141
+      BackToTitle: 1258586910
       Base: 1422330174
       Boss: -71216714
       Chickadee: 1402137104

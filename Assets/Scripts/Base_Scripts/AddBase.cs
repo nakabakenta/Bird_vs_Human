@@ -152,31 +152,26 @@ public class AddBase : MonoBehaviour
         //
         if (GameManager.score >= 10000)
         {
-            score.text = "" + GameManager.score;
             resultScore.text = "" + GameManager.score;
         }
         //
         else if (GameManager.score >= 1000)
         {
-            score.text = "0" + GameManager.score;
             resultScore.text = "0" + GameManager.score;
         }
         //
         else if (GameManager.score >= 100)
         {
-            score.text = "00" + GameManager.score;
             resultScore.text = "00" + GameManager.score;
         }
         //
         else if (GameManager.score >= 10)
         {
-            score.text = "000" + GameManager.score;
             resultScore.text = "000" + GameManager.score;
         }
         //
         else if (GameManager.score >= 0)
         {
-            score.text = "0000" + GameManager.score;
             resultScore.text = "0000" + GameManager.score;
         }
     }

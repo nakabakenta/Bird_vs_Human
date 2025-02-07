@@ -58,7 +58,7 @@ public class PlayerBase : CharacteBase
     public void UpdatePlayer()
     {
         //ゲームの状態が"Play"の場合
-        if (hp > 0 && GameManager.status == "Play")
+        if (hp > 0 && Stage.gameStatus == "Play")
         {
             //攻撃タイマーに経過時間を足す
             attackTimer[0] += Time.deltaTime;//攻撃タイマー[前方]

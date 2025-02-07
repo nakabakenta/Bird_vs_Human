@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOver : MonoBehaviour
+public class GameOver : AddBase
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        ResultScore();
     }
 
     // Update is called once per frame
