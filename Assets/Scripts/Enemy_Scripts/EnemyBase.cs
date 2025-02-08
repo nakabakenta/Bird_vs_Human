@@ -45,7 +45,16 @@ public class EnemyBase : CharacteBase
             animator = this.GetComponent<Animator>();
             runtimeAnimatorController = animator.runtimeAnimatorController;
             //処理を初期化する
-            nowAnimationNumber = defaultAnimationNumber;//現在のアニメーション番号に標準のアニメーション番号を設定する
+
+            if (GameManager.nowScene == "GameOver")
+            {
+                nowAnimationNumber = (int)Enemy.HumanoidAnimation.Dance;
+            }
+            else
+            {
+                nowAnimationNumber = defaultAnimationNumber;//現在のアニメーション番号に標準のアニメーション番号を設定する
+            }
+
             AnimationPlay();                            //関数"AnimationPlay"を実行する
         }
     }
@@ -53,31 +62,43 @@ public class EnemyBase : CharacteBase
     //関数"BaseUpdate"
     public virtual void BaseUpdate()
     {
-        //このオブジェクトのワールド座標をビューポート座標に変換して取得する
-        viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
-        viewPortPosition.y = Camera.main.WorldToViewportPoint(this.transform.position).y;
-
-        //体力が"0より上" && 行動"する"の場合
-        if (hp > 0 && action == true)
+        if (GameManager.nowScene == "GameOver")
         {
-            Action();//関数"Action"を実行する
-        }
-
-        if (sEMove != null)
-        {
-            if(viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
+            if (enemyType == Enemy.EnemyType.Human.ToString())
             {
-                sEMove.SetActive(true);
-            }
-            else if(viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
-            {
-                sEMove.SetActive(false);
+                //位置(.Y)を"0.0f"にする
+                this.transform.position
+                    = new Vector3(this.transform.position.x, 0.0f, this.transform.position.z);
             }
         }
-
-        if (hp > 0 && bossEnemy == false)
+        else
         {
-            DeathEnemy();
+            //このオブジェクトのワールド座標をビューポート座標に変換して取得する
+            viewPortPosition.x = Camera.main.WorldToViewportPoint(this.transform.position).x;
+            viewPortPosition.y = Camera.main.WorldToViewportPoint(this.transform.position).y;
+
+            //体力が"0より上" && 行動"する"の場合
+            if (hp > 0 && action == true)
+            {
+                Action();//関数"Action"を実行する
+            }
+
+            if (sEMove != null)
+            {
+                if (viewPortPosition.x > moveRange[0].range[0].x && viewPortPosition.x < moveRange[0].range[1].x)
+                {
+                    sEMove.SetActive(true);
+                }
+                else if (viewPortPosition.x < moveRange[0].range[0].x || viewPortPosition.x > moveRange[0].range[1].x)
+                {
+                    sEMove.SetActive(false);
+                }
+            }
+
+            if (hp > 0 && bossEnemy == false)
+            {
+                DeathEnemy();
+            }
         }
     }
 

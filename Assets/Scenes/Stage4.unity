@@ -3767,7 +3767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86f26f54cfdd9440b9879c8ee85fcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateCount: 15
+  generateCount: 8
   generateInterval: 0
   infiniteGenerate: 0
   generatePosition:

@@ -8,6 +8,8 @@ public class GameClear : AddBase
     void Start()
     {
         ResultScore();
+
+        GameManager.nowScene = "GameClear";
     }
 
     // Update is called once per frame

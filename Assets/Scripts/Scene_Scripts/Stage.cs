@@ -286,7 +286,7 @@ public class Stage : AddBase
 
     void UISetActive()
     {
-        if (PlayerController.remain <= 0)
+        if (PlayerController.remain > 0)
         {
             uIMenu[0].SetActive(uIMenuSetActive[0] = !uIMenuSetActive[0]);
             uIMenu[4].SetActive(uIMenuSetActive[4] = !uIMenuSetActive[4]);

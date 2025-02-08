@@ -49,8 +49,12 @@ public class CharacteBase : MonoBehaviour
             capsuleCollider = this.gameObject.GetComponent<CapsuleCollider>();
         }
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        //他のオブジェクトのコンポーネントを取得
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+
+        if(GameManager.nowScene != "GameOver")
+        {
+            //他のオブジェクトのコンポーネントを取得
+            playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        }
     }
 
     //関数"Destroy"

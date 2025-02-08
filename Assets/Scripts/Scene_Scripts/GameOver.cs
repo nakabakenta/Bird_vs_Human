@@ -8,6 +8,8 @@ public class GameOver : AddBase
     void Start()
     {
         ResultScore();
+
+        GameManager.nowScene = "GameOver";
     }
 
     // Update is called once per frame
