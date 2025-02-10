@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
-public class AddBase : MonoBehaviour
+public class AddBase : LoadScene
 {
     public float flashInterval;
     public float[] fadeSpeed;
@@ -180,47 +179,5 @@ public class AddBase : MonoBehaviour
     {
         audioSource.clip = bgm;
         audioSource.Play();
-    }
-
-    public void LoadScene()
-    {
-        Time.timeScale = 1;
-
-        if (GameManager.nextScene == "Stage1")
-        {
-            Stage.nowStage = 1;
-        }
-        else if (GameManager.nextScene == "Stage2")
-        {
-            Stage.nowStage = 2;
-        }
-        else if (GameManager.nextScene == "Stage3")
-        {
-            Stage.nowStage = 3;
-        }
-        else if (GameManager.nextScene == "Stage4")
-        {
-            Stage.nowStage = 4;
-        }
-        else if (GameManager.nextScene == "Stage5")
-        {
-            Stage.nowStage = 5;
-        }
-
-        SceneManager.LoadScene(GameManager.nextScene);
-        GameManager.nowScene = GameManager.nextScene;
-    }
-
-    public static class Scene
-    {
-        public enum Name
-        {
-            Title,
-            Stage1,
-            Stage2,
-            Stage3,
-            Stage4,
-            Stage5,
-        }
     }
 }

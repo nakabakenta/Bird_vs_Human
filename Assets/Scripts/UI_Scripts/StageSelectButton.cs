@@ -8,6 +8,8 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
 {
     public static string selectButton;//選択しているボタン
     public static bool buttonClick;   //ボタンのクリック可否
+    private string[] buttonName = new string[5]
+        {"Button_Stage1", "Button_Stage2", "Button_Stage3", "Button_Stage4", "Button_Stage5" };
 
     // Start is called before the first frame update
     void Start()
@@ -38,30 +40,12 @@ public class StageSelectButton : ButtonBase, IPointerEnterHandler, IPointerClick
 
             selectButton = button.gameObject.name;//選択しているボタンの名前を入れる
 
-            //ステージ1
-            if (button.gameObject.name == "Button_Stage1")
+            for (int i = 0; i < 5; i++)
             {
-                GameManager.nextScene = "Stage1";
-            }
-            //ステージ2
-            else if (button.gameObject.name == "Button_Stage2")
-            {
-                GameManager.nextScene = "Stage2";
-            }
-            //ステージ3
-            else if (button.gameObject.name == "Button_Stage3")
-            {
-                GameManager.nextScene = "Stage3";
-            }
-            //ステージ4
-            else if (button.gameObject.name == "Button_Stage4")
-            {
-                GameManager.nextScene = "Stage4";
-            }
-            //ステージ5
-            else if (button.gameObject.name == "Button_Stage5")
-            {
-                GameManager.nextScene = "Stage5";
+                if (button.gameObject.name == buttonName[i])
+                {
+                    GameManager.nextScene = stageName[i];
+                }
             }
 
             EnterButton();//関数"EnterButton"を実行する

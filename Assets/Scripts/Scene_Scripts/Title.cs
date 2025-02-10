@@ -79,7 +79,7 @@ public class Title : AddBase
             else if (imageFade[0].color.a >= 1)
             {
                 GameManager.nextScene = "PlayerSelect";
-                LoadScene();
+                SceneChange();
             }
         }
         else if (loadScene == false)

@@ -279,7 +279,7 @@ public class Stage : AddBase
             {
                 gameStatus = "GameClear";
                 GameManager.nextScene = "GameClear";
-                LoadScene();
+                SceneChange();
             }
         }
     }
@@ -344,7 +344,7 @@ public class Stage : AddBase
         {
             loadScene = true;
             GameManager.nextScene = "GameOver";
-            LoadScene();
+            SceneChange();
         }
         else if(playerController.hp <= 0)
         {

@@ -52,21 +52,12 @@ public class StageButton : ButtonBase, IPointerEnterHandler, IPointerClickHandle
             }
             else if (selectButton == "Button_NextStage")
             {
-                if(GameManager.nowScene == "Stage1")
+                for (int i = 0; i < 4; i++)
                 {
-                    GameManager.nextScene = "Stage2";
-                }
-                else if (GameManager.nowScene == "Stage2")
-                {
-                    GameManager.nextScene = "Stage3";
-                }
-                else if (GameManager.nowScene == "Stage3")
-                {
-                    GameManager.nextScene = "Stage4";
-                }
-                else if (GameManager.nowScene == "Stage4")
-                {
-                    GameManager.nextScene = "Stage5";
+                    if (GameManager.nowScene == stageName[i])
+                    {
+                        GameManager.nextScene = stageName[i + 1];
+                    }
                 }
             }
 

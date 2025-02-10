@@ -60,11 +60,11 @@ public class ButtonBase : AddBase
         if(Stage.gameStatus == "Pause")
         {
             Stage.gameStatus = null;
-            LoadScene();
+            SceneChange();
         }
 
         InvokeRepeating("ButtonFlash", 0.0f, 0.25f);//関数"Flash"を"0.0f"後に実行、"0.25f"毎に繰り返す
-        Invoke("LoadScene", 2.0f);                  //関数"LoadScene"を"2.0f"後に実行
+        Invoke("SceneChange", 2.0f);                //関数"LoadScene"を"2.0f"後に実行
     }
 
     public virtual void ResetButton()

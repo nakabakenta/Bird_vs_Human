@@ -25,7 +25,7 @@ public class BackToTitleButton : ButtonBase, IPointerEnterHandler, IPointerExitH
 
             if (selectButton == "Button_BackToTitle")
             {
-                GameManager.nextScene = "Title";
+                GameManager.nextScene = Scene.Name.Title.ToString();
             }
 
             EnterButton();//ä÷êî"EnterButton"Çé¿çsÇ∑ÇÈ
